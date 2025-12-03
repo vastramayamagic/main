@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Custom Dashboard Layout</title>
+<title>Responsive Dashboard Layout</title>
 
-<!-- DM Sans -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --header-height: 70px;          /* navbar height */
+  --header-height-desktop: 70px;
   --sidebar-width: 260px;
   --row-height: 48px;
 
@@ -19,6 +18,7 @@
 
   --text-color: rgb(24, 24, 26);
   --icon-color: #6b7280;
+  --icon-active: #5127ba;
 
   --active-bg: #f3f4f6;
   --hover-bg: #f3f4f6;
@@ -43,113 +43,110 @@ body {
   color: var(--text-color);
 }
 
-/* PAGE LAYOUT */
-.page {
+/* ============= DESKTOP LAYOUT ============= */
+
+.page-desktop {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* TOP NAVBAR */
-.topbar {
-  height: var(--header-height);
+/* Desktop header */
+.d-topbar {
+  height: var(--header-height-desktop);
   background: var(--header-bg);
   border-bottom: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
-  padding: 0 24px;
-  padding-left: 40px;          /* 40px left padding for logo */
+  padding-left: 40px;
 }
 
-.topbar-logo {
-  height: 52px;                /* logo height 52px */
+.d-topbar-logo {
+  height: 52px;
   width: auto;
   object-fit: contain;
 }
 
-/* MAIN APP AREA */
-.app {
+/* Desktop main area */
+.d-app {
   flex: 1;
   display: flex;
 }
 
-/* SIDEBAR */
-.sidebar {
+/* Desktop sidebar */
+.d-sidebar {
   width: var(--sidebar-width);
   background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
 }
 
-.sidebar-inner {
-  padding: 24px 16px 16px 12px;   /* left padding = 12px */
+.d-sidebar-inner {
+  padding: 24px 16px 16px 12px;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-/* NAVIGATION */
-nav {
+/* Desktop nav */
+.d-nav {
   display: flex;
   flex-direction: column;
 }
 
-.nav-group + .nav-group {
+.d-nav-group + .d-nav-group {
   margin-top: 6px;
 }
 
-.nav-item {
+.d-nav-item {
   display: flex;
   align-items: center;
   height: var(--row-height);
-  padding: 0 20px 0 12px;        /* left padding 12px */
+  padding: 0 20px 0 12px;
   margin: 2px 0;
   border-radius: 8px;
   gap: 12px;
   cursor: pointer;
-
-  /* frozen typography */
   font-weight: 500;
   font-size: 14px;
   color: var(--text-color);
   line-height: 20px;
-
   transition: background 0.15s ease;
 }
 
-.nav-item .icon {
-  width: 20px;
-  height: 20px;
-  color: var(--icon-color);
-  flex: 0 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.d-nav-item .icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--icon-color);
 }
 
-/* HOVER – only background */
-.nav-item:hover {
+/* Desktop active */
+.d-nav-item--active {
+  background: var(--active-bg);
+}
+.d-nav-item--active .icon svg {
+  stroke: var(--icon-active);
+}
+
+/* Desktop hover */
+.d-nav-item:hover {
   background: var(--hover-bg);
 }
 
-/* ACTIVE – only background */
-.nav-item--active {
-  background: var(--active-bg);
-}
-
-/* ACCOUNT section at bottom */
-.account-row {
+/* Desktop account section */
+.d-account-section {
   margin-top: auto;
-  padding-top: 20px;
+  padding: 16px;
+  border-top: 1px solid var(--border-subtle);
 }
 
-/* ACCOUNT ITEM STYLES */
-.account-item {
-  padding: 8px 20px 8px 12px;
+/* Shared Account card styles (desktop + mobile) */
+.account-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  height: auto;                 /* allow natural height */
 }
 
 .account-avatar {
@@ -157,7 +154,6 @@ nav {
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  flex: 0 0 40px;
 }
 
 .account-text {
@@ -176,44 +172,242 @@ nav {
   color: #6b7280;
 }
 
-/* MAIN CONTENT (right side) */
-.content {
+/* Desktop content */
+.d-content {
   flex: 1;
   background: var(--page-bg);
+}
+
+/* ============= MOBILE LAYOUT ============= */
+
+.page-mobile {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile header */
+.m-header {
+  height: 64px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+/* Menu button left - now rounded 6px, not circle */
+.m-menu-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.m-menu-lines {
+  width: 18px;
+  height: 14px;
+  position: relative;
+}
+.m-menu-lines::before,
+.m-menu-lines::after,
+.m-menu-lines span {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: #111827;
+}
+.m-menu-lines::before {
+  top: 0;
+}
+.m-menu-lines span {
+  top: 6px;
+}
+.m-menu-lines::after {
+  bottom: 0;
+}
+
+/* Logo right (42px) */
+.m-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Mobile main bg */
+.m-main {
+  flex: 1;
+  background: var(--page-bg);
+}
+
+/* Overlay & drawer */
+.m-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: none;
+  z-index: 40;
+}
+
+.m-overlay.open {
+  display: block;
+}
+
+.m-drawer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 320px;
+  max-width: 90vw;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease-out;
+}
+
+.m-overlay.open .m-drawer {
+  transform: translateX(0);
+}
+
+/* Drawer header */
+.m-drawer-header {
+  height: 64px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+/* Drawer logo also 42px */
+.m-drawer-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+
+.m-drawer-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.m-drawer-close-icon {
+  width: 14px;
+  height: 14px;
+  position: relative;
+}
+.m-drawer-close-icon::before,
+.m-drawer-close-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 2px;
+  border-radius: 999px;
+  background: #111827;
+}
+.m-drawer-close-icon::before {
+  transform: rotate(45deg);
+}
+.m-drawer-close-icon::after {
+  transform: rotate(-45deg);
+}
+
+/* Drawer nav */
+.m-drawer-nav {
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-nav-item {
+  display: flex;
+  align-items: center;
+  height: var(--row-height);
+  padding: 0 16px;
+  margin: 2px 0;
+  border-radius: 8px;
+  gap: 12px;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: background 0.15s ease;
+}
+
+.m-nav-item .icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--icon-color);
+}
+
+/* active mobile */
+.m-nav-item.active {
+  background: var(--active-bg);
+}
+.m-nav-item.active .icon svg {
+  stroke: var(--icon-active);
+}
+
+/* Drawer footer account - same style as desktop */
+.m-account-section {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ============= RESPONSIVE SWITCH ============= */
+
+/* Desktop default, hide mobile */
+.page-desktop { display: flex; }
+.page-mobile  { display: none; }
+
+@media (max-width: 768px) {
+  .page-desktop { display: none; }
+  .page-mobile  { display: flex; }
 }
 </style>
 </head>
 <body>
 
-<div class="page">
+<!-- ================= DESKTOP VIEW ================= -->
+<div class="page-desktop">
 
-  <!-- TOP NAVBAR -->
-  <header class="topbar">
-    <img
-      class="topbar-logo"
-      src="https://product-ecommerces.netlify.app/vastramaya.png"
-      alt="Logo"
-    />
+  <header class="d-topbar">
+    <img class="d-topbar-logo"
+         src="https://product-ecommerces.netlify.app/vastramaya.png"
+         alt="Logo" />
   </header>
 
-  <!-- BELOW HEADER: SIDEBAR + CONTENT -->
-  <div class="app">
+  <div class="d-app">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-inner">
+    <aside class="d-sidebar">
+      <div class="d-sidebar-inner">
 
-        <nav>
-          <div class="nav-group">
+        <nav class="d-nav">
+          <div class="d-nav-group">
 
-            <!-- Dashboard (ACTIVE) -->
-            <div class="nav-item nav-item--active">
+            <!-- Dashboard (active) -->
+            <div class="d-nav-item d-nav-item--active">
               <span class="icon">
-                <!-- Dashboard SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-layout-grid-icon lucide-layout-grid">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect width="7" height="7" x="3" y="3" rx="1"/>
                   <rect width="7" height="7" x="14" y="3" rx="1"/>
                   <rect width="7" height="7" x="14" y="14" rx="1"/>
@@ -224,13 +418,10 @@ nav {
             </div>
 
             <!-- Inventory -->
-            <div class="nav-item">
+            <div class="d-nav-item">
               <span class="icon">
-                <!-- Inventory SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-gallery-horizontal-end-icon lucide-gallery-horizontal-end">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M2 7v10"/>
                   <path d="M6 5v14"/>
                   <rect width="12" height="18" x="10" y="3" rx="2"/>
@@ -240,13 +431,10 @@ nav {
             </div>
 
             <!-- Customize Site -->
-            <div class="nav-item">
+            <div class="d-nav-item">
               <span class="icon">
-                <!-- Customize Site SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-square-mouse-pointer-icon lucide-square-mouse-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
                   <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
                 </svg>
@@ -255,13 +443,10 @@ nav {
             </div>
 
             <!-- All Orders -->
-            <div class="nav-item">
+            <div class="d-nav-item">
               <span class="icon">
-                <!-- All Orders SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-file-clock-icon lucide-file-clock">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
                   <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
                   <path d="M8 14v2.2l1.6 1"/>
@@ -274,14 +459,13 @@ nav {
           </div>
         </nav>
 
-        <!-- BOTTOM: Account sharing (ACTIVE) -->
-        <div class="account-row">
-          <div class="nav-item nav-item--active account-item">
+        <!-- Desktop Account sharing (same style as mobile) -->
+        <div class="d-account-section">
+          <div class="account-card">
             <img
               class="account-avatar"
               src="https://bpb-us-w2.wpmucdn.com/wp.wpi.edu/dist/e/505/files/2024/06/unknown-person-icon-3.png"
-              alt="Profile"
-            />
+              alt="Profile" />
             <div class="account-text">
               <div class="account-name">Account sharing</div>
               <div class="account-email">demo@gmail.com</div>
@@ -292,10 +476,138 @@ nav {
       </div>
     </aside>
 
-    <!-- MAIN BLANK AREA -->
-    <main class="content"></main>
+    <main class="d-content"></main>
   </div>
 </div>
+
+<!-- ================= MOBILE VIEW ================= -->
+<div class="page-mobile">
+
+  <!-- Mobile header: menu left, logo right -->
+  <header class="m-header">
+    <button class="m-menu-btn" id="m-menu-toggle" aria-label="Open menu">
+      <div class="m-menu-lines"><span></span></div>
+    </button>
+
+    <img
+      class="m-logo"
+      src="https://product-ecommerces.netlify.app/vastramaya.png"
+      alt="Logo" />
+  </header>
+
+  <main class="m-main"></main>
+
+  <!-- Overlay & drawer -->
+  <div class="m-overlay" id="m-overlay">
+    <div class="m-drawer">
+
+      <div class="m-drawer-header">
+        <img
+          class="m-drawer-logo"
+          src="https://product-ecommerces.netlify.app/vastramaya.png"
+          alt="Logo" />
+        <button class="m-drawer-close" id="m-drawer-close" aria-label="Close menu">
+          <div class="m-drawer-close-icon"></div>
+        </button>
+      </div>
+
+      <nav class="m-drawer-nav">
+
+        <!-- Dashboard active -->
+        <div class="m-nav-item active">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="7" x="3" y="3" rx="1"/>
+              <rect width="7" height="7" x="14" y="3" rx="1"/>
+              <rect width="7" height="7" x="14" y="14" rx="1"/>
+              <rect width="7" height="7" x="3" y="14" rx="1"/>
+            </svg>
+          </span>
+          <span class="label">Dashboard</span>
+        </div>
+
+        <!-- Inventory -->
+        <div class="m-nav-item">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 7v10"/>
+              <path d="M6 5v14"/>
+              <rect width="12" height="18" x="10" y="3" rx="2"/>
+            </svg>
+          </span>
+          <span class="label">Inventory</span>
+        </div>
+
+        <!-- Customize Site -->
+        <div class="m-nav-item">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
+              <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
+            </svg>
+          </span>
+          <span class="label">Customize Site</span>
+        </div>
+
+        <!-- All Orders -->
+        <div class="m-nav-item">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
+              <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
+              <path d="M8 14v2.2l1.6 1"/>
+              <circle cx="8" cy="16" r="6"/>
+            </svg>
+          </span>
+          <span class="label">All Orders</span>
+        </div>
+
+      </nav>
+
+      <!-- Mobile account sharing (same as desktop) -->
+      <div class="m-account-section">
+        <div class="account-card">
+          <img
+            class="account-avatar"
+            src="https://bpb-us-w2.wpmucdn.com/wp.wpi.edu/dist/e/505/files/2024/06/unknown-person-icon-3.png"
+            alt="Profile" />
+          <div class="account-text">
+            <div class="account-name">Account sharing</div>
+            <div class="account-email">demo@gmail.com</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mobile drawer behaviour
+  const mOverlay = document.getElementById('m-overlay');
+  const mMenuToggle = document.getElementById('m-menu-toggle');
+  const mDrawerClose = document.getElementById('m-drawer-close');
+
+  if (mMenuToggle && mOverlay && mDrawerClose) {
+    mMenuToggle.addEventListener('click', () => {
+      mOverlay.classList.add('open');
+    });
+
+    mDrawerClose.addEventListener('click', () => {
+      mOverlay.classList.remove('open');
+    });
+
+    mOverlay.addEventListener('click', (e) => {
+      if (e.target === mOverlay) {
+        mOverlay.classList.remove('open');
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
