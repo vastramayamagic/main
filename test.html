@@ -9,7 +9,7 @@
 
 <style>
 :root {
-  --header-height: 64px;
+  --header-height: 70px;          /* navbar height */
   --sidebar-width: 260px;
   --row-height: 48px;
 
@@ -58,15 +58,16 @@ body {
   display: flex;
   align-items: center;
   padding: 0 24px;
+  padding-left: 40px;          /* 40px left padding for logo */
 }
 
 .topbar-logo {
-  height: 28px; /* bigger logo */
+  height: 52px;                /* logo height 52px */
   width: auto;
   object-fit: contain;
 }
 
-/* MAIN AREA */
+/* MAIN APP AREA */
 .app {
   flex: 1;
   display: flex;
@@ -81,7 +82,7 @@ body {
 }
 
 .sidebar-inner {
-  padding: 24px 16px 16px 12px; /* left padding 12px */
+  padding: 24px 16px 16px 12px;   /* left padding = 12px */
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -93,11 +94,15 @@ nav {
   flex-direction: column;
 }
 
+.nav-group + .nav-group {
+  margin-top: 6px;
+}
+
 .nav-item {
   display: flex;
   align-items: center;
   height: var(--row-height);
-  padding: 0 20px 0 12px; /* left = 12px */
+  padding: 0 20px 0 12px;        /* left padding 12px */
   margin: 2px 0;
   border-radius: 8px;
   gap: 12px;
@@ -122,16 +127,56 @@ nav {
   justify-content: center;
 }
 
-/* HOVER & ACTIVE */
+/* HOVER – only background */
 .nav-item:hover {
   background: var(--hover-bg);
 }
 
+/* ACTIVE – only background */
 .nav-item--active {
   background: var(--active-bg);
 }
 
-/* MAIN CONTENT (blank canvas) */
+/* ACCOUNT section at bottom */
+.account-row {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+/* ACCOUNT ITEM STYLES */
+.account-item {
+  padding: 8px 20px 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: auto;                 /* allow natural height */
+}
+
+.account-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 40px;
+}
+
+.account-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.account-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.account-email {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* MAIN CONTENT (right side) */
 .content {
   flex: 1;
   background: var(--page-bg);
@@ -151,86 +196,104 @@ nav {
     />
   </header>
 
-  <!-- SIDEBAR + CONTENT -->
+  <!-- BELOW HEADER: SIDEBAR + CONTENT -->
   <div class="app">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-inner">
+
         <nav>
+          <div class="nav-group">
 
-          <!-- Dashboard (active) -->
-          <div class="nav-item nav-item--active">
-            <span class="icon">
-              <!-- Dashboard SVG -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                   class="lucide lucide-layout-grid-icon lucide-layout-grid">
-                <rect width="7" height="7" x="3" y="3" rx="1"/>
-                <rect width="7" height="7" x="14" y="3" rx="1"/>
-                <rect width="7" height="7" x="14" y="14" rx="1"/>
-                <rect width="7" height="7" x="3" y="14" rx="1"/>
-              </svg>
-            </span>
-            <span class="label">Dashboard</span>
+            <!-- Dashboard (ACTIVE) -->
+            <div class="nav-item nav-item--active">
+              <span class="icon">
+                <!-- Dashboard SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-layout-grid-icon lucide-layout-grid">
+                  <rect width="7" height="7" x="3" y="3" rx="1"/>
+                  <rect width="7" height="7" x="14" y="3" rx="1"/>
+                  <rect width="7" height="7" x="14" y="14" rx="1"/>
+                  <rect width="7" height="7" x="3" y="14" rx="1"/>
+                </svg>
+              </span>
+              <span class="label">Dashboard</span>
+            </div>
+
+            <!-- Inventory -->
+            <div class="nav-item">
+              <span class="icon">
+                <!-- Inventory SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-gallery-horizontal-end-icon lucide-gallery-horizontal-end">
+                  <path d="M2 7v10"/>
+                  <path d="M6 5v14"/>
+                  <rect width="12" height="18" x="10" y="3" rx="2"/>
+                </svg>
+              </span>
+              <span class="label">Inventory</span>
+            </div>
+
+            <!-- Customize Site -->
+            <div class="nav-item">
+              <span class="icon">
+                <!-- Customize Site SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-square-mouse-pointer-icon lucide-square-mouse-pointer">
+                  <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
+                  <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
+                </svg>
+              </span>
+              <span class="label">Customize Site</span>
+            </div>
+
+            <!-- All Orders -->
+            <div class="nav-item">
+              <span class="icon">
+                <!-- All Orders SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-file-clock-icon lucide-file-clock">
+                  <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
+                  <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
+                  <path d="M8 14v2.2l1.6 1"/>
+                  <circle cx="8" cy="16" r="6"/>
+                </svg>
+              </span>
+              <span class="label">All Orders</span>
+            </div>
+
           </div>
-
-          <!-- Inventory -->
-          <div class="nav-item">
-            <span class="icon">
-              <!-- Inventory SVG -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                   class="lucide lucide-gallery-horizontal-end-icon lucide-gallery-horizontal-end">
-                <path d="M2 7v10"/>
-                <path d="M6 5v14"/>
-                <rect width="12" height="18" x="10" y="3" rx="2"/>
-              </svg>
-            </span>
-            <span class="label">Inventory</span>
-          </div>
-
-          <!-- Customize Site -->
-          <div class="nav-item">
-            <span class="icon">
-              <!-- Customize Site SVG -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                   class="lucide lucide-square-mouse-pointer-icon lucide-square-mouse-pointer">
-                <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
-                <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
-              </svg>
-            </span>
-            <span class="label">Customize Site</span>
-          </div>
-
-          <!-- All Orders -->
-          <div class="nav-item">
-            <span class="icon">
-              <!-- All Orders SVG -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                   class="lucide lucide-file-clock-icon lucide-file-clock">
-                <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
-                <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
-                <path d="M8 14v2.2l1.6 1"/>
-                <circle cx="8" cy="16" r="6"/>
-              </svg>
-            </span>
-            <span class="label">All Orders</span>
-          </div>
-
         </nav>
+
+        <!-- BOTTOM: Account sharing (ACTIVE) -->
+        <div class="account-row">
+          <div class="nav-item nav-item--active account-item">
+            <img
+              class="account-avatar"
+              src="https://bpb-us-w2.wpmucdn.com/wp.wpi.edu/dist/e/505/files/2024/06/unknown-person-icon-3.png"
+              alt="Profile"
+            />
+            <div class="account-text">
+              <div class="account-name">Account sharing</div>
+              <div class="account-email">demo@gmail.com</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </aside>
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- MAIN BLANK AREA -->
     <main class="content"></main>
-
   </div>
 </div>
 
