@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Responsive Dashboard Layout</title>
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -197,7 +198,7 @@ body {
   padding: 0 16px;
 }
 
-/* Menu button left - now rounded 6px, not circle */
+/* Menu button left - rounded 6px */
 .m-menu-btn {
   width: 36px;
   height: 36px;
@@ -249,17 +250,20 @@ body {
   background: var(--page-bg);
 }
 
-/* Overlay & drawer */
+/* Overlay & drawer (smooth animation) */
 .m-overlay {
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.45);
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out;
   z-index: 40;
 }
 
 .m-overlay.open {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .m-drawer {
@@ -273,7 +277,7 @@ body {
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
-  transition: transform 0.2s ease-out;
+  transition: transform 0.25s ease-out;
 }
 
 .m-overlay.open .m-drawer {
@@ -602,6 +606,7 @@ body {
     });
 
     mOverlay.addEventListener('click', (e) => {
+      // click outside drawer closes
       if (e.target === mOverlay) {
         mOverlay.classList.remove('open');
       }
