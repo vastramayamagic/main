@@ -1,316 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hostinger Dashboard Replica</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<title>Hostinger Sidebar Replica - Fixed Gaps</title>
 
-    <style>
-        /* --- CSS Variables & Reset --- */
-        :root {
-            --font-family: 'DM Sans', sans-serif;
-            --c-text-primary: rgb(24, 24, 26);
-            --c-text-secondary: #727586;
-            --c-icon: #2F3136;
-            --c-bg-sidebar: #ffffff;
-            --c-bg-body: #F4F5F7;
-            --c-bg-active: #F4F5F7; /* Light gray for active item */
-            --c-border: #EBEBEF;
-            --c-badge: #673DE6;
-            --c-badge-border: #673DE6;
-            
-            --sidebar-width: 280px;
-            --header-height: 72px; /* Exact height from inspection */
-            --item-height: 44px;   /* Consistent click target height */
-            --item-h-padding: 16px;
-            --item-gap: 4px;
-        }
+<style>
+:root {
+  --sidebar-width: 260px;
+  --row-height: 48px;
+  --sidebar-bg: #ffffff;
+  --page-bg: #f4f5f7;
+  --text-main: #111827;
+  --text-muted: #374151;
+  --icon-muted: #6b7280;
+  --active-bg: #f3f4f6;
+  --border-subtle: #e5e7eb;
+  --purple-border: #a855f7;
+  --purple-text: #7c3aed;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        body {
-            font-family: var(--font-family);
-            background-color: var(--c-bg-body);
-            color: var(--c-text-primary);
-            font-size: 14px;
-            font-weight: 500; /* Matching weight 499/500 */
-            line-height: 20px;
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
-        }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--page-bg);
+  color: var(--text-muted);
+}
 
-        /* --- Sidebar Structure --- */
-        aside {
-            width: var(--sidebar-width);
-            background-color: var(--c-bg-sidebar);
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid var(--c-border);
-            flex-shrink: 0;
-        }
+.app {
+  display: flex;
+  min-height: 100vh;
+}
 
-        /* --- Header / Logo --- */
-        .sidebar-header {
-            height: var(--header-height);
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
-            border-bottom: 1px solid var(--c-border); /* The subtle separator line */
-            margin-bottom: 16px; /* Gap before first menu item */
-        }
+/* SIDEBAR */
 
-        .logo {
-            height: 32px;
-            width: auto;
-            object-fit: contain;
-            display: block;
-        }
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+}
 
-        /* --- Navigation --- */
-        .nav-list {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 4px; /* Vertical space between items */
-            padding: 0 16px; /* Side padding for the list container */
-        }
+.sidebar-inner {
+  padding: 0 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--c-text-primary);
-            height: var(--item-height);
-            padding: 0 12px; /* Internal padding of the link */
-            border-radius: 8px; /* Rounded corners for hover/active */
-            transition: background-color 0.15s ease;
-            position: relative;
-        }
+/* Logo row */
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 20px 8px;
+}
 
-        .nav-item:hover {
-            background-color: var(--c-bg-active);
-        }
+.logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
 
-        /* Active State - Inset style */
-        .nav-item.active {
-            background-color: var(--c-bg-active);
-            font-weight: 500;
-        }
+.logo-text {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 14px;
+}
 
-        /* --- Icons & Labels --- */
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px; /* Specific gap */
-            color: var(--c-icon);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+.sidebar-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin-bottom: 12px;
+}
 
-        .nav-icon svg {
-            width: 100%;
-            height: 100%;
-            fill: currentColor; /* Many icons here are filled or thick stroke */
-        }
+/* NAVIGATION */
 
-        .nav-label {
-            flex: 1;
-            white-space: nowrap;
-        }
+nav {
+  display: flex;
+  flex-direction: column;
+}
 
-        /* --- Right Arrow (Chevron) --- */
-        .nav-arrow {
-            width: 20px;
-            height: 20px;
-            color: var(--c-text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* The specific path for Chevron Small Right */
-        .nav-arrow svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--c-text-secondary);
-        }
+.nav-group {
+  margin-bottom: 4px;
+}
 
-        /* --- Badge (NEW) --- */
-        .badge {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--c-badge);
-            border: 1px solid var(--c-badge-border);
-            border-radius: 4px; /* Slightly squarer radius in new UI */
-            padding: 1px 5px;
-            margin-right: 8px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            border-radius: 10px;
-        }
+.nav-group + .nav-group {
+  margin-top: 8px;   /* bigger gap between groups */
+}
 
-        /* --- Footer --- */
-        .sidebar-footer {
-            padding: 16px;
-            margin-top: auto;
-        }
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--row-height);
+  border-radius: 8px;
+  padding: 0 20px 0 24px;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  user-select: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  margin: 2px 0;     /* 🔥 fixed, consistent vertical gap (4px total between items) */
+}
 
-        /* --- Main Content --- */
-        main {
-            flex: 1;
-            background-color: var(--c-bg-body);
-        }
+/* Hover active effect */
+.nav-item:hover {
+  background: var(--active-bg);
+  color: var(--text-main);
+}
 
-        /* --- SVG Specifics (Stroked vs Filled) --- */
-        /* Some icons need stroke, some fill. Adjusting per icon visual. */
-        .icon-stroked {
-            fill: none !important;
-            stroke: currentColor;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-    </style>
+.nav-item:hover .icon {
+  color: var(--text-main);
+}
+
+.nav-item .icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon-muted);
+}
+
+.nav-item .label {
+  flex: 1 1 auto;
+}
+
+.nav-item .tail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Arrow SVG style from your snippet */
+.hp-menu__item-dropdown-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--icon-muted);
+  fill: var(--icon-muted);
+}
+
+/* ACTIVE ITEM */
+.nav-item--active {
+  background: var(--active-bg);
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.nav-item--active .icon {
+  color: var(--text-main);
+}
+
+/* Badge NEW */
+.badge-new {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--purple-border);
+  color: var(--purple-text);
+  background: #ffffff;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+}
+
+/* Bottom account block */
+.account-row {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* MAIN CONTENT */
+.content {
+  flex: 1 1 auto;
+  background: var(--page-bg);
+}
+</style>
+
 </head>
 <body>
 
-    <aside>
-        <!-- Header -->
-        <div class="sidebar-header">
-            <img src="https://product-ecommerces.netlify.app/vastramaya.png" alt="VASTRAMAYA" class="logo">
+<!-- SVG SYMBOLS -->
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="ic-chevron-small-right-24" viewBox="0 0 24 24">
+      <path d="M10 7l5 5-5 5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <!-- LOGO -->
+      <div class="logo-row">
+        <img class="logo-img" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Logo">
+        <div class="logo-text">HOSTINGER</div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- NAVIGATION -->
+      <nav>
+
+        <div class="nav-group">
+
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 11.5L12 4l8 7.5"
+                      fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.5 10.5V20h11V10.5"
+                      fill="none" stroke="currentColor"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="label">Home</span>
+          </div>
+
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="4" y="6" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 10h16" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M9 4v4M15 4v4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="label">Websites</span>
+            <span class="tail">
+              <svg class="h-icon h-ml-0 hp-menu__item-dropdown-icon" aria-hidden="true">
+                <use href="#ic-chevron-small-right-24"></use>
+              </svg>
+            </span>
+          </div>
+
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <ellipse cx="12" cy="12" rx="3" ry="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 12h16" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <span class="label">Domains</span>
+            <span class="tail">
+              <svg class="h-icon hp-menu__item-dropdown-icon">
+                <use href="#ic-chevron-small-right-24"></use>
+              </svg>
+            </span>
+          </div>
+
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 9c1.2 0 1.8-.8 3-.8s1.8.8 3 .8 1.8-.8 3-.8 1.8.8 3 .8 1.8-.8 3-.8"
+                      fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M4 13c1.2 0 1.8-.8 3-.8s1.8.8 3 .8 1.8-.8 3-.8 1.8.8 3 .8 1.8-.8 3-.8"
+                      fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="label">Horizons</span>
+          </div>
+
+          <div class="nav-item nav-item--active">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="4" y="6" width="16" height="12" rx="2"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 8l8 5 8-5"
+                      fill="none" stroke="currentColor" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="label">Emails</span>
+          </div>
         </div>
 
-        <!-- Menu -->
-        <nav class="nav-list">
-            
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Home (Outline style) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                </div>
-                <span class="nav-label">Home</span>
-            </a>
+        <div class="nav-group">
 
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Websites (Layout) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                </div>
-                <span class="nav-label">Websites</span>
-                <div class="nav-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                </div>
-            </a>
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 5V3M12 21v-2M5 12H3M21 12h-2"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="label">Email marketing</span>
+            <span class="tail"><span class="badge-new">New</span></span>
+          </div>
 
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Domains (Globe) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                </div>
-                <span class="nav-label">Domains</span>
-                <div class="nav-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                </div>
-            </a>
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="5" width="14" height="6" rx="1.5"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="5" y="13" width="14" height="6" rx="1.5"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <span class="label">VPS</span>
+          </div>
 
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Horizons (Waves/Wind) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><path d="M2 9.5h20M2 14.5h20M5 4.5h14" stroke-dasharray="0" stroke-width="2"></path></svg>
-                </div>
-                <span class="nav-label">Horizons</span>
-            </a>
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="4" y="7" width="16" height="10" rx="2"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 10h16"
+                      stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <span class="label">Billing</span>
+            <span class="tail">
+              <svg class="h-icon hp-menu__item-dropdown-icon">
+                <use href="#ic-chevron-small-right-24"></use>
+              </svg>
+            </span>
+          </div>
 
-            <!-- ACTIVE ITEM: Emails -->
-            <a href="#" class="nav-item active">
-                <div class="nav-icon">
-                    <!-- Emails (Envelope) -->
-                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                </div>
-                <span class="nav-label">Emails</span>
-            </a>
+          <div class="nav-item">
+            <span class="icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 9h14l-1 9H6L5 9z"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 9l1.5-4h11L19 9"
+                      fill="none" stroke="currentColor" stroke-width="1.5"
+                      stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="label">Marketplace</span>
+            <span class="tail">
+              <span class="badge-new">New</span>
+              <svg class="h-icon hp-menu__item-dropdown-icon">
+                <use href="#ic-chevron-small-right-24"></use>
+              </svg>
+            </span>
+          </div>
 
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Email Marketing (Target) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
-                </div>
-                <span class="nav-label">Email marketing</span>
-                <span class="badge">New</span>
-            </a>
-
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- VPS (Server Stack) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-                </div>
-                <span class="nav-label">VPS</span>
-            </a>
-
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Billing (Card) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                </div>
-                <span class="nav-label">Billing</span>
-                <div class="nav-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                </div>
-            </a>
-
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Marketplace (Store) -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><line x1="9" y1="22" x2="9" y2="12"></line><line x1="15" y1="12" x2="15" y2="22"></line></svg>
-                </div>
-                <span class="nav-label">Marketplace</span>
-                <span class="badge">New</span>
-                <div class="nav-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                </div>
-            </a>
-
-        </nav>
-
-        <!-- Footer -->
-        <div class="sidebar-footer">
-            <a href="#" class="nav-item">
-                <div class="nav-icon">
-                    <!-- Account Sharing -->
-                    <svg class="icon-stroked" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                </div>
-                <span class="nav-label">Account sharing</span>
-            </a>
         </div>
-    </aside>
 
-    <main></main>
+      </nav>
 
-    <script>
-        // Simple script for click interaction
-        const items = document.querySelectorAll('.nav-item');
-        items.forEach(item => {
-            item.addEventListener('click', (e) => {
-                items.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-            });
-        });
-    </script>
+      <!-- ACCOUNT SHARING at bottom -->
+      <div class="account-row">
+        <div class="nav-item">
+          <span class="icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="9" r="3"
+                      fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6 19c0-3 2.5-5 6-5s6 2 6 5"
+                    fill="none" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </span>
+          <span class="label">Account sharing</span>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <main class="content"></main>
+
+</div>
 
 </body>
 </html>
