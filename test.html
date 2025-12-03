@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Hostinger Layout Replica</title>
+<title>Custom Dashboard Layout</title>
 
 <!-- DM Sans -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,14 +43,14 @@ body {
   color: var(--text-color);
 }
 
-/* PAGE LAYOUT: header on top, app below */
+/* PAGE LAYOUT */
 .page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* TOP NAVBAR (like screenshot) */
+/* TOP NAVBAR */
 .topbar {
   height: var(--header-height);
   background: var(--header-bg);
@@ -61,12 +61,12 @@ body {
 }
 
 .topbar-logo {
-  height: 42px;         /* adjust if needed */
+  height: 28px; /* bigger logo */
   width: auto;
   object-fit: contain;
 }
 
-/* MAIN APP AREA */
+/* MAIN AREA */
 .app {
   flex: 1;
   display: flex;
@@ -81,7 +81,7 @@ body {
 }
 
 .sidebar-inner {
-  padding: 24px 16px 16px 12px;
+  padding: 24px 16px 16px 12px; /* left padding 12px */
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -93,21 +93,17 @@ nav {
   flex-direction: column;
 }
 
-.nav-group + .nav-group {
-  margin-top: 6px;
-}
-
 .nav-item {
   display: flex;
   align-items: center;
   height: var(--row-height);
-  padding: 0 20px 0 12px;
+  padding: 0 20px 0 12px; /* left = 12px */
   margin: 2px 0;
   border-radius: 8px;
   gap: 12px;
   cursor: pointer;
 
-  /* frozen typography — no change on active/hover */
+  /* frozen typography */
   font-weight: 500;
   font-size: 14px;
   color: var(--text-color);
@@ -126,31 +122,16 @@ nav {
   justify-content: center;
 }
 
-/* HOVER – only background */
+/* HOVER & ACTIVE */
 .nav-item:hover {
   background: var(--hover-bg);
 }
 
-/* ACTIVE – only background */
 .nav-item--active {
   background: var(--active-bg);
 }
 
-/* Chevron icon */
-.hp-menu__item-dropdown-icon {
-  width: 20px;
-  height: 20px;
-  color: var(--icon-color);
-  fill: var(--icon-color);
-}
-
-/* ACCOUNT section at bottom */
-.account-row {
-  margin-top: auto;
-  padding-top: 20px;
-}
-
-/* MAIN CONTENT (right side) */
+/* MAIN CONTENT (blank canvas) */
 .content {
   flex: 1;
   background: var(--page-bg);
@@ -158,20 +139,6 @@ nav {
 </style>
 </head>
 <body>
-
-<!-- Chevron symbol -->
-<svg width="0" height="0" style="position:absolute;">
-  <defs>
-    <symbol id="chevron-right" viewBox="0 0 24 24">
-      <path d="M10 7l5 5-5 5"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-    </symbol>
-  </defs>
-</svg>
 
 <div class="page">
 
@@ -184,173 +151,86 @@ nav {
     />
   </header>
 
-  <!-- BELOW HEADER: SIDEBAR + CONTENT -->
+  <!-- SIDEBAR + CONTENT -->
   <div class="app">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-inner">
-
         <nav>
-          <div class="nav-group">
 
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 11.5L12 4l8 7.5"
-                        fill="none" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M6.5 10.5V20h11V10.5"
-                        fill="none" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <span class="label">Home</span>
-            </div>
-
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="4" y="6" width="16" height="14" rx="2"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M4 10h16" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M9 4v4M15 4v4" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round"/>
-                </svg>
-              </span>
-              <span class="label">Websites</span>
-
-              <svg class="hp-menu__item-dropdown-icon">
-                <use href="#chevron-right"></use>
+          <!-- Dashboard (active) -->
+          <div class="nav-item nav-item--active">
+            <span class="icon">
+              <!-- Dashboard SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="lucide lucide-layout-grid-icon lucide-layout-grid">
+                <rect width="7" height="7" x="3" y="3" rx="1"/>
+                <rect width="7" height="7" x="14" y="3" rx="1"/>
+                <rect width="7" height="7" x="14" y="14" rx="1"/>
+                <rect width="7" height="7" x="3" y="14" rx="1"/>
               </svg>
-            </div>
-
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="8"
-                          fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <ellipse cx="12" cy="12" rx="3" ry="8"
-                           fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M4 12h16" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-              </span>
-              <span class="label">Domains</span>
-
-              <svg class="hp-menu__item-dropdown-icon">
-                <use href="#chevron-right"></use>
-              </svg>
-            </div>
-
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 9c1.2 0 1.8-.8 3-.8s1.8.8 3 .8 1.8-.8 3-.8 1.8.8 3 .8 1.8-.8 3-.8"
-                        fill="none" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round"/>
-                  <path d="M4 13c1.2 0 1.8-.8 3-.8s1.8.8 3 .8 1.8-.8 3-.8 1.8.8 3 .8 1.8-.8 3-.8"
-                        fill="none" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round"/>
-                </svg>
-              </span>
-              <span class="label">Horizons</span>
-            </div>
-
-            <!-- ACTIVE: Emails -->
-            <div class="nav-item nav-item--active">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="4" y="6" width="16" height="12" rx="2"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M4 8l8 5 8-5"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-              </span>
-              <span class="label">Emails</span>
-            </div>
-
+            </span>
+            <span class="label">Dashboard</span>
           </div>
 
-          <div class="nav-group">
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="3"
-                          fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M12 5V3M12 21v-2M5 12H3M21 12h-2"
-                        stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round"/>
-                </svg>
-              </span>
-              <span class="label">Email marketing</span>
-            </div>
-
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="5" y="5" width="14" height="6" rx="1.5"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <rect x="5" y="13" width="14" height="6" rx="1.5"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-              </span>
-              <span class="label">VPS</span>
-            </div>
-
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <rect x="4" y="7" width="16" height="10" rx="2"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M4 10h16" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-              </span>
-              <span class="label">Billing</span>
-
-              <svg class="hp-menu__item-dropdown-icon">
-                <use href="#chevron-right"></use>
+          <!-- Inventory -->
+          <div class="nav-item">
+            <span class="icon">
+              <!-- Inventory SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="lucide lucide-gallery-horizontal-end-icon lucide-gallery-horizontal-end">
+                <path d="M2 7v10"/>
+                <path d="M6 5v14"/>
+                <rect width="12" height="18" x="10" y="3" rx="2"/>
               </svg>
-            </div>
+            </span>
+            <span class="label">Inventory</span>
+          </div>
 
-            <div class="nav-item">
-              <span class="icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M5 9h14l-1 9H6L5 9z"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M5 9l1.5-4h11L19 9"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-              </span>
-              <span class="label">Marketplace</span>
-
-              <svg class="hp-menu__item-dropdown-icon">
-                <use href="#chevron-right"></use>
+          <!-- Customize Site -->
+          <div class="nav-item">
+            <span class="icon">
+              <!-- Customize Site SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="lucide lucide-square-mouse-pointer-icon lucide-square-mouse-pointer">
+                <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
+                <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
               </svg>
-            </div>
+            </span>
+            <span class="label">Customize Site</span>
+          </div>
+
+          <!-- All Orders -->
+          <div class="nav-item">
+            <span class="icon">
+              <!-- All Orders SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="lucide lucide-file-clock-icon lucide-file-clock">
+                <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
+                <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
+                <path d="M8 14v2.2l1.6 1"/>
+                <circle cx="8" cy="16" r="6"/>
+              </svg>
+            </span>
+            <span class="label">All Orders</span>
           </div>
 
         </nav>
-
-        <!-- BOTTOM ACTIVE ITEM: Account sharing -->
-        <div class="account-row">
-          <div class="nav-item nav-item--active">
-            <span class="icon">
-              <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="9" r="3"
-                        fill="none" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M6 19c0-3 2.5-5 6-5s6 2 6 5"
-                      fill="none" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-            </span>
-            <span class="label">Account sharing</span>
-          </div>
-        </div>
-
       </div>
     </aside>
 
-    <!-- MAIN BLANK AREA -->
+    <!-- MAIN CONTENT AREA -->
     <main class="content"></main>
+
   </div>
 </div>
 
