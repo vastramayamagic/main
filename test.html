@@ -281,7 +281,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  border-radius: 999px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   font-family: "DM Sans", Roboto, sans-serif;
@@ -289,12 +289,16 @@ body {
   font-size: 14px;
   line-height: 20px;
   color: #ffffff;
-  background: #6d28d9;
+  background: #5127ba;
+  transition: background 0.15s ease;
 }
 .primary-btn svg {
   width: 18px;
   height: 18px;
   stroke: #ffffff;
+}
+.primary-btn:hover {
+  background: #471ea7;
 }
 
 /* Card */
@@ -319,6 +323,18 @@ body {
   height: 40px;
   display: flex;
   align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s ease;
+}
+
+.search-input-wrap:focus-within {
+  border-color: #673de6;
+}
+
+.search-icon {
+  width: 16px;
+  height: 16px;
+  stroke: #9ca3af;
 }
 
 .search-input-wrap input {
@@ -355,7 +371,7 @@ body {
 /* header cells */
 .domain-table thead th {
   font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 600; /* 599 approximated */
+  font-weight: 700;
   font-size: 14px;
   line-height: 24px;
   color: rgb(29, 30, 32);
@@ -363,22 +379,10 @@ body {
   border-bottom: 1px solid #e5e7eb;
 }
 
-.th-checkbox,
-.td-checkbox {
-  width: 40px;
-}
-
-/* sort icon */
-.th-sort {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.th-sort svg {
-  width: 14px;
-  height: 14px;
-  stroke: #9ca3af;
+/* image column */
+.th-image,
+.td-image {
+  width: 64px;
 }
 
 /* body rows */
@@ -390,64 +394,30 @@ body {
   border-bottom: none;
 }
 
+/* product image */
+.product-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #e5e7eb;
+}
+
 /* text styles for rows */
-.domain-name {
-  font-weight: 400; /* domain names look regular */
+.product-name {
+  font-weight: 400;
   font-size: 14px;
   line-height: 24px;
   color: rgb(29, 30, 32);
 }
 
-.domain-status,
-.domain-expiry,
-.domain-auto,
-.domain-actions {
+.product-count,
+.product-status,
+.product-actions {
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
   color: rgb(59, 61, 74);
-}
-
-/* checkbox (simple custom) */
-.checkbox {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  border: 1.5px solid #a855f7;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.checkbox-inner {
-  width: 10px;
-  height: 10px;
-  background: #a855f7;
-  border-radius: 2px;
-}
-
-/* Status pill */
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.status-dot {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  border: 2px solid #10b981;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.status-dot-inner {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #10b981;
 }
 
 /* Toggle switch */
@@ -461,6 +431,7 @@ body {
   display: inline-flex;
   align-items: center;
   padding: 0 2px;
+  transition: background 0.15s ease;
 }
 .toggle-inner {
   width: 18px;
@@ -487,14 +458,18 @@ body {
 
 .btn-secondary {
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: 8px;
   border: 1px solid #e5e7eb;
   background: #ffffff;
   font-family: "DM Sans", Roboto, sans-serif;
   font-size: 13px;
   line-height: 20px;
-  color: rgb(29, 30, 32);
+  color: #673de6;
   cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn-secondary:hover {
+  background: #f2efff;
 }
 
 /* kebab menu */
@@ -900,7 +875,14 @@ body {
         <div class="card">
           <div class="card-header">
             <div class="search-input-wrap">
-              <input type="text" placeholder="Search..." />
+              <!-- search icon -->
+              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+              </svg>
+              <input type="text" placeholder="Search" />
             </div>
           </div>
 
@@ -908,75 +890,30 @@ body {
             <table class="domain-table">
               <thead>
                 <tr>
-                  <th class="th-checkbox">
-                    <div class="checkbox">
-                      <!-- empty, looks like outline only -->
-                    </div>
-                  </th>
-                  <th>
-                    <span class="th-sort">
-                      <span>Domain name</span>
-                      <!-- down arrow svg -->
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                           fill="none" stroke="currentColor" stroke-width="2"
-                           stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14"/>
-                        <path d="m19 12-7 7-7-7"/>
-                      </svg>
-                    </span>
-                  </th>
-                  <th>
-                    <span class="th-sort">
-                      <span>Status</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                           fill="none" stroke="currentColor" stroke-width="2"
-                           stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14"/>
-                        <path d="m19 12-7 7-7-7"/>
-                      </svg>
-                    </span>
-                  </th>
-                  <th>
-                    <span class="th-sort">
-                      <span>Expiration date</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                           fill="none" stroke="currentColor" stroke-width="2"
-                           stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14"/>
-                        <path d="m19 12-7 7-7-7"/>
-                      </svg>
-                    </span>
-                  </th>
-                  <th>Auto-renewal</th>
+                  <th class="th-image"></th>
+                  <th>Name</th>
+                  <th>No. of products</th>
+                  <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <!-- ROW 1 -->
                 <tr>
-                  <td class="td-checkbox">
-                    <div class="checkbox">
-                      <div class="checkbox-inner"></div>
-                    </div>
+                  <td class="td-image">
+                    <img class="product-thumb"
+                         src="https://images.pexels.com/photos/6311657/pexels-photo-6311657.jpeg?auto=compress&cs=tinysrgb&w=200"
+                         alt="Product 1" />
                   </td>
-                  <td class="domain-name">vastramayamagic.in</td>
-                  <td class="domain-status">
-                    <span class="status-pill">
-                      <span class="status-dot">
-                        <span class="status-dot-inner"></span>
-                      </span>
-                      <span>Active</span>
-                    </span>
-                  </td>
-                  <td class="domain-expiry">2026-12-03</td>
-                  <td class="domain-auto">
+                  <td class="product-name">vastramayamagic.in</td>
+                  <td class="product-count">124 products</td>
+                  <td class="product-status">
                     <div class="toggle on">
                       <div class="toggle-inner"></div>
                     </div>
                   </td>
-                  <td class="domain-actions">
+                  <td class="product-actions">
                     <div class="action-buttons">
-                      <button class="btn-secondary">Renew</button>
                       <button class="btn-secondary">Manage</button>
                       <span class="kebab">
                         <span class="kebab-dots"></span>
@@ -987,27 +924,20 @@ body {
 
                 <!-- ROW 2 -->
                 <tr>
-                  <td class="td-checkbox">
-                    <div class="checkbox"></div>
+                  <td class="td-image">
+                    <img class="product-thumb"
+                         src="https://images.pexels.com/photos/3738089/pexels-photo-3738089.jpeg?auto=compress&cs=tinysrgb&w=200"
+                         alt="Product 2" />
                   </td>
-                  <td class="domain-name">wixo.in</td>
-                  <td class="domain-status">
-                    <span class="status-pill">
-                      <span class="status-dot">
-                        <span class="status-dot-inner"></span>
-                      </span>
-                      <span>Active</span>
-                    </span>
-                  </td>
-                  <td class="domain-expiry">2026-08-07</td>
-                  <td class="domain-auto">
+                  <td class="product-name">wixo.in</td>
+                  <td class="product-count">48 products</td>
+                  <td class="product-status">
                     <div class="toggle">
                       <div class="toggle-inner"></div>
                     </div>
                   </td>
-                  <td class="domain-actions">
+                  <td class="product-actions">
                     <div class="action-buttons">
-                      <button class="btn-secondary">Renew</button>
                       <button class="btn-secondary">Manage</button>
                       <span class="kebab">
                         <span class="kebab-dots"></span>
@@ -1018,27 +948,20 @@ body {
 
                 <!-- ROW 3 -->
                 <tr>
-                  <td class="td-checkbox">
-                    <div class="checkbox"></div>
+                  <td class="td-image">
+                    <img class="product-thumb"
+                         src="https://images.pexels.com/photos/3738124/pexels-photo-3738124.jpeg?auto=compress&cs=tinysrgb&w=200"
+                         alt="Product 3" />
                   </td>
-                  <td class="domain-name">syncskill.in</td>
-                  <td class="domain-status">
-                    <span class="status-pill">
-                      <span class="status-dot">
-                        <span class="status-dot-inner"></span>
-                      </span>
-                      <span>Active</span>
-                    </span>
-                  </td>
-                  <td class="domain-expiry">2026-07-09</td>
-                  <td class="domain-auto">
+                  <td class="product-name">syncskill.in</td>
+                  <td class="product-count">89 products</td>
+                  <td class="product-status">
                     <div class="toggle on">
                       <div class="toggle-inner"></div>
                     </div>
                   </td>
-                  <td class="domain-actions">
+                  <td class="product-actions">
                     <div class="action-buttons">
-                      <button class="btn-secondary">Renew</button>
                       <button class="btn-secondary">Manage</button>
                       <span class="kebab">
                         <span class="kebab-dots"></span>
@@ -1049,27 +972,20 @@ body {
 
                 <!-- ROW 4 -->
                 <tr>
-                  <td class="td-checkbox">
-                    <div class="checkbox"></div>
+                  <td class="td-image">
+                    <img class="product-thumb"
+                         src="https://images.pexels.com/photos/3738116/pexels-photo-3738116.jpeg?auto=compress&cs=tinysrgb&w=200"
+                         alt="Product 4" />
                   </td>
-                  <td class="domain-name">ihtnas.com</td>
-                  <td class="domain-status">
-                    <span class="status-pill">
-                      <span class="status-dot">
-                        <span class="status-dot-inner"></span>
-                      </span>
-                      <span>Active</span>
-                    </span>
-                  </td>
-                  <td class="domain-expiry">2026-07-01</td>
-                  <td class="domain-auto">
+                  <td class="product-name">ihtnas.com</td>
+                  <td class="product-count">32 products</td>
+                  <td class="product-status">
                     <div class="toggle">
                       <div class="toggle-inner"></div>
                     </div>
                   </td>
-                  <td class="domain-actions">
+                  <td class="product-actions">
                     <div class="action-buttons">
-                      <button class="btn-secondary">Renew</button>
                       <button class="btn-secondary">Manage</button>
                       <span class="kebab">
                         <span class="kebab-dots"></span>
@@ -1138,7 +1054,13 @@ body {
       <div class="card">
         <div class="card-header">
           <div class="search-input-wrap">
-            <input type="text" placeholder="Search..." />
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+            </svg>
+            <input type="text" placeholder="Search" />
           </div>
         </div>
 
@@ -1146,72 +1068,29 @@ body {
           <table class="domain-table">
             <thead>
               <tr>
-                <th class="th-checkbox">
-                  <div class="checkbox"></div>
-                </th>
-                <th>
-                  <span class="th-sort">
-                    <span>Domain name</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 5v14"/>
-                      <path d="m19 12-7 7-7-7"/>
-                    </svg>
-                  </span>
-                </th>
-                <th>
-                  <span class="th-sort">
-                    <span>Status</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 5v14"/>
-                      <path d="m19 12-7 7-7-7"/>
-                    </svg>
-                  </span>
-                </th>
-                <th>
-                  <span class="th-sort">
-                    <span>Expiration date</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 5v14"/>
-                      <path d="m19 12-7 7-7-7"/>
-                    </svg>
-                  </span>
-                </th>
-                <th>Auto-renewal</th>
+                <th class="th-image"></th>
+                <th>Name</th>
+                <th>No. of products</th>
+                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <!-- repeat same rows as desktop for mobile -->
               <tr>
-                <td class="td-checkbox">
-                  <div class="checkbox">
-                    <div class="checkbox-inner"></div>
-                  </div>
+                <td class="td-image">
+                  <img class="product-thumb"
+                       src="https://images.pexels.com/photos/6311657/pexels-photo-6311657.jpeg?auto=compress&cs=tinysrgb&w=200"
+                       alt="Product 1" />
                 </td>
-                <td class="domain-name">vastramayamagic.in</td>
-                <td class="domain-status">
-                  <span class="status-pill">
-                    <span class="status-dot">
-                      <span class="status-dot-inner"></span>
-                    </span>
-                    <span>Active</span>
-                  </span>
-                </td>
-                <td class="domain-expiry">2026-12-03</td>
-                <td class="domain-auto">
+                <td class="product-name">vastramayamagic.in</td>
+                <td class="product-count">124 products</td>
+                <td class="product-status">
                   <div class="toggle on">
                     <div class="toggle-inner"></div>
                   </div>
                 </td>
-                <td class="domain-actions">
+                <td class="product-actions">
                   <div class="action-buttons">
-                    <button class="btn-secondary">Renew</button>
                     <button class="btn-secondary">Manage</button>
                     <span class="kebab">
                       <span class="kebab-dots"></span>
@@ -1221,27 +1100,20 @@ body {
               </tr>
 
               <tr>
-                <td class="td-checkbox">
-                  <div class="checkbox"></div>
+                <td class="td-image">
+                  <img class="product-thumb"
+                       src="https://images.pexels.com/photos/3738089/pexels-photo-3738089.jpeg?auto=compress&cs=tinysrgb&w=200"
+                       alt="Product 2" />
                 </td>
-                <td class="domain-name">wixo.in</td>
-                <td class="domain-status">
-                  <span class="status-pill">
-                    <span class="status-dot">
-                      <span class="status-dot-inner"></span>
-                    </span>
-                    <span>Active</span>
-                  </span>
-                </td>
-                <td class="domain-expiry">2026-08-07</td>
-                <td class="domain-auto">
+                <td class="product-name">wixo.in</td>
+                <td class="product-count">48 products</td>
+                <td class="product-status">
                   <div class="toggle">
                     <div class="toggle-inner"></div>
                   </div>
                 </td>
-                <td class="domain-actions">
+                <td class="product-actions">
                   <div class="action-buttons">
-                    <button class="btn-secondary">Renew</button>
                     <button class="btn-secondary">Manage</button>
                     <span class="kebab">
                       <span class="kebab-dots"></span>
@@ -1251,27 +1123,20 @@ body {
               </tr>
 
               <tr>
-                <td class="td-checkbox">
-                  <div class="checkbox"></div>
+                <td class="td-image">
+                  <img class="product-thumb"
+                       src="https://images.pexels.com/photos/3738124/pexels-photo-3738124.jpeg?auto=compress&cs=tinysrgb&w=200"
+                       alt="Product 3" />
                 </td>
-                <td class="domain-name">syncskill.in</td>
-                <td class="domain-status">
-                  <span class="status-pill">
-                    <span class="status-dot">
-                      <span class="status-dot-inner"></span>
-                    </span>
-                    <span>Active</span>
-                  </span>
-                </td>
-                <td class="domain-expiry">2026-07-09</td>
-                <td class="domain-auto">
+                <td class="product-name">syncskill.in</td>
+                <td class="product-count">89 products</td>
+                <td class="product-status">
                   <div class="toggle on">
                     <div class="toggle-inner"></div>
                   </div>
                 </td>
-                <td class="domain-actions">
+                <td class="product-actions">
                   <div class="action-buttons">
-                    <button class="btn-secondary">Renew</button>
                     <button class="btn-secondary">Manage</button>
                     <span class="kebab">
                       <span class="kebab-dots"></span>
@@ -1281,27 +1146,20 @@ body {
               </tr>
 
               <tr>
-                <td class="td-checkbox">
-                  <div class="checkbox"></div>
+                <td class="td-image">
+                  <img class="product-thumb"
+                       src="https://images.pexels.com/photos/3738116/pexels-photo-3738116.jpeg?auto=compress&cs=tinysrgb&w=200"
+                       alt="Product 4" />
                 </td>
-                <td class="domain-name">ihtnas.com</td>
-                <td class="domain-status">
-                  <span class="status-pill">
-                    <span class="status-dot">
-                      <span class="status-dot-inner"></span>
-                    </span>
-                    <span>Active</span>
-                  </span>
-                </td>
-                <td class="domain-expiry">2026-07-01</td>
-                <td class="domain-auto">
+                <td class="product-name">ihtnas.com</td>
+                <td class="product-count">32 products</td>
+                <td class="product-status">
                   <div class="toggle">
                     <div class="toggle-inner"></div>
                   </div>
                 </td>
-                <td class="domain-actions">
+                <td class="product-actions">
                   <div class="action-buttons">
-                    <button class="btn-secondary">Renew</button>
                     <button class="btn-secondary">Manage</button>
                     <span class="kebab">
                       <span class="kebab-dots"></span>
@@ -1464,6 +1322,13 @@ body {
       mCustomizeToggle.classList.toggle('dropdown-open');
     });
   }
+
+  // Make all toggles functional
+  document.querySelectorAll('.toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('on');
+    });
+  });
 </script>
 
 </body>
