@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Responsive Dashboard Layout</title>
+<title>Vastramaya - Ecommerce Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -246,7 +246,7 @@ body {
   gap: 4px;
 }
 
-/* "Domain portfolio" main title */
+/* "Manage Categories" main title */
 .page-title {
   font-family: "DM Sans", Roboto, sans-serif;
   font-weight: 700;
@@ -764,7 +764,7 @@ body {
   color: #d1d5db;
 }
 
-/* Mobile search and add button row */
+/* Mobile search and add button row - UPDATED UI */
 .mobile-controls-row {
   display: flex;
   align-items: center;
@@ -774,105 +774,149 @@ body {
 
 .mobile-search-wrap {
   flex: 1;
+  position: relative;
 }
 
 .mobile-search-input-wrap {
-  background: #f9fafb;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  padding: 0 16px;
-  height: 44px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  padding: 0 16px 0 44px;
+  height: 48px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: border-color 0.15s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .mobile-search-input-wrap:focus-within {
-  border-color: #673de6;
+  border-color: #5127ba;
+  box-shadow: 0 0 0 3px rgba(81, 39, 186, 0.1);
+}
+
+.mobile-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  stroke: #6b7280;
+  z-index: 2;
+}
+
+.mobile-search-input-wrap input {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-family: "DM Sans", Roboto, sans-serif;
+  font-size: 16px;
+  color: #111827;
+  font-weight: 500;
+}
+
+.mobile-search-input-wrap input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
 }
 
 .mobile-add-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border-radius: 8px;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   font-family: "DM Sans", Roboto, sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 20px;
   color: #ffffff;
-  background: #5127ba;
+  background: linear-gradient(135deg, #5127ba 0%, #673de6 100%);
   white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(81, 39, 186, 0.2);
+}
+
+.mobile-add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(81, 39, 186, 0.25);
 }
 
 .mobile-add-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   stroke: #ffffff;
 }
 
-/* Mobile domain cards */
-.mobile-domain-cards {
+/* Mobile category cards */
+.mobile-category-cards {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.domain-card {
+.category-card {
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px solid #e5e7eb;
   padding: 16px;
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.domain-card-image {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.category-card-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
   object-fit: cover;
-  background: #e5e7eb;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
   flex-shrink: 0;
+  padding: 8px;
 }
 
-.domain-card-content {
+.category-card-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
-.domain-card-name {
+.category-card-name {
   font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
   color: rgb(29, 30, 32);
 }
 
-.domain-card-products {
+.category-card-products {
   font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 400;
-  font-size: 13px;
+  font-weight: 500;
+  font-size: 14px;
   line-height: 18px;
   color: #6b7280;
 }
 
-.domain-card-status {
+.category-card-status {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.domain-card-toggle {
-  width: 36px;
-  height: 20px;
+.category-card-toggle {
+  width: 40px;
+  height: 24px;
   border-radius: 999px;
   background: #e5e7eb;
   cursor: pointer;
@@ -880,38 +924,45 @@ body {
   align-items: center;
   padding: 0 2px;
   transition: background 0.15s ease;
+  position: relative;
 }
 
-.domain-card-toggle.on {
-  background: #7c3aed;
+.category-card-toggle.on {
+  background: #10b981;
 }
 
-.domain-card-toggle-inner {
-  width: 16px;
-  height: 16px;
+.category-card-toggle-inner {
+  width: 20px;
+  height: 20px;
   border-radius: 999px;
   background: #ffffff;
-  transition: transform 0.15s ease;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.domain-card-toggle.on .domain-card-toggle-inner {
+.category-card-toggle.on .category-card-toggle-inner {
   transform: translateX(16px);
 }
 
-.domain-card-menu-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+.category-card-menu-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   border: 1px solid #e5e7eb;
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 4px;
+  transition: all 0.2s ease;
 }
 
-.domain-card-menu-dots {
+.category-card-menu-btn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.category-card-menu-dots {
   width: 4px;
   height: 4px;
   border-radius: 999px;
@@ -926,12 +977,14 @@ body {
   left: 0;
   right: 0;
   background: #ffffff;
-  border-radius: 20px 20px 0 0;
+  border-radius: 24px 24px 0 0;
   padding: 24px 0;
   transform: translateY(100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 100;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .advanced-menu.open {
@@ -954,17 +1007,19 @@ body {
 }
 
 .advanced-menu-header {
-  padding: 0 20px 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 0 24px 20px 24px;
+  border-bottom: 1px solid #f3f4f6;
   margin-bottom: 16px;
+  position: relative;
 }
 
 .advanced-menu-title {
   font-family: "DM Sans", Roboto, sans-serif;
   font-weight: 700;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 20px;
+  line-height: 28px;
   color: rgb(29, 30, 32);
+  text-align: center;
 }
 
 .advanced-menu-items {
@@ -973,10 +1028,10 @@ body {
 }
 
 .advanced-menu-item {
-  padding: 16px 20px;
+  padding: 18px 24px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   background: none;
   border: none;
   width: 100%;
@@ -987,6 +1042,16 @@ body {
   line-height: 24px;
   color: rgb(29, 30, 32);
   transition: background 0.15s ease;
+  border-bottom: 1px solid #f9fafb;
+}
+
+.advanced-menu-item:last-child {
+  border-bottom: none;
+  color: #ef4444;
+}
+
+.advanced-menu-item:last-child svg {
+  stroke: #ef4444;
 }
 
 .advanced-menu-item:hover {
@@ -994,29 +1059,35 @@ body {
 }
 
 .advanced-menu-item svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   stroke: #6b7280;
+  flex-shrink: 0;
 }
 
 .advanced-menu-close {
   position: absolute;
-  top: 16px;
+  top: 0;
   right: 20px;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   border: 1px solid #e5e7eb;
   background: #f9fafb;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.advanced-menu-close:hover {
+  background: #f3f4f6;
 }
 
 .advanced-menu-close-icon {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   position: relative;
 }
 
@@ -1026,7 +1097,7 @@ body {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 14px;
+  width: 16px;
   height: 2px;
   border-radius: 999px;
   background: #111827;
@@ -1038,6 +1109,15 @@ body {
 
 .advanced-menu-close-icon::after {
   transform: rotate(-45deg);
+}
+
+/* Handle bar at top of menu */
+.menu-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  margin: 0 auto 20px auto;
 }
 
 /* ============= RESPONSIVE SWITCH ============= */
@@ -1073,7 +1153,7 @@ body {
   <header class="d-topbar">
     <img class="d-topbar-logo"
          src="https://product-ecommerces.netlify.app/vastramaya.png"
-         alt="Logo" />
+         alt="Vastramaya Logo" />
   </header>
 
   <div class="d-app">
@@ -1084,8 +1164,8 @@ body {
         <nav class="d-nav">
           <div class="d-nav-group">
 
-            <!-- Dashboard (active) -->
-            <div class="d-nav-item d-nav-item--active">
+            <!-- Dashboard -->
+            <div class="d-nav-item">
               <span class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                      fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1098,8 +1178,8 @@ body {
               <span class="label">Dashboard</span>
             </div>
 
-            <!-- Inventory -->
-            <div class="d-nav-item">
+            <!-- Inventory (Active) -->
+            <div class="d-nav-item d-nav-item--active">
               <span class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                      fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1138,8 +1218,8 @@ body {
               <div class="d-submenu-item">Navigation</div>
             </div>
 
-            <!-- All Orders -->
-            <div class="d-nav-item">
+            <!-- MANAGE ORDERS (with dropdown chevron) -->
+            <div class="d-nav-item" id="d-orders-toggle">
               <span class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                      fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1149,13 +1229,28 @@ body {
                   <circle cx="8" cy="16" r="6"/>
                 </svg>
               </span>
-              <span class="label">All Orders</span>
+              <span class="label">MANAGE ORDERS</span>
+              <span class="chevron">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round"
+                     class="chevron-icon">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </span>
+            </div>
+
+            <!-- Desktop MANAGE ORDERS submenu -->
+            <div class="d-submenu" id="d-orders-submenu">
+              <div class="d-submenu-item">Today</div>
+              <div class="d-submenu-item">This Month</div>
+              <div class="d-submenu-item active">All Orders</div>
             </div>
 
           </div>
         </nav>
 
-        <!-- Desktop Account sharing (same style as mobile) -->
+        <!-- Desktop Account sharing -->
         <div class="d-account-section">
           <div class="account-card">
             <img
@@ -1164,7 +1259,7 @@ body {
               alt="Profile" />
             <div class="account-text">
               <div class="account-name">Account sharing</div>
-              <div class="account-email">demo@gmail.com</div>
+              <div class="account-email">admin@vastramaya.com</div>
             </div>
           </div>
         </div>
@@ -1178,7 +1273,7 @@ body {
         <!-- PAGE HEADER -->
         <div class="page-header">
           <div class="page-title-wrap">
-            <div class="page-title">Domain portfolio</div>
+            <div class="page-title">Manage Categories</div>
             <div class="breadcrumb">
               <span class="breadcrumb-icon">
                 <!-- home icon svg -->
@@ -1191,7 +1286,7 @@ body {
               </span>
               <span>Home</span>
               <span class="breadcrumb-divider">/</span>
-              <span>Domain portfolio</span>
+              <span>Manage Categories</span>
             </div>
           </div>
 
@@ -1203,7 +1298,7 @@ body {
               <path d="M5 12h14"/>
               <path d="M12 5v14"/>
             </svg>
-            <span>Add new domain</span>
+            <span>Add Category</span>
           </button>
         </div>
 
@@ -1218,7 +1313,7 @@ body {
                 <circle cx="11" cy="11" r="7"></circle>
                 <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
               </svg>
-              <input type="text" placeholder="Search" />
+              <input type="text" placeholder="Search categories..." />
             </div>
           </div>
 
@@ -1234,14 +1329,14 @@ body {
                 </tr>
               </thead>
               <tbody>
-                <!-- ROW 1 -->
+                <!-- ROW 1 - SAREES -->
                 <tr>
                   <td class="td-image">
                     <img class="product-thumb"
                          src="https://images.pexels.com/photos/6311657/pexels-photo-6311657.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Product 1" />
+                         alt="Sarees" />
                   </td>
-                  <td class="product-name">vastramayamagic.in</td>
+                  <td class="product-name">SAREES</td>
                   <td class="product-count">124 products</td>
                   <td class="product-status">
                     <div class="toggle on">
@@ -1258,14 +1353,14 @@ body {
                   </td>
                 </tr>
 
-                <!-- ROW 2 -->
+                <!-- ROW 2 - DRESSES -->
                 <tr>
                   <td class="td-image">
                     <img class="product-thumb"
                          src="https://images.pexels.com/photos/3738089/pexels-photo-3738089.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Product 2" />
+                         alt="Dresses" />
                   </td>
-                  <td class="product-name">wixo.in</td>
+                  <td class="product-name">DRESSES</td>
                   <td class="product-count">48 products</td>
                   <td class="product-status">
                     <div class="toggle">
@@ -1282,14 +1377,14 @@ body {
                   </td>
                 </tr>
 
-                <!-- ROW 3 -->
+                <!-- ROW 3 - PANTS -->
                 <tr>
                   <td class="td-image">
                     <img class="product-thumb"
                          src="https://images.pexels.com/photos/3738124/pexels-photo-3738124.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Product 3" />
+                         alt="Pants" />
                   </td>
-                  <td class="product-name">syncskill.in</td>
+                  <td class="product-name">PANTS</td>
                   <td class="product-count">89 products</td>
                   <td class="product-status">
                     <div class="toggle on">
@@ -1306,14 +1401,14 @@ body {
                   </td>
                 </tr>
 
-                <!-- ROW 4 -->
+                <!-- ROW 4 - SHIRTS -->
                 <tr>
                   <td class="td-image">
                     <img class="product-thumb"
                          src="https://images.pexels.com/photos/3738116/pexels-photo-3738116.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Product 4" />
+                         alt="Shirts" />
                   </td>
-                  <td class="product-name">ihtnas.com</td>
+                  <td class="product-name">SHIRTS</td>
                   <td class="product-count">32 products</td>
                   <td class="product-status">
                     <div class="toggle">
@@ -1351,7 +1446,7 @@ body {
     <img
       class="m-logo"
       src="https://product-ecommerces.netlify.app/vastramaya.png"
-      alt="Logo" />
+      alt="Vastramaya Logo" />
   </header>
 
   <main class="m-main">
@@ -1360,7 +1455,7 @@ body {
       <!-- Mobile Page Header - Stacked up and down -->
       <div class="mobile-page-header">
         <div class="mobile-page-title-wrap">
-          <div class="mobile-page-title">Domain portfolio</div>
+          <div class="mobile-page-title">Manage Categories</div>
           <div class="mobile-breadcrumb">
             <span class="mobile-breadcrumb-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -1372,21 +1467,21 @@ body {
             </span>
             <span>Home</span>
             <span class="mobile-breadcrumb-divider">/</span>
-            <span>Domain portfolio</span>
+            <span>Manage Categories</span>
           </div>
         </div>
         
-        <!-- Mobile Search and Add Button Row -->
+        <!-- Mobile Search and Add Button Row - UPDATED UI -->
         <div class="mobile-controls-row">
           <div class="mobile-search-wrap">
             <div class="mobile-search-input-wrap">
-              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
+              <svg class="mobile-search-icon" xmlns="http://www.w3.org/2000/svg"
                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="7"></circle>
                 <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
               </svg>
-              <input type="text" placeholder="Search domains" />
+              <input type="text" placeholder="Search categories..." />
             </div>
           </div>
           <button class="mobile-add-btn">
@@ -1401,82 +1496,82 @@ body {
         </div>
       </div>
 
-      <!-- Mobile Domain Cards -->
-      <div class="mobile-domain-cards">
+      <!-- Mobile Category Cards -->
+      <div class="mobile-category-cards">
         
-        <!-- Domain Card 1 -->
-        <div class="domain-card" data-domain="1">
-          <img class="domain-card-image"
+        <!-- Category Card 1 - SAREES -->
+        <div class="category-card" data-category="1">
+          <img class="category-card-image"
                src="https://images.pexels.com/photos/6311657/pexels-photo-6311657.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="vastramayamagic.in" />
-          <div class="domain-card-content">
-            <div class="domain-card-name">vastramayamagic.in</div>
-            <div class="domain-card-products">124 products</div>
+               alt="Sarees" />
+          <div class="category-card-content">
+            <div class="category-card-name">SAREES</div>
+            <div class="category-card-products">124 products</div>
           </div>
-          <div class="domain-card-status">
-            <div class="domain-card-toggle on">
-              <div class="domain-card-toggle-inner"></div>
+          <div class="category-card-status">
+            <div class="category-card-toggle on">
+              <div class="category-card-toggle-inner"></div>
             </div>
           </div>
-          <button class="domain-card-menu-btn" data-domain="1">
-            <span class="domain-card-menu-dots"></span>
+          <button class="category-card-menu-btn" data-category="1">
+            <span class="category-card-menu-dots"></span>
           </button>
         </div>
         
-        <!-- Domain Card 2 -->
-        <div class="domain-card" data-domain="2">
-          <img class="domain-card-image"
+        <!-- Category Card 2 - DRESSES -->
+        <div class="category-card" data-category="2">
+          <img class="category-card-image"
                src="https://images.pexels.com/photos/3738089/pexels-photo-3738089.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="wixo.in" />
-          <div class="domain-card-content">
-            <div class="domain-card-name">wixo.in</div>
-            <div class="domain-card-products">48 products</div>
+               alt="Dresses" />
+          <div class="category-card-content">
+            <div class="category-card-name">DRESSES</div>
+            <div class="category-card-products">48 products</div>
           </div>
-          <div class="domain-card-status">
-            <div class="domain-card-toggle">
-              <div class="domain-card-toggle-inner"></div>
+          <div class="category-card-status">
+            <div class="category-card-toggle">
+              <div class="category-card-toggle-inner"></div>
             </div>
           </div>
-          <button class="domain-card-menu-btn" data-domain="2">
-            <span class="domain-card-menu-dots"></span>
+          <button class="category-card-menu-btn" data-category="2">
+            <span class="category-card-menu-dots"></span>
           </button>
         </div>
         
-        <!-- Domain Card 3 -->
-        <div class="domain-card" data-domain="3">
-          <img class="domain-card-image"
+        <!-- Category Card 3 - PANTS -->
+        <div class="category-card" data-category="3">
+          <img class="category-card-image"
                src="https://images.pexels.com/photos/3738124/pexels-photo-3738124.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="syncskill.in" />
-          <div class="domain-card-content">
-            <div class="domain-card-name">syncskill.in</div>
-            <div class="domain-card-products">89 products</div>
+               alt="Pants" />
+          <div class="category-card-content">
+            <div class="category-card-name">PANTS</div>
+            <div class="category-card-products">89 products</div>
           </div>
-          <div class="domain-card-status">
-            <div class="domain-card-toggle on">
-              <div class="domain-card-toggle-inner"></div>
+          <div class="category-card-status">
+            <div class="category-card-toggle on">
+              <div class="category-card-toggle-inner"></div>
             </div>
           </div>
-          <button class="domain-card-menu-btn" data-domain="3">
-            <span class="domain-card-menu-dots"></span>
+          <button class="category-card-menu-btn" data-category="3">
+            <span class="category-card-menu-dots"></span>
           </button>
         </div>
         
-        <!-- Domain Card 4 -->
-        <div class="domain-card" data-domain="4">
-          <img class="domain-card-image"
+        <!-- Category Card 4 - SHIRTS -->
+        <div class="category-card" data-category="4">
+          <img class="category-card-image"
                src="https://images.pexels.com/photos/3738116/pexels-photo-3738116.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="ihtnas.com" />
-          <div class="domain-card-content">
-            <div class="domain-card-name">ihtnas.com</div>
-            <div class="domain-card-products">32 products</div>
+               alt="Shirts" />
+          <div class="category-card-content">
+            <div class="category-card-name">SHIRTS</div>
+            <div class="category-card-products">32 products</div>
           </div>
-          <div class="domain-card-status">
-            <div class="domain-card-toggle">
-              <div class="domain-card-toggle-inner"></div>
+          <div class="category-card-status">
+            <div class="category-card-toggle">
+              <div class="category-card-toggle-inner"></div>
             </div>
           </div>
-          <button class="domain-card-menu-btn" data-domain="4">
-            <span class="domain-card-menu-dots"></span>
+          <button class="category-card-menu-btn" data-category="4">
+            <span class="category-card-menu-dots"></span>
           </button>
         </div>
         
@@ -1492,7 +1587,7 @@ body {
         <img
           class="m-drawer-logo"
           src="https://product-ecommerces.netlify.app/vastramaya.png"
-          alt="Logo" />
+          alt="Vastramaya Logo" />
         <button class="m-drawer-close" id="m-drawer-close" aria-label="Close menu">
           <div class="m-drawer-close-icon"></div>
         </button>
@@ -1500,8 +1595,8 @@ body {
 
       <nav class="m-drawer-nav">
 
-        <!-- Dashboard active -->
-        <div class="m-nav-item active">
+        <!-- Dashboard -->
+        <div class="m-nav-item">
           <span class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                  fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1514,8 +1609,8 @@ body {
           <span class="label">Dashboard</span>
         </div>
 
-        <!-- Inventory -->
-        <div class="m-nav-item">
+        <!-- Inventory (Active) -->
+        <div class="m-nav-item active">
           <span class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                  fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1554,8 +1649,8 @@ body {
           <div class="m-submenu-item">Navigation</div>
         </div>
 
-        <!-- All Orders -->
-        <div class="m-nav-item">
+        <!-- MANAGE ORDERS with dropdown -->
+        <div class="m-nav-item" id="m-orders-toggle">
           <span class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                  fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1565,12 +1660,27 @@ body {
               <circle cx="8" cy="16" r="6"/>
             </svg>
           </span>
-          <span class="label">All Orders</span>
+          <span class="label">MANAGE ORDERS</span>
+          <span class="chevron">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 class="chevron-icon">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </span>
+        </div>
+
+        <!-- Mobile MANAGE ORDERS submenu -->
+        <div class="m-submenu" id="m-orders-submenu">
+          <div class="m-submenu-item">Today</div>
+          <div class="m-submenu-item">This Month</div>
+          <div class="m-submenu-item active">All Orders</div>
         </div>
 
       </nav>
 
-      <!-- Mobile account sharing (same as desktop) -->
+      <!-- Mobile account sharing -->
       <div class="m-account-section">
         <div class="account-card">
           <img
@@ -1579,7 +1689,7 @@ body {
             alt="Profile" />
           <div class="account-text">
             <div class="account-name">Account sharing</div>
-            <div class="account-email">demo@gmail.com</div>
+            <div class="account-email">admin@vastramaya.com</div>
           </div>
         </div>
       </div>
@@ -1590,8 +1700,9 @@ body {
   <!-- Advanced Menu (Bottom Sheet) -->
   <div class="advanced-menu-overlay" id="advanced-menu-overlay"></div>
   <div class="advanced-menu" id="advanced-menu">
+    <div class="menu-handle"></div>
     <div class="advanced-menu-header">
-      <div class="advanced-menu-title">Domain Actions</div>
+      <div class="advanced-menu-title">Category Actions</div>
       <button class="advanced-menu-close" id="advanced-menu-close">
         <div class="advanced-menu-close-icon"></div>
       </button>
@@ -1608,25 +1719,7 @@ body {
           <path d="M14 10l-3.5 4"/>
           <path d="m5 15 4.5-4"/>
         </svg>
-        <span>Manage</span>
-      </button>
-      <button class="advanced-menu-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-          <path d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"/>
-        </svg>
-        <span>Edit</span>
-      </button>
-      <button class="advanced-menu-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round">
-          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
-          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
-        </svg>
-        <span>Duplicate</span>
+        <span>Manage Products</span>
       </button>
       <button class="advanced-menu-item">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -1638,7 +1731,7 @@ body {
           <line x1="10" x2="10" y1="11" y2="17"/>
           <line x1="14" x2="14" y1="11" y2="17"/>
         </svg>
-        <span>Delete</span>
+        <span>Delete Category</span>
       </button>
     </div>
   </div>
@@ -1677,6 +1770,17 @@ body {
     });
   }
 
+  // Desktop MANAGE ORDERS dropdown
+  const dOrdersToggle = document.getElementById('d-orders-toggle');
+  const dOrdersSubmenu = document.getElementById('d-orders-submenu');
+
+  if (dOrdersToggle && dOrdersSubmenu) {
+    dOrdersToggle.addEventListener('click', () => {
+      dOrdersSubmenu.classList.toggle('open');
+      dOrdersToggle.classList.toggle('dropdown-open');
+    });
+  }
+
   // Mobile Customize Site dropdown
   const mCustomizeToggle = document.getElementById('m-customize-toggle');
   const mCustomizeSubmenu = document.getElementById('m-customize-submenu');
@@ -1688,8 +1792,19 @@ body {
     });
   }
 
+  // Mobile MANAGE ORDERS dropdown
+  const mOrdersToggle = document.getElementById('m-orders-toggle');
+  const mOrdersSubmenu = document.getElementById('m-orders-submenu');
+
+  if (mOrdersToggle && mOrdersSubmenu) {
+    mOrdersToggle.addEventListener('click', () => {
+      mOrdersSubmenu.classList.toggle('open');
+      mOrdersToggle.classList.toggle('dropdown-open');
+    });
+  }
+
   // Make all toggles functional
-  document.querySelectorAll('.toggle, .domain-card-toggle').forEach(toggle => {
+  document.querySelectorAll('.toggle, .category-card-toggle').forEach(toggle => {
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('on');
     });
@@ -1699,10 +1814,10 @@ body {
   const advancedMenu = document.getElementById('advanced-menu');
   const advancedMenuOverlay = document.getElementById('advanced-menu-overlay');
   const advancedMenuClose = document.getElementById('advanced-menu-close');
-  const domainMenuButtons = document.querySelectorAll('.domain-card-menu-btn');
+  const categoryMenuButtons = document.querySelectorAll('.category-card-menu-btn');
 
   // Open advanced menu when 3-dot button is clicked
-  domainMenuButtons.forEach(button => {
+  categoryMenuButtons.forEach(button => {
     button.addEventListener('click', () => {
       advancedMenu.classList.add('open');
       advancedMenuOverlay.classList.add('open');
