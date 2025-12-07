@@ -1,1999 +1,724 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Vastramaya - Ecommerce Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --header-height-desktop: 70px;
-  --sidebar-width: 260px;
-  --row-height: 48px;
-
-  --sidebar-bg: #ffffff;
-  --header-bg: #ffffff;
-  --page-bg: #f4f5f7;
-
-  --text-color: rgb(24, 24, 26);
-  --icon-color: #6b7280;
-  --icon-active: #5127ba;
-
-  --active-bg: #f3f4f6;
-  --hover-bg: #f3f4f6;
-
-  --border-subtle: #e5e7eb;
-}
-
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  min-height: 100vh;
-  background: var(--page-bg);
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--text-color);
-}
-
-/* ============= DESKTOP LAYOUT ============= */
-
-.page-desktop {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Desktop header */
-.d-topbar {
-  height: var(--header-height-desktop);
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--border-subtle);
-  border-top: 1px solid var(--border-subtle);
-  display: flex;
-  align-items: center;
-  padding-left: 40px;
-}
-
-.d-topbar-logo {
-  height: 52px;
-  width: auto;
-  object-fit: contain;
-}
-
-/* Desktop main area */
-.d-app {
-  flex: 1;
-  display: flex;
-}
-
-/* Desktop sidebar */
-.d-sidebar {
-  width: var(--sidebar-width);
-  background: var(--sidebar-bg);
-  border-right: 1px solid var(--border-subtle);
-  display: flex;
-  flex-direction: column;
-}
-
-.d-sidebar-inner {
-  padding: 32px 16px 16px 12px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* Desktop nav */
-.d-nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.d-nav-group + .d-nav-group {
-  margin-top: 6px;
-}
-
-.d-nav-item {
-  display: flex;
-  align-items: center;
-  height: var(--row-height);
-  padding: 0 20px 0 12px;
-  margin: 2px 0;
-  border-radius: 8px;
-  gap: 12px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--text-color);
-  line-height: 20px;
-  transition: background 0.15s ease;
-}
-
-/* label takes remaining space so chevron sticks right */
-.d-nav-item .label {
-  flex: 1;
-}
-
-.d-nav-item .icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: var(--icon-color);
-}
-
-/* chevron icon (desktop + mobile shared class) */
-.chevron-icon {
-  width: 18px;
-  height: 18px;
-  stroke: var(--icon-color);
-  transition: transform 0.2s ease;
-}
-
-/* rotated when open */
-.dropdown-open .chevron-icon {
-  transform: rotate(90deg);
-}
-
-/* Desktop active */
-.d-nav-item--active {
-  background: var(--active-bg);
-}
-.d-nav-item--active .icon svg {
-  stroke: var(--icon-active);
-}
-
-/* Desktop hover */
-.d-nav-item:hover {
-  background: var(--hover-bg);
-}
-
-/* Desktop Customize Site submenu */
-.d-submenu {
-  display: none;
-  margin-left: 28px;
-  padding-left: 16px;
-  border-left: 1px solid var(--border-subtle);
-  margin-top: 4px;
-}
-.d-submenu.open {
-  display: block;
-}
-.d-submenu-item {
-  height: 44px; /* Increased height */
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  border-radius: 8px;
-  margin: 2px 0;
-  cursor: pointer;
-  gap: 12px; /* Space for icon */
-  font-size: 15px; /* Slightly larger font */
-  font-weight: 500; /* Increased weight */
-}
-.d-submenu-item:hover {
-  background: var(--hover-bg);
-}
-/* Remove default active highlight */
-.d-submenu-item {
-  background: none;
-}
-.d-submenu-item.active {
-  background: var(--active-bg);
-}
-
-/* Submenu icon styles */
-.d-submenu-item .submenu-icon {
-  width: 18px;
-  height: 18px;
-  stroke: #6b7280;
-  flex-shrink: 0;
-}
-
-/* Desktop account section */
-.d-account-section {
-  margin-top: auto;
-  padding: 16px;
-  border-top: 1px solid var(--border-subtle);
-}
-
-/* Shared Account card styles (desktop + mobile) */
-.account-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.account-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.account-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.account-name {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.account-email {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-/* Desktop content */
-.d-content {
-  flex: 1;
-  background: var(--page-bg);
-}
-
-/* ============= BODY CONTENT (desktop + mobile shared) ============= */
-
-.content-inner {
-  max-width: 1110px;
-  margin: 0 auto;
-  padding: 24px 24px 40px;
-}
-
-/* Top title + button row */
-.page-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-
-.page-title-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-/* "Manage Categories" main title */
-.page-title {
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 32px;
-  color: rgb(29, 30, 32);
-}
-
-/* Breadcrumb */
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  line-height: 20px;
-  color: #6b7280;
-}
-
-.breadcrumb-icon svg {
-  width: 16px;
-  height: 16px;
-  stroke: #9ca3af;
-}
-
-.breadcrumb-divider {
-  color: #d1d5db;
-}
-
-/* Add domain button */
-.primary-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  color: #ffffff;
-  background: #5127ba;
-  transition: background 0.15s ease;
-}
-.primary-btn svg {
-  width: 18px;
-  height: 18px;
-  stroke: #ffffff;
-}
-.primary-btn:hover {
-  background: #471ea7;
-}
-
-/* Card */
-.card {
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  overflow: hidden;
-}
-
-/* Card search header */
-.card-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.search-input-wrap {
-  background: #f9fafb;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  padding: 0 16px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: border-color 0.15s ease;
-}
-
-.search-input-wrap:focus-within {
-  border-color: #673de6;
-}
-
-.search-icon {
-  width: 16px;
-  height: 16px;
-  stroke: #9ca3af;
-}
-
-.search-input-wrap input {
-  border: none;
-  background: transparent;
-  outline: none;
-  flex: 1;
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-size: 14px;
-}
-
-/* Table area */
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.domain-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-/* table header row */
-.domain-table thead tr {
-  height: 48px;
-}
-
-.domain-table th,
-.domain-table td {
-  padding: 12px 20px;
-}
-
-/* header cells */
-.domain-table thead th {
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
-  color: rgb(29, 30, 32);
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-/* image column */
-.th-image,
-.td-image {
-  width: 64px;
-}
-
-/* body rows */
-.domain-table tbody tr {
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.domain-table tbody tr:last-child {
-  border-bottom: none;
-}
-
-/* product image */
-.product-thumb {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  object-fit: cover;
-  background: #e5e7eb;
-}
-
-/* text styles for rows */
-.product-name {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  color: rgb(29, 30, 32);
-}
-
-.product-count,
-.product-status,
-.product-actions {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  color: rgb(59, 61, 74);
-}
-
-/* Toggle switch - UPDATED COLOR */
-.toggle {
-  position: relative;
-  width: 40px;
-  height: 22px;
-  border-radius: 999px;
-  background: #e5e7eb;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 2px;
-  transition: background 0.15s ease;
-}
-.toggle-inner {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: #ffffff;
-  transition: transform 0.15s ease;
-}
-
-/* active toggle - UPDATED TO #5127ba */
-.toggle.on {
-  background: #5127ba;
-}
-.toggle.on .toggle-inner {
-  transform: translateX(18px);
-}
-
-/* Buttons in actions */
-.action-buttons {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.btn-secondary {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-size: 13px;
-  line-height: 20px;
-  color: #673de6;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-.btn-secondary:hover {
-  background: #f2efff;
-}
-
-/* kebab menu */
-.kebab {
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.kebab-dots {
-  width: 4px;
-  height: 4px;
-  border-radius: 999px;
-  background: #a855f7;
-  box-shadow: 0 -6px 0 0 #a855f7, 0 6px 0 0 #a855f7;
-}
-
-/* ============= MOBILE LAYOUT ============= */
-
-.page-mobile {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Mobile header */
-.m-header {
-  height: 72px;
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--border-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-}
-
-/* Menu button left - rounded 6px */
-.m-menu-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  border: 1px solid var(--border-subtle);
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.m-menu-lines {
-  width: 18px;
-  height: 14px;
-  position: relative;
-}
-.m-menu-lines::before,
-.m-menu-lines::after,
-.m-menu-lines span {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  border-radius: 999px;
-  background: #111827;
-}
-.m-menu-lines::before {
-  top: 0;
-}
-.m-menu-lines span {
-  top: 6px;
-}
-.m-menu-lines::after {
-  bottom: 0;
-}
-
-/* Logo right (48px) */
-.m-logo {
-  height: 48px;
-  width: auto;
-  object-fit: contain;
-}
-
-/* Mobile main bg */
-.m-main {
-  flex: 1;
-  background: var(--page-bg);
-  padding-bottom: 20px;
-}
-
-/* Overlay & drawer (smooth animation) */
-.m-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease-out;
-  z-index: 40;
-}
-
-.m-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.m-drawer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 320px;
-  max-width: 90vw;
-  height: 100%;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform 0.25s ease-out;
-}
-
-.m-overlay.open .m-drawer {
-  transform: translateX(0);
-}
-
-/* Drawer header */
-.m-drawer-header {
-  height: 72px;
-  border-bottom: 1px solid var(--border-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-}
-
-/* Drawer logo also 48px */
-.m-drawer-logo {
-  height: 48px;
-  width: auto;
-  object-fit: contain;
-}
-
-.m-drawer-close {
-  width: 40px;
-  height: 40px;
-  border: 0px;
-  background: #f9fafb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.m-drawer-close-icon {
-  width: 14px;
-  height: 14px;
-  position: relative;
-}
-.m-drawer-close-icon::before,
-.m-drawer-close-icon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 14px;
-  height: 2px;
-  border-radius: 999px;
-  background: #111827;
-}
-.m-drawer-close-icon::before {
-  transform: rotate(45deg);
-}
-.m-drawer-close-icon::after {
-  transform: rotate(-45deg);
-}
-
-/* Drawer nav - INCREASED FONT SIZE, WEIGHT AND HEIGHT */
-.m-drawer-nav {
-  padding: 32px 8px;
-  display: flex;
-  flex-direction: column;
-}
-
-.m-nav-item {
-  display: flex;
-  align-items: center;
-  height: 52px; /* Increased height */
-  padding: 0 16px;
-  margin: 2px 0;
-  border-radius: 8px;
-  gap: 12px;
-  cursor: pointer;
-  color: var(--text-color);
-  transition: background 0.15s ease;
-  font-size: 16px; /* Increased font size */
-  font-weight: 600; /* Increased weight */
-}
-
-.m-nav-item .label {
-  flex: 1;
-}
-
-.m-nav-item .icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: var(--icon-color);
-}
-
-/* active mobile */
-.m-nav-item.active {
-  background: var(--active-bg);
-}
-.m-nav-item.active .icon svg {
-  stroke: var(--icon-active);
-}
-
-/* Mobile submenu */
-.m-submenu {
-  display: none;
-  margin-left: 28px;
-  padding-left: 16px;
-  border-left: 1px solid var(--border-subtle);
-  margin-top: 4px;
-}
-.m-submenu.open {
-  display: block;
-}
-.m-submenu-item {
-  height: 48px; /* Increased height */
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  border-radius: 8px;
-  margin: 2px 0;
-  cursor: pointer;
-  gap: 12px; /* Space for icon */
-  font-size: 15px; /* Increased font size */
-  font-weight: 500; /* Increased weight */
-}
-.m-submenu-item:hover {
-  background: var(--hover-bg);
-}
-/* Remove default active highlight */
-.m-submenu-item {
-  background: none;
-}
-.m-submenu-item.active {
-  background: var(--active-bg);
-}
-
-/* Submenu icon styles for mobile */
-.m-submenu-item .submenu-icon {
-  width: 18px;
-  height: 18px;
-  stroke: #6b7280;
-  flex-shrink: 0;
-}
-
-/* Drawer footer account - same style as desktop */
-.m-account-section {
-  margin-top: auto;
-  padding: 16px;
-  border-top: 1px solid var(--border-subtle);
-}
-
-/* ============= MOBILE SPECIFIC DOMAIN CARDS ============= */
-
-/* Mobile content layout */
-.mobile-content-inner {
-  padding: 16px;
-}
-
-/* Mobile page header - stacked vertically */
-.mobile-page-header {
-  margin-bottom: 20px;
-}
-
-.mobile-page-title-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.mobile-page-title {
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 32px;
-  color: rgb(29, 30, 32);
-}
-
-.mobile-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #6b7280;
-}
-
-.mobile-breadcrumb-icon svg {
-  width: 16px;
-  height: 16px;
-  stroke: #9ca3af;
-}
-
-.mobile-breadcrumb-divider {
-  color: #d1d5db;
-}
-
-/* Mobile search and add button row - UPDATED UI */
-.mobile-controls-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.mobile-search-wrap {
-  flex: 1;
-  position: relative;
-}
-
-.mobile-search-input-wrap {
-  background: #ffffff;
-  border-radius: 12px;
-  border: 2px solid #e5e7eb;
-  padding: 0 16px 0 44px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.mobile-search-input-wrap:focus-within {
-  border-color: #5127ba;
-  box-shadow: 0 0 0 3px rgba(81, 39, 186, 0.1);
-}
-
-.mobile-search-icon {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  stroke: #6b7280;
-  z-index: 2;
-}
-
-.mobile-search-input-wrap input {
-  border: none;
-  background: transparent;
-  outline: none;
-  flex: 1;
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-size: 16px;
-  color: #111827;
-  font-weight: 500;
-}
-
-.mobile-search-input-wrap input::placeholder {
-  color: #9ca3af;
-  font-weight: 400;
-}
-
-.mobile-add-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
-  color: #ffffff;
-  background: linear-gradient(135deg, #5127ba 0%, #673de6 100%);
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(81, 39, 186, 0.2);
-}
-
-.mobile-add-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(81, 39, 186, 0.25);
-}
-
-.mobile-add-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: #ffffff;
-}
-
-/* Mobile category cards */
-.mobile-category-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.category-card {
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.category-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.category-card-image {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  object-fit: cover;
-  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-  flex-shrink: 0;
-  padding: 8px;
-}
-
-.category-card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.category-card-name {
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  color: rgb(29, 30, 32);
-}
-
-.category-card-products {
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 18px;
-  color: #6b7280;
-}
-
-.category-card-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.category-card-toggle {
-  width: 40px;
-  height: 24px;
-  border-radius: 999px;
-  background: #e5e7eb;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 2px;
-  transition: background 0.15s ease;
-  position: relative;
-}
-
-/* UPDATED TOGGLE COLOR TO #5127ba */
-.category-card-toggle.on {
-  background: #5127ba;
-}
-
-.category-card-toggle-inner {
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  background: #ffffff;
-  transition: transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.category-card-toggle.on .category-card-toggle-inner {
-  transform: translateX(16px);
-}
-
-.category-card-menu-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.category-card-menu-btn:hover {
-  background: #f9fafb;
-  border-color: #d1d5db;
-}
-
-.category-card-menu-dots {
-  width: 4px;
-  height: 4px;
-  border-radius: 999px;
-  background: #6b7280;
-  box-shadow: 0 -6px 0 0 #6b7280, 0 6px 0 0 #6b7280;
-}
-
-/* Advanced Menu (Bottom Sheet) */
-.advanced-menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  border-radius: 24px 24px 0 0;
-  padding: 24px 0;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 100;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.advanced-menu.open {
-  transform: translateY(0);
-}
-
-.advanced-menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 99;
-}
-
-.advanced-menu-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.advanced-menu-header {
-  padding: 0 24px 20px 24px;
-  border-bottom: 1px solid #f3f4f6;
-  margin-bottom: 16px;
-  position: relative;
-}
-
-.advanced-menu-title {
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 28px;
-  color: rgb(29, 30, 32);
-  text-align: center;
-}
-
-.advanced-menu-items {
-  display: flex;
-  flex-direction: column;
-}
-
-.advanced-menu-item {
-  padding: 18px 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: none;
-  border: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  font-family: "DM Sans", Roboto, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: rgb(29, 30, 32);
-  transition: background 0.15s ease;
-  border-bottom: 1px solid #f9fafb;
-}
-
-.advanced-menu-item:last-child {
-  border-bottom: none;
-  color: #ef4444;
-}
-
-.advanced-menu-item:last-child svg {
-  stroke: #ef4444;
-}
-
-.advanced-menu-item:hover {
-  background: #f9fafb;
-}
-
-.advanced-menu-item svg {
-  width: 22px;
-  height: 22px;
-  stroke: #6b7280;
-  flex-shrink: 0;
-}
-
-.advanced-menu-close {
-  position: absolute;
-  top: 0;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.advanced-menu-close:hover {
-  background: #f3f4f6;
-}
-
-.advanced-menu-close-icon {
-  width: 16px;
-  height: 16px;
-  position: relative;
-}
-
-.advanced-menu-close-icon::before,
-.advanced-menu-close-icon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 16px;
-  height: 2px;
-  border-radius: 999px;
-  background: #111827;
-}
-
-.advanced-menu-close-icon::before {
-  transform: rotate(45deg);
-}
-
-.advanced-menu-close-icon::after {
-  transform: rotate(-45deg);
-}
-
-/* Handle bar at top of menu */
-.menu-handle {
-  width: 40px;
-  height: 4px;
-  border-radius: 999px;
-  background: #e5e7eb;
-  margin: 0 auto 20px auto;
-}
-
-/* ============= RESPONSIVE SWITCH ============= */
-
-/* Desktop default, hide mobile */
-.page-desktop { display: flex; }
-.page-mobile  { display: none; }
-
-@media (max-width: 768px) {
-  .page-desktop { display: none; }
-  .page-mobile  { display: flex; }
-  
-  /* Hide desktop-style card in mobile */
-  .card {
-    display: none;
-  }
-  
-  .content-inner {
-    padding: 0;
-  }
-  
-  .page-header {
-    display: none;
-  }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vastranand - The Soul of Indian Sarees</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#1a0f0c', // Deep charcoal
+                            primary: '#8b6b4e', // Warm bronze
+                            light: '#f8f5f2', // Cream background
+                            gold: '#c9a86a', // Antique gold
+                            border: '#e3d9d0',
+                            accent: '#a67c52'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', '"Playfair Display"', 'serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8f5f2;
+            color: #1a0f0c;
+            scroll-behavior: smooth;
+        }
+        
+        .text-stroke {
+            -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .premium-border {
+            position: relative;
+        }
+        
+        .premium-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a86a, transparent);
+            transition: width 0.6s ease;
+        }
+        
+        .premium-border:hover::after {
+            width: 100%;
+        }
+        
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #c9a86a 0%, #e6d1a5 50%, #b89446 100%);
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e3d9d0, transparent);
+        }
+        
+        .ornament {
+            position: relative;
+        }
+        
+        .ornament::before, .ornament::after {
+            content: '✦';
+            position: absolute;
+            color: #c9a86a;
+            font-size: 10px;
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c9a86a;
+            border-radius: 3px;
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 30px rgba(201, 168, 106, 0.3);
+        }
+    </style>
 </head>
-<body>
+<body class="font-sans antialiased">
 
-<!-- ================= DESKTOP VIEW ================= -->
-<div class="page-desktop">
-
-  <header class="d-topbar">
-    <img class="d-topbar-logo"
-         src="https://product-ecommerces.netlify.app/vastramaya.png"
-         alt="Vastramaya Logo" />
-  </header>
-
-  <div class="d-app">
-
-    <aside class="d-sidebar">
-      <div class="d-sidebar-inner">
-
-        <nav class="d-nav">
-          <div class="d-nav-group">
-
-            <!-- Dashboard -->
-            <div class="d-nav-item">
-              <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="7" height="7" x="3" y="3" rx="1"/>
-                  <rect width="7" height="7" x="14" y="3" rx="1"/>
-                  <rect width="7" height="7" x="14" y="14" rx="1"/>
-                  <rect width="7" height="7" x="3" y="14" rx="1"/>
-                </svg>
-              </span>
-              <span class="label">Dashboard</span>
+    <!-- Top Bar -->
+    <div class="bg-white/95 backdrop-blur-sm border-b border-brand-border/30 py-3 px-4 md:px-12 sticky top-0 z-50">
+        <div class="flex justify-between items-center max-w-7xl mx-auto">
+            <!-- Left: Menu -->
+            <div class="hidden md:flex items-center gap-6 text-xs font-medium text-brand-dark">
+                <a href="#" class="premium-border uppercase tracking-widest hover:text-brand-primary transition">Menu</a>
             </div>
 
-            <!-- Inventory (Active) -->
-            <div class="d-nav-item d-nav-item--active">
-              <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 7v10"/>
-                  <path d="M6 5v14"/>
-                  <rect width="12" height="18" x="10" y="3" rx="2"/>
-                </svg>
-              </span>
-              <span class="label">Inventory</span>
+            <!-- Logo -->
+            <div class="text-center">
+                <h1 class="font-serif text-3xl tracking-[0.2em] font-light text-brand-dark">VASTRANAND</h1>
+                <p class="text-[10px] tracking-[0.4em] uppercase text-brand-primary mt-1">The Art of Indian Drapes</p>
             </div>
 
-            <!-- Customize Site (with dropdown chevron) -->
-            <div class="d-nav-item" id="d-customize-toggle">
-              <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
-                  <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
-                </svg>
-              </span>
-              <span class="label">Customize Site</span>
-              <span class="chevron">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round"
-                     class="chevron-icon">
-                  <path d="m9 18 6-6-6-6"/>
-                </svg>
-              </span>
-            </div>
-
-            <!-- Desktop Customize Site submenu -->
-            <div class="d-submenu" id="d-customize-submenu">
-              <div class="d-submenu-item">
-                <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
-                  <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
-                  <path d="M4 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-                  <path d="M9.5 12.5 11 14"/>
-                  <path d="M14 10l-3.5 4"/>
-                  <path d="m5 15 4.5-4"/>
-                </svg>
-                <span>Theme & layout</span>
-              </div>
-              <div class="d-submenu-item">
-                <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="18" height="18" x="3" y="3" rx="2"/>
-                  <path d="M3 9h18"/>
-                  <path d="M9 21V9"/>
-                </svg>
-                <span>Sections</span>
-              </div>
-              <div class="d-submenu-item">
-                <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="18" cy="5" r="3"/>
-                  <circle cx="6" cy="12" r="3"/>
-                  <circle cx="18" cy="19" r="3"/>
-                  <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
-                  <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
-                </svg>
-                <span>Navigation</span>
-              </div>
-            </div>
-
-            <!-- MANAGE ORDERS (with dropdown chevron) -->
-            <div class="d-nav-item" id="d-orders-toggle">
-              <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
-                  <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
-                  <path d="M8 14v2.2l1.6 1"/>
-                  <circle cx="8" cy="16" r="6"/>
-                </svg>
-              </span>
-              <span class="label">MANAGE ORDERS</span>
-              <span class="chevron">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round"
-                     class="chevron-icon">
-                  <path d="m9 18 6-6-6-6"/>
-                </svg>
-              </span>
-            </div>
-
-            <!-- Desktop MANAGE ORDERS submenu with SVGs -->
-            <div class="d-submenu" id="d-orders-submenu">
-              <div class="d-submenu-item">
-                <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 6v6l4 2"/>
-                  <path d="M22 12a10 10 0 1 0-11 9.95"/>
-                  <path d="m22 16-5.5 5.5L14 19"/>
-                </svg>
-                <span>Today</span>
-              </div>
-              <div class="d-submenu-item">
-                <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 2v4"/>
-                  <path d="M16 2v4"/>
-                  <rect width="18" height="18" x="3" y="4" rx="2"/>
-                  <path d="M3 10h18"/>
-                  <path d="M8 14h.01"/>
-                  <path d="M12 14h.01"/>
-                  <path d="M16 14h.01"/>
-                  <path d="M8 18h.01"/>
-                  <path d="M12 18h.01"/>
-                  <path d="M16 18h.01"/>
-                </svg>
-                <span>This Month</span>
-              </div>
-              <div class="d-submenu-item">
-                <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2v2"/>
-                  <path d="M15.726 21.01A2 2 0 0 1 14 22H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2"/>
-                  <path d="M18 2v2"/>
-                  <path d="M2 13h2"/>
-                  <path d="M8 8h14"/>
-                  <rect x="8" y="3" width="14" height="14" rx="2"/>
-                </svg>
-                <span>All Orders</span>
-              </div>
-            </div>
-
-          </div>
-        </nav>
-
-        <!-- Desktop Account sharing -->
-        <div class="d-account-section">
-          <div class="account-card">
-            <img
-              class="account-avatar"
-              src="https://bpb-us-w2.wpmucdn.com/wp.wpi.edu/dist/e/505/files/2024/06/unknown-person-icon-3.png"
-              alt="Profile" />
-            <div class="account-text">
-              <div class="account-name">Account sharing</div>
-              <div class="account-email">admin@vastramaya.com</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </aside>
-
-    <main class="d-content">
-      <div class="content-inner">
-
-        <!-- PAGE HEADER -->
-        <div class="page-header">
-          <div class="page-title-wrap">
-            <div class="page-title">Manage Categories</div>
-            <div class="breadcrumb">
-              <span class="breadcrumb-icon">
-                <!-- home icon svg -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                </svg>
-              </span>
-              <span>Home</span>
-              <span class="breadcrumb-divider">/</span>
-              <span>Manage Categories</span>
-            </div>
-          </div>
-
-          <button class="primary-btn">
-            <!-- plus icon svg -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"/>
-              <path d="M12 5v14"/>
-            </svg>
-            <span>Add Category</span>
-          </button>
-        </div>
-
-        <!-- CARD -->
-        <div class="card">
-          <div class="card-header">
-            <div class="search-input-wrap">
-              <!-- search icon -->
-              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="7"></circle>
-                <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
-              </svg>
-              <input type="text" placeholder="Search categories..." />
-            </div>
-          </div>
-
-          <div class="table-wrapper">
-            <table class="domain-table">
-              <thead>
-                <tr>
-                  <th class="th-image"></th>
-                  <th>Name</th>
-                  <th>No. of products</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- ROW 1 - SAREES -->
-                <tr>
-                  <td class="td-image">
-                    <img class="product-thumb"
-                         src="https://images.pexels.com/photos/6311657/pexels-photo-6311657.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Sarees" />
-                  </td>
-                  <td class="product-name">SAREES</td>
-                  <td class="product-count">124 products</td>
-                  <td class="product-status">
-                    <div class="toggle on">
-                      <div class="toggle-inner"></div>
+            <!-- Right: Icons & Search -->
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex items-center">
+                    <div class="relative">
+                        <input type="text" placeholder="Discover elegance..." 
+                               class="pl-10 pr-4 py-2 w-48 bg-transparent border-b border-brand-border text-sm focus:outline-none focus:border-brand-primary transition">
+                        <i class="fa-solid fa-magnifying-glass absolute left-2 top-2.5 text-brand-primary"></i>
                     </div>
-                  </td>
-                  <td class="product-actions">
-                    <div class="action-buttons">
-                      <button class="btn-secondary">Manage</button>
-                      <span class="kebab">
-                        <span class="kebab-dots"></span>
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- ROW 2 - DRESSES -->
-                <tr>
-                  <td class="td-image">
-                    <img class="product-thumb"
-                         src="https://images.pexels.com/photos/3738089/pexels-photo-3738089.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Dresses" />
-                  </td>
-                  <td class="product-name">DRESSES</td>
-                  <td class="product-count">48 products</td>
-                  <td class="product-status">
-                    <div class="toggle">
-                      <div class="toggle-inner"></div>
-                    </div>
-                  </td>
-                  <td class="product-actions">
-                    <div class="action-buttons">
-                      <button class="btn-secondary">Manage</button>
-                      <span class="kebab">
-                        <span class="kebab-dots"></span>
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- ROW 3 - PANTS -->
-                <tr>
-                  <td class="td-image">
-                    <img class="product-thumb"
-                         src="https://images.pexels.com/photos/3738124/pexels-photo-3738124.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Pants" />
-                  </td>
-                  <td class="product-name">PANTS</td>
-                  <td class="product-count">89 products</td>
-                  <td class="product-status">
-                    <div class="toggle on">
-                      <div class="toggle-inner"></div>
-                    </div>
-                  </td>
-                  <td class="product-actions">
-                    <div class="action-buttons">
-                      <button class="btn-secondary">Manage</button>
-                      <span class="kebab">
-                        <span class="kebab-dots"></span>
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-
-                <!-- ROW 4 - SHIRTS -->
-                <tr>
-                  <td class="td-image">
-                    <img class="product-thumb"
-                         src="https://images.pexels.com/photos/3738116/pexels-photo-3738116.jpeg?auto=compress&cs=tinysrgb&w=200"
-                         alt="Shirts" />
-                  </td>
-                  <td class="product-name">SHIRTS</td>
-                  <td class="product-count">32 products</td>
-                  <td class="product-status">
-                    <div class="toggle">
-                      <div class="toggle-inner"></div>
-                    </div>
-                  </td>
-                  <td class="product-actions">
-                    <div class="action-buttons">
-                      <button class="btn-secondary">Manage</button>
-                      <span class="kebab">
-                        <span class="kebab-dots"></span>
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-    </main>
-  </div>
-</div>
-
-<!-- ================= MOBILE VIEW ================= -->
-<div class="page-mobile">
-
-  <!-- Mobile header: menu left, logo right -->
-  <header class="m-header">
-    <button class="m-menu-btn" id="m-menu-toggle" aria-label="Open menu">
-      <div class="m-menu-lines"><span></span></div>
-    </button>
-
-    <img
-      class="m-logo"
-      src="https://product-ecommerces.netlify.app/vastramaya.png"
-      alt="Vastramaya Logo" />
-  </header>
-
-  <main class="m-main">
-    <div class="mobile-content-inner">
-      
-      <!-- Mobile Page Header - Stacked up and down -->
-      <div class="mobile-page-header">
-        <div class="mobile-page-title-wrap">
-          <div class="mobile-page-title">Manage Categories</div>
-          <div class="mobile-breadcrumb">
-            <span class="mobile-breadcrumb-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                   fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
-                <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              </svg>
-            </span>
-            <span>Home</span>
-            <span class="mobile-breadcrumb-divider">/</span>
-            <span>Manage Categories</span>
-          </div>
-        </div>
-        
-        <!-- Mobile Search and Add Button Row - UPDATED UI -->
-        <div class="mobile-controls-row">
-          <div class="mobile-search-wrap">
-            <div class="mobile-search-input-wrap">
-              <svg class="mobile-search-icon" xmlns="http://www.w3.org/2000/svg"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="7"></circle>
-                <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
-              </svg>
-              <input type="text" placeholder="Search categories..." />
+                </div>
+                <div class="flex gap-5 text-brand-dark">
+                    <a href="#" class="hover:text-brand-primary transition"><i class="fa-regular fa-heart text-lg"></i></a>
+                    <a href="#" class="hover:text-brand-primary transition relative">
+                        <i class="fa-solid fa-bag-shopping text-lg"></i>
+                        <span class="absolute -top-2 -right-2 bg-brand-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </a>
+                    <a href="#" class="hover:text-brand-primary transition"><i class="fa-regular fa-user text-lg"></i></a>
+                </div>
             </div>
-          </div>
-          <button class="mobile-add-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"/>
-              <path d="M12 5v14"/>
-            </svg>
-            <span>Add</span>
-          </button>
         </div>
-      </div>
 
-      <!-- Mobile Category Cards -->
-      <div class="mobile-category-cards">
-        
-        <!-- Category Card 1 - SAREES -->
-        <div class="category-card" data-category="1">
-          <img class="category-card-image"
-               src="https://images.pexels.com/photos/6311657/pexels-photo-6311657.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="Sarees" />
-          <div class="category-card-content">
-            <div class="category-card-name">SAREES</div>
-            <div class="category-card-products">124 products</div>
-          </div>
-          <div class="category-card-status">
-            <div class="category-card-toggle on">
-              <div class="category-card-toggle-inner"></div>
-            </div>
-          </div>
-          <button class="category-card-menu-btn" data-category="1">
-            <span class="category-card-menu-dots"></span>
-          </button>
+        <!-- Navigation -->
+        <div class="hidden md:flex justify-center gap-8 mt-6 text-xs font-medium tracking-widest">
+            <a href="#" class="text-brand-primary uppercase border-b border-brand-primary pb-1">Best Sellers</a>
+            <a href="#" class="text-brand-dark hover:text-brand-primary uppercase transition">Craft Stories</a>
+            <a href="#" class="text-brand-dark hover:text-brand-primary uppercase transition">Popup Shop</a>
+            <a href="#" class="text-brand-dark hover:text-brand-primary uppercase transition">Accessories</a>
+            <a href="#" class="text-brand-dark hover:text-brand-primary uppercase transition">Dresses</a>
+            <a href="#" class="text-brand-dark hover:text-brand-primary uppercase transition">Exclusives</a>
+            <a href="#" class="text-brand-dark hover:text-brand-primary uppercase transition">Heritage</a>
+            <a href="#" class="text-brand-dark hover:text-brand-primary uppercase transition">Style 21</a>
+            <a href="#" class="text-red-700 hover:text-red-800 uppercase">Atelier</a>
         </div>
-        
-        <!-- Category Card 2 - DRESSES -->
-        <div class="category-card" data-category="2">
-          <img class="category-card-image"
-               src="https://images.pexels.com/photos/3738089/pexels-photo-3738089.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="Dresses" />
-          <div class="category-card-content">
-            <div class="category-card-name">DRESSES</div>
-            <div class="category-card-products">48 products</div>
-          </div>
-          <div class="category-card-status">
-            <div class="category-card-toggle">
-              <div class="category-card-toggle-inner"></div>
-            </div>
-          </div>
-          <button class="category-card-menu-btn" data-category="2">
-            <span class="category-card-menu-dots"></span>
-          </button>
-        </div>
-        
-        <!-- Category Card 3 - PANTS -->
-        <div class="category-card" data-category="3">
-          <img class="category-card-image"
-               src="https://images.pexels.com/photos/3738124/pexels-photo-3738124.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="Pants" />
-          <div class="category-card-content">
-            <div class="category-card-name">PANTS</div>
-            <div class="category-card-products">89 products</div>
-          </div>
-          <div class="category-card-status">
-            <div class="category-card-toggle on">
-              <div class="category-card-toggle-inner"></div>
-            </div>
-          </div>
-          <button class="category-card-menu-btn" data-category="3">
-            <span class="category-card-menu-dots"></span>
-          </button>
-        </div>
-        
-        <!-- Category Card 4 - SHIRTS -->
-        <div class="category-card" data-category="4">
-          <img class="category-card-image"
-               src="https://images.pexels.com/photos/3738116/pexels-photo-3738116.jpeg?auto=compress&cs=tinysrgb&w=200"
-               alt="Shirts" />
-          <div class="category-card-content">
-            <div class="category-card-name">SHIRTS</div>
-            <div class="category-card-products">32 products</div>
-          </div>
-          <div class="category-card-status">
-            <div class="category-card-toggle">
-              <div class="category-card-toggle-inner"></div>
-            </div>
-          </div>
-          <button class="category-card-menu-btn" data-category="4">
-            <span class="category-card-menu-dots"></span>
-          </button>
-        </div>
-        
-      </div>
     </div>
-  </main>
 
-  <!-- Overlay & drawer -->
-  <div class="m-overlay" id="m-overlay">
-    <div class="m-drawer">
-
-      <div class="m-drawer-header">
-        <img
-          class="m-drawer-logo"
-          src="https://product-ecommerces.netlify.app/vastramaya.png"
-          alt="Vastramaya Logo" />
-        <button class="m-drawer-close" id="m-drawer-close" aria-label="Close menu">
-          <div class="m-drawer-close-icon"></div>
-        </button>
-      </div>
-
-      <nav class="m-drawer-nav">
-
-        <!-- Dashboard -->
-        <div class="m-nav-item">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect width="7" height="7" x="3" y="3" rx="1"/>
-              <rect width="7" height="7" x="14" y="3" rx="1"/>
-              <rect width="7" height="7" x="14" y="14" rx="1"/>
-              <rect width="7" height="7" x="3" y="14" rx="1"/>
-            </svg>
-          </span>
-          <span class="label">Dashboard</span>
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-brand-light via-white to-brand-light/50">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%23e3d9d0" fill-opacity="0.4" fill-rule="evenodd"/%3E%3C/svg%3E')] opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center min-h-[85vh] px-8">
+            <!-- Text Content -->
+            <div class="w-full md:w-1/2 py-20 md:py-0 pr-8 animate-fade-in">
+                <div class="mb-6">
+                    <span class="text-xs tracking-[0.5em] uppercase text-brand-primary mb-4 block">Heritage Since 2017</span>
+                    <h1 class="font-serif text-5xl md:text-7xl text-brand-dark leading-[1.1] mb-6">
+                        <span class="block">Timeless</span>
+                        <span class="block italic font-light">Elegance</span>
+                        <span class="block text-brand-primary">Woven</span>
+                    </h1>
+                </div>
+                <p class="text-lg text-brand-dark/70 mb-10 max-w-xl font-light leading-relaxed">
+                    Each drape tells a story of craftsmanship, tradition, and unparalleled beauty. 
+                    Experience the luxury of handwoven Indian sarees curated for the modern connoisseur.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="bg-brand-dark text-white px-10 py-4 uppercase tracking-widest text-sm hover:bg-brand-primary transition duration-500">
+                        Explore Collection
+                    </a>
+                    <a href="#" class="border border-brand-dark px-10 py-4 uppercase tracking-widest text-sm hover:bg-brand-dark hover:text-white transition duration-500">
+                        Book Appointment
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Hero Image -->
+            <div class="w-full md:w-1/2 relative h-[500px] md:h-[700px] animate-float">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="relative w-96 h-96 md:w-[500px] md:h-[500px]">
+                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=1000&auto=format&fit=crop" 
+                             alt="Silk Saree Texture"
+                             class="absolute inset-0 w-full h-full object-cover rounded-full shadow-2xl">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-brand-gold/20 to-transparent rounded-full blur-xl"></div>
+                    </div>
+                </div>
+                <div class="absolute bottom-10 left-10 bg-white/90 p-6 shadow-xl max-w-xs">
+                    <h3 class="font-serif text-xl mb-2">Handcrafted Excellence</h3>
+                    <p class="text-sm text-brand-dark/60">Each piece takes 40-60 hours of meticulous craftsmanship</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Inventory (Active) -->
-        <div class="m-nav-item active">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 7v10"/>
-              <path d="M6 5v14"/>
-              <rect width="12" height="18" x="10" y="3" rx="2"/>
-            </svg>
-          </span>
-          <span class="label">Inventory</span>
+    <!-- New Arrival Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <span class="text-xs tracking-[0.5em] uppercase text-brand-primary mb-2 block">Curated</span>
+                    <h2 class="font-serif text-4xl text-brand-dark">New Arrivals</h2>
+                </div>
+                <a href="#" class="group flex items-center gap-2 text-sm uppercase tracking-widest hover:text-brand-primary transition">
+                    View Collection
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Product Card 1 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4 bg-brand-light">
+                        <div class="aspect-[3/4] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1583391733958-84b2e8fb7a39?w=800&auto=format&fit=crop&q=80" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="absolute top-4 left-4 bg-brand-dark text-white text-xs px-3 py-1 uppercase tracking-widest">Limited</span>
+                            <button class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white text-brand-dark px-6 py-2 text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                                Quick View
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-serif text-lg text-brand-dark mb-1">Chiku Copper Radiance Silk</h4>
+                        <p class="text-xs text-brand-primary uppercase tracking-widest mb-2">Pure Silk • Handwoven</p>
+                        <div class="flex justify-center items-center gap-3">
+                            <span class="font-serif text-lg text-brand-dark">₹ 1,750.00</span>
+                            <span class="text-xs text-gray-400 line-through">₹ 2,500.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 2 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4 bg-brand-light">
+                        <div class="aspect-[3/4] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&auto=format&fit=crop&q=80" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="absolute top-4 left-4 bg-brand-gold text-white text-xs px-3 py-1 uppercase tracking-widest">Exclusive</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-serif text-lg text-brand-dark mb-1">Peacock Aura Banarasi Katan</h4>
+                        <p class="text-xs text-brand-primary uppercase tracking-widest mb-2">Banarasi • Zari Work</p>
+                        <div class="flex justify-center">
+                            <span class="font-serif text-lg text-brand-dark">₹ 1,099.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 3 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4 bg-brand-light">
+                        <div class="aspect-[3/4] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1594628211079-573531b7966f?w=800&auto=format&fit=crop&q=80" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="absolute top-4 left-4 bg-red-600 text-white text-xs px-3 py-1 uppercase tracking-widest">Best Seller</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-serif text-lg text-brand-dark mb-1">Radiant Ombre Chiffon Swarovski</h4>
+                        <p class="text-xs text-brand-primary uppercase tracking-widest mb-2">Chiffon • Crystal Work</p>
+                        <div class="flex justify-center items-center gap-3">
+                            <span class="font-serif text-lg text-brand-dark">₹ 1,050.00</span>
+                            <span class="text-xs text-gray-400 line-through">₹ 1,999.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 4 -->
+                <div class="product-card group">
+                    <div class="relative overflow-hidden mb-4 bg-brand-light">
+                        <div class="aspect-[3/4] relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1627883296836-932d201a0701?w=800&auto=format&fit=crop&q=80" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <button class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white text-brand-dark px-6 py-2 text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                                Quick View
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-serif text-lg text-brand-dark mb-1">Celebrity Style Banarasi Ikkat</h4>
+                        <p class="text-xs text-brand-primary uppercase tracking-widest mb-2">Ikkat • Hand Block</p>
+                        <div class="flex justify-center">
+                            <span class="font-serif text-lg text-brand-dark">₹ 2,150.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Customize Site with dropdown -->
-        <div class="m-nav-item" id="m-customize-toggle">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
-              <path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/>
-            </svg>
-          </span>
-          <span class="label">Customize Site</span>
-          <span class="chevron">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round"
-                 class="chevron-icon">
-              <path d="m9 18 6-6-6-6"/>
-            </svg>
-          </span>
+    <!-- Craft Heritage Section -->
+    <section class="py-20 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.5em] uppercase text-brand-primary mb-4 block">Artistry</span>
+                <h2 class="font-serif text-5xl text-brand-dark mb-6">The Craft Heritage</h2>
+                <p class="text-lg text-brand-dark/60 max-w-2xl mx-auto">
+                    Each technique passed down through generations, preserving the soul of Indian textile artistry.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Craft 1 -->
+                <div class="text-center group">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 border-2 border-brand-gold/30 group-hover:border-brand-gold transition">
+                        <img src="https://placehold.co/400x400/8b6b4e/FFF?text=Zari" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">Zari Weaving</h3>
+                    <p class="text-sm text-brand-dark/60">24K gold & silver thread work</p>
+                </div>
+                
+                <!-- Craft 2 -->
+                <div class="text-center group">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 border-2 border-brand-gold/30 group-hover:border-brand-gold transition">
+                        <img src="https://placehold.co/400x400/8b6b4e/FFF?text=Block" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">Hand Block</h3>
+                    <p class="text-sm text-brand-dark/60">Natural dye printing techniques</p>
+                </div>
+                
+                <!-- Craft 3 -->
+                <div class="text-center group">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 border-2 border-brand-gold/30 group-hover:border-brand-gold transition">
+                        <img src="https://placehold.co/400x400/8b6b4e/FFF?text=Embroidery" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">Kashmiri Embroidery</h3>
+                    <p class="text-sm text-brand-dark/60">Intricate needlework artistry</p>
+                </div>
+                
+                <!-- Craft 4 -->
+                <div class="text-center group">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 border-2 border-brand-gold/30 group-hover:border-brand-gold transition">
+                        <img src="https://placehold.co/400x400/8b6b4e/FFF?text=Bandhani" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-serif text-xl mb-2">Bandhani</h3>
+                    <p class="text-sm text-brand-dark/60">Traditional tie-dye patterns</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Mobile Customize Site submenu -->
-        <div class="m-submenu" id="m-customize-submenu">
-          <div class="m-submenu-item">
-            <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
-              <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
-              <path d="M4 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-              <path d="M9.5 12.5 11 14"/>
-              <path d="M14 10l-3.5 4"/>
-              <path d="m5 15 4.5-4"/>
-            </svg>
-            <span>Theme & layout</span>
-          </div>
-          <div class="m-submenu-item">
-            <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect width="18" height="18" x="3" y="3" rx="2"/>
-              <path d="M3 9h18"/>
-              <path d="M9 21V9"/>
-            </svg>
-            <span>Sections</span>
-          </div>
-          <div class="m-submenu-item">
-            <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"/>
-              <circle cx="6" cy="12" r="3"/>
-              <circle cx="18" cy="19" r="3"/>
-              <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
-              <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
-            </svg>
-            <span>Navigation</span>
-          </div>
+    <!-- Video Consultation Section -->
+    <section class="relative py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=2000&auto=format&fit=crop&q=80')] bg-cover bg-center opacity-5"></div>
+        
+        <div class="max-w-7xl mx-auto px-8 relative">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="animate-slide-up">
+                    <span class="text-xs tracking-[0.5em] uppercase text-brand-primary mb-4 block">Personal Service</span>
+                    <h2 class="font-serif text-5xl text-brand-dark mb-6">Personal Virtual Consultation</h2>
+                    <p class="text-lg text-brand-dark/60 mb-8 leading-relaxed">
+                        Experience luxury shopping from the comfort of your home. Our style experts provide one-on-one virtual consultations, 
+                        helping you find the perfect drape for every occasion.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="gold-gradient w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-check text-white text-xs"></i>
+                            </div>
+                            <p class="text-brand-dark/70">One-on-one styling session with our experts</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="gold-gradient w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-check text-white text-xs"></i>
+                            </div>
+                            <p class="text-brand-dark/70">View exclusive collections not available online</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="gold-gradient w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-check text-white text-xs"></i>
+                            </div>
+                            <p class="text-brand-dark/70">Personalized fabric and color recommendations</p>
+                        </div>
+                    </div>
+                    <button class="mt-10 bg-brand-dark text-white px-12 py-4 uppercase tracking-widest text-sm hover:bg-brand-primary transition duration-500">
+                        Book Your Session
+                    </button>
+                </div>
+                
+                <div class="relative">
+                    <div class="relative z-10 bg-white shadow-2xl p-2">
+                        <div class="aspect-video bg-gray-900 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1595085610896-fb31cfd5d4b7?w=1200&auto=format&fit=crop&q=80" 
+                                 class="w-full h-full object-cover">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="gold-gradient w-20 h-20 rounded-full flex items-center justify-center animate-pulse">
+                                    <i class="fa-solid fa-play text-white text-2xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-gold/20 to-brand-primary/20 blur-xl"></div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- MANAGE ORDERS with dropdown -->
-        <div class="m-nav-item" id="m-orders-toggle">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
-              <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
-              <path d="M8 14v2.2l1.6 1"/>
-              <circle cx="8" cy="16" r="6"/>
-            </svg>
-          </span>
-          <span class="label">MANAGE ORDERS</span>
-          <span class="chevron">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round"
-                 class="chevron-icon">
-              <path d="m9 18 6-6-6-6"/>
-            </svg>
-          </span>
+    <!-- Exclusive Collection -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.5em] uppercase text-brand-primary mb-4 block">Exclusivity</span>
+                <h2 class="font-serif text-5xl text-brand-dark mb-6">The Atelier Collection</h2>
+                <p class="text-lg text-brand-dark/60 max-w-2xl mx-auto">
+                    Limited edition pieces created in collaboration with master weavers across India.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Collection 1 -->
+                <div class="relative group overflow-hidden">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1545959734-772922cb7340?w=1200&auto=format&fit=crop&q=80" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                        <h3 class="font-serif text-3xl mb-2">Wedding Ensemble</h3>
+                        <p class="text-sm mb-4">Opulent bridal collection featuring rare silks</p>
+                        <a href="#" class="text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition">
+                            Explore Collection
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Collection 2 -->
+                <div class="relative group overflow-hidden">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1588258760088-75d506a77d70?w=1200&auto=format&fit=crop&q=80" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                        <h3 class="font-serif text-3xl mb-2">Festival Edit</h3>
+                        <p class="text-sm mb-4">Traditional drapes for celebratory occasions</p>
+                        <a href="#" class="text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition">
+                            Explore Collection
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Mobile MANAGE ORDERS submenu with SVGs -->
-        <div class="m-submenu" id="m-orders-submenu">
-          <div class="m-submenu-item">
-            <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 6v6l4 2"/>
-              <path d="M22 12a10 10 0 1 0-11 9.95"/>
-              <path d="m22 16-5.5 5.5L14 19"/>
-            </svg>
-            <span>Today</span>
-          </div>
-          <div class="m-submenu-item">
-            <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8 2v4"/>
-              <path d="M16 2v4"/>
-              <rect width="18" height="18" x="3" y="4" rx="2"/>
-              <path d="M3 10h18"/>
-              <path d="M8 14h.01"/>
-              <path d="M12 14h.01"/>
-              <path d="M16 14h.01"/>
-              <path d="M8 18h.01"/>
-              <path d="M12 18h.01"/>
-              <path d="M16 18h.01"/>
-            </svg>
-            <span>This Month</span>
-          </div>
-          <div class="m-submenu-item">
-            <svg class="submenu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2v2"/>
-              <path d="M15.726 21.01A2 2 0 0 1 14 22H4a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2"/>
-              <path d="M18 2v2"/>
-              <path d="M2 13h2"/>
-              <path d="M8 8h14"/>
-              <rect x="8" y="3" width="14" height="14" rx="2"/>
-            </svg>
-            <span>All Orders</span>
-          </div>
+    <!-- Testimonials -->
+    <section class="py-20 bg-brand-light">
+        <div class="max-w-5xl mx-auto px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-[0.5em] uppercase text-brand-primary mb-4 block">Testimonials</span>
+                <h2 class="font-serif text-4xl text-brand-dark">Our Patrons Speak</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 shadow-lg">
+                    <div class="text-amber-400 mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-dark/70 italic mb-6">
+                        "The craftsmanship is exceptional. Each drape feels like a piece of art. The virtual consultation made choosing perfect."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&auto=format&fit=crop&q=60" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Priya Sharma</h4>
+                            <p class="text-xs text-brand-primary">Mumbai</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 shadow-lg">
+                    <div class="text-amber-400 mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-dark/70 italic mb-6">
+                        "Exquisite collection! The attention to detail and quality is unmatched. My wedding saree was a dream come true."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&auto=format&fit=crop&q=60" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Anjali Patel</h4>
+                            <p class="text-xs text-brand-primary">Delhi</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 shadow-lg">
+                    <div class="text-amber-400 mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-brand-dark/70 italic mb-6">
+                        "The personal shopping experience was exceptional. They understood exactly what I was looking for and delivered perfection."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=60" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Rashmi Verma</h4>
+                            <p class="text-xs text-brand-primary">Bangalore</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-      </nav>
-
-      <!-- Mobile account sharing -->
-      <div class="m-account-section">
-        <div class="account-card">
-          <img
-            class="account-avatar"
-            src="https://bpb-us-w2.wpmucdn.com/wp.wpi.edu/dist/e/505/files/2024/06/unknown-person-icon-3.png"
-            alt="Profile" />
-          <div class="account-text">
-            <div class="account-name">Account sharing</div>
-            <div class="account-email">admin@vastramaya.com</div>
-          </div>
+    <!-- Services -->
+    <section class="py-12 bg-white border-t border-brand-border">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="p-6 hover-lift">
+                    <div class="gold-gradient w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-truck text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-serif text-lg mb-2">Complimentary Shipping</h4>
+                    <p class="text-sm text-brand-dark/60">On orders above ₹ 5,000</p>
+                </div>
+                
+                <div class="p-6 hover-lift">
+                    <div class="gold-gradient w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-shield-alt text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-serif text-lg mb-2">Authenticity Guaranteed</h4>
+                    <p class="text-sm text-brand-dark/60">Certified handwoven textiles</p>
+                </div>
+                
+                <div class="p-6 hover-lift">
+                    <div class="gold-gradient w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-undo text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-serif text-lg mb-2">Easy Returns</h4>
+                    <p class="text-sm text-brand-dark/60">7-day return policy</p>
+                </div>
+                
+                <div class="p-6 hover-lift">
+                    <div class="gold-gradient w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-headset text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-serif text-lg mb-2">Personal Stylist</h4>
+                    <p class="text-sm text-brand-dark/60">One-on-one consultation</p>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-    </div>
-  </div>
-  
-  <!-- Advanced Menu (Bottom Sheet) -->
-  <div class="advanced-menu-overlay" id="advanced-menu-overlay"></div>
-  <div class="advanced-menu" id="advanced-menu">
-    <div class="menu-handle"></div>
-    <div class="advanced-menu-header">
-      <div class="advanced-menu-title">Category Actions</div>
-      <button class="advanced-menu-close" id="advanced-menu-close">
-        <div class="advanced-menu-close-icon"></div>
-      </button>
-    </div>
-    <div class="advanced-menu-items">
-      <button class="advanced-menu-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
-          <path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/>
-          <path d="M4 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-          <path d="M9.5 12.5 11 14"/>
-          <path d="M14 10l-3.5 4"/>
-          <path d="m5 15 4.5-4"/>
-        </svg>
-        <span>Manage Products</span>
-      </button>
-      <button class="advanced-menu-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 6h18"/>
-          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-          <line x1="10" x2="10" y1="11" y2="17"/>
-          <line x1="14" x2="14" y1="11" y2="17"/>
-        </svg>
-        <span>Delete Category</span>
-      </button>
-    </div>
-  </div>
-</div>
+    <!-- Newsletter -->
+    <section class="py-20 bg-brand-dark text-white">
+        <div class="max-w-2xl mx-auto px-8 text-center">
+            <h2 class="font-serif text-4xl mb-6">Join Our World of Elegance</h2>
+            <p class="text-white/70 mb-8">
+                Be the first to know about new collections, exclusive events, and special offers.
+            </p>
+            <form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" 
+                       placeholder="Your email address" 
+                       class="flex-1 bg-transparent border-b border-white/30 text-white placeholder-white/50 px-4 py-3 focus:outline-none focus:border-white transition">
+                <button type="submit" 
+                        class="bg-white text-brand-dark px-8 py-3 uppercase tracking-widest text-sm hover:bg-brand-light transition">
+                    Subscribe
+                </button>
+            </form>
+            <p class="text-xs text-white/50 mt-4">By subscribing, you agree to our Privacy Policy</p>
+        </div>
+    </section>
 
-<script>
-  // Mobile drawer behaviour
-  const mOverlay = document.getElementById('m-overlay');
-  const mMenuToggle = document.getElementById('m-menu-toggle');
-  const mDrawerClose = document.getElementById('m-drawer-close');
-
-  if (mMenuToggle && mOverlay && mDrawerClose) {
-    mMenuToggle.addEventListener('click', () => {
-      mOverlay.classList.add('open');
-    });
-
-    mDrawerClose.addEventListener('click', () => {
-      mOverlay.classList.remove('open');
-    });
-
-    mOverlay.addEventListener('click', (e) => {
-      if (e.target === mOverlay) {
-        mOverlay.classList.remove('open');
-      }
-    });
-  }
-
-  // Desktop Customize Site dropdown
-  const dCustomizeToggle = document.getElementById('d-customize-toggle');
-  const dCustomizeSubmenu = document.getElementById('d-customize-submenu');
-
-  if (dCustomizeToggle && dCustomizeSubmenu) {
-    dCustomizeToggle.addEventListener('click', () => {
-      dCustomizeSubmenu.classList.toggle('open');
-      dCustomizeToggle.classList.toggle('dropdown-open');
-    });
-  }
-
-  // Desktop MANAGE ORDERS dropdown
-  const dOrdersToggle = document.getElementById('d-orders-toggle');
-  const dOrdersSubmenu = document.getElementById('d-orders-submenu');
-
-  if (dOrdersToggle && dOrdersSubmenu) {
-    dOrdersToggle.addEventListener('click', () => {
-      dOrdersSubmenu.classList.toggle('open');
-      dOrdersToggle.classList.toggle('dropdown-open');
-    });
-  }
-
-  // Mobile Customize Site dropdown
-  const mCustomizeToggle = document.getElementById('m-customize-toggle');
-  const mCustomizeSubmenu = document.getElementById('m-customize-submenu');
-
-  if (mCustomizeToggle && mCustomizeSubmenu) {
-    mCustomizeToggle.addEventListener('click', () => {
-      mCustomizeSubmenu.classList.toggle('open');
-      mCustomizeToggle.classList.toggle('dropdown-open');
-    });
-  }
-
-  // Mobile MANAGE ORDERS dropdown
-  const mOrdersToggle = document.getElementById('m-orders-toggle');
-  const mOrdersSubmenu = document.getElementById('m-orders-submenu');
-
-  if (mOrdersToggle && mOrdersSubmenu) {
-    mOrdersToggle.addEventListener('click', () => {
-      mOrdersSubmenu.classList.toggle('open');
-      mOrdersToggle.classList.toggle('dropdown-open');
-    });
-  }
-
-  // Make all toggles functional
-  document.querySelectorAll('.toggle, .category-card-toggle').forEach(toggle => {
-    toggle.addEventListener('click', () => {
-      toggle.classList.toggle('on');
-    });
-  });
-
-  // Advanced Menu functionality
-  const advancedMenu = document.getElementById('advanced-menu');
-  const advancedMenuOverlay = document.getElementById('advanced-menu-overlay');
-  const advancedMenuClose = document.getElementById('advanced-menu-close');
-  const categoryMenuButtons = document.querySelectorAll('.category-card-menu-btn');
-
-  // Open advanced menu when 3-dot button is clicked
-  categoryMenuButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      advancedMenu.classList.add('open');
-      advancedMenuOverlay.classList.add('open');
-    });
-  });
-
-  // Close advanced menu
-  if (advancedMenuClose && advancedMenuOverlay) {
-    advancedMenuClose.addEventListener('click', () => {
-      advancedMenu.classList.remove('open');
-      advancedMenuOverlay.classList.remove('open');
-    });
-
-    advancedMenuOverlay.addEventListener('click', () => {
-      advancedMenu.classList.remove('open');
-      advancedMenuOverlay.classList.remove('open');
-    });
-  }
-
-  // Close advanced menu when clicking on menu items
-  document.querySelectorAll('.advanced-menu-item').forEach(item => {
-    item.addEventListener('click', () => {
-      advancedMenu.classList.remove('open');
-      advancedMenuOverlay.classList.remove('open');
-      // Here you would add functionality for each menu item
-      console.log('Menu item clicked:', item.textContent.trim());
-    });
-  });
-</script>
+    <!-- Footer -->
+    <footer class="bg-black text-white py-16">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid md:grid-cols-5 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <h2 class="font-serif text-3xl tracking-widest mb-4">VASTRANAND</h2>
+                    <p class="text-white/60 text-sm mb-6 max-w-md">
+                        Preserving the art of Indian textiles through timeless creations that celebrate heritage and craftsmanship.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-serif text-lg mb-6 uppercase tracking-widest">Collections</h4>
+                    <ul class="space-y-3 text-white/60 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Bridal Collection</a></li>
+                        <li><a href="#" class="hover:text-white transition">Festival Edit</a></li>
+                        <li><a href="#" class="hover:text-white transition">Couture</a></li>
+                        <li><a href="#" class="hover:text-white transition">Heritage Weaves</a></li>
+                        <li><a href="#" class="hover:text-white transition">Limited Edition</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div>
+                    <h4 class="font-serif text-lg mb-6 uppercase tracking-widest">Services</h4>
+                    <ul class="space-y-3 text-white/60 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Virtual Styling</a></li>
+                        <li><a href="#" class="hover:text-white transition">Bespoke Tailoring</a></li>
+                        <li><a href="#" class="hover:text-white transition">Wedding Consultation</a></li>
+                        <li><a href="#" class="hover:text-white transition">Fabric Care</a></li>
+                        <li><a href="#" class="hover:text-white transition">International Shipping</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-serif text-lg mb-6 uppercase tracking-widest">Contact</h4>
+                    <ul class="space-y-3 text-white/60 text-sm">
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-brand-gold"></i>
+                            <span>Surat, Gujarat - 394230</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-brand-gold"></i>
+                            <span>+91 8154 0000 83</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-brand-gold"></i>
+                            <span>atelier@vastranand.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 text-center text-white/40 text-sm">
+                <p>&copy; 2024 Vastranand Private Limited. All rights reserved.</p>
+                <p class="mt-2 text-xs">Crafted with <i class="fa-solid fa-heart text-red-400 mx-1"></i> in India</p>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
