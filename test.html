@@ -78,9 +78,9 @@
             padding: 0 40px;
         }
 
-        /* Logo */
+        /* Logo - INCREASED SIZE */
         .d-navbar-logo {
-            height: 40px;
+            height: 60px; /* Increased from 40px to 60px */
             width: auto;
             object-fit: contain;
         }
@@ -696,6 +696,7 @@
             cursor: pointer;
             flex-shrink: 0;
             transition: all 0.2s ease;
+            z-index: 2;
         }
 
         .m-menu-btn:hover {
@@ -728,22 +729,46 @@
             bottom: 0;
         }
 
-        /* Mobile Logo */
-        .m-logo {
-            height: 36px;
-            width: auto;
-            object-fit: contain;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+        /* Mobile Logo - INCREASED SIZE and CENTERED */
+        /* Mobile Logo - Centered between menu button and search/cart buttons */
+/* Mobile Logo */
+.m-logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    position: absolute;
+    left: calc(42.5% ); /* ADJUST THIS VALUE */
+    transform: translateX(-50%);
+}
 
         /* Mobile Right Icons */
-        .m-right-icons {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        /* Mobile Right Icons */
+.m-right-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+    /* Add these to prevent the icons from shifting */
+    min-width: 92px; /* Approximate width of search + cart icons + gap */
+    justify-content: flex-end;
+}
+/* Ensure menu button takes consistent space */
+.m-menu-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    z-index: 2;
+    /* Add this to prevent button from shrinking */
+    min-width: 40px;
+}
 
         .m-icon-btn {
             width: 40px;
@@ -852,8 +877,9 @@
             z-index: 10;
         }
 
+        /* Mobile Drawer Logo - INCREASED SIZE */
         .m-drawer-logo {
-            height: 36px;
+            height: 50px; /* Increased from 36px to 50px */
             width: auto;
             object-fit: contain;
             display: block;
@@ -1312,7 +1338,7 @@
         <!-- Desktop Navbar -->
         <nav class="d-navbar">
             <div class="d-navbar-container">
-                <!-- Logo -->
+                <!-- Logo - INCREASED SIZE -->
                 <img class="d-navbar-logo"
                      src="https://product-ecommerces.netlify.app/vastramaya.png"
                      alt="Vastramaya Logo" />
@@ -1540,7 +1566,7 @@
                 <div class="m-menu-lines"><span></span></div>
             </button>
 
-            <!-- Logo (Centered) -->
+            <!-- Logo (Centered) - INCREASED SIZE -->
             <img class="m-logo"
                  src="https://product-ecommerces.netlify.app/vastramaya.png"
                  alt="Vastramaya Logo" />
@@ -1759,9 +1785,19 @@
     </div>
 
     <script>
+        // Cart data structure to fix calculation errors
+        const cartData = {
+            items: [
+                { id: 1, name: "Premium White T-Shirt", price: 24.99, quantity: 1 },
+                { id: 2, name: "Slim Fit Denim Jeans", price: 49.99, quantity: 1 },
+                { id: 3, name: "Pro Running Shoes", price: 89.99, quantity: 1 }
+            ]
+        };
+
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', function() {
             initUI();
+            updateCartTotal(); // Initialize cart with correct calculations
         });
 
         // --- UI INITIALIZATION ---
@@ -1882,22 +1918,26 @@
                 });
             }
 
-            // Quantity buttons functionality
+            // Quantity buttons functionality - FIXED CALCULATION
             const quantityButtons = document.querySelectorAll('.quantity-btn');
             quantityButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const item = this.closest('.cart-item');
-                    const quantityElement = item.querySelector('.quantity-value');
-                    let quantity = parseInt(quantityElement.textContent);
+                    const cartItem = this.closest('.cart-item');
+                    const itemIndex = Array.from(document.querySelectorAll('.cart-item')).indexOf(cartItem);
                     
-                    if (this.textContent === '+') {
-                        quantity++;
-                    } else if (this.textContent === '-' && quantity > 1) {
-                        quantity--;
+                    if (itemIndex !== -1 && cartData.items[itemIndex]) {
+                        if (this.textContent === '+') {
+                            cartData.items[itemIndex].quantity++;
+                        } else if (this.textContent === '-' && cartData.items[itemIndex].quantity > 1) {
+                            cartData.items[itemIndex].quantity--;
+                        }
+                        
+                        // Update display
+                        const quantityElement = cartItem.querySelector('.quantity-value');
+                        quantityElement.textContent = cartData.items[itemIndex].quantity;
+                        
+                        updateCartTotal();
                     }
-                    
-                    quantityElement.textContent = quantity;
-                    updateCartTotal();
                 });
             });
 
@@ -1920,49 +1960,50 @@
 
         function removeCartItem(button) {
             const cartItem = button.closest('.cart-item');
-            if (cartItem) {
+            const itemIndex = Array.from(document.querySelectorAll('.cart-item')).indexOf(cartItem);
+            
+            if (itemIndex !== -1) {
+                // Remove from cart data
+                cartData.items.splice(itemIndex, 1);
+                
+                // Animate removal
                 cartItem.style.opacity = '0';
                 cartItem.style.transform = 'translateX(20px)';
                 
                 setTimeout(() => {
                     cartItem.remove();
                     updateCartTotal();
-                    updateCartBadge();
                 }, 300);
             }
         }
 
         function updateCartTotal() {
-            const cartItems = document.querySelectorAll('.cart-item');
+            // Calculate total from cart data
             let total = 0;
+            let totalItems = 0;
             
-            cartItems.forEach(item => {
-                const priceText = item.querySelector('.cart-item-price').textContent;
-                const quantity = parseInt(item.querySelector('.quantity-value').textContent);
-                const price = parseFloat(priceText.replace('$', ''));
-                total += price * quantity;
+            cartData.items.forEach(item => {
+                total += item.price * item.quantity;
+                totalItems += item.quantity;
             });
             
-            // Update desktop total
+            // Update desktop total - FIXED CALCULATION
             const desktopTotal = document.querySelector('.cart-total-amount');
             if (desktopTotal) {
                 desktopTotal.textContent = `$${total.toFixed(2)}`;
             }
             
-            // Update mobile total
+            // Update mobile total - FIXED CALCULATION
             const mobileTotal = document.querySelector('.mobile-cart-total-amount');
             if (mobileTotal) {
                 mobileTotal.textContent = `$${total.toFixed(2)}`;
             }
             
             // Update cart count
-            updateCartBadge();
+            updateCartBadge(totalItems);
         }
 
-        function updateCartBadge() {
-            const cartItems = document.querySelectorAll('.cart-item');
-            const count = cartItems.length;
-            
+        function updateCartBadge(count) {
             // Update desktop badge
             const desktopBadge = document.querySelector('.cart-badge');
             if (desktopBadge) {
@@ -1998,13 +2039,13 @@
         }
 
         function checkout() {
-            const cartItems = document.querySelectorAll('.cart-item');
-            if (cartItems.length === 0) {
+            if (cartData.items.length === 0) {
                 alert('Your cart is empty!');
                 return;
             }
             
-            alert('Proceeding to checkout... Thank you for your purchase!');
+            const total = cartData.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            alert(`Proceeding to checkout with total: $${total.toFixed(2)}\nThank you for your purchase!`);
             
             // Close all cart popups
             document.getElementById('cart-popup').classList.remove('show');
