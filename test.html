@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>E-commerce Navigation Demo</title>
+    <title>Premium E-commerce with Enhanced Navigation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
             --header-height-desktop: 80px;
             --navbar-height-mobile: 70px;
             
-            /* New Color Palette based on #fefcf3 and #3f0b17 */
+            /* Cream Background Color Palette */
             --page-bg: #fefcf3;
             --text-primary: #3f0b17;
             --text-secondary: #6b422a;
@@ -20,13 +20,21 @@
             --brand-primary: #8b2635;
             --brand-secondary: #d33d49;
             --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            --progress-color: linear-gradient(90deg, #8b2635, #d33d49);
+            --progress-bg: rgba(59, 11, 23, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(139, 38, 53, 0.1);
+            --circle-bg: #fff9f0;
+            --circle-border: #e8d5c4;
             --border-subtle: #e8d5c4;
             --surface-light: #fff9f0;
             --surface-card: #fffefb;
             --surface-hover: #f9f2e3;
+            --product-card-bg: #fffefb;
             --success-color: #4a9c7d;
             --shadow-premium: 0 10px 25px -5px rgba(59, 11, 23, 0.1), 0 5px 10px -5px rgba(59, 11, 23, 0.04);
             --shadow-light: 0 2px 10px rgba(59, 11, 23, 0.05);
+            --shadow-medium: 0 8px 30px rgba(59, 11, 23, 0.12);
         }
 
         * {
@@ -39,11 +47,8 @@
             min-height: 100vh;
             background: var(--page-bg);
             font-family: "DM Sans", Roboto, sans-serif;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 20px;
-            color: var(--text-primary);
             overflow-x: hidden;
+            color: var(--text-primary);
             width: 100%;
         }
 
@@ -80,7 +85,7 @@
 
         /* Logo - INCREASED SIZE */
         .d-navbar-logo {
-            height: 60px; /* Increased from 40px to 60px */
+            height: 60px;
             width: auto;
             object-fit: contain;
         }
@@ -367,7 +372,7 @@
             stroke: var(--brand-primary);
         }
 
-        /* Desktop Cart Popup - FIXED LAYOUT */
+        /* Desktop Cart Popup */
         .cart-popup {
             position: absolute;
             top: calc(100% + 10px);
@@ -629,32 +634,573 @@
             overflow-y: auto;
             width: 100%;
             margin-top: var(--header-height-desktop);
-            padding: 40px;
         }
 
-        .d-content-container {
-            max-width: 1440px;
+        /* ============= FULL WIDTH HERO CAROUSEL ============= */
+        .hero-section {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            margin-top: var(--header-height-desktop);
+            height: calc(75vh - var(--header-height-desktop)); /* INCREASED HEIGHT */
+            min-height: 600px; /* INCREASED */
+            max-height: 750px; /* INCREASED */
+            background: var(--page-bg);
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0 auto;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 1s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+
+        .carousel-slide {
+            flex: 0 0 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Premium Image Effects */
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 12s ease-out;
+        }
+
+        .carousel-slide.active .slide-image {
+            transform: scale(1.08);
+        }
+
+        /* Glass Overlay Effect */
+        .glass-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(254, 252, 243, 0.1) 0%,
+                rgba(254, 252, 243, 0.05) 50%,
+                rgba(254, 252, 243, 0.1) 100%);
+            z-index: 1;
+        }
+
+        /* Premium Progress Indicators Container */
+        .progress-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+            padding: 12px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Individual Progress Indicator */
+        .progress-indicator {
+            width: 50px;
+            height: 3px;
+            background: var(--progress-bg);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-indicator:hover {
+            transform: scaleY(1.5);
+            background: rgba(139, 38, 53, 0.25);
+        }
+
+        .progress-indicator.active {
+            background: transparent;
+        }
+
+        /* Progress Fill Animation */
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--progress-color);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .progress-indicator.active .progress-fill {
+            box-shadow: 0 0 8px rgba(139, 38, 53, 0.4);
+        }
+
+        /* Premium Navigation Arrows */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto;
+            opacity: 0;
+            transform: translateX(-15px);
+        }
+
+        .carousel-container:hover .nav-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .nav-arrow:hover {
+            background: rgba(139, 38, 53, 0.1);
+            border-color: rgba(139, 38, 53, 0.2);
+            transform: scale(1.1) !important;
+            box-shadow: var(--shadow-light);
+        }
+
+        .nav-arrow svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+        }
+
+        .nav-arrow.next {
+            transform: translateX(15px);
+        }
+
+        .carousel-container:hover .nav-arrow.next {
+            transform: translateX(0);
+        }
+
+        /* ============= NEW ARRIVALS SECTION ============= */
+        .new-arrivals-section {
+            padding: 60px 20px;
+            background: var(--page-bg);
+            max-width: 1600px;
             margin: 0 auto;
         }
 
-        /* Demo Content */
-        .demo-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
         }
 
-        .demo-title {
+        .section-header h2 {
             font-size: 32px;
             font-weight: 700;
-            margin-bottom: 20px;
             color: var(--text-primary);
+            position: relative;
         }
 
-        .demo-text {
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--brand-primary);
+            border-radius: 2px;
+        }
+
+        /* Navigation Arrows for New Arrivals */
+        .new-arrivals-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--product-card-bg);
+            border: 1px solid var(--circle-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-btn:hover {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .nav-btn:hover svg {
+            stroke: white;
+        }
+
+        .nav-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+            transition: stroke 0.3s ease;
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-btn.disabled:hover {
+            background: var(--product-card-bg);
+            border-color: var(--circle-border);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-btn.disabled:hover svg {
+            stroke: var(--text-primary);
+        }
+
+        /* Products Container */
+        .products-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .products-grid {
+            display: flex;
+            gap: 25px;
+            padding: 20px 10px 40px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-snap-type: x mandatory;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* REMOVE HORIZONTAL SCROLLBAR ON DESKTOP */
+        @media (min-width: 769px) {
+            .products-grid::-webkit-scrollbar {
+                display: none !important;
+            }
+        }
+
+        /* Product Card */
+        .product-card {
+            flex: 0 0 auto;
+            width: 300px;
+            background: var(--product-card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            scroll-snap-align: start;
+            border: 1px solid var(--circle-border);
+            position: relative;
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-medium);
+            border-color: var(--brand-primary);
+        }
+
+        /* Product Image Container with Dual Images */
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--circle-border);
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease, transform 0.8s ease;
+        }
+
+        .default-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hover-image {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+
+        /* Image change on hover */
+        .product-card:hover .default-image {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+
+        .product-card:hover .hover-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Quick View Button */
+        .quick-view-btn {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(139, 38, 53, 0.95);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-family: "DM Sans", sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .quick-view-btn:hover {
+            background: rgba(139, 38, 53, 1);
+        }
+
+        .quick-view-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: white;
+        }
+
+        .product-card:hover .quick-view-btn {
+            transform: translateY(0);
+        }
+
+        /* Product Info */
+        .product-info {
+            padding: 15px;
+            min-height: 110px;
+        }
+
+        .product-title {
             font-size: 16px;
-            line-height: 1.6;
-            color: var(--text-secondary);
-            margin-bottom: 30px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.3;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            height: 16px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .current-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--brand-primary);
+        }
+
+        .old-price {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .add-to-cart {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--circle-bg);
+            border: 1px solid var(--circle-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .add-to-cart:hover svg {
+            stroke: white;
+        }
+
+        .add-to-cart svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+            transition: stroke 0.3s ease;
+        }
+
+        /* ============= CATEGORIES SECTION ============= */
+        .categories-section {
+            padding: 50px 20px;
+            background: var(--page-bg);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--brand-primary);
+            border-radius: 2px;
+        }
+
+        /* Desktop Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 25px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Category Item */
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .category-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--circle-bg);
+            border: 2px solid var(--circle-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-light);
+        }
+
+        .category-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .category-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            transition: color 0.3s ease;
+            line-height: 1.4;
+            padding: 0 5px;
+        }
+
+        /* Hover Effects */
+        .category-item:hover .category-circle {
+            transform: translateY(-8px);
+            border-color: var(--brand-primary);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .category-item:hover .category-circle img {
+            transform: scale(1.1);
+        }
+
+        .category-item:hover .category-name {
+            color: var(--brand-primary);
         }
 
         /* ============= MOBILE LAYOUT ============= */
@@ -697,6 +1243,7 @@
             flex-shrink: 0;
             transition: all 0.2s ease;
             z-index: 2;
+            min-width: 40px;
         }
 
         .m-menu-btn:hover {
@@ -729,46 +1276,25 @@
             bottom: 0;
         }
 
-        /* Mobile Logo - INCREASED SIZE and CENTERED */
-        /* Mobile Logo - Centered between menu button and search/cart buttons */
-/* Mobile Logo */
-.m-logo {
-    height: 50px;
-    width: auto;
-    object-fit: contain;
-    position: absolute;
-    left: calc(42.5% ); /* ADJUST THIS VALUE */
-    transform: translateX(-50%);
-}
+        /* Mobile Logo */
+        .m-logo {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            position: absolute;
+            left: calc(42.5%);
+            transform: translateX(-50%);
+        }
 
         /* Mobile Right Icons */
-        /* Mobile Right Icons */
-.m-right-icons {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 2;
-    /* Add these to prevent the icons from shifting */
-    min-width: 92px; /* Approximate width of search + cart icons + gap */
-    justify-content: flex-end;
-}
-/* Ensure menu button takes consistent space */
-.m-menu-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1px solid var(--border-subtle);
-    background: var(--surface-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-    z-index: 2;
-    /* Add this to prevent button from shrinking */
-    min-width: 40px;
-}
+        .m-right-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 2;
+            min-width: 92px;
+            justify-content: flex-end;
+        }
 
         .m-icon-btn {
             width: 40px;
@@ -822,7 +1348,7 @@
         }
 
         .m-content-inner {
-            padding: 16px;
+            padding: 0;
             max-width: 100%;
         }
 
@@ -863,7 +1389,7 @@
             transform: translateX(0);
         }
 
-        /* Drawer header - FIXED: No disappearing padding */
+        /* Drawer header */
         .m-drawer-header {
             height: 72px;
             min-height: 72px;
@@ -877,9 +1403,9 @@
             z-index: 10;
         }
 
-        /* Mobile Drawer Logo - INCREASED SIZE */
+        /* Mobile Drawer Logo */
         .m-drawer-logo {
-            height: 50px; /* Increased from 36px to 50px */
+            height: 50px;
             width: auto;
             object-fit: contain;
             display: block;
@@ -1311,6 +1837,16 @@
             .d-search-container {
                 max-width: 300px;
             }
+            
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            
+            .category-circle {
+                width: 120px;
+                height: 120px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1324,11 +1860,309 @@
             .cart-popup {
                 width: 350px;
             }
+
+            /* Mobile Hero Section - INCREASED HEIGHT */
+            .hero-section {
+                margin-top: var(--navbar-height-mobile);
+                height: calc(65vh - var(--navbar-height-mobile));
+                min-height: 450px; /* INCREASED for mobile */
+                max-height: 550px; /* INCREASED for mobile */
+            }
+
+            /* Show mobile images, hide desktop images */
+            .desktop-image { display: none !important; }
+            .mobile-image { display: block !important; }
+
+            .progress-indicators {
+                bottom: 20px;
+                gap: 10px;
+                padding: 10px 16px;
+            }
+
+            .progress-indicator {
+                width: 35px;
+                height: 2.5px;
+            }
+
+            .carousel-nav {
+                padding: 0 15px;
+            }
+
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+                transform: translateX(0) !important;
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid rgba(139, 38, 53, 0.2);
+            }
+
+            /* Adjust image zoom for mobile */
+            .carousel-slide.active .slide-image {
+                transform: scale(1.05);
+            }
+
+            /* New Arrivals Mobile */
+            .new-arrivals-section {
+                padding: 40px 10px;
+            }
+
+            .section-header {
+                padding: 0 10px;
+                margin-bottom: 30px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .nav-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .products-grid {
+                gap: 15px;
+                padding: 10px 5px 30px;
+            }
+
+            .product-card {
+                width: 280px;
+            }
+
+            /* Reset image container height for mobile */
+            .product-image-container {
+                height: 280px;
+            }
+
+            .product-info {
+                padding: 12px;
+                min-height: 100px;
+            }
+
+            .product-title {
+                font-size: 15px;
+                height: 36px;
+            }
+
+            .current-price {
+                font-size: 18px;
+            }
+
+            .old-price {
+                font-size: 13px;
+            }
+
+            /* Mobile Categories Container with Horizontal Scroll */
+            .categories-grid {
+                display: flex;
+                grid-template-columns: none;
+                gap: 20px;
+                overflow-x: auto;
+                padding: 20px 10px 40px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                scroll-behavior: smooth;
+                justify-content: flex-start;
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .categories-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .category-item {
+                flex: 0 0 auto;
+                width: 110px;
+            }
+
+            .category-circle {
+                width: 100px;
+                height: 100px;
+            }
+
+            .category-name {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+
+            /* Mobile Navigation Arrows for Categories */
+            .categories-container {
+                position: relative;
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            .scroll-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: var(--glass-bg);
+                backdrop-filter: blur(10px);
+                border: 1px solid var(--glass-border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 20;
+                transition: all 0.3s ease;
+                box-shadow: var(--shadow-light);
+            }
+
+            .scroll-arrow:hover {
+                background: rgba(139, 38, 53, 0.1);
+                border-color: var(--brand-primary);
+            }
+
+            .scroll-arrow.left {
+                left: 10px;
+            }
+
+            .scroll-arrow.right {
+                right: 10px;
+            }
+
+            .scroll-arrow svg {
+                width: 20px;
+                height: 20px;
+                stroke: var(--text-primary);
+            }
+
+            .scroll-arrow.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
         }
 
+        /* Desktop-specific adjustments */
         @media (min-width: 769px) {
-            .page-desktop { display: flex; }
-            .page-mobile { display: none; }
+            .desktop-image { display: block !important; }
+            .mobile-image { display: none !important; }
+            
+            .categories-container {
+                position: relative;
+            }
+            
+            .scroll-arrow {
+                display: none;
+            }
+
+            /* Enable mouse wheel scrolling on desktop */
+            .products-grid {
+                cursor: grab;
+                overflow-x: scroll;
+            }
+
+            .products-grid:active {
+                cursor: grabbing;
+            }
+
+            /* Prevent text selection while dragging on desktop */
+            .products-grid.dragging {
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-item {
+                width: 95px;
+            }
+            
+            .category-circle {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .category-name {
+                font-size: 12px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+
+            .product-card {
+                width: 260px;
+            }
+
+            .product-image-container {
+                height: 260px;
+            }
+        }
+
+        /* Premium Animations */
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .carousel-slide {
+            animation: slideIn 0.8s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+        }
+
+        /* Pulse animation for active indicator */
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(139, 38, 53, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 0 4px rgba(139, 38, 53, 0);
+            }
+        }
+
+        .progress-indicator.active .progress-fill {
+            animation: pulse 2s infinite;
+        }
+
+        /* Hover pause effect */
+        .carousel-container.paused .progress-fill {
+            animation-play-state: paused !important;
+        }
+
+        /* Responsive padding for sections */
+        @media (min-width: 1200px) {
+            .new-arrivals-section, .categories-section {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+        }
+
+        /* Demo Content (kept for reference but hidden) */
+        .demo-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: none; /* Hidden in production */
+        }
+
+        .demo-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .demo-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
         }
     </style>
 </head>
@@ -1338,7 +2172,7 @@
         <!-- Desktop Navbar -->
         <nav class="d-navbar">
             <div class="d-navbar-container">
-                <!-- Logo - INCREASED SIZE -->
+                <!-- Logo -->
                 <img class="d-navbar-logo"
                      src="https://product-ecommerces.netlify.app/vastramaya.png"
                      alt="Vastramaya Logo" />
@@ -1395,7 +2229,7 @@
                             <span class="cart-badge">3</span>
                         </button>
                         
-                        <!-- Cart Popup - FIXED LAYOUT -->
+                        <!-- Cart Popup -->
                         <div class="cart-popup" id="cart-popup">
                             <div class="cart-popup-header">
                                 <div class="cart-popup-title">Your Shopping Cart</div>
@@ -1537,23 +2371,402 @@
 
         <!-- Desktop Main Content -->
         <main class="d-content">
-            <div class="d-content-container">
-                <div class="demo-content">
-                    <h1 class="demo-title">Premium E-commerce Navigation</h1>
-                    <p class="demo-text">This is the desktop layout with a premium navigation bar featuring:</p>
-                    <ul class="demo-text">
-                        <li><strong>Max-width 1440px container</strong> - Centered content with proper spacing</li>
-                        <li>Logo on the left with navigation links (Home, Shop, Categories, Deals)</li>
-                        <li><strong>Premium Categories dropdown</strong> - Hover over Categories to see elegant list</li>
-                        <li>Advanced search bar with icon</li>
-                        <li>Action icons (Wishlist, Cart, Profile) on the right</li>
-                        <li><strong>Fixed Cart Popup Layout</strong> - Properly balanced header, body, and footer sections with optimized space</li>
-                        <li><strong>Profile Popup</strong> - Click profile image to see user info and navigation links</li>
-                        <li><strong>New Color Palette</strong> - Based on #fefcf3 (background) and #3f0b17 (text/icon colors)</li>
-                    </ul>
-                    <p class="demo-text">Resize your browser window to see the mobile navigation with premium cart drawer.</p>
+            <!-- Premium Hero Carousel (FULL WIDTH) -->
+            <section class="hero-section" id="hero-carousel">
+                <div class="carousel-container" id="carousel-container">
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Slide 1 -->
+                        <div class="carousel-slide active" data-slide="1">
+                            <!-- Desktop Image -->
+                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
+                                 alt="Fashion Collection 1" 
+                                 class="slide-image desktop-image">
+                            <!-- Mobile Image -->
+                            <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Fashion Collection 1" 
+                                 class="slide-image mobile-image">
+                            <div class="glass-overlay"></div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="carousel-slide" data-slide="2">
+                            <!-- Desktop Image -->
+                            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
+                                 alt="Fashion Collection 2" 
+                                 class="slide-image desktop-image">
+                            <!-- Mobile Image -->
+                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Fashion Collection 2" 
+                                 class="slide-image mobile-image">
+                            <div class="glass-overlay"></div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="carousel-slide" data-slide="3">
+                            <!-- Desktop Image -->
+                            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
+                                 alt="Fashion Collection 3" 
+                                 class="slide-image desktop-image">
+                            <!-- Mobile Image -->
+                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Fashion Collection 3" 
+                                 class="slide-image mobile-image">
+                            <div class="glass-overlay"></div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="carousel-slide" data-slide="4">
+                            <!-- Desktop Image -->
+                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
+                                 alt="Fashion Collection 4" 
+                                 class="slide-image desktop-image">
+                            <!-- Mobile Image -->
+                            <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Fashion Collection 4" 
+                                 class="slide-image mobile-image">
+                            <div class="glass-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <div class="carousel-nav">
+                        <button class="nav-arrow prev" id="carousel-prev" aria-label="Previous slide">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="nav-arrow next" id="carousel-next" aria-label="Next slide">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Progress Indicators -->
+                    <div class="progress-indicators" id="progress-indicators">
+                        <div class="progress-indicator active" data-slide="1">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-indicator" data-slide="2">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-indicator" data-slide="3">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-indicator" data-slide="4">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- New Arrivals Section -->
+            <section class="new-arrivals-section">
+                <div class="section-header">
+                    <h2>New Arrivals</h2>
+                    <div class="new-arrivals-nav">
+                        <button class="nav-btn prev-btn" id="new-arrivals-prev">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn next-btn" id="new-arrivals-next">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="products-container">
+                    <div class="products-grid" id="products-grid">
+                        <!-- Product 1 -->
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Premium Silk Saree" 
+                                     class="product-image default-image">
+                                <img src="https://images.unsplash.com/photo-1568259839926-4c4b0dc48a1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Premium Silk Saree - Back View" 
+                                     class="product-image hover-image">
+                                <button class="quick-view-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Premium Silk Saree with Golden Border</h3>
+                                <p class="product-category">Saree Collection</p>
+                                <div class="product-price">
+                                    <div class="price-container">
+                                        <span class="current-price">₹2,499</span>
+                                        <span class="old-price">₹3,499</span>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                            <path d="M3 6h18"/>
+                                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Embroidered Dress" 
+                                     class="product-image default-image">
+                                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Embroidered Dress - Side View" 
+                                     class="product-image hover-image">
+                                <button class="quick-view-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Embroidered Evening Dress</h3>
+                                <p class="product-category">Dress Collection</p>
+                                <div class="product-price">
+                                    <div class="price-container">
+                                        <span class="current-price">₹1,799</span>
+                                        <span class="old-price">₹2,499</span>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                            <path d="M3 6h18"/>
+                                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Designer Kurta Set" 
+                                     class="product-image default-image">
+                                <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Designer Kurta Set - Pattern Detail" 
+                                     class="product-image hover-image">
+                                <button class="quick-view-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Designer Kurta with Dupatta</h3>
+                                <p class="product-category">Kurta Collection</p>
+                                <div class="product-price">
+                                    <div class="price-container">
+                                        <span class="current-price">₹2,199</span>
+                                        <span class="old-price">₹2,999</span>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                            <path d="M3 6h18"/>
+                                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Gold Plated Jewelry" 
+                                     class="product-image default-image">
+                                <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Gold Plated Jewelry - Close Up" 
+                                     class="product-image hover-image">
+                                <button class="quick-view-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Gold Plated Earrings & Necklace Set</h3>
+                                <p class="product-category">Jewelry Collection</p>
+                                <div class="product-price">
+                                    <div class="price-container">
+                                        <span class="current-price">₹1,499</span>
+                                        <span class="old-price">₹2,199</span>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                            <path d="M3 6h18"/>
+                                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 5 -->
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Leather Handbag" 
+                                     class="product-image default-image">
+                                <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Leather Handbag - Interior" 
+                                     class="product-image hover-image">
+                                <button class="quick-view-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Premium Leather Handbag</h3>
+                                <p class="product-category">Bag Collection</p>
+                                <div class="product-price">
+                                    <div class="price-container">
+                                        <span class="current-price">₹3,299</span>
+                                        <span class="old-price">₹4,499</span>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                            <path d="M3 6h18"/>
+                                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 6 -->
+                        <div class="product-card">
+                            <div class="product-image-container">
+                                <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Fashion Accessories" 
+                                     class="product-image default-image">
+                                <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                     alt="Fashion Accessories - Styled" 
+                                     class="product-image hover-image">
+                                <button class="quick-view-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">Premium Fashion Accessories Set</h3>
+                                <p class="product-category">Accessory Collection</p>
+                                <div class="product-price">
+                                    <div class="price-container">
+                                        <span class="current-price">₹899</span>
+                                        <span class="old-price">₹1,299</span>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                            <path d="M3 6h18"/>
+                                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section class="categories-section">
+                <h2 class="section-title">Shop by Category</h2>
+                
+                <div class="categories-container">
+                    <button class="scroll-arrow left hidden" id="scroll-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    
+                    <div class="categories-grid" id="categories-grid">
+                        <!-- Category 1 -->
+                        <a href="#" class="category-item">
+                            <div class="category-circle">
+                                <img src="https://images.unsplash.com/photo-1568259839926-4c4b0dc48a1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Saree">
+                            </div>
+                            <div class="category-name">Saree</div>
+                        </a>
+                        
+                        <!-- Category 2 -->
+                        <a href="#" class="category-item">
+                            <div class="category-circle">
+                                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Dresses">
+                            </div>
+                            <div class="category-name">Dresses</div>
+                        </a>
+                        
+                        <!-- Category 3 -->
+                        <a href="#" class="category-item">
+                            <div class="category-circle">
+                                <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Kurtas">
+                            </div>
+                            <div class="category-name">Kurtas</div>
+                        </a>
+                        
+                        <!-- Category 4 -->
+                        <a href="#" class="category-item">
+                            <div class="category-circle">
+                                <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Jewelry">
+                            </div>
+                            <div class="category-name">Jewelry</div>
+                        </a>
+                        
+                        <!-- Category 5 -->
+                        <a href="#" class="category-item">
+                            <div class="category-circle">
+                                <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Bags">
+                            </div>
+                            <div class="category-name">Bags</div>
+                        </a>
+                        
+                        <!-- Category 6 -->
+                        <a href="#" class="category-item">
+                            <div class="category-circle">
+                                <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Accessories">
+                            </div>
+                            <div class="category-name">Accessories</div>
+                        </a>
+                    </div>
+                    
+                    <button class="scroll-arrow right" id="scroll-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -1566,7 +2779,7 @@
                 <div class="m-menu-lines"><span></span></div>
             </button>
 
-            <!-- Logo (Centered) - INCREASED SIZE -->
+            <!-- Logo (Centered) -->
             <img class="m-logo"
                  src="https://product-ecommerces.netlify.app/vastramaya.png"
                  alt="Vastramaya Logo" />
@@ -1596,18 +2809,346 @@
         <!-- Mobile Main Content -->
         <main class="m-content">
             <div class="m-content-inner">
-                <h1 class="demo-title">Mobile Premium Navigation</h1>
-                <p class="demo-text">This is the mobile layout with premium features:</p>
-                <ul class="demo-text">
-                    <li>Hamburger menu button on the left</li>
-                    <li>Centered logo with perfect alignment</li>
-                    <li>Search and cart icons on the right with badge</li>
-                    <li>Tap the menu button to open premium drawer with gradient backgrounds</li>
-                    <li><strong>Fixed Drawer Header</strong> - Logo padding is maintained even when dropdowns are opened</li>
-                    <li><strong>Categories dropdown</strong> - Tap to expand/collapse with smooth animation</li>
-                    <li><strong>Profile section at bottom</strong> - Shows profile with gradient background</li>
-                    <li><strong>Premium Cart Drawer</strong> - Tap cart icon to open premium cart from right side</li>
-                </ul>
+                <!-- Premium Hero Carousel (FULL WIDTH) - Mobile -->
+                <section class="hero-section" id="hero-carousel-mobile">
+                    <div class="carousel-container" id="carousel-container-mobile">
+                        <div class="carousel-track" id="carousel-track-mobile">
+                            <!-- Slide 1 -->
+                            <div class="carousel-slide active" data-slide="1">
+                                <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                     alt="Fashion Collection 1" 
+                                     class="slide-image mobile-image">
+                                <div class="glass-overlay"></div>
+                            </div>
+
+                            <!-- Slide 2 -->
+                            <div class="carousel-slide" data-slide="2">
+                                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                     alt="Fashion Collection 2" 
+                                     class="slide-image mobile-image">
+                                <div class="glass-overlay"></div>
+                            </div>
+
+                            <!-- Slide 3 -->
+                            <div class="carousel-slide" data-slide="3">
+                                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                     alt="Fashion Collection 3" 
+                                     class="slide-image mobile-image">
+                                <div class="glass-overlay"></div>
+                            </div>
+
+                            <!-- Slide 4 -->
+                            <div class="carousel-slide" data-slide="4">
+                                <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                     alt="Fashion Collection 4" 
+                                     class="slide-image mobile-image">
+                                <div class="glass-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <div class="carousel-nav">
+                            <button class="nav-arrow prev" id="carousel-prev-mobile" aria-label="Previous slide">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m15 18-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button class="nav-arrow next" id="carousel-next-mobile" aria-label="Next slide">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Progress Indicators -->
+                        <div class="progress-indicators" id="progress-indicators-mobile">
+                            <div class="progress-indicator active" data-slide="1">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-indicator" data-slide="2">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-indicator" data-slide="3">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-indicator" data-slide="4">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- New Arrivals Section - Mobile -->
+                <section class="new-arrivals-section">
+                    <div class="section-header">
+                        <h2>New Arrivals</h2>
+                        <div class="new-arrivals-nav">
+                            <button class="nav-btn prev-btn" id="new-arrivals-prev-mobile">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m15 18-6-6 6-6"/>
+                                </svg>
+                            </button>
+                            <button class="nav-btn next-btn" id="new-arrivals-next-mobile">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="products-container">
+                        <div class="products-grid" id="products-grid-mobile">
+                            <!-- Product 1 -->
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Premium Silk Saree" 
+                                         class="product-image default-image">
+                                    <img src="https://images.unsplash.com/photo-1568259839926-4c4b0dc48a1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Premium Silk Saree - Back View" 
+                                         class="product-image hover-image">
+                                    <button class="quick-view-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                        Quick View
+                                    </button>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-title">Premium Silk Saree with Golden Border</h3>
+                                    <p class="product-category">Saree Collection</p>
+                                    <div class="product-price">
+                                        <div class="price-container">
+                                            <span class="current-price">₹2,499</span>
+                                            <span class="old-price">₹3,499</span>
+                                        </div>
+                                        <button class="add-to-cart">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                <path d="M3 6h18"/>
+                                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 2 -->
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Embroidered Dress" 
+                                         class="product-image default-image">
+                                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Embroidered Dress - Side View" 
+                                         class="product-image hover-image">
+                                    <button class="quick-view-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                        Quick View
+                                    </button>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-title">Embroidered Evening Dress</h3>
+                                    <p class="product-category">Dress Collection</p>
+                                    <div class="product-price">
+                                        <div class="price-container">
+                                            <span class="current-price">₹1,799</span>
+                                            <span class="old-price">₹2,499</span>
+                                        </div>
+                                        <button class="add-to-cart">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                <path d="M3 6h18"/>
+                                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 3 -->
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Designer Kurta Set" 
+                                         class="product-image default-image">
+                                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Designer Kurta Set - Pattern Detail" 
+                                         class="product-image hover-image">
+                                    <button class="quick-view-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                        Quick View
+                                    </button>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-title">Designer Kurta with Dupatta</h3>
+                                    <p class="product-category">Kurta Collection</p>
+                                    <div class="product-price">
+                                        <div class="price-container">
+                                            <span class="current-price">₹2,199</span>
+                                            <span class="old-price">₹2,999</span>
+                                        </div>
+                                        <button class="add-to-cart">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                <path d="M3 6h18"/>
+                                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 4 -->
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Gold Plated Jewelry" 
+                                         class="product-image default-image">
+                                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Gold Plated Jewelry - Close Up" 
+                                         class="product-image hover-image">
+                                    <button class="quick-view-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                        Quick View
+                                    </button>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-title">Gold Plated Earrings & Necklace Set</h3>
+                                    <p class="product-category">Jewelry Collection</p>
+                                    <div class="product-price">
+                                        <div class="price-container">
+                                            <span class="current-price">₹1,499</span>
+                                            <span class="old-price">₹2,199</span>
+                                        </div>
+                                        <button class="add-to-cart">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                <path d="M3 6h18"/>
+                                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 5 -->
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Leather Handbag" 
+                                         class="product-image default-image">
+                                    <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                         alt="Leather Handbag - Interior" 
+                                         class="product-image hover-image">
+                                    <button class="quick-view-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                        Quick View
+                                    </button>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-title">Premium Leather Handbag</h3>
+                                    <p class="product-category">Bag Collection</p>
+                                    <div class="product-price">
+                                        <div class="price-container">
+                                            <span class="current-price">₹3,299</span>
+                                            <span class="old-price">₹4,499</span>
+                                        </div>
+                                        <button class="add-to-cart">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                <path d="M3 6h18"/>
+                                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categories Section - Mobile -->
+                <section class="categories-section">
+                    <h2 class="section-title">Shop by Category</h2>
+                    
+                    <div class="categories-container">
+                        <button class="scroll-arrow left hidden" id="scroll-left-mobile">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="categories-grid" id="categories-grid-mobile">
+                            <!-- Category 1 -->
+                            <a href="#" class="category-item">
+                                <div class="category-circle">
+                                    <img src="https://images.unsplash.com/photo-1568259839926-4c4b0dc48a1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Saree">
+                                </div>
+                                <div class="category-name">Saree</div>
+                            </a>
+                            
+                            <!-- Category 2 -->
+                            <a href="#" class="category-item">
+                                <div class="category-circle">
+                                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Dresses">
+                                </div>
+                                <div class="category-name">Dresses</div>
+                            </a>
+                            
+                            <!-- Category 3 -->
+                            <a href="#" class="category-item">
+                                <div class="category-circle">
+                                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Kurtas">
+                                </div>
+                                <div class="category-name">Kurtas</div>
+                            </a>
+                            
+                            <!-- Category 4 -->
+                            <a href="#" class="category-item">
+                                <div class="category-circle">
+                                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Jewelry">
+                                </div>
+                                <div class="category-name">Jewelry</div>
+                            </a>
+                            
+                            <!-- Category 5 -->
+                            <a href="#" class="category-item">
+                                <div class="category-circle">
+                                    <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Bags">
+                                </div>
+                                <div class="category-name">Bags</div>
+                            </a>
+                            
+                            <!-- Category 6 -->
+                            <a href="#" class="category-item">
+                                <div class="category-circle">
+                                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Accessories">
+                                </div>
+                                <div class="category-name">Accessories</div>
+                            </a>
+                        </div>
+                        
+                        <button class="scroll-arrow right" id="scroll-right-mobile">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </section>
             </div>
         </main>
 
@@ -1719,7 +3260,7 @@
         <!-- Overlay & Drawer -->
         <div class="m-overlay" id="m-overlay">
             <div class="m-drawer">
-                <!-- Drawer Header - FIXED: No disappearing padding -->
+                <!-- Drawer Header -->
                 <div class="m-drawer-header">
                     <img class="m-drawer-logo"
                          src="https://product-ecommerces.netlify.app/vastramaya.png"
@@ -1785,7 +3326,8 @@
     </div>
 
     <script>
-        // Cart data structure to fix calculation errors
+        // ============= NAVBAR FUNCTIONALITY =============
+        // Cart data structure
         const cartData = {
             items: [
                 { id: 1, name: "Premium White T-Shirt", price: 24.99, quantity: 1 },
@@ -1796,12 +3338,16 @@
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', function() {
-            initUI();
+            initNavbarUI();
+            initCarouselFunctionality();
+            initCategoriesScroll();
+            initNewArrivalsScroll();
+            initAddToCart();
             updateCartTotal(); // Initialize cart with correct calculations
         });
 
-        // --- UI INITIALIZATION ---
-        function initUI() {
+        // --- NAVBAR UI INITIALIZATION ---
+        function initNavbarUI() {
             // Mobile drawer functionality
             const mOverlay = document.getElementById('m-overlay');
             const mMenuToggle = document.getElementById('m-menu-toggle');
@@ -1918,7 +3464,7 @@
                 });
             }
 
-            // Quantity buttons functionality - FIXED CALCULATION
+            // Quantity buttons functionality
             const quantityButtons = document.querySelectorAll('.quantity-btn');
             quantityButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -1944,16 +3490,541 @@
             // Close all popups when pressing ESC key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    profilePopup.classList.remove('show');
-                    cartPopup.classList.remove('show');
-                    cartOverlay.classList.remove('open');
-                    mOverlay.classList.remove('open');
-                    mSearchOverlay.style.display = 'none';
+                    const profilePopup = document.getElementById('profile-popup');
+                    const cartPopup = document.getElementById('cart-popup');
+                    const cartOverlay = document.getElementById('cart-overlay');
+                    const mOverlay = document.getElementById('m-overlay');
+                    const mSearchOverlay = document.getElementById('m-search-overlay');
+                    
+                    if (profilePopup) profilePopup.classList.remove('show');
+                    if (cartPopup) cartPopup.classList.remove('show');
+                    if (cartOverlay) cartOverlay.classList.remove('open');
+                    if (mOverlay) mOverlay.classList.remove('open');
+                    if (mSearchOverlay) mSearchOverlay.style.display = 'none';
                 }
             });
         }
 
-        // --- FUNCTIONS ---
+        // ============= CAROUSEL FUNCTIONALITY =============
+        function initCarouselFunctionality() {
+            // Initialize both desktop and mobile carousels
+            initCarousel('carousel-container', 'carousel-track', 'carousel-prev', 'carousel-next', 'progress-indicators');
+            initCarousel('carousel-container-mobile', 'carousel-track-mobile', 'carousel-prev-mobile', 'carousel-next-mobile', 'progress-indicators-mobile');
+        }
+
+        function initCarousel(containerId, trackId, prevBtnId, nextBtnId, indicatorsId) {
+            const carouselContainer = document.getElementById(containerId);
+            if (!carouselContainer) return;
+            
+            const carouselTrack = document.getElementById(trackId);
+            const carouselSlides = carouselTrack.querySelectorAll('.carousel-slide');
+            const progressIndicators = document.getElementById(indicatorsId).querySelectorAll('.progress-indicator');
+            const prevButton = document.getElementById(prevBtnId);
+            const nextButton = document.getElementById(nextBtnId);
+            
+            // Carousel state variables
+            let currentSlide = 0;
+            let slideCount = carouselSlides.length;
+            let isAnimating = false;
+            const slideDuration = 5000;
+            
+            // Progress state for each slide
+            let progressStates = Array(slideCount).fill().map(() => ({
+                isActive: false,
+                progress: 0,
+                startTime: null,
+                animationFrame: null
+            }));
+            
+            // Set initial positions
+            updateCarousel();
+            
+            // Start progress for first slide
+            startProgressAnimation(currentSlide);
+            
+            // Add event listeners
+            prevButton.addEventListener('click', goToPrevSlide);
+            nextButton.addEventListener('click', goToNextSlide);
+            
+            // Indicator click navigation
+            progressIndicators.forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.getAttribute('data-slide')) - 1;
+                    if (slideIndex !== currentSlide) {
+                        goToSlide(slideIndex);
+                    }
+                });
+            });
+            
+            // Pause progress on hover, resume on unhover
+            carouselContainer.addEventListener('mouseenter', pauseProgress);
+            carouselContainer.addEventListener('mouseleave', resumeProgress);
+            
+            // Touch support for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+            let isTouching = false;
+            
+            carouselContainer.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+                isTouching = true;
+                pauseProgress();
+            }, {passive: true});
+            
+            carouselContainer.addEventListener('touchmove', function(e) {
+                if (!isTouching) return;
+                touchEndX = e.changedTouches[0].screenX;
+            }, {passive: true});
+            
+            carouselContainer.addEventListener('touchend', function(e) {
+                if (!isTouching) return;
+                
+                const swipeThreshold = 50;
+                const difference = touchStartX - touchEndX;
+                
+                if (Math.abs(difference) > swipeThreshold) {
+                    if (difference > 0) {
+                        goToNextSlide();
+                    } else {
+                        goToPrevSlide();
+                    }
+                }
+                
+                isTouching = false;
+                
+                // Resume after delay
+                setTimeout(resumeProgress, 1000);
+            }, {passive: true});
+            
+            // Update carousel display
+            function updateCarousel() {
+                // Move track to current slide
+                carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Update slide active states
+                carouselSlides.forEach((slide, index) => {
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+                
+                // Update progress indicators
+                progressIndicators.forEach((indicator, index) => {
+                    if (index === currentSlide) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                        // Reset progress for inactive indicators
+                        resetProgress(index);
+                    }
+                });
+                
+                // Reset animation flag
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 800);
+            }
+            
+            // Start progress animation for a specific slide
+            function startProgressAnimation(slideIndex) {
+                // Stop any existing animation
+                stopProgressAnimation(slideIndex);
+                
+                const indicator = progressIndicators[slideIndex];
+                const fill = indicator.querySelector('.progress-fill');
+                
+                // Reset fill
+                fill.style.transition = 'none';
+                fill.style.width = '0%';
+                
+                // Force reflow
+                fill.offsetHeight;
+                
+                // Start animation
+                fill.style.transition = `width ${slideDuration}ms linear`;
+                fill.style.width = '100%';
+                
+                // Store start time
+                progressStates[slideIndex].startTime = Date.now();
+                progressStates[slideIndex].isActive = true;
+                
+                // Set timeout to go to next slide
+                progressStates[slideIndex].animationFrame = setTimeout(() => {
+                    if (slideIndex === currentSlide && progressStates[slideIndex].isActive) {
+                        goToNextSlide();
+                    }
+                }, slideDuration);
+            }
+            
+            // Pause progress animation
+            function pauseProgress() {
+                carouselContainer.classList.add('paused');
+                
+                // Pause current slide progress
+                const currentState = progressStates[currentSlide];
+                if (currentState.isActive && currentState.startTime) {
+                    // Calculate current progress
+                    const elapsed = Date.now() - currentState.startTime;
+                    const progressPercent = Math.min(100, (elapsed / slideDuration) * 100);
+                    
+                    // Clear the timeout
+                    if (currentState.animationFrame) {
+                        clearTimeout(currentState.animationFrame);
+                    }
+                    
+                    // Store progress
+                    currentState.progress = progressPercent;
+                    currentState.isActive = false;
+                    
+                    // Set current width
+                    const fill = progressIndicators[currentSlide].querySelector('.progress-fill');
+                    fill.style.transition = 'none';
+                    fill.style.width = progressPercent + '%';
+                }
+            }
+            
+            // Resume progress animation
+            function resumeProgress() {
+                carouselContainer.classList.remove('paused');
+                
+                const currentState = progressStates[currentSlide];
+                if (!currentState.isActive && currentState.progress > 0 && currentState.progress < 100) {
+                    // Calculate remaining time
+                    const remainingTime = slideDuration * (1 - currentState.progress / 100);
+                    
+                    // Get the fill element
+                    const fill = progressIndicators[currentSlide].querySelector('.progress-fill');
+                    
+                    // Reset transition
+                    fill.style.transition = `width ${remainingTime}ms linear`;
+                    fill.style.width = '100%';
+                    
+                    // Store new start time
+                    currentState.startTime = Date.now() - (slideDuration * (currentState.progress / 100));
+                    currentState.isActive = true;
+                    
+                    // Set new timeout
+                    currentState.animationFrame = setTimeout(() => {
+                        if (currentSlide === currentSlide && currentState.isActive) {
+                            goToNextSlide();
+                        }
+                    }, remainingTime);
+                }
+            }
+            
+            // Stop progress animation for a specific slide
+            function stopProgressAnimation(slideIndex) {
+                const state = progressStates[slideIndex];
+                if (state.animationFrame) {
+                    clearTimeout(state.animationFrame);
+                }
+                state.isActive = false;
+                state.startTime = null;
+                state.animationFrame = null;
+            }
+            
+            // Reset progress for a specific slide
+            function resetProgress(slideIndex) {
+                const fill = progressIndicators[slideIndex].querySelector('.progress-fill');
+                fill.style.transition = 'none';
+                fill.style.width = '0%';
+                
+                progressStates[slideIndex] = {
+                    isActive: false,
+                    progress: 0,
+                    startTime: null,
+                    animationFrame: null
+                };
+            }
+            
+            // Go to specific slide
+            function goToSlide(slideIndex) {
+                if (isAnimating) return;
+                
+                isAnimating = true;
+                
+                // Stop current progress
+                stopProgressAnimation(currentSlide);
+                
+                // Update current slide
+                currentSlide = slideIndex;
+                
+                // Loop back to beginning if at end
+                if (currentSlide >= slideCount) {
+                    currentSlide = 0;
+                }
+                
+                // Loop to end if before beginning
+                if (currentSlide < 0) {
+                    currentSlide = slideCount - 1;
+                }
+                
+                // Update carousel
+                updateCarousel();
+                
+                // Start progress for new slide
+                startProgressAnimation(currentSlide);
+            }
+            
+            // Go to next slide
+            function goToNextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+            
+            // Go to previous slide
+            function goToPrevSlide() {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        // ============= CATEGORIES SCROLL FUNCTIONALITY =============
+        function initCategoriesScroll() {
+            // Initialize both desktop and mobile categories
+            initCategories('categories-grid', 'scroll-left', 'scroll-right');
+            initCategories('categories-grid-mobile', 'scroll-left-mobile', 'scroll-right-mobile');
+        }
+
+        function initCategories(gridId, leftBtnId, rightBtnId) {
+            const categoriesGrid = document.getElementById(gridId);
+            const scrollLeftBtn = document.getElementById(leftBtnId);
+            const scrollRightBtn = document.getElementById(rightBtnId);
+            
+            if (!categoriesGrid || !scrollLeftBtn || !scrollRightBtn) return;
+            
+            // Only add scroll functionality on mobile
+            if (window.innerWidth <= 768) {
+                const scrollAmount = 150;
+                
+                scrollLeftBtn.addEventListener('click', () => {
+                    categoriesGrid.scrollBy({
+                        left: -scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+                
+                scrollRightBtn.addEventListener('click', () => {
+                    categoriesGrid.scrollBy({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+                
+                // Update arrow visibility based on scroll position
+                categoriesGrid.addEventListener('scroll', updateCategoriesArrowVisibility);
+                
+                // Initial check
+                updateCategoriesArrowVisibility();
+                
+                function updateCategoriesArrowVisibility() {
+                    const scrollLeft = categoriesGrid.scrollLeft;
+                    const scrollWidth = categoriesGrid.scrollWidth;
+                    const clientWidth = categoriesGrid.clientWidth;
+                    
+                    // Show/hide left arrow
+                    if (scrollLeft <= 10) {
+                        scrollLeftBtn.classList.add('hidden');
+                    } else {
+                        scrollLeftBtn.classList.remove('hidden');
+                    }
+                    
+                    // Show/hide right arrow
+                    if (scrollLeft + clientWidth >= scrollWidth - 10) {
+                        scrollRightBtn.classList.add('hidden');
+                    } else {
+                        scrollRightBtn.classList.remove('hidden');
+                    }
+                }
+            }
+        }
+
+        // ============= NEW ARRIVALS SCROLL FUNCTIONALITY =============
+        function initNewArrivalsScroll() {
+            // Initialize both desktop and mobile new arrivals
+            initNewArrivals('products-grid', 'new-arrivals-prev', 'new-arrivals-next');
+            initNewArrivals('products-grid-mobile', 'new-arrivals-prev-mobile', 'new-arrivals-next-mobile');
+        }
+
+        function initNewArrivals(gridId, prevBtnId, nextBtnId) {
+            const productsGrid = document.getElementById(gridId);
+            const newArrivalsPrevBtn = document.getElementById(prevBtnId);
+            const newArrivalsNextBtn = document.getElementById(nextBtnId);
+            
+            if (!productsGrid || !newArrivalsPrevBtn || !newArrivalsNextBtn) return;
+            
+            const scrollAmount = 325; // Card width + gap
+            
+            // Scroll with buttons
+            newArrivalsPrevBtn.addEventListener('click', () => {
+                productsGrid.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+            
+            newArrivalsNextBtn.addEventListener('click', () => {
+                productsGrid.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Update button states based on scroll position
+            productsGrid.addEventListener('scroll', updateNewArrivalsArrows);
+            
+            // Mouse wheel scrolling for desktop - IMPROVED
+            if (window.innerWidth >= 769) {
+                let isDragging = false;
+                let startX;
+                let scrollLeft;
+                
+                // Prevent text selection during drag
+                function preventTextSelection(e) {
+                    if (isDragging) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+                
+                productsGrid.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    startX = e.pageX - productsGrid.offsetLeft;
+                    scrollLeft = productsGrid.scrollLeft;
+                    productsGrid.style.cursor = 'grabbing';
+                    productsGrid.classList.add('dragging');
+                    
+                    // Prevent text selection during drag
+                    document.addEventListener('selectstart', preventTextSelection);
+                });
+                
+                productsGrid.addEventListener('mouseleave', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        productsGrid.style.cursor = 'grab';
+                        productsGrid.classList.remove('dragging');
+                        document.removeEventListener('selectstart', preventTextSelection);
+                    }
+                });
+                
+                productsGrid.addEventListener('mouseup', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        productsGrid.style.cursor = 'grab';
+                        productsGrid.classList.remove('dragging');
+                        document.removeEventListener('selectstart', preventTextSelection);
+                    }
+                });
+                
+                productsGrid.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const x = e.pageX - productsGrid.offsetLeft;
+                    const walk = (x - startX) * 2; // Scroll multiplier
+                    productsGrid.scrollLeft = scrollLeft - walk;
+                });
+                
+                // Mouse wheel scrolling
+                productsGrid.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    productsGrid.scrollLeft += e.deltaY;
+                });
+            }
+            
+            // Touch scrolling for mobile
+            let touchStartX = 0;
+            let touchScrollLeft = 0;
+            
+            productsGrid.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].pageX;
+                touchScrollLeft = productsGrid.scrollLeft;
+            }, { passive: true });
+            
+            productsGrid.addEventListener('touchmove', (e) => {
+                if (!touchStartX) return;
+                const touchX = e.touches[0].pageX;
+                const walk = (touchX - touchStartX) * 1.5;
+                productsGrid.scrollLeft = touchScrollLeft - walk;
+            }, { passive: true });
+            
+            productsGrid.addEventListener('touchend', () => {
+                touchStartX = 0;
+            }, { passive: true });
+            
+            // Initial check
+            updateNewArrivalsArrows();
+            
+            function updateNewArrivalsArrows() {
+                const scrollLeft = productsGrid.scrollLeft;
+                const scrollWidth = productsGrid.scrollWidth;
+                const clientWidth = productsGrid.clientWidth;
+                
+                // Update prev button
+                if (scrollLeft <= 10) {
+                    newArrivalsPrevBtn.classList.add('disabled');
+                } else {
+                    newArrivalsPrevBtn.classList.remove('disabled');
+                }
+                
+                // Update next button
+                if (scrollLeft + clientWidth >= scrollWidth - 10) {
+                    newArrivalsNextBtn.classList.add('disabled');
+                } else {
+                    newArrivalsNextBtn.classList.remove('disabled');
+                }
+            }
+        }
+
+        // ============= ADD TO CART FUNCTIONALITY =============
+        function initAddToCart() {
+            // Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const productTitle = productCard.querySelector('.product-title').textContent;
+                    const productPrice = productCard.querySelector('.current-price').textContent;
+                    
+                    // Add visual feedback
+                    this.style.backgroundColor = 'var(--brand-primary)';
+                    this.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    `;
+                    
+                    // Reset after animation
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                        this.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                <path d="M3 6h18"/>
+                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                            </svg>
+                        `;
+                    }, 1000);
+                    
+                    console.log(`Added to cart: ${productTitle} - ${productPrice}`);
+                });
+            });
+            
+            // Quick View functionality
+            const quickViewButtons = document.querySelectorAll('.quick-view-btn');
+            quickViewButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    const productTitle = productCard.querySelector('.product-title').textContent;
+                    const productPrice = productCard.querySelector('.current-price').textContent;
+                    
+                    // Show quick view modal
+                    alert(`Quick View: ${productTitle}\nPrice: ${productPrice}\n\nDetailed product view would open here with more information, images, and options.`);
+                });
+            });
+        }
+
+        // ============= NAVBAR FUNCTIONS =============
         function openWishlist() {
             alert('Opening wishlist...');
         }
@@ -1987,13 +4058,13 @@
                 totalItems += item.quantity;
             });
             
-            // Update desktop total - FIXED CALCULATION
+            // Update desktop total
             const desktopTotal = document.querySelector('.cart-total-amount');
             if (desktopTotal) {
                 desktopTotal.textContent = `$${total.toFixed(2)}`;
             }
             
-            // Update mobile total - FIXED CALCULATION
+            // Update mobile total
             const mobileTotal = document.querySelector('.mobile-cart-total-amount');
             if (mobileTotal) {
                 mobileTotal.textContent = `$${total.toFixed(2)}`;
@@ -2048,12 +4119,20 @@
             alert(`Proceeding to checkout with total: $${total.toFixed(2)}\nThank you for your purchase!`);
             
             // Close all cart popups
-            document.getElementById('cart-popup').classList.remove('show');
-            document.getElementById('cart-overlay').classList.remove('open');
+            const cartPopup = document.getElementById('cart-popup');
+            const cartOverlay = document.getElementById('cart-overlay');
+            if (cartPopup) cartPopup.classList.remove('show');
+            if (cartOverlay) cartOverlay.classList.remove('open');
         }
 
-        // Initialize cart total on load
-        updateCartTotal();
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            // Re-initialize categories scroll on resize
+            initCategoriesScroll();
+            
+            // Re-initialize new arrivals scroll
+            initNewArrivalsScroll();
+        });
     </script>
 </body>
 </html>
