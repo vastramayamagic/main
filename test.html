@@ -39,42 +39,37 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Roboto, sans-serif; overflow-x: hidden; color: var(--text-primary); width: 100%; }
 
-        /* Desktop Layout */
-        .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
+        /* ... [KEEPING PREVIOUS CSS UNTOUCHED] ... */
+        /* Paste the previous CSS here. I will only add the NEW CSS for the Login Modal below */
         
+        /* === PREVIOUS CSS START === */
+        .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
         .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
         .d-navbar-container { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
         .d-navbar-logo { height: 60px; width: auto; object-fit: contain; }
-        
         .d-nav-links { display: flex; align-items: center; gap: 32px; margin: 0 40px; }
         .d-nav-link { font-size: 15px; font-weight: 600; color: var(--text-primary); text-decoration: none; padding: 8px 0; position: relative; transition: color 0.2s ease; white-space: nowrap; }
         .d-nav-link:hover, .d-nav-link.active { color: var(--brand-primary); }
         .d-nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--brand-primary); border-radius: 1px; }
-
         .d-categories-dropdown { position: relative; }
         .d-categories-content { position: absolute; top: 100%; left: -20px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 0; min-width: 220px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 100; }
         .d-categories-dropdown:hover .d-categories-content { opacity: 1; visibility: visible; transform: translateY(0); }
         .d-category-item { display: block; padding: 12px 24px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; }
         .d-category-item:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 28px; }
-
         .d-search-container { flex: 1; max-width: 400px; position: relative; }
         .d-search-bar { width: 100%; padding: 12px 16px 12px 44px; border: 1px solid var(--border-subtle); border-radius: 10px; background: var(--surface-light); font-family: "DM Sans", sans-serif; font-size: 14px; color: var(--text-primary); outline: none; transition: all 0.2s ease; }
         .d-search-bar:focus { background: var(--surface-card); border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
         .d-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-light); width: 18px; height: 18px; }
-
         .d-action-icons { display: flex; align-items: center; gap: 20px; }
         .d-icon-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
         .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
+        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); transition: stroke 0.2s ease; }
         .d-icon-btn:hover svg { stroke: var(--brand-primary); }
-
         .cart-badge { position: absolute; top: -6px; right: -6px; background: var(--brand-primary); color: white; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
-
         .d-profile-dropdown { position: relative; }
         .d-profile-btn { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; border: 2px solid var(--border-subtle); cursor: pointer; transition: all 0.2s ease; }
         .d-profile-btn:hover { border-color: var(--brand-primary); transform: translateY(-1px); }
         .d-profile-img { width: 100%; height: 100%; object-fit: cover; }
-
         .profile-popup { position: absolute; top: calc(100% + 10px); right: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 20px; min-width: 280px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 1000; }
         .profile-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .profile-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
@@ -82,11 +77,10 @@
         .profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
         .profile-email { font-size: 14px; color: var(--text-light); }
         .profile-links { display: flex; flex-direction: column; gap: 8px; }
-        .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; }
+        .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
         .profile-link:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 20px; transform: translateX(2px); }
         .admin-link-btn { background-color: var(--text-primary); color: white !important; border: 1px solid var(--text-primary); }
         .admin-link-btn:hover { background-color: transparent; color: var(--text-primary) !important; }
-
         .cart-popup { position: absolute; top: calc(100% + 10px); right: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 16px; width: 420px; max-height: 520px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 1000; display: flex; flex-direction: column; overflow: hidden; }
         .cart-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .cart-popup-header { padding: 20px; border-bottom: 1px solid var(--border-subtle); background: var(--surface-light); flex-shrink: 0; }
@@ -112,10 +106,7 @@
         .buy-btn { width: 100%; padding: 14px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .buy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139, 38, 53, 0.3); }
         .empty-cart-msg { text-align: center; padding: 2rem; color: var(--text-light); }
-
         .d-content { flex: 1; background: var(--page-bg); overflow-y: auto; width: 100%; padding-top: var(--header-height-desktop); margin-top: 0; }
-
-        /* Hero */
         .hero-section { width: 100%; position: relative; overflow: hidden; margin-top: 0; height: 85vh; min-height: 700px; max-height: 900px; background: var(--page-bg); }
         .carousel-container { position: relative; width: 100%; height: 100%; overflow: hidden; margin: 0 auto; box-shadow: var(--shadow-medium); }
         .carousel-track { display: flex; height: 100%; transition: transform 1s cubic-bezier(0.33, 1, 0.68, 1); }
@@ -123,7 +114,6 @@
         .slide-image { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; transition: transform 12s ease-out; }
         .carousel-slide.active .slide-image { transform: scale(1.08); }
         .glass-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(254, 252, 243, 0.1) 0%, rgba(254, 252, 243, 0.05) 50%, rgba(254, 252, 243, 0.1) 100%); z-index: 1; }
-
         .progress-indicators { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 10; padding: 12px 20px; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 100px; box-shadow: var(--shadow-light); }
         .progress-indicator { width: 50px; height: 3px; background: var(--progress-bg); border-radius: 2px; position: relative; overflow: hidden; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .progress-indicator:hover { transform: scaleY(1.5); background: rgba(139, 38, 53, 0.25); }
@@ -131,7 +121,6 @@
         .progress-fill { position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--progress-color); border-radius: 2px; }
         .progress-indicator.active .progress-fill { animation: fillProgress 5s linear forwards; }
         @keyframes fillProgress { from { width: 0%; } to { width: 100%; } }
-
         .carousel-nav { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 30px; z-index: 10; pointer-events: none; }
         .nav-arrow { width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto; opacity: 0; transform: translateX(-15px); }
         .carousel-container:hover .nav-arrow { opacity: 1; transform: translateX(0); }
@@ -139,29 +128,22 @@
         .nav-arrow.next { transform: translateX(15px); }
         .carousel-container:hover .nav-arrow.next { transform: translateX(0); }
         .nav-arrow svg { width: 24px; height: 24px; stroke: var(--text-primary); stroke-width: 2; }
-
-        /* Shared Product Sections - Tightened Padding */
         .best-sellers-section, .category-products-section, .categories-section { padding: 30px 40px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
-        
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 0; }
         .section-header h2 { font-size: 32px; font-weight: 700; color: var(--text-primary); position: relative; margin: 0; }
         .section-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 50px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
-        
         .section-header-right { display: flex; align-items: center; gap: 20px; }
         .view-more-link { font-size: 14px; font-weight: 600; color: var(--brand-primary); text-decoration: none; transition: all 0.2s; white-space: nowrap; border-bottom: 1px solid transparent; }
         .view-more-link:hover { border-bottom-color: var(--brand-primary); }
-
         .section-nav, .new-arrivals-nav { display: flex; gap: 12px; }
         .nav-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--product-card-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .nav-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); box-shadow: var(--shadow-medium); }
         .nav-btn:hover svg { stroke: white; }
         .nav-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 2; transition: stroke 0.3s ease; }
         .nav-btn.disabled { opacity: 0.3; cursor: not-allowed; }
-
         .products-container { position: relative; overflow: hidden; }
         .products-grid { display: flex; gap: 25px; padding: 10px 5px 30px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; scroll-snap-type: x mandatory; }
         .products-grid::-webkit-scrollbar { display: none !important; }
-
         .product-card { flex: 0 0 auto; width: 300px; background: var(--product-card-bg); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-light); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); scroll-snap-align: start; border: 1px solid var(--circle-border); position: relative; cursor: pointer; }
         .product-card:hover { box-shadow: var(--shadow-medium); border-color: var(--brand-primary); }
         .product-image-container { position: relative; width: 100%; height: 320px; overflow: hidden; border-bottom: 1px solid var(--circle-border); }
@@ -170,12 +152,10 @@
         .hover-image { opacity: 0; transform: scale(1.05); }
         .product-card:hover .default-image { opacity: 0; transform: scale(1.05); }
         .product-card:hover .hover-image { opacity: 1; transform: scale(1); }
-        
         .quick-view-btn { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(139, 38, 53, 0.95); color: white; padding: 12px 20px; border: none; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; gap: 8px; z-index: 2; }
         .quick-view-btn:hover { background: rgba(139, 38, 53, 1); }
         .quick-view-btn svg { width: 16px; height: 16px; stroke: white; }
         .product-card:hover .quick-view-btn { transform: translateY(0); }
-
         .product-info { padding: 15px; min-height: 110px; }
         .product-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
         .product-category { font-size: 12px; color: var(--text-light); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; height: 16px; overflow: hidden; }
@@ -183,21 +163,15 @@
         .price-container { display: flex; align-items: center; gap: 8px; }
         .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
-        
-        /* Wishlist Icon Top Right */
         .wishlist-btn-top-right { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-subtle); box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; z-index: 10; transition: all 0.2s ease; }
         .wishlist-btn-top-right:hover { transform: scale(1.1); background: #fff; }
         .wishlist-btn-top-right svg { width: 18px; height: 18px; stroke: var(--brand-primary); fill: none; }
-
         .add-to-cart { width: 40px; height: 40px; border-radius: 10px; background: var(--circle-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 5; }
         .add-to-cart:hover { background: var(--brand-primary); border-color: var(--brand-primary); }
         .add-to-cart:hover svg { stroke: white; }
         .add-to-cart svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.3s ease; }
-
-        /* Shop by Category - Centered Title */
         .categories-section .section-title { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 30px; color: var(--text-primary); position: relative; }
         .categories-section .section-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
-        
         .categories-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 25px; justify-content: center; max-width: 1200px; margin: 0 auto; }
         .category-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .category-circle { width: 140px; height: 140px; border-radius: 50%; background: var(--circle-bg); border: 2px solid var(--circle-border); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-light); }
@@ -222,15 +196,12 @@
         .m-icon-btn:hover { background: var(--surface-hover); }
         .m-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; }
         .mobile-cart-badge { position: absolute; top: -4px; right: -4px; background: var(--brand-primary); color: white; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
-
         .m-content { flex: 1; background: var(--page-bg); padding-top: var(--navbar-height-mobile); padding-bottom: 20px; width: 100%; overflow-x: hidden; margin-top: 0; }
         .m-content-inner { padding: 0; max-width: 100%; }
-
         .m-overlay { position: fixed; inset: 0; background: rgba(59, 11, 23, 0.3); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.25s ease-out; z-index: 2000; }
         .m-overlay.open { opacity: 1; pointer-events: auto; }
         .m-drawer { position: absolute; left: 0; top: 0; width: 320px; max-width: 90vw; height: 100%; background: var(--surface-card); display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.25s ease-out; overflow-y: auto; box-shadow: 2px 0 20px rgba(59, 11, 23, 0.1); }
         .m-overlay.open .m-drawer { transform: translateX(0); }
-        
         .m-drawer-header { height: 72px; min-height: 72px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--surface-card); position: relative; z-index: 10; }
         .m-drawer-logo { height: 50px; width: auto; object-fit: contain; display: block; }
         .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; }
@@ -239,7 +210,6 @@
         .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; border-radius: 999px; background: var(--text-primary); }
         .m-drawer-close-icon::before { transform: rotate(45deg); }
         .m-drawer-close-icon::after { transform: rotate(-45deg); }
-
         .m-drawer-nav { padding: 20px 0; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
         .nav-section { padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
         .nav-section:last-child { border-bottom: none; margin-bottom: 0; }
@@ -247,7 +217,6 @@
         .m-nav-link { display: flex; align-items: center; height: 48px; padding: 0 24px; margin: 2px 0; color: var(--text-primary); text-decoration: none; font-size: 16px; font-weight: 500; transition: background 0.15s ease; border-radius: 0; }
         .m-nav-link:hover { background: var(--surface-hover); }
         .m-nav-link.active { color: var(--brand-primary); background: linear-gradient(135deg, #fdf2f4 0%, #fbe9eb 100%); border-right: 3px solid var(--brand-primary); }
-
         .m-categories-dropdown { margin: 2px 0; }
         .m-categories-toggle { display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 24px; color: var(--text-primary); font-size: 16px; font-weight: 500; cursor: pointer; transition: background 0.15s ease; border-radius: 0; }
         .m-categories-toggle:hover { background: var(--surface-hover); }
@@ -258,19 +227,16 @@
         .m-categories-content.show { display: block; }
         .m-category-item { display: block; height: 44px; padding: 0 24px; color: var(--text-light); text-decoration: none; font-size: 15px; font-weight: 400; border-radius: 8px; transition: all 0.15s ease; display: flex; align-items: center; }
         .m-category-item:hover { background: var(--surface-hover); color: var(--brand-primary); }
-
         .m-drawer-profile { padding: 20px 24px; border-top: 1px solid var(--border-subtle); background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-hover) 100%); margin-top: auto; flex-shrink: 0; }
         .m-profile-header { display: flex; align-items: center; gap: 12px; }
         .m-profile-img { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; border: 2px solid var(--surface-card); box-shadow: 0 2px 8px rgba(59, 11, 23, 0.1); }
         .m-profile-info { flex: 1; }
         .m-profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
         .m-profile-email { font-size: 14px; color: var(--text-light); }
-
         .m-search-overlay { position: fixed; inset: 0; background: var(--surface-card); z-index: 4000; display: none; flex-direction: column; }
         .m-search-header { height: 72px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; padding: 0 16px; gap: 12px; }
         .m-search-input { flex: 1; padding: 14px; border: 1px solid var(--border-subtle); border-radius: 10px; font-family: "DM Sans", sans-serif; font-size: 16px; color: var(--text-primary); outline: none; background: var(--surface-light); }
         .m-search-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
         .cart-overlay { position: fixed; inset: 0; background: rgba(59, 11, 23, 0.3); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.25s ease-out; z-index: 3000; }
         .cart-overlay.open { opacity: 1; pointer-events: auto; }
         .cart-drawer { position: absolute; right: 0; top: 0; width: 380px; max-width: 90vw; height: 100%; background: var(--surface-card); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.25s ease-out; overflow-y: auto; box-shadow: -2px 0 20px rgba(59, 11, 23, 0.1); }
@@ -334,7 +300,6 @@
             .scroll-arrow.hidden { opacity: 0; pointer-events: none; }
             .quick-view-btn { display: none !important; }
             
-            /* 2-column grid for newly added category sections ONLY */
             .category-products-section .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 0 10px; overflow-x: visible; }
             .category-products-section .product-card { width: 100%; flex: none; border-radius: 12px; }
             .category-products-section .product-image-container { height: 200px; }
@@ -443,10 +408,27 @@
             .btn-mobile-buy { flex: 1.2; height: 48px; background: var(--brand-gradient); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
         }
 
+        /* Popups */
         .promo-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .promo-popup-content { background: white; width: 90%; max-width: 400px; border-radius: 16px; overflow: hidden; position: relative; box-shadow: var(--shadow-modal); animation: popUp 0.4s ease; }
         @keyframes popUp { from {transform: scale(0.9); opacity:0;} to {transform: scale(1); opacity:1;} }
         .promo-close { position: absolute; top: 10px; right: 10px; background: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #ddd; }
+
+        /* Login Modal */
+        .login-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(40, 10, 15, 0.6); backdrop-filter: blur(6px); z-index: 6000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-modal-overlay.active { opacity: 1; visibility: visible; }
+        .login-content { background: var(--page-bg); width: 100%; max-width: 400px; border-radius: 20px; box-shadow: var(--shadow-modal); overflow: hidden; position: relative; padding: 30px; transform: translateY(20px); transition: transform 0.3s ease; }
+        .login-modal-overlay.active .login-content { transform: translateY(0); }
+        .login-title { font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; text-align: center; }
+        .login-subtitle { font-size: 14px; color: var(--text-light); margin-bottom: 24px; text-align: center; }
+        .login-input { width: 100%; padding: 14px 16px; border: 1px solid var(--border-subtle); border-radius: 10px; background: white; font-family: "DM Sans", sans-serif; font-size: 16px; margin-bottom: 16px; outline: none; transition: border-color 0.2s; }
+        .login-input:focus { border-color: var(--brand-primary); }
+        .login-btn { width: 100%; padding: 14px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+        .login-btn:hover { box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); transform: translateY(-1px); }
+        .login-step { display: none; flex-direction: column; }
+        .login-step.active { display: flex; }
+        .login-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-light); background: transparent; border: none; font-size: 24px; line-height: 1; }
+        .login-close:hover { background: rgba(0,0,0,0.05); }
 
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 3000; pointer-events: none; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 1rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 1rem; border-left: 4px solid #8b2635; min-width: 300px; pointer-events: auto; }
@@ -454,6 +436,38 @@
     </style>
 </head>
 <body>
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="login-modal">
+        <div class="login-content">
+            <button class="login-close" onclick="closeLoginModal()">&times;</button>
+            <div id="recaptcha-container"></div>
+            
+            <!-- Step 1: Phone -->
+            <div class="login-step active" id="step-phone">
+                <h2 class="login-title">Welcome Back</h2>
+                <p class="login-subtitle">Enter your mobile number to continue</p>
+                <input type="tel" class="login-input" id="phone-input" placeholder="+91 9876543210">
+                <button class="login-btn" onclick="sendOTP()">Get OTP</button>
+            </div>
+
+            <!-- Step 2: OTP -->
+            <div class="login-step" id="step-otp">
+                <h2 class="login-title">Verify OTP</h2>
+                <p class="login-subtitle">Enter the code sent to your phone</p>
+                <input type="number" class="login-input" id="otp-input" placeholder="123456">
+                <button class="login-btn" onclick="verifyOTP()">Verify</button>
+            </div>
+
+            <!-- Step 3: Name -->
+            <div class="login-step" id="step-name">
+                <h2 class="login-title">Almost There</h2>
+                <p class="login-subtitle">Please enter your full name</p>
+                <input type="text" class="login-input" id="name-input" placeholder="Your Name">
+                <button class="login-btn" onclick="saveUserName()">Continue</button>
+            </div>
+        </div>
+    </div>
+
     <div class="page-desktop">
         <nav class="d-navbar">
             <div class="d-navbar-container">
@@ -509,7 +523,7 @@
                                 </div>
                             </div>
                             <div class="profile-links" id="profile-links-container">
-                                <a href="admin.html" id="login-link" class="profile-link">Sign In</a>
+                                <a href="#" id="login-link" class="profile-link" onclick="openLoginModal()">Sign In</a>
                             </div>
                         </div>
                     </div>
@@ -628,6 +642,11 @@
                         </div>
                     </div>
                 </nav>
+                
+                <!-- Mobile Login Button at bottom of drawer -->
+                <div class="m-drawer-profile" id="mobile-drawer-profile">
+                    <button class="login-btn" onclick="openLoginModal()">Login / Sign Up</button>
+                </div>
             </div>
         </div>
 
@@ -738,6 +757,7 @@
         let activeProduct = null;
         let cart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
         let galleryInterval;
+        let confirmationResult = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             initNavbarUI();
@@ -750,39 +770,160 @@
             loadPopup();
             renderCart();
             initCategoriesScroll();
-            initNewArrivalsScroll();
+            setupLogin();
         });
+
+        function setupLogin() {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                'size': 'invisible'
+            });
+        }
+
+        function openLoginModal() {
+            document.getElementById('login-modal').classList.add('active');
+            // Reset to step 1
+            document.querySelectorAll('.login-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-phone').classList.add('active');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.remove('active');
+        }
+
+        function sendOTP() {
+            let phoneNumber = document.getElementById('phone-input').value.trim();
+            if (!phoneNumber) return showToast("Please enter phone number");
+            
+            // Auto-add country code if missing
+            if (!phoneNumber.startsWith('+')) {
+                phoneNumber = '+91' + phoneNumber;
+            }
+
+            const appVerifier = window.recaptchaVerifier;
+            
+            auth.signInWithPhoneNumber(phoneNumber, appVerifier)
+                .then((result) => {
+                    confirmationResult = result;
+                    document.getElementById('step-phone').classList.remove('active');
+                    document.getElementById('step-otp').classList.add('active');
+                    showToast("OTP Sent!");
+                }).catch((error) => {
+                    console.error(error);
+                    showToast("Error sending OTP");
+                    // Reset recaptcha
+                    window.recaptchaVerifier.render().then(function(widgetId) {
+                      grecaptcha.reset(widgetId);
+                    });
+                });
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById('otp-input').value.trim();
+            if (!otp) return showToast("Please enter OTP");
+
+            confirmationResult.confirm(otp).then((result) => {
+                const user = result.user;
+                // Check if user has a name in Firestore
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if (doc.exists && doc.data().name) {
+                        // User exists and has name
+                        closeLoginModal();
+                        showToast("Login Successful");
+                    } else {
+                        // New user or no name, show name step
+                        document.getElementById('step-otp').classList.remove('active');
+                        document.getElementById('step-name').classList.add('active');
+                    }
+                });
+            }).catch((error) => {
+                showToast("Invalid OTP");
+            });
+        }
+
+        function saveUserName() {
+            const name = document.getElementById('name-input').value.trim();
+            if (!name) return showToast("Please enter your name");
+
+            const user = auth.currentUser;
+            if (user) {
+                user.updateProfile({
+                    displayName: name
+                }).then(() => {
+                    // Save to Firestore
+                    db.collection('users').doc(user.uid).set({
+                        name: name,
+                        phone: user.phoneNumber,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true });
+                    
+                    closeLoginModal();
+                    showToast("Welcome " + name);
+                    checkAuth(); // Refresh UI
+                });
+            }
+        }
 
         function checkAuth() {
             auth.onAuthStateChanged(user => {
                 if (user) {
-                    const name = user.displayName || user.email.split('@')[0];
+                    // Logged In State
+                    const name = user.displayName || "User";
+                    const email = user.email || user.phoneNumber; // Fallback for phone auth users
+                    
+                    // Desktop Profile Update
                     document.getElementById('user-name').textContent = name;
-                    document.getElementById('user-email').textContent = user.email;
-                    document.getElementById('user-avatar').src = user.photoURL || `https://ui-avatars.com/api/?name=${name}&background=8b2635&color=fff`;
+                    document.getElementById('user-email').textContent = email;
+                    // Keep random avatar for now or fetch from DB if you store it
                     
                     document.getElementById('login-link').textContent = "Sign Out";
-                    document.getElementById('login-link').href = "#";
                     document.getElementById('login-link').onclick = (e) => {
                         e.preventDefault();
                         auth.signOut();
                     };
 
+                    // Mobile Drawer Update - Replace "Login" button with Profile Info
+                    const mobileProfileHtml = `
+                        <div class="m-profile-header">
+                            <img class="m-profile-img" src="https://ui-avatars.com/api/?name=${name}&background=8b2635&color=fff" alt="Profile" />
+                            <div class="m-profile-info">
+                                <div class="m-profile-name">${name}</div>
+                                <div class="m-profile-email">${email}</div>
+                            </div>
+                        </div>
+                        <div style="margin-top:15px">
+                             <button class="login-btn" onclick="firebase.auth().signOut()" style="padding:10px; font-size:14px; background:#f5f5f5; color:#333; border:1px solid #ddd;">Sign Out</button>
+                        </div>
+                    `;
+                    document.getElementById('mobile-drawer-profile').innerHTML = mobileProfileHtml;
+
+                    // Admin Check (Only if email matches)
                     if (user.email === ADMIN_EMAIL) {
                         const adminBtn = document.createElement('a');
                         adminBtn.href = "admin.html";
                         adminBtn.className = "profile-link admin-link-btn";
                         adminBtn.innerHTML = `Admin Dashboard`;
-                        document.getElementById('profile-links-container').prepend(adminBtn);
-
+                        
+                        // Check if already appended to avoid duplicates
+                        if (!document.querySelector('.admin-link-btn')) {
+                            document.getElementById('profile-links-container').prepend(adminBtn);
+                        }
                         document.getElementById('mobile-admin-link').style.display = 'flex';
                         document.getElementById('mobile-admin-link').href = "admin.html";
                     }
                 } else {
+                    // Guest State
                     document.getElementById('user-name').textContent = "Guest";
-                    document.getElementById('login-link').textContent = "Sign In / Admin";
-                    document.getElementById('login-link').href = "admin.html";
+                    document.getElementById('user-email').textContent = "Sign in to sync";
+                    document.getElementById('login-link').textContent = "Sign In";
+                    document.getElementById('login-link').onclick = openLoginModal; // Desktop click triggers modal
+
+                    // Mobile Drawer - Show Login Button
+                    document.getElementById('mobile-drawer-profile').innerHTML = `<button class="login-btn" onclick="openLoginModal()">Login / Sign Up</button>`;
+                    
                     document.getElementById('mobile-admin-link').style.display = 'none';
+                    if (document.querySelector('.admin-link-btn')) {
+                        document.querySelector('.admin-link-btn').remove();
+                    }
                 }
             });
         }
@@ -893,6 +1034,9 @@
                         <div class="product-image-container">
                             <img src="${img1}" class="product-image default-image">
                             <img src="${img2}" class="product-image hover-image">
+                            <button class="wishlist-btn-top-right" onclick="event.stopPropagation(); alert('Added to Wishlist!')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                </button>
                             <button class="quick-view-btn" onclick="event.stopPropagation(); openProductModal('${p.id}', 'quickview')">Quick View</button>
                         </div>
                         <div class="product-info">
@@ -904,9 +1048,6 @@
                                     <span class="old-price">₹${p.oldPrice || (p.price * 1.2).toFixed(0)}</span>
                                 </div>
                                 <div style="display: flex; gap: 8px; align-items: center;">
-                                    <button class="add-to-cart" style="background-color: #fff; border-color: #e8d5c4;" onclick="event.stopPropagation(); alert('Added to Wishlist!')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3f0b17" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                                    </button>
                                     <button class="add-to-cart" onclick="event.stopPropagation(); openProductModal('${p.id}', 'cart')">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                                     </button>
