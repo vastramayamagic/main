@@ -39,6 +39,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Roboto, sans-serif; overflow-x: hidden; color: var(--text-primary); width: 100%; }
 
+        /* Desktop Layout */
         .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
         
         .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
@@ -64,7 +65,7 @@
         .d-action-icons { display: flex; align-items: center; gap: 20px; }
         .d-icon-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
         .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
+        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); transition: stroke 0.2s ease; }
         .d-icon-btn:hover svg { stroke: var(--brand-primary); }
 
         .cart-badge { position: absolute; top: -6px; right: -6px; background: var(--brand-primary); color: white; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
@@ -138,11 +139,12 @@
         .carousel-container:hover .nav-arrow.next { transform: translateX(0); }
         .nav-arrow svg { width: 24px; height: 24px; stroke: var(--text-primary); stroke-width: 2; }
 
-        .new-arrivals-section { padding: 60px 20px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
+        /* Reusable Section Styles */
+        .category-products-section, .new-arrivals-section { padding: 60px 20px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding: 0 20px; }
         .section-header h2 { font-size: 32px; font-weight: 700; color: var(--text-primary); position: relative; }
         .section-header h2::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 60px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
-        .new-arrivals-nav { display: flex; gap: 15px; }
+        .section-nav { display: flex; gap: 15px; }
         .nav-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--product-card-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .nav-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); box-shadow: var(--shadow-medium); }
         .nav-btn:hover svg { stroke: white; }
@@ -175,11 +177,10 @@
         .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
         
-        .product-actions-row { display: flex; gap: 8px; position: relative; z-index: 5; }
-        .icon-action-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--circle-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
-        .icon-action-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); }
-        .icon-action-btn:hover svg { stroke: white; }
-        .icon-action-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.3s ease; fill: none; }
+        .add-to-cart { width: 40px; height: 40px; border-radius: 10px; background: var(--circle-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 5; }
+        .add-to-cart:hover { background: var(--brand-primary); border-color: var(--brand-primary); }
+        .add-to-cart:hover svg { stroke: white; }
+        .add-to-cart svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.3s ease; }
 
         .categories-section { padding: 50px 20px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 40px; color: var(--text-primary); position: relative; }
@@ -294,7 +295,7 @@
             .carousel-nav { padding: 0 15px; pointer-events: auto; }
             .nav-arrow { width: 40px; height: 40px; opacity: 1; transform: translateX(0) !important; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(139, 38, 53, 0.2); }
             .carousel-slide.active .slide-image { transform: scale(1.05); }
-            .new-arrivals-section { padding: 40px 10px; }
+            .new-arrivals-section, .category-products-section { padding: 40px 10px; }
             .section-header { padding: 0 10px; margin-bottom: 30px; }
             .section-header h2 { font-size: 28px; }
             .nav-btn { width: 44px; height: 44px; }
@@ -345,7 +346,7 @@
         
         @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(139, 38, 53, 0.4); } 50% { box-shadow: 0 0 0 4px rgba(139, 38, 53, 0); } }
         
-        @media (min-width: 1200px) { .new-arrivals-section, .categories-section { padding-left: 40px; padding-right: 40px; } }
+        @media (min-width: 1200px) { .new-arrivals-section, .categories-section, .category-products-section { padding-left: 40px; padding-right: 40px; } }
 
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(40, 10, 15, 0.6); backdrop-filter: blur(6px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -378,18 +379,19 @@
         .swatch img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
         .swatch.active { border-color: var(--brand-primary); }
         .size-selector { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
-        .size-btn { min-width: 48px; height: 44px; padding: 0 10px; background: white; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; }
+        .size-btn { min-width: 48px; height: 44px; padding: 0 10px; background: white; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; cursor: pointer; }
         .size-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
         .size-btn.active { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
         .qty-wrapper { display: inline-flex; align-items: center; justify-content: space-between; background: white; border: 1px solid var(--border-subtle); border-radius: 8px; height: 44px; width: 130px; margin-bottom: 30px; }
         .qty-btn { width: 40px; height: 100%; background: transparent; border: none; font-size: 20px; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; }
         .qty-val { font-weight: 600; font-size: 15px; }
         .actions-desktop { display: flex; gap: 16px; margin-bottom: 30px; }
-        .btn-main, .btn-secondary { height: 52px; border-radius: 10px; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; }
+        .btn-main, .btn-secondary { height: 52px; border-radius: 10px; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; cursor: pointer; }
         .btn-secondary { flex: 1; background: white; border: 1px solid var(--border-subtle); color: var(--text-primary); }
         .btn-secondary:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
         .btn-main { flex: 1.5; background: var(--brand-gradient); color: white; border: none; box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
+
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
         @media (max-width: 1024px) {
@@ -405,7 +407,7 @@
             .btn-close-modal { top: 16px; right: 16px; background: rgba(255,255,255,0.9); backdrop-filter: blur(4px); width: 36px; height: 36px; }
             .modal-container { display: block; padding: 0; padding-bottom: 90px; }
             .gallery-wrapper, .actions-desktop { display: none; }
-            .mobile-gallery { display: flex; position: relative; width: 100%; height: 480px; background: #f5f5f5; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+            .mobile-gallery { display: flex; position: relative; width: 100%; height: 420px; background: #f5f5f5; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
             .mobile-gallery::-webkit-scrollbar { display: none; }
             .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
             .product-details { padding: 24px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; }
@@ -413,8 +415,8 @@
             .modal-price-current { font-size: 24px; }
             .price-block { margin-bottom: 20px; border: none; padding-bottom: 0; }
             .mobile-actions-bar { display: flex; position: absolute; bottom: 0; left: 0; right: 0; background: white; padding: 12px 20px; gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 100; }
-            .btn-mobile-cart { flex: 1; height: 48px; background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); border-radius: 8px; font-weight: 600; }
-            .btn-mobile-buy { flex: 1.2; height: 48px; background: var(--brand-gradient); color: white; border: none; border-radius: 8px; font-weight: 600; }
+            .btn-mobile-cart { flex: 1; height: 48px; background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); border-radius: 8px; font-weight: 600; cursor: pointer; }
+            .btn-mobile-buy { flex: 1.2; height: 48px; background: var(--brand-gradient); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
         }
 
         .promo-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
@@ -522,6 +524,8 @@
                     <div class="categories-grid" id="categories-grid"></div>
                 </div>
             </section>
+            
+            <div id="dynamic-category-sections"></div>
         </main>
     </div>
 
@@ -570,6 +574,8 @@
                         <button class="scroll-arrow right" id="scroll-right-mobile"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
                     </div>
                 </section>
+                
+                <div id="dynamic-category-sections-mobile"></div>
             </div>
         </main>
 
@@ -636,8 +642,7 @@
                         <div class="thumbnails" id="thumbContainer"></div>
                         <div class="main-stage"><img id="mainImage" src="" alt="Product"></div>
                     </div>
-                    <div class="mobile-gallery" id="mobileGallery">
-                    </div>
+                    <div class="mobile-gallery" id="mobileGallery"></div>
                     <div class="product-details">
                         <div class="product-header"><h1 class="modal-product-title" id="productTitle"></h1></div>
                         <div class="price-block">
@@ -710,6 +715,7 @@
             loadHero();
             loadCategories().then(() => {
                 loadProducts();
+                loadCategorySections();
             });
             loadPopup();
             renderCart();
@@ -853,10 +859,7 @@
                                     <span class="current-price">₹${p.price}</span>
                                     <span class="old-price">₹${p.oldPrice || (p.price * 1.2).toFixed(0)}</span>
                                 </div>
-                                <div class="product-actions-row">
-                                    <div class="icon-action-btn" onclick="event.stopPropagation(); alert('Wishlist feature coming soon!')"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg></div>
-                                    <div class="icon-action-btn add-to-cart" onclick="event.stopPropagation(); openProductModal('${p.id}', 'cart')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg></div>
-                                </div>
+                                <button class="add-to-cart" onclick="event.stopPropagation(); openProductModal('${p.id}', 'cart')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
                             </div>
                         </div>
                     </div>`;
@@ -867,6 +870,84 @@
                 document.getElementById('products-grid-mobile').innerHTML = html;
 
             } catch (e) { console.error("Product Error:", e); }
+        }
+
+        async function loadCategorySections() {
+            try {
+                const sectionDoc = await db.collection('landingPage').doc('Sections').get();
+                if (!sectionDoc.exists) return;
+                
+                const sectionsData = sectionDoc.data().categories || [];
+                const sortedCategories = [];
+                
+                sectionsData.forEach(sectionItem => {
+                    const cat = allCategories.find(c => c.id === sectionItem.id && c.enabled !== false);
+                    if (cat && sectionItem.enabled !== false) {
+                        sortedCategories.push(cat);
+                    }
+                });
+                
+                const desktopContainer = document.getElementById('dynamic-category-sections');
+                const mobileContainer = document.getElementById('dynamic-category-sections-mobile');
+                
+                for (const cat of sortedCategories) {
+                    const products = allProducts.filter(p => 
+                        p.category === cat.name && 
+                        p.isAvailable !== false
+                    ).slice(0, 6);
+                    
+                    if (products.length === 0) continue;
+                    
+                    const renderCard = (p) => {
+                        const img1 = (p.images && p.images[0]) || 'https://via.placeholder.com/300';
+                        const img2 = (p.images && p.images[1]) || img1;
+                        return `
+                        <div class="product-card" onclick="window.location.href='view.html?id=${p.id}'">
+                            <div class="product-image-container">
+                                <img src="${img1}" class="product-image default-image">
+                                <img src="${img2}" class="product-image hover-image">
+                                <button class="quick-view-btn" onclick="event.stopPropagation(); openProductModal('${p.id}', 'quickview')">Quick View</button>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">${p.name}</h3>
+                                <p class="product-category">${p.category}</p>
+                                <div class="product-price">
+                                    <div class="price-container">
+                                        <span class="current-price">₹${p.price}</span>
+                                        <span class="old-price">₹${p.oldPrice || (p.price * 1.2).toFixed(0)}</span>
+                                    </div>
+                                    <button class="add-to-cart" onclick="event.stopPropagation(); openProductModal('${p.id}', 'cart')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
+                                </div>
+                            </div>
+                        </div>`;
+                    };
+                    
+                    const sectionHtml = `
+                    <section class="category-products-section">
+                        <div class="section-header">
+                            <h2>${cat.name}</h2>
+                            <div class="section-nav">
+                                <button class="nav-btn prev-btn" id="prev-${cat.id}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                                <button class="nav-btn next-btn" id="next-${cat.id}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                            </div>
+                        </div>
+                        <div class="products-container">
+                            <div class="products-grid" id="grid-${cat.id}">
+                                ${products.map(renderCard).join('')}
+                            </div>
+                        </div>
+                    </section>`;
+                    
+                    if (desktopContainer) desktopContainer.insertAdjacentHTML('beforeend', sectionHtml);
+                    if (mobileContainer) mobileContainer.insertAdjacentHTML('beforeend', sectionHtml);
+                    
+                    // Init scroll for this section
+                    setTimeout(() => {
+                        initProductScroll(`grid-${cat.id}`, `prev-${cat.id}`, `next-${cat.id}`);
+                    }, 100);
+                }
+                
+            } catch (e) { console.error("Section Error:", e); }
         }
 
         window.openProductModal = function(id, mode) {
@@ -897,7 +978,6 @@
                 });
                 selectVariant(0);
             } else {
-                // If no variants, use main images
                 updateGallery(product.images || []);
                 ['S', 'M', 'L', 'XL', 'XXL'].forEach(size => {
                     const btn = document.createElement('button');
@@ -955,51 +1035,32 @@
             const mainImg = document.getElementById('mainImage');
             const thumbContainer = document.getElementById('thumbContainer');
             const mobileGallery = document.getElementById('mobileGallery');
-            
-            // Clear existing intervals
             if (galleryInterval) clearInterval(galleryInterval);
 
-            // 1. Desktop Thumbnails & Main Image
-            if (images.length > 0) {
-                mainImg.src = images[0];
-                thumbContainer.innerHTML = images.map((src, i) => 
-                    `<div class="thumb ${i===0?'active':''}" onclick="setMainImage('${src}', this)"><img src="${src}"></div>`
-                ).join('');
-            } else {
-                mainImg.src = 'https://via.placeholder.com/400';
-                thumbContainer.innerHTML = '';
-            }
-
-            // 2. Mobile Gallery (Scrollable Container)
+            mainImg.src = images[0] || 'https://via.placeholder.com/400';
+            thumbContainer.innerHTML = images.map((src, i) => `<div class="thumb ${i===0?'active':''}" onclick="setMainImage('${src}', this)"><img src="${src}"></div>`).join('');
             mobileGallery.innerHTML = images.map(src => `<img src="${src}">`).join('');
 
-            // 3. Auto-change Logic (4 seconds)
+            // Mobile scroll handling for gallery is done via CSS (scroll-snap)
+
             if (images.length > 1) {
                 let currentIndex = 0;
                 galleryInterval = setInterval(() => {
                     currentIndex = (currentIndex + 1) % images.length;
-                    
-                    // Update Desktop Main Image
                     mainImg.style.opacity = 0;
-                    setTimeout(() => {
-                        mainImg.src = images[currentIndex];
-                        mainImg.style.opacity = 1;
+                    setTimeout(() => { 
+                        mainImg.src = images[currentIndex]; 
+                        mainImg.style.opacity = 1; 
                     }, 200);
                     
-                    // Update Thumbnails
-                    const thumbs = document.querySelectorAll('.thumb');
-                    thumbs.forEach((t, i) => {
-                        if (i === currentIndex) t.classList.add('active');
+                    document.querySelectorAll('.thumb').forEach((t, i) => { 
+                        if(i === currentIndex) t.classList.add('active');
                         else t.classList.remove('active');
                     });
-
-                    // Scroll Mobile Gallery
-                    if (mobileGallery) {
+                    
+                    if(mobileGallery) {
                         const imgWidth = mobileGallery.offsetWidth;
-                        mobileGallery.scrollTo({
-                            left: currentIndex * imgWidth,
-                            behavior: 'smooth'
-                        });
+                        mobileGallery.scrollTo({ left: currentIndex * imgWidth, behavior: 'smooth' });
                     }
                 }, 4000);
             }
@@ -1009,7 +1070,6 @@
             document.getElementById('mainImage').src = src;
             document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-            // Reset interval on user interaction
             if (galleryInterval) clearInterval(galleryInterval);
         }
 
@@ -1079,6 +1139,28 @@
                 curr = (curr + 1) % count;
                 update();
             }, intervalTime);
+            
+            // Allow manual scroll on mobile
+            if (id.includes('mobile')) {
+                let startX = 0;
+                let isDragging = false;
+                
+                track.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].pageX;
+                    isDragging = true;
+                }, {passive: true});
+                
+                track.addEventListener('touchend', (e) => {
+                    if (!isDragging) return;
+                    const diff = startX - e.changedTouches[0].pageX;
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) curr = (curr + 1) % count;
+                        else curr = (curr - 1 + count) % count;
+                        update();
+                    }
+                    isDragging = false;
+                }, {passive: true});
+            }
         }
 
         function initNavbarUI() {
