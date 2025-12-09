@@ -7,374 +7,522 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-    /* =========================================
-       PREMIUM DESIGN SYSTEM
-       ========================================= */
-    :root {
-        --page-bg: #fefcf3;
-        --card-bg: #ffffff;
-        --text-primary: #3f0b17;
-        --text-secondary: #6b422a;
-        --text-light: #a3715f;
-        
-        --brand-primary: #8b2635;
-        --brand-secondary: #d33d49;
-        --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
-        
-        --green-success: #4a9c7d;
-        --green-bg: #e6f4ea;
-        --red-warning: #c62828;
-        --red-bg: #ffebee;
-        
-        --border-subtle: #e8d5c4;
-        --surface-light: #fff9f0;
-        --surface-hover: #f9f2e3;
-        
-        --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
-        --font-main: 'DM Sans', sans-serif;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-    body {
-        font-family: var(--font-main);
-        background-color: var(--page-bg);
-        color: var(--text-primary);
-        line-height: 1.5;
-        min-height: 100vh;
-        padding-bottom: 0; 
-    }
-
-    body.no-scroll { overflow: hidden; }
-
-    /* --- PREMIUM CLOSE BUTTON --- */
-    .premium-close-btn {
-        width: 40px; height: 40px; border-radius: 10px;
-        border: 1px solid var(--border-subtle); background: var(--surface-light);
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; transition: all 0.2s ease;
-        position: absolute; top: 20px; right: 20px; z-index: 20;
-    }
-    .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
-    
-    .close-icon-lines { width: 14px; height: 14px; position: relative; }
-    .close-icon-lines::before, .close-icon-lines::after {
-        content: ""; position: absolute; inset: 0; margin: auto;
-        width: 14px; height: 2px; border-radius: 999px;
-        background: var(--text-primary); transition: background 0.2s;
-    }
-    .close-icon-lines::before { transform: rotate(45deg); }
-    .close-icon-lines::after { transform: rotate(-45deg); }
-    .premium-close-btn:hover .close-icon-lines::before,
-    .premium-close-btn:hover .close-icon-lines::after { background: var(--brand-primary); }
-
-    /* Header */
-    header {
-        background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-        padding: 15px 0; border-bottom: 1px solid var(--border-subtle);
-        text-align: center; position: sticky; top: 0; z-index: 100;
-    }
-    .logo img { height: 50px; display: block; margin: 0 auto; object-fit: contain; }
-
-    /* Layout */
-    .container {
-        max-width: 1100px; margin: 0 auto; padding: 40px 20px;
-        display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px;
-    }
-
-    h1 { font-family: var(--font-main); font-size: 26px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
-    p.sub-head { color: var(--text-secondary); margin-bottom: 30px; font-size: 15px; }
-    h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; opacity: 0.9; font-weight: 700; color: var(--text-light); }
-
-    /* --- ADDRESS CARD --- */
-    .address-card {
-        background: var(--card-bg); border: 1px solid var(--border-subtle);
-        border-radius: 16px; padding: 24px; margin-bottom: 30px;
-        display: flex; gap: 15px; cursor: pointer; position: relative;
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 10px rgba(59, 11, 23, 0.03);
-    }
-    .address-card:hover { box-shadow: var(--shadow-rich); border-color: var(--brand-primary); transform: translateY(-2px); }
-    
-    /* FIX APPLIED HERE: Added width fit-content and adjusted padding */
-    .addr-type-tag {
-        background: var(--surface-hover); 
-        color: var(--brand-primary);
-        font-size: 10px; 
-        font-weight: 700; 
-        padding: 3px 8px; /* Tighter padding */
-        border-radius: 6px; 
-        text-transform: uppercase; 
-        letter-spacing: 0.5px;
-        margin-bottom: 8px; 
-        display: inline-block;
-        width: fit-content; /* Ensure background clips to text width */
-    }
-
-    .address-details strong { display: block; font-size: 18px; margin-bottom: 6px; color: var(--text-primary); }
-    .address-details span { font-size: 15px; color: var(--text-secondary); line-height: 1.5; display: block;}
-    .address-details .phone { font-size: 14px; color: var(--text-light); margin-top: 6px; }
-    
-    .change-btn { 
-        color: var(--brand-primary); font-weight: 700; font-size: 13px; 
-        text-transform: uppercase; margin-left: auto; cursor: pointer; 
-        align-self: flex-start; padding: 8px 16px; background: var(--surface-light); 
-        border: 1px solid var(--border-subtle); border-radius: 8px; transition: 0.2s;
-    }
-    .change-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
-
-    /* Payment UI */
-    .payment-option {
-        padding: 24px; border-radius: 16px; margin-bottom: 15px;
-        display: flex; align-items: center; gap: 18px; position: relative;
-        cursor: pointer; background: var(--card-bg); transition: all 0.2s ease;
-        border: 1px solid var(--border-subtle); overflow: hidden; 
-    }
-    .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
-    .best-value-badge {
-        position: absolute; top: 0; right: 0; background: var(--green-success); color: white;
-        font-size: 11px; font-weight: 700; padding: 6px 14px;
-        border-bottom-left-radius: 12px; letter-spacing: 0.5px; z-index: 2;
-    }
-    input[type="radio"] {
-        appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; 
-        border-radius: 50%; margin-right: 5px; position: relative; transition: 0.2s; flex-shrink: 0;
-    }
-    input[type="radio"]:checked { border-color: var(--brand-primary); background: #fff; }
-    input[type="radio"]:checked::after {
-        content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        width: 12px; height: 12px; background: var(--brand-primary); border-radius: 50%;
-    }
-    .pay-text { flex: 1; }
-    .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
-    .pay-sub { font-size: 14px; color: var(--text-secondary); display: block; }
-    .save-badge {
-        display: inline-block; background: var(--green-bg); color: var(--green-success); 
-        font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 20px; 
-        margin-left: 8px; border: 1px solid rgba(74, 156, 125, 0.3); animation: pulse-green 2s infinite;
-    }
-    .fee-warning {
-        display: block; margin-top: 6px; font-weight: 700; font-size: 13px;
-        color: var(--red-warning); background: var(--red-bg);
-        padding: 4px 12px; border-radius: 6px; width: fit-content;
-    }
-    @keyframes pulse-green {
-        0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); }
-        70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); }
-    }
-
-    /* Order Summary */
-    .order-box {
-        background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
-        border: 1px solid #fff; padding: 30px; border-radius: 16px;
-        box-shadow: var(--shadow-rich); position: sticky; top: 90px;
-    }
-    .product { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
-    .prod-img { 
-        width: 70px; height: 90px; object-fit: cover; 
-        border-radius: 8px; border: 1px solid var(--border-subtle);
-        box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05);
-    }
-    .prod-info h4 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); font-weight: 600; line-height: 1.4; }
-    .prod-info p { font-size: 13px; color: var(--text-light); }
-    .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
-    .total-row { 
-        display: flex; justify-content: space-between; margin-top: 24px; 
-        padding-top: 24px; border-top: 1px dashed var(--border-subtle);
-        font-weight: 700; font-size: 20px; color: var(--text-primary);
-    }
-    .total-row span:last-child { color: var(--brand-primary); font-size: 24px; }
-    .text-green { color: var(--green-success); font-weight: 700; }
-    .text-red { color: var(--red-warning); font-weight: 700; }
-    .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
-
-    /* --- DESKTOP BUTTON --- */
-    .btn-main {
-        width: 100%; padding: 16px; background: var(--brand-gradient);
-        color: white; border: none; border-radius: 12px;
-        font-size: 16px; font-weight: 600; margin-top: 25px;
-        cursor: pointer; transition: all 0.3s ease; 
-        display: flex; justify-content: center; align-items: center; gap: 10px;
-        position: relative; overflow: hidden;
-        box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3);
-    }
-    .btn-main::before {
-        content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-        opacity: 0; transition: opacity 0.3s ease;
-    }
-    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); }
-    .btn-main:hover::before { opacity: 1; }
-
-    /* --- MOBILE BOTTOM BAR --- */
-    .mobile-bottom-bar { display: none; }
-
-    /* --- MODALS --- */
-    .modal-overlay {
-        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px);
-        z-index: 2000; justify-content: center; align-items: center; padding: 20px;
-    }
-    .modal-card {
-        background: #fff; border-radius: 20px; width: 100%; max-width: 500px;
-        box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative; display: flex; flex-direction: column;
-        max-height: 85vh; border: 1px solid var(--border-subtle);
-    }
-    .modal-header { padding: 25px 30px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; background: var(--surface-light); border-radius: 20px 20px 0 0; position: relative; }
-    .modal-body { padding: 30px; overflow-y: auto; flex: 1; }
-    .modal-footer { padding: 20px 30px; border-top: 1px solid var(--border-subtle); background: #fff; border-radius: 0 0 20px 20px; flex-shrink: 0; }
-    
-    @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-    .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 20px; }
-    .full-width { grid-column: span 2; }
-    .modal-input {
-        width: 100%; padding: 14px; border: 1px solid var(--border-subtle); border-radius: 10px;
-        font-family: var(--font-main); font-size: 15px; background: var(--page-bg); color: var(--text-primary); transition: 0.2s;
-    }
-    .modal-input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
-    .modal-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-    .addr-type-container { display: flex; gap: 10px; margin-top: 5px; }
-    .addr-chip-input { display: none; }
-    .addr-chip-label {
-        padding: 12px 20px; border: 1px solid var(--border-subtle); border-radius: 10px;
-        font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-secondary); 
-        background: #fff; transition: 0.2s; flex: 1; text-align: center;
-    }
-    .addr-chip-input:checked + .addr-chip-label { background: var(--surface-hover); border-color: var(--brand-primary); color: var(--brand-primary); font-weight: 700; }
-
-    .psych-content { text-align: center; padding: 40px; }
-    .modal-icon-lg { 
-        width: 80px; height: 80px; background: var(--surface-hover); border-radius: 50%; 
-        display: flex; align-items: center; justify-content: center; font-size: 36px; 
-        color: var(--brand-primary); margin: 0 auto 20px; 
-    }
-    .psych-content h3 { font-size: 22px; color: var(--text-primary); margin-bottom: 10px; }
-    .psych-content p { color: var(--text-secondary); font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
-
-    .btn-green-modal {
-        background: var(--green-success); color: white; width: 100%; padding: 16px;
-        border: none; border-radius: 12px; font-weight: 600; font-size: 16px;
-        cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(74, 156, 125, 0.3); transition: 0.2s;
-    }
-    .btn-green-modal:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74, 156, 125, 0.4); }
-    .btn-outline-modal {
-        background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary);
-        width: 100%; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px;
-        cursor: pointer; transition: 0.2s;
-    }
-    .btn-outline-modal:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
-
-    #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--page-bg); z-index: 5000; justify-content: center; align-items: center; text-align: center; flex-direction: column;}
-    .success-icon { font-size: 60px; color: var(--brand-primary); margin-bottom: 20px; animation: bounce 1s; }
-    @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
-
-    /* =========================================
-       MOBILE RESPONSIVE ADJUSTMENTS
-       ========================================= */
-    @media (max-width: 900px) {
-        .container { display: flex; flex-direction: column; gap: 30px; }
-        .order-box { position: static; border: none; background: white; padding: 20px; }
-        
-        body { padding-bottom: 110px; }
-
-        /* Hide desktop button */
-        .btn-main { display: none; }
-
-        /* Mobile Bottom Bar */
-        .mobile-bottom-bar {
-            display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
-            border-top: 1px solid var(--border-subtle); padding: 12px 20px 20px 20px;
-            z-index: 900; box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        :root {
+            --header-height-desktop: 80px;
+            --navbar-height-mobile: 70px;
+            --page-bg: #fefcf3;
+            --card-bg: #ffffff;
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --text-light: #a3715f;
+            --brand-primary: #8b2635;
+            --brand-secondary: #d33d49;
+            --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            --progress-color: #8b2635;
+            --progress-bg: rgba(59, 11, 23, 0.15);
+            --green-success: #4a9c7d;
+            --green-bg: #e6f4ea;
+            --red-warning: #c62828;
+            --red-bg: #ffebee;
+            --border-subtle: #e8d5c4;
+            --surface-light: #fff9f0;
+            --surface-card: #fffefb;
+            --surface-hover: #f9f2e3;
+            --shadow-premium: 0 10px 25px -5px rgba(59, 11, 23, 0.1), 0 5px 10px -5px rgba(59, 11, 23, 0.04);
+            --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
+            --shadow-light: 0 2px 10px rgba(59, 11, 23, 0.05);
+            --shadow-modal: 0 25px 50px -12px rgba(63, 11, 23, 0.25);
+            --font-main: 'DM Sans', sans-serif;
         }
 
-        /* PREMIUM MOBILE BUTTON */
-        .btn-mobile-fixed {
-            width: 100%; 
-            height: 56px;
-            padding: 0 24px;
-            background: var(--brand-gradient);
-            color: white; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            border-radius: 30px; /* Pill Shape */
-            font-size: 17px; 
-            font-weight: 700; 
-            cursor: pointer;
-            box-shadow: 0 10px 25px -5px rgba(139, 38, 53, 0.5); /* Rich Shadow */
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            gap: 12px;
-            position: relative; 
-            overflow: hidden;
-            letter-spacing: 0.5px;
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { min-height: 100vh; background: var(--page-bg); font-family: var(--font-main); overflow-x: hidden; color: var(--text-primary); width: 100%; }
+        body.no-scroll { overflow: hidden; }
+
+        /* --- FULL NAVBAR STYLES (Restored from Index) --- */
+        .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
+        .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
+        .d-navbar-container { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .d-navbar-logo { height: 60px; width: auto; object-fit: contain; cursor: pointer; }
+        
+        .d-nav-links { display: flex; align-items: center; gap: 32px; margin: 0 40px; }
+        .d-nav-link { font-size: 15px; font-weight: 600; color: var(--text-primary); text-decoration: none; padding: 8px 0; position: relative; transition: color 0.2s ease; white-space: nowrap; }
+        .d-nav-link:hover, .d-nav-link.active { color: var(--brand-primary); }
+        .d-nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--brand-primary); border-radius: 1px; }
+
+        .d-categories-dropdown { position: relative; }
+        .d-categories-content { position: absolute; top: 100%; left: -20px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 0; min-width: 220px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 100; }
+        .d-categories-dropdown:hover .d-categories-content { opacity: 1; visibility: visible; transform: translateY(0); }
+        .d-category-item { display: block; padding: 12px 24px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; }
+        .d-category-item:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 28px; }
+
+        .d-search-container { flex: 1; max-width: 400px; position: relative; }
+        .d-search-bar { width: 100%; padding: 12px 16px 12px 44px; border: 1px solid var(--border-subtle); border-radius: 10px; background: var(--surface-light); font-family: "DM Sans", sans-serif; font-size: 14px; color: var(--text-primary); outline: none; transition: all 0.2s ease; }
+        .d-search-bar:focus { background: var(--surface-card); border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
+        .d-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-light); width: 18px; height: 18px; }
+
+        .d-action-icons { display: flex; align-items: center; gap: 20px; }
+        .d-icon-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; text-decoration: none; color: inherit; }
+        .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); transform: translateY(-1px); }
+        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
+        .d-icon-btn:hover svg { stroke: var(--brand-primary); }
+
+        .d-profile-dropdown { position: relative; }
+        .d-profile-btn { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; border: 2px solid var(--border-subtle); cursor: pointer; transition: all 0.2s ease; }
+        .d-profile-btn:hover { border-color: var(--brand-primary); transform: translateY(-1px); }
+        .d-profile-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .profile-popup { position: absolute; top: calc(100% + 10px); right: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 20px; min-width: 280px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 1000; }
+        .profile-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .profile-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+        .profile-info { flex: 1; }
+        .profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
+        .profile-email { font-size: 14px; color: var(--text-light); }
+        .profile-links { display: flex; flex-direction: column; gap: 8px; }
+        .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
+        .profile-link:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 20px; transform: translateX(2px); }
+        
+        .auth-hidden { display: none !important; }
+
+        .page-mobile { display: none; width: 100%; }
+        .m-navbar { height: var(--navbar-height-mobile); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
+        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; z-index: 2; min-width: 40px; }
+        .m-menu-btn:hover { background: var(--surface-hover); }
+        .m-menu-lines { width: 18px; height: 14px; position: relative; }
+        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; border-radius: 999px; background: var(--text-primary); }
+        .m-menu-lines::before { top: 0; }
+        .m-menu-lines span { top: 6px; }
+        .m-menu-lines::after { bottom: 0; }
+        .m-logo { height: 50px; width: auto; object-fit: contain; position: absolute; left: 50%; transform: translateX(-50%); }
+        .m-right-icons { display: flex; align-items: center; gap: 12px; z-index: 2; min-width: 92px; justify-content: flex-end; }
+        .m-icon-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; position: relative; }
+        .m-icon-btn:hover { background: var(--surface-hover); }
+        .m-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; }
+
+        /* Mobile Drawer */
+        .m-overlay { position: fixed; inset: 0; background: rgba(59, 11, 23, 0.3); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.25s ease-out; z-index: 2000; }
+        .m-overlay.open { opacity: 1; pointer-events: auto; }
+        .m-drawer { position: absolute; left: 0; top: 0; width: 320px; max-width: 90vw; height: 100%; background: var(--surface-card); display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.25s ease-out; overflow-y: auto; box-shadow: 2px 0 20px rgba(59, 11, 23, 0.1); }
+        .m-overlay.open .m-drawer { transform: translateX(0); }
+        
+        .m-drawer-header { height: 72px; min-height: 72px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--surface-card); position: relative; z-index: 10; }
+        .m-drawer-logo { height: 50px; width: auto; object-fit: contain; display: block; }
+        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; }
+        .m-drawer-close:hover { background: var(--surface-hover); }
+        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
+        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; border-radius: 999px; background: var(--text-primary); }
+        .m-drawer-close-icon::before { transform: rotate(45deg); }
+        .m-drawer-close-icon::after { transform: rotate(-45deg); }
+
+        .m-drawer-nav { padding: 20px 0; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
+        .nav-section { padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+        .nav-section:last-child { border-bottom: none; margin-bottom: 0; }
+        .m-nav-link { display: flex; align-items: center; height: 48px; padding: 0 24px; margin: 2px 0; color: var(--text-primary); text-decoration: none; font-size: 16px; font-weight: 500; transition: background 0.15s ease; border-radius: 0; }
+        .m-nav-link:hover { background: var(--surface-hover); }
+        .m-nav-link.active { color: var(--brand-primary); background: linear-gradient(135deg, #fdf2f4 0%, #fbe9eb 100%); border-right: 3px solid var(--brand-primary); }
+
+        /* --- CHECKOUT LAYOUT --- */
+        .container {
+            max-width: 1100px; margin: 0 auto; padding: 120px 20px 40px; /* Top padding for fixed navbar */
+            display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px;
         }
 
-        .btn-mobile-fixed::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: 0.6s;
+        /* Empty Cart State */
+        .empty-cart-container {
+            grid-column: span 2; text-align: center; padding: 60px 20px;
+            background: #fff; border-radius: 20px; border: 1px solid var(--border-subtle);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .empty-cart-container.active { display: flex; }
+        .empty-cart-icon { font-size: 64px; color: var(--border-subtle); margin-bottom: 20px; }
+        .empty-cart-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+        .empty-cart-text { color: var(--text-secondary); margin-bottom: 30px; }
+
+        h1 { font-family: var(--font-main); font-size: 26px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
+        p.sub-head { color: var(--text-secondary); margin-bottom: 30px; font-size: 15px; }
+        h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; opacity: 0.9; font-weight: 700; color: var(--text-light); }
+
+        /* Address Card */
+        .address-card {
+            background: var(--card-bg); border: 1px solid var(--border-subtle);
+            border-radius: 16px; padding: 24px; margin-bottom: 30px;
+            display: flex; gap: 15px; cursor: pointer; position: relative;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 10px rgba(59, 11, 23, 0.03);
+        }
+        .address-card:hover { box-shadow: var(--shadow-rich); border-color: var(--brand-primary); transform: translateY(-2px); }
+        
+        .address-empty-state {
+            text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
         }
         
-        .btn-mobile-fixed:active::before { left: 100%; transition: 0s; }
-        .btn-mobile-fixed:active { transform: scale(0.98); }
+        .addr-type-tag {
+            background: var(--surface-hover); color: var(--brand-primary);
+            font-size: 10px; font-weight: 700; padding: 3px 8px; 
+            border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 8px; display: inline-block; width: fit-content;
+        }
+        .address-details strong { display: block; font-size: 18px; margin-bottom: 6px; color: var(--text-primary); }
+        .address-details span { font-size: 15px; color: var(--text-secondary); line-height: 1.5; display: block;}
+        .address-details .phone { font-size: 14px; color: var(--text-light); margin-top: 6px; }
+        
+        .change-btn { 
+            color: var(--brand-primary); font-weight: 700; font-size: 13px; 
+            text-transform: uppercase; margin-left: auto; cursor: pointer; 
+            align-self: flex-start; padding: 8px 16px; background: var(--surface-light); 
+            border: 1px solid var(--border-subtle); border-radius: 8px; transition: 0.2s;
+            white-space: nowrap;
+        }
+        .change-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
 
-        /* Bottom Sheet Modal Style */
-        .modal-overlay { align-items: flex-end; padding: 0; }
+        /* Payment UI */
+        .payment-option {
+            padding: 24px; border-radius: 16px; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 18px; position: relative;
+            cursor: pointer; background: var(--card-bg); transition: all 0.2s ease;
+            border: 1px solid var(--border-subtle); overflow: hidden; 
+        }
+        .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
+        .best-value-badge {
+            position: absolute; top: 0; right: 0; background: var(--green-success); color: white;
+            font-size: 11px; font-weight: 700; padding: 6px 14px;
+            border-bottom-left-radius: 12px; letter-spacing: 0.5px; z-index: 2;
+        }
+        input[type="radio"] {
+            appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; 
+            border-radius: 50%; margin-right: 5px; position: relative; transition: 0.2s; flex-shrink: 0;
+        }
+        input[type="radio"]:checked { border-color: var(--brand-primary); background: #fff; }
+        input[type="radio"]:checked::after {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 12px; height: 12px; background: var(--brand-primary); border-radius: 50%;
+        }
+        .pay-text { flex: 1; }
+        .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
+        .pay-sub { font-size: 14px; color: var(--text-secondary); display: block; }
+        .save-badge {
+            display: inline-block; background: var(--green-bg); color: var(--green-success); 
+            font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 20px; 
+            margin-left: 8px; border: 1px solid rgba(74, 156, 125, 0.3); animation: pulse-green 2s infinite;
+        }
+        .fee-warning {
+            display: block; margin-top: 6px; font-weight: 700; font-size: 13px;
+            color: var(--red-warning); background: var(--red-bg);
+            padding: 4px 12px; border-radius: 6px; width: fit-content;
+        }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); } }
+
+        /* Order Summary */
+        .order-box {
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
+            border: 1px solid #fff; padding: 30px; border-radius: 16px;
+            box-shadow: var(--shadow-rich); position: sticky; top: 100px;
+        }
+        .product { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
+        .prod-img { 
+            width: 70px; height: 90px; object-fit: cover; 
+            border-radius: 8px; border: 1px solid var(--border-subtle);
+            box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05);
+        }
+        .prod-info h4 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .prod-info p { font-size: 13px; color: var(--text-light); }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
+        .total-row { 
+            display: flex; justify-content: space-between; margin-top: 24px; 
+            padding-top: 24px; border-top: 1px dashed var(--border-subtle);
+            font-weight: 700; font-size: 20px; color: var(--text-primary);
+        }
+        .total-row span:last-child { color: var(--brand-primary); font-size: 24px; }
+        .text-green { color: var(--green-success); font-weight: 700; }
+        .text-red { color: var(--red-warning); font-weight: 700; }
+        .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
+
+        /* --- GLOBAL BUTTON STYLES --- */
+        .btn-main {
+            width: 100%; padding: 16px; background: var(--brand-gradient);
+            color: white; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 600; margin-top: 25px;
+            cursor: pointer; transition: all 0.3s ease; 
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3);
+        }
+        .btn-main::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); }
+        .btn-main:hover::before { opacity: 1; }
+
+        /* --- MOBILE BOTTOM BAR --- */
+        .mobile-bottom-bar { display: none; }
+
+        /* --- MODALS --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px);
+            z-index: 2000; justify-content: center; align-items: center; padding: 20px;
+        }
+        
         .modal-card {
-            border-radius: 24px 24px 0 0; width: 100%; max-width: 100%;
-            margin: 0; max-height: 85vh; border: none;
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: #fff; border-radius: 20px; width: 100%; max-width: 500px;
+            box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; display: flex; flex-direction: column;
+            max-height: 85vh; border: 1px solid var(--border-subtle);
         }
-        .modal-header { padding: 20px 25px; border-radius: 24px 24px 0 0; }
-        .modal-body { padding: 25px; }
-        .modal-footer { padding: 20px 25px; border-radius: 0; }
+        .modal-header { padding: 25px 30px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; background: var(--surface-light); border-radius: 20px 20px 0 0; position: relative; }
+        .modal-body { padding: 30px; overflow-y: auto; flex: 1; }
+        .modal-footer { padding: 20px 30px; border-top: 1px solid var(--border-subtle); background: #fff; border-radius: 0 0 20px 20px; flex-shrink: 0; }
         
-        .addr-form-grid { grid-template-columns: 1fr; gap: 15px; }
-        .full-width { grid-column: span 1; }
-        
-        /* Adjust close button for mobile bottom sheet */
-        .premium-close-btn { 
-            position: absolute; top: 20px; right: 20px; 
-            background: #fff; border: 1px solid var(--border-subtle); 
+        @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        /* PREMIUM CLOSE BUTTON */
+        .premium-close-btn {
+            width: 40px; height: 40px; border-radius: 10px;
+            border: 1px solid var(--border-subtle); background: var(--surface-light);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s ease;
+            position: absolute; top: 20px; right: 20px; z-index: 20;
         }
-    }
+        .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
+        .close-icon-lines { width: 14px; height: 14px; position: relative; }
+        .close-icon-lines::before, .close-icon-lines::after {
+            content: ""; position: absolute; inset: 0; margin: auto;
+            width: 14px; height: 2px; border-radius: 999px;
+            background: var(--text-primary); transition: background 0.2s;
+        }
+        .close-icon-lines::before { transform: rotate(45deg); }
+        .close-icon-lines::after { transform: rotate(-45deg); }
+
+        /* VALIDATION */
+        .input-error { border-color: var(--red-warning) !important; background-color: #fff8f8 !important; }
+        .error-msg { color: var(--red-warning); font-size: 11px; margin-top: 4px; font-weight: 600; display: none; }
+        .error-msg.show { display: block; }
+
+        /* FORM INPUTS */
+        .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 20px; }
+        .full-width { grid-column: span 2; }
+        .modal-input {
+            width: 100%; padding: 14px; border: 1px solid var(--border-subtle); border-radius: 10px;
+            font-family: var(--font-main); font-size: 15px; background: var(--page-bg); color: var(--text-primary); transition: 0.2s;
+        }
+        .modal-input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
+        .modal-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .addr-type-container { display: flex; gap: 10px; margin-top: 5px; }
+        .addr-chip-input { display: none; }
+        .addr-chip-label {
+            padding: 12px 20px; border: 1px solid var(--border-subtle); border-radius: 10px;
+            font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-secondary); 
+            background: #fff; transition: 0.2s; flex: 1; text-align: center;
+        }
+        .addr-chip-input:checked + .addr-chip-label { background: var(--surface-hover); border-color: var(--brand-primary); color: var(--brand-primary); font-weight: 700; }
+
+        .psych-content { text-align: center; padding: 40px; }
+        .modal-icon-lg { 
+            width: 80px; height: 80px; background: var(--surface-hover); border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 36px; 
+            color: var(--brand-primary); margin: 0 auto 20px; 
+        }
+        .psych-content h3 { font-size: 22px; color: var(--text-primary); margin-bottom: 10px; }
+        .psych-content p { color: var(--text-secondary); font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
+
+        .btn-green-modal {
+            background: var(--green-success); color: white; width: 100%; padding: 16px;
+            border: none; border-radius: 12px; font-weight: 600; font-size: 16px;
+            cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(74, 156, 125, 0.3); transition: 0.2s;
+        }
+        .btn-green-modal:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74, 156, 125, 0.4); }
+        .btn-outline-modal {
+            background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary);
+            width: 100%; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px;
+            cursor: pointer; transition: 0.2s;
+        }
+        .btn-outline-modal:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+
+        /* Success Screen */
+        #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--page-bg); z-index: 5000; justify-content: center; align-items: center; text-align: center; flex-direction: column;}
+        .success-icon { font-size: 60px; color: var(--brand-primary); margin-bottom: 20px; animation: bounce 1s; }
+        .success-order-id { font-size: 18px; color: var(--text-primary); font-weight: 700; margin-top: 15px; font-family: monospace; background: #fff; padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border-subtle); }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
+
+        @media (max-width: 900px) {
+            .page-desktop { display: none; }
+            .page-mobile { display: flex; flex-direction: column; }
+            .container { display: flex; flex-direction: column; gap: 30px; padding-top: 90px; }
+            .order-box { position: static; border: none; background: white; padding: 20px; }
+            
+            body { padding-bottom: 110px; }
+            .summary-section .btn-main { display: none; }
+
+            .mobile-bottom-bar {
+                display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
+                background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+                border-top: 1px solid var(--border-subtle); padding: 12px 20px 20px 20px;
+                z-index: 900; box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            }
+
+            .btn-mobile-fixed {
+                width: 100%; height: 56px; padding: 0 24px;
+                background: var(--brand-gradient);
+                color: white; border: 1px solid rgba(255,255,255,0.2); 
+                border-radius: 30px; font-size: 17px; font-weight: 700; 
+                cursor: pointer; box-shadow: 0 10px 25px -5px rgba(139, 38, 53, 0.5);
+                display: flex; justify-content: center; align-items: center;
+                gap: 12px; position: relative; overflow: hidden; letter-spacing: 0.5px;
+            }
+            .btn-mobile-fixed::before {
+                content: ''; position: absolute; top: 0; left: -100%;
+                width: 100%; height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                transition: 0.6s;
+            }
+            .btn-mobile-fixed:active::before { left: 100%; transition: 0s; }
+            .btn-mobile-fixed:active { transform: scale(0.98); }
+
+            .modal-overlay { align-items: flex-end; padding: 0; }
+            .modal-card {
+                border-radius: 24px 24px 0 0; width: 100%; max-width: 100%;
+                margin: 0; height: 85vh; max-height: 85vh; border: none;
+                animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                display: flex; flex-direction: column;
+            }
+            .modal-header { padding: 20px 25px; border-radius: 24px 24px 0 0; flex-shrink: 0; }
+            .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
+            .modal-footer { padding: 20px 25px; border-radius: 0; margin-top: auto; flex-shrink: 0; border-top: 1px solid var(--border-subtle); background: #fff; }
+            
+            .addr-form-grid { grid-template-columns: 1fr; gap: 15px; }
+            .full-width { grid-column: span 1; }
+            .premium-close-btn { position: absolute; top: 20px; right: 20px; background: #fff; border: 1px solid var(--border-subtle); }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <img src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Logo">
+    <!-- Desktop Navbar -->
+    <div class="page-desktop">
+        <nav class="d-navbar">
+            <div class="d-navbar-container">
+                <img class="d-navbar-logo" onclick="window.location.href='index.html'" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" />
+                <div class="d-nav-links">
+                    <a href="index.html" class="d-nav-link">Home</a>
+                    <a href="shop.html" class="d-nav-link">Shop</a>
+                    <div class="d-categories-dropdown">
+                        <a href="#" class="d-nav-link">Categories</a>
+                        <div class="d-categories-content" id="desktop-nav-categories">
+                            <!-- Categories Loaded via JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="d-search-container">
+                    <svg class="d-search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" class="d-search-bar" placeholder="Search products..." id="desktop-search">
+                </div>
+                <div class="d-action-icons">
+                    <a href="wishlist.html" class="d-icon-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                    </a>
+                    <div class="d-profile-dropdown">
+                        <button class="d-profile-btn" id="d-profile-toggle">
+                            <img class="d-profile-img" id="user-avatar" src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile" />
+                        </button>
+                        <div class="profile-popup" id="profile-popup">
+                            <div class="profile-header">
+                                <div class="profile-info">
+                                    <div class="profile-name" id="user-name">Guest User</div>
+                                    <div class="profile-email" id="user-email">Sign in to sync</div>
+                                </div>
+                            </div>
+                            <div class="profile-links" id="profile-links-container">
+                                <a href="my-profile.html" class="profile-link auth-only auth-hidden">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    My Profile
+                                </a>
+                                <a href="my-orders.html" class="profile-link auth-only auth-hidden">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                    My Orders
+                                </a>
+                                <div id="login-trigger-desktop" class="profile-link" onclick="window.location.href='index.html'">Sign In</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile Navbar -->
+    <div class="page-mobile">
+        <nav class="m-navbar">
+            <button class="m-menu-btn" id="m-menu-toggle"><div class="m-menu-lines"><span></span></div></button>
+            <img class="m-logo" onclick="window.location.href='index.html'" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" />
+            <div class="m-right-icons">
+                <button class="m-icon-btn" onclick="window.location.href='index.html'">
+                    <i class="fas fa-home" style="color: var(--text-primary);"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Drawer -->
+        <div class="m-overlay" id="m-overlay">
+            <div class="m-drawer">
+                <div class="m-drawer-header">
+                    <img class="m-drawer-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Logo" />
+                    <button class="m-drawer-close" id="m-drawer-close"><div class="m-drawer-close-icon"></div></button>
+                </div>
+                <nav class="m-drawer-nav">
+                    <div class="nav-section">
+                        <a href="index.html" class="m-nav-link">Home</a>
+                        <a href="shop.html" class="m-nav-link">Shop</a>
+                        <a href="wishlist.html" class="m-nav-link">Wishlist</a>
+                        <a href="my-orders.html" class="m-nav-link auth-only auth-hidden">My Orders</a>
+                        <a href="my-profile.html" class="m-nav-link auth-only auth-hidden">My Profile</a>
+                    </div>
+                </nav>
+            </div>
         </div>
-    </header>
+    </div>
 
     <div class="container">
-        <div class="form-section">
+        <!-- Empty Cart Message (Hidden by default) -->
+        <div class="empty-cart-container" id="empty-cart-msg">
+            <div class="empty-cart-icon"><i class="fas fa-shopping-basket"></i></div>
+            <div class="empty-cart-title">Your Cart is Empty</div>
+            <div class="empty-cart-text">Looks like you haven't added anything to your cart yet.</div>
+            <button class="btn-main" style="width: auto; padding: 15px 40px;" onclick="window.location.href='index.html'">Start Shopping</button>
+        </div>
+
+        <div class="form-section" id="checkout-form-section">
             <h1>Secure Checkout</h1>
             <p class="sub-head">Review your order details.</p>
 
             <h2>Shipping Address</h2>
-            <div class="address-card">
+            <!-- Address Loaded State -->
+            <div class="address-card" id="address-filled" style="display: none;">
                 <i class="fas fa-map-marker-alt" style="color:var(--brand-primary); margin-top:4px;"></i>
                 <div class="address-details">
                     <span class="addr-type-tag" id="display-type">Home</span>
-                    <strong id="display-name">Anjali Sharma</strong>
-                    <span id="display-address">102 Palm Grove Heights, Link Road, Andheri West</span>
-                    <span id="display-city-state">Mumbai - 400053, Maharashtra</span>
-                    <span class="phone" id="display-phone">+91 98765 43210</span>
+                    <strong id="display-name">Loading...</strong>
+                    <span id="display-address">Loading...</span>
+                    <span id="display-city-state">Loading...</span>
+                    <span class="phone" id="display-phone">Loading...</span>
                 </div>
                 <div class="change-btn" onclick="openAddressModal()">Change</div>
+            </div>
+
+            <!-- Address Empty State -->
+            <div class="address-card" id="address-empty" onclick="openAddressModal()">
+                <div class="address-empty-state">
+                    <i class="fas fa-plus-circle" style="font-size: 32px; color: var(--border-subtle);"></i>
+                    <div style="font-weight: 600; color: var(--text-primary);">Add Delivery Address</div>
+                    <div style="font-size: 13px; color: var(--text-light);">We need this to deliver your order</div>
+                </div>
             </div>
 
             <h2>Payment Method</h2>
@@ -398,33 +546,20 @@
             </label>
         </div>
 
-        <div class="summary-section">
+        <div class="summary-section" id="checkout-summary-section">
             <div class="order-box">
-                <div class="product">
-                    <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg" class="prod-img">
-                    <div class="prod-info">
-                        <h4>Cotton Blend Kurti Set</h4>
-                        <p>Qty: 1 • Maroon</p>
-                    </div>
-                    <div style="margin-left:auto; font-weight:700;">₹2,000</div>
-                </div>
-                <div class="product">
-                    <img src="https://i.pinimg.com/736x/62/2b/b8/622bb8bc020aec85aba99945c61ab91b.jpg" class="prod-img">
-                    <div class="prod-info">
-                        <h4>Organza Saree</h4>
-                        <p>Qty: 1 • Lilac</p>
-                    </div>
-                    <div style="margin-left:auto; font-weight:700;">₹1,499</div>
+                <div id="order-items-container">
+                    <!-- Dynamic Products Here -->
                 </div>
 
                 <hr style="border:0; border-top:1px dashed #ddd; margin: 20px 0;">
 
-                <div class="summary-row"><span>Subtotal</span><span>₹3,499</span></div>
+                <div class="summary-row"><span>Subtotal</span><span id="subtotal-display">₹0</span></div>
                 <div class="summary-row"><span>Shipping & Handling</span><span id="shipping-display" class="text-green"><span class="strike">₹100</span> FREE</span></div>
-                <div class="total-row"><span>Total to Pay</span><span id="total-display">₹3,499</span></div>
+                <div class="total-row"><span>Total to Pay</span><span id="total-display">₹0</span></div>
 
                 <button class="btn-main" onclick="handleCheckout()">
-                    <span id="btn-text">Pay ₹3,499</span> <i class="fas fa-arrow-right"></i>
+                    <span id="btn-text">Proceed to Pay</span> <i class="fas fa-arrow-right"></i>
                 </button>
                 
                 <div style="text-align:center; margin-top:15px; font-size:12px; color:#a3715f;"><i class="fas fa-lock"></i> Secured by Razorpay</div>
@@ -432,15 +567,15 @@
         </div>
     </div>
 
-    <div class="mobile-bottom-bar">
+    <div class="mobile-bottom-bar" id="mobile-bottom-bar">
         <button class="btn-mobile-fixed" onclick="handleCheckout()">
-            <span id="btn-text-mobile">Pay ₹3,499</span>
+            <span id="btn-text-mobile">Proceed to Pay</span>
             <i class="fas fa-arrow-right"></i>
         </button>
     </div>
 
     <div id="codModal" class="modal-overlay">
-        <div class="modal-card psych-content">
+        <div class="modal-card psych-content" style="height: auto; max-height: auto;">
             <button class="premium-close-btn" onclick="closeCodModal()"><div class="close-icon-lines"></div></button>
             <div class="modal-icon-lg"><i class="fas fa-wallet"></i></div>
             <h3>Wait! Save ₹100 Instantly</h3>
@@ -452,7 +587,6 @@
 
     <div id="addressModal" class="modal-overlay">
         <form onsubmit="saveAddress(event)" class="modal-card">
-            
             <div class="modal-header">
                 <h3 style="margin:0; font-size:22px; color:var(--text-primary);">Update Address</h3>
                 <p style="margin:5px 0 0; font-size:14px; color:var(--text-secondary);">Enter your full delivery details.</p>
@@ -463,44 +597,46 @@
                 <div class="addr-form-grid">
                     <div>
                         <label class="modal-label">Full Name</label>
-                        <input type="text" id="input-name" class="modal-input" value="Anjali Sharma" required>
+                        <input type="text" id="input-name" class="modal-input" required>
                     </div>
                     <div>
                         <label class="modal-label">Mobile Number</label>
-                        <input type="tel" id="input-phone" class="modal-input" value="+91 98765 43210" required>
+                        <input type="tel" id="input-phone" class="modal-input" required>
+                        <div class="error-msg" id="error-phone">Enter valid 10 digit number</div>
                     </div>
                 </div>
 
                 <div class="addr-form-grid">
                     <div>
                         <label class="modal-label">Pincode</label>
-                        <input type="text" id="input-zip" class="modal-input" value="400053" required>
+                        <input type="text" id="input-zip" class="modal-input" required>
+                        <div class="error-msg" id="error-zip">Enter valid 6 digit pincode</div>
                     </div>
                     <div>
                         <label class="modal-label">Locality / Town</label>
-                        <input type="text" id="input-locality" class="modal-input" value="Andheri West" required>
+                        <input type="text" id="input-locality" class="modal-input" required>
                     </div>
                 </div>
 
                 <div class="addr-form-grid">
                     <div>
                         <label class="modal-label">City</label>
-                        <input type="text" id="input-city" class="modal-input" value="Mumbai" required>
+                        <input type="text" id="input-city" class="modal-input" required>
                     </div>
                     <div>
                         <label class="modal-label">State</label>
-                        <input type="text" id="input-state" class="modal-input" value="Maharashtra" required>
+                        <input type="text" id="input-state" class="modal-input" required>
                     </div>
                 </div>
 
                 <div class="addr-form-grid">
                     <div class="full-width">
                         <label class="modal-label">Address (House No, Building, Street)</label>
-                        <input type="text" id="input-street" class="modal-input" value="102 Palm Grove Heights, Link Road" required>
+                        <input type="text" id="input-street" class="modal-input" required>
                     </div>
                     <div class="full-width">
                         <label class="modal-label">Landmark (Optional)</label>
-                        <input type="text" id="input-landmark" class="modal-input" placeholder="Near City Mall">
+                        <input type="text" id="input-landmark" class="modal-input">
                     </div>
                 </div>
 
@@ -527,19 +663,190 @@
         <div class="success-icon"><i class="fas fa-check-circle"></i></div>
         <h1>Order Confirmed!</h1>
         <p class="sub-head">Thank you for your purchase.</p>
-        <button class="btn-main" style="width:auto; padding: 15px 40px;" onclick="window.location.reload()">Continue Shopping</button>
+        <div class="success-order-id" id="success-order-id">#Generating...</div>
+        <br>
+        <button class="btn-main" style="width:auto; padding: 15px 40px;" onclick="window.location.href='index.html'">Continue Shopping</button>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
     <script>
-        const baseTotal = 3499;
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
+            authDomain: "vastramaya---magic.firebaseapp.com",
+            projectId: "vastramaya---magic",
+            storageBucket: "vastramaya---magic.firebasestorage.app",
+            messagingSenderId: "543460072082",
+            appId: "1:543460072082:web:f3d1140e8f81ad338ae44b",
+            measurementId: "G-E39VNDCFVE"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let baseTotal = 0;
         const codFee = 100;
+        let cartItems = [];
+        let addressExists = false;
+        let currentUser = null;
+
         const codModal = document.getElementById('codModal');
         const addrModal = document.getElementById('addressModal');
         const totalDisplay = document.getElementById('total-display');
+        const subtotalDisplay = document.getElementById('subtotal-display');
         const shippingDisplay = document.getElementById('shipping-display');
         const btnText = document.getElementById('btn-text');
         const btnTextMobile = document.getElementById('btn-text-mobile');
         
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavbarUI();
+            checkAuth();
+            loadCart();
+            loadCategories();
+        });
+
+        function checkAuth() {
+            auth.onAuthStateChanged(user => {
+                const triggerDesktop = document.getElementById('login-trigger-desktop');
+                const authOnlyLinks = document.querySelectorAll('.auth-only');
+
+                if (user) {
+                    currentUser = user;
+                    const name = user.displayName || 'User';
+                    const avatarUrl = user.photoURL || `https://ui-avatars.com/api/?name=${name}&background=8b2635&color=fff`;
+                    const email = user.phoneNumber || user.email || 'Sign in to sync';
+
+                    document.getElementById('user-avatar').src = avatarUrl;
+                    document.getElementById('user-name').innerText = name;
+                    document.getElementById('user-email').innerText = email;
+                    
+                    authOnlyLinks.forEach(el => el.classList.remove('auth-hidden'));
+                    
+                    if (triggerDesktop) {
+                        triggerDesktop.innerText = "Sign Out";
+                        triggerDesktop.onclick = () => { auth.signOut().then(() => window.location.href = 'index.html'); };
+                    }
+
+                    loadAddress(user.uid);
+                } else {
+                    authOnlyLinks.forEach(el => el.classList.add('auth-hidden'));
+                    if (triggerDesktop) {
+                        triggerDesktop.innerText = "Sign In";
+                        triggerDesktop.onclick = () => window.location.href = 'index.html';
+                    }
+                }
+            });
+        }
+
+        async function loadCategories() {
+            try {
+                const snap = await db.collection('categories').where('enabled', '!=', false).get();
+                const cats = snap.docs.map(d => d.data());
+                const container = document.getElementById('desktop-nav-categories');
+                if(container) {
+                    container.innerHTML = cats.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`).join('');
+                }
+            } catch (e) { console.log("Cat error", e); }
+        }
+
+        function loadCart() {
+            cartItems = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
+            
+            // Empty Cart Logic
+            if (cartItems.length === 0) {
+                document.getElementById('checkout-form-section').style.display = 'none';
+                document.getElementById('checkout-summary-section').style.display = 'none';
+                document.getElementById('mobile-bottom-bar').style.display = 'none';
+                document.getElementById('empty-cart-msg').classList.add('active');
+                return;
+            }
+
+            const container = document.getElementById('order-items-container');
+            container.innerHTML = '';
+            baseTotal = 0;
+
+            cartItems.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                baseTotal += itemTotal;
+                
+                const div = document.createElement('div');
+                div.className = 'product';
+                div.innerHTML = `
+                    <img src="${item.image}" class="prod-img">
+                    <div class="prod-info">
+                        <h4>${item.name}</h4>
+                        <p>Qty: ${item.quantity} ${item.size ? '• ' + item.size : ''} ${item.color ? '• ' + item.color : ''}</p>
+                    </div>
+                    <div style="margin-left:auto; font-weight:700;">₹${itemTotal.toLocaleString('en-IN')}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
+            setPrepaidUI(); // Default state
+        }
+
+        async function loadAddress(uid) {
+            try {
+                const doc = await db.collection('users').doc(uid).get();
+                if (doc.exists && doc.data().address) {
+                    const addr = doc.data().address;
+                    document.getElementById('display-name').innerText = addr.name;
+                    document.getElementById('display-phone').innerText = addr.phone;
+                    document.getElementById('display-address').innerText = `${addr.street}, ${addr.locality}`;
+                    document.getElementById('display-city-state').innerText = `${addr.city} - ${addr.zip}, ${addr.state}`;
+                    document.getElementById('display-type').innerText = addr.type || 'Home';
+                    
+                    // Pre-fill modal inputs
+                    document.getElementById('input-name').value = addr.name;
+                    document.getElementById('input-phone').value = addr.phone;
+                    document.getElementById('input-zip').value = addr.zip;
+                    document.getElementById('input-locality').value = addr.locality;
+                    document.getElementById('input-city').value = addr.city;
+                    document.getElementById('input-state').value = addr.state;
+                    document.getElementById('input-street').value = addr.street;
+                    document.getElementById('input-landmark').value = addr.landmark || '';
+
+                    addressExists = true;
+                    document.getElementById('address-filled').style.display = 'flex';
+                    document.getElementById('address-empty').style.display = 'none';
+                } else {
+                    addressExists = false;
+                    document.getElementById('address-filled').style.display = 'none';
+                    document.getElementById('address-empty').style.display = 'flex';
+                }
+            } catch (e) {
+                console.error("Error loading address:", e);
+            }
+        }
+
+        // --- NAVBAR UI LOGIC ---
+        function initNavbarUI() {
+            const mMenuToggle = document.getElementById('m-menu-toggle');
+            const mDrawerClose = document.getElementById('m-drawer-close');
+            const mOverlay = document.getElementById('m-overlay');
+            const mDrawer = document.querySelector('.m-drawer');
+
+            function toggleDrawer() {
+                mOverlay.classList.toggle('open');
+                mDrawer.style.transform = mOverlay.classList.contains('open') ? 'translateX(0)' : 'translateX(-100%)';
+            }
+
+            if(mMenuToggle) mMenuToggle.onclick = toggleDrawer;
+            if(mDrawerClose) mDrawerClose.onclick = toggleDrawer;
+            if(mOverlay) mOverlay.onclick = (e) => { if(e.target === mOverlay) toggleDrawer(); };
+
+            const pToggle = document.getElementById('d-profile-toggle');
+            const pPopup = document.getElementById('profile-popup');
+            if(pToggle) {
+                pToggle.onclick = (e) => { e.stopPropagation(); pPopup.classList.toggle('show'); };
+                document.onclick = () => pPopup.classList.remove('show');
+            }
+        }
+
         // --- ADDRESS LOGIC ---
         function openAddressModal() {
             document.body.classList.add('no-scroll');
@@ -550,27 +857,85 @@
             addrModal.style.display = 'none';
         }
         
-        function saveAddress(e) {
+        async function saveAddress(e) {
             e.preventDefault();
+            
             const newName = document.getElementById('input-name').value;
-            const newPhone = document.getElementById('input-phone').value;
+            const newPhoneInput = document.getElementById('input-phone');
             const newStreet = document.getElementById('input-street').value;
             const newLocality = document.getElementById('input-locality').value;
             const newCity = document.getElementById('input-city').value;
-            const newZip = document.getElementById('input-zip').value;
+            const newZipInput = document.getElementById('input-zip');
             const newState = document.getElementById('input-state').value;
+            const newLandmark = document.getElementById('input-landmark').value;
             
+            // Reset Errors
+            document.getElementById('error-phone').classList.remove('show');
+            newPhoneInput.classList.remove('input-error');
+            document.getElementById('error-zip').classList.remove('show');
+            newZipInput.classList.remove('input-error');
+
+            let isValid = true;
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const cleanPhone = newPhoneInput.value.replace(/\D/g, '');
+            
+            if (!phoneRegex.test(cleanPhone)) {
+                document.getElementById('error-phone').classList.add('show');
+                newPhoneInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            const zipRegex = /^\d{6}$/;
+            if (!zipRegex.test(newZipInput.value)) {
+                document.getElementById('error-zip').classList.add('show');
+                newZipInput.classList.add('input-error');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Get selected type
             const typeOptions = document.getElementsByName('addrType');
             let selectedType = 'Home';
             for(const opt of typeOptions) {
                 if(opt.checked) selectedType = opt.value;
             }
 
+            const addressData = {
+                name: newName,
+                phone: cleanPhone,
+                street: newStreet,
+                locality: newLocality,
+                city: newCity,
+                state: newState,
+                zip: newZipInput.value,
+                landmark: newLandmark,
+                type: selectedType
+            };
+
+            // Update UI
             document.getElementById('display-name').innerText = newName;
             document.getElementById('display-address').innerText = `${newStreet}, ${newLocality}`;
-            document.getElementById('display-city-state').innerText = `${newCity} - ${newZip}, ${newState}`;
-            document.getElementById('display-phone').innerText = newPhone;
+            document.getElementById('display-city-state').innerText = `${newCity} - ${newZipInput.value}, ${newState}`;
+            document.getElementById('display-phone').innerText = cleanPhone;
             document.getElementById('display-type').innerText = selectedType;
+            
+            document.getElementById('address-filled').style.display = 'flex';
+            document.getElementById('address-empty').style.display = 'none';
+            addressExists = true;
+
+            // Save to Firebase
+            if(currentUser) {
+                try {
+                    await db.collection('users').doc(currentUser.uid).update({
+                        address: addressData
+                    });
+                } catch(err) {
+                    await db.collection('users').doc(currentUser.uid).set({
+                        address: addressData
+                    }, { merge: true });
+                }
+            }
             
             closeAddressModal();
         }
@@ -608,7 +973,7 @@
             shippingDisplay.innerHTML = '+ ₹100 Fee';
             shippingDisplay.className = 'text-red';
             const newTotal = baseTotal + codFee;
-            const priceText = `Place Order (₹${newTotal.toLocaleString('en-IN')})`;
+            const priceText = "Place Order"; 
 
             totalDisplay.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
             btnText.innerText = priceText;
@@ -630,28 +995,55 @@
         function closeCodModal() {
             document.body.classList.remove('no-scroll');
             codModal.style.display = 'none';
-            confirmCOD(); 
+            setPrepaidUI(); // Revert to prepaid if closed
         }
 
-        function handleCheckout() {
+        async function handleCheckout() {
+            if (!addressExists) {
+                alert("Please add a delivery address.");
+                openAddressModal();
+                return;
+            }
+
             const isCod = document.getElementById('radio-cod').checked;
-            if(isCod) {
-                document.getElementById('success-screen').style.display = 'flex';
-            } else {
-                const btnDesktop = document.getElementById('btn-text');
-                const btnMobile = document.getElementById('btn-text-mobile');
-                const oldText = btnDesktop.innerText;
-                
-                const loadingHtml = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+            const btnDesktop = document.getElementById('btn-text');
+            const btnMobile = document.getElementById('btn-text-mobile');
+            const oldText = btnDesktop.innerText;
+            
+            // UI Loading State
+            const loadingHtml = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+            if(!isCod) {
                 btnDesktop.innerHTML = loadingHtml;
                 btnMobile.innerHTML = loadingHtml;
+            }
 
-                setTimeout(() => {
+            // Simulate Delay for Payment Gateway or Order Processing
+            setTimeout(async () => {
+                if(!isCod) {
                     alert("Redirecting to Razorpay/PhonePe...");
+                }
+                
+                // GENERATE ORDER ID
+                const randomId = Math.floor(100000 + Math.random() * 900000);
+                document.getElementById('success-order-id').innerText = `Order ID: #ORD-${randomId}`;
+                document.getElementById('success-screen').style.display = 'flex';
+                
+                // CLEAR CART
+                localStorage.removeItem('vastramaya_cart'); 
+                
+                if (currentUser) {
+                    try {
+                        await db.collection('users').doc(currentUser.uid).update({
+                            cart: []
+                        });
+                    } catch(e) { console.error("Error clearing DB cart", e); }
+                }
+
+                if(!isCod) {
                     btnDesktop.innerText = oldText;
                     btnMobile.innerText = oldText;
-                }, 1000);
-            }
+                }
+            }, 1500);
         }
 
         window.onclick = function(event) {
