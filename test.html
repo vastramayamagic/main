@@ -1,16 +1,3 @@
-Here is the complete code.
-
-**Changes made:**
-1.  **Renamed Section:** Changed "New Arrivals" to **"Best Sellers"** in the HTML.
-2.  **Data Logic:** Added `loadBestSellers()` function which:
-    *   Fetches the `landingPage/Sections` document from Firestore.
-    *   Gets the array of product IDs stored in the `bestSellers` field (managed by your admin page).
-    *   Filters `allProducts` to match these IDs.
-    *   Applies the visibility logic (Product `isAvailable` AND Category `enabled` check).
-3.  **UI Consistency:** It uses the exact horizontal scrolling UI (`products-grid`) used by the previous "New Arrivals" section.
-4.  **Init Logic:** Updated the initialization chain to ensure products are loaded before trying to filter the Best Sellers list.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
