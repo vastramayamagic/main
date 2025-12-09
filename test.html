@@ -1,19 +1,3 @@
-Here is the updated code with the requested changes.
-
-**Updates Summary:**
-1.  **Mobile Drawer:**
-    *   Added **Wishlist** and **My Orders** to the navigation menu.
-    *   Added a **Login Button** at the bottom for guests.
-    *   For logged-in users, it shows the **Profile Section** (Name & Phone) at the bottom.
-    *   Clicking the Mobile Profile Section opens a **Popup** with "My Profile" and "Logout" options.
-2.  **Desktop Profile:**
-    *   Added **My Profile** and **My Orders** buttons in the dropdown.
-    *   Configured the **Wishlist icon** in the header to redirect to `/wishlist.html`.
-3.  **Routing:**
-    *   Links connected: `/wishlist.html`, `/my-orders.html`, `/my-profile.html`.
-    *   Admin link logic preserved.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,7 +82,7 @@ Here is the updated code with the requested changes.
         .profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
         .profile-email { font-size: 14px; color: var(--text-light); }
         .profile-links { display: flex; flex-direction: column; gap: 8px; }
-        .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; }
+        .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
         .profile-link:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 20px; transform: translateX(2px); }
         .admin-link-btn { background-color: var(--text-primary); color: white !important; border: 1px solid var(--text-primary); }
         .admin-link-btn:hover { background-color: transparent; color: var(--text-primary) !important; }
@@ -275,8 +259,7 @@ Here is the updated code with the requested changes.
         .m-category-item { display: block; height: 44px; padding: 0 24px; color: var(--text-light); text-decoration: none; font-size: 15px; font-weight: 400; border-radius: 8px; transition: all 0.15s ease; display: flex; align-items: center; }
         .m-category-item:hover { background: var(--surface-hover); color: var(--brand-primary); }
 
-        .m-drawer-profile { padding: 20px 24px; border-top: 1px solid var(--border-subtle); background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-hover) 100%); margin-top: auto; flex-shrink: 0; cursor: pointer; transition: background 0.2s; }
-        .m-drawer-profile:hover { background: linear-gradient(135deg, var(--surface-hover) 0%, var(--surface-light) 100%); }
+        .m-drawer-profile { padding: 20px 24px; border-top: 1px solid var(--border-subtle); background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-hover) 100%); margin-top: auto; flex-shrink: 0; }
         .m-profile-header { display: flex; align-items: center; gap: 12px; }
         .m-profile-img { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; border: 2px solid var(--surface-card); box-shadow: 0 2px 8px rgba(59, 11, 23, 0.1); }
         .m-profile-info { flex: 1; }
@@ -311,35 +294,28 @@ Here is the updated code with the requested changes.
         .login-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
         .login-input-group { display: flex; flex-direction: column; gap: 8px; }
         .login-label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        
+        .input-prefix-group { display: flex; align-items: center; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; background: #fff; }
+        .input-prefix { padding: 12px; background: var(--surface-light); border-right: 1px solid var(--border-subtle); font-weight: 600; color: var(--text-secondary); font-size: 15px; }
+        .login-input-phone { border: none; outline: none; padding: 12px; font-size: 15px; width: 100%; font-family: "DM Sans", sans-serif; }
+        
         .login-input { padding: 12px; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 15px; width: 100%; outline: none; transition: border-color 0.2s; }
         .login-input:focus { border-color: var(--brand-primary); }
         
-        /* Updated: Phone input styles */
-        .phone-input-wrapper { display: flex; align-items: center; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
-        .phone-input-wrapper:focus-within { border-color: var(--brand-primary); }
-        .country-code { background: var(--surface-light); padding: 12px 16px; font-weight: 600; color: var(--text-primary); border-right: 1px solid var(--border-subtle); font-size: 15px; }
-        .phone-input-wrapper input { border: none; padding: 12px; font-family: "DM Sans", sans-serif; font-size: 15px; flex: 1; outline: none; }
-
-        .login-btn { width: 100%; padding: 14px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; margin-top: 8px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: opacity 0.2s; }
+        .login-btn { width: 100%; padding: 14px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; margin-top: 8px; position: relative; display: flex; justify-content: center; align-items: center; }
         .login-btn:hover { opacity: 0.9; }
-        .login-btn:disabled { background: #ccc; cursor: not-allowed; opacity: 0.7; }
+        .login-btn:disabled { background: #ccc; cursor: not-allowed; }
         
-        /* Spinner */
-        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; display: none; }
-        .login-btn.loading .spinner { display: block; }
-        .login-btn.loading span { display: none; }
+        .btn-spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; margin-left: 10px; display: none; }
+        .login-btn.loading .btn-spinner { display: block; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .mobile-login-btn-container { padding: 16px 24px; border-top: 1px solid var(--border-subtle); background: var(--surface-card); margin-top: auto; }
+        /* Mobile Drawer Button Container */
+        .m-drawer { display: flex; flex-direction: column; }
+        .m-drawer-nav { flex: 1; overflow-y: auto; }
+        .mobile-login-btn-container { padding: 16px 24px; border-top: 1px solid var(--border-subtle); background: var(--surface-card); margin-top: auto; } /* Pushed to bottom */
+        
         #recaptcha-container { margin-top: 10px; display: flex; justify-content: center; }
-
-        /* Mobile Profile Popup */
-        #mobileProfileModal .modal-content-box { height: auto; max-height: 400px; padding: 0; bottom: 0; position: absolute; border-radius: 20px 20px 0 0; width: 100%; max-width: 100%; transform: translateY(100%); transition: transform 0.3s ease; }
-        .modal-overlay.active #mobileProfileModal .modal-content-box { transform: translateY(0); }
-        .m-profile-action-item { padding: 18px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 500; color: var(--text-primary); text-decoration: none; }
-        .m-profile-action-item svg { width: 22px; height: 22px; stroke: var(--text-light); }
-        .m-profile-action-item:last-child { border-bottom: none; color: #ef4444; }
-        .m-profile-action-item:last-child svg { stroke: #ef4444; }
 
         @media (max-width: 1024px) {
             .d-nav-links { gap: 20px; margin: 0 20px; }
@@ -397,7 +373,6 @@ Here is the updated code with the requested changes.
             
             .best-sellers-section .product-card { width: 260px; }
             .best-sellers-section .product-image-container { height: 260px; }
-            .category-products-section .product-image-container { height: 180px; }
         }
 
         @media (min-width: 769px) {
@@ -526,7 +501,7 @@ Here is the updated code with the requested changes.
                     <input type="text" class="d-search-bar" placeholder="Search products..." id="desktop-search">
                 </div>
                 <div class="d-action-icons">
-                    <button class="d-icon-btn" onclick="window.location.href='wishlist.html'">
+                    <button class="d-icon-btn" onclick="alert('Wishlist feature coming soon!')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
                     </button>
                     <div class="d-profile-dropdown">
@@ -564,14 +539,6 @@ Here is the updated code with the requested changes.
                                 </div>
                             </div>
                             <div class="profile-links" id="profile-links-container">
-                                <a href="my-profile.html" class="profile-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
-                                    My Profile
-                                </a>
-                                <a href="my-orders.html" class="profile-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 22h2a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v2.85"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 14v2.2l1.6 1"/><circle cx="8" cy="16" r="6"/></svg>
-                                    My Orders
-                                </a>
                                 <a href="admin.html" id="login-link" class="profile-link">Sign In</a>
                             </div>
                         </div>
@@ -681,7 +648,7 @@ Here is the updated code with the requested changes.
                 <nav class="m-drawer-nav">
                     <div class="nav-section">
                         <a href="#" class="m-nav-link active">Home</a>
-                        <a href="shop.html" class="m-nav-link">Shop</a>
+                        <a href="admin.html" id="mobile-admin-link" class="m-nav-link" style="display:none; color: var(--brand-primary);">Admin Dashboard</a>
                         <div class="m-categories-dropdown">
                             <div class="m-categories-toggle" id="m-categories-toggle">
                                 <span>Categories</span>
@@ -689,25 +656,8 @@ Here is the updated code with the requested changes.
                             </div>
                             <div class="m-categories-content" id="mobile-nav-categories"></div>
                         </div>
-                        <a href="wishlist.html" class="m-nav-link">Wishlist</a>
-                        <a href="my-orders.html" class="m-nav-link">My Orders</a>
-                    </div>
-                    
-                    <div class="mobile-login-btn-container">
-                        <!-- Login Button injected by JS here -->
                     </div>
                 </nav>
-                
-                <!-- Profile Section (Shows when logged in) -->
-                <div class="m-drawer-profile" id="mobile-profile-section" style="display: none;" onclick="document.getElementById('mobileProfileModal').classList.add('active'); document.getElementById('m-overlay').classList.add('active');">
-                    <div class="m-profile-header">
-                        <img class="m-profile-img" id="mobile-user-avatar" src="" alt="Profile" />
-                        <div class="m-profile-info">
-                            <div class="m-profile-name" id="mobile-user-name">User Name</div>
-                            <div class="m-profile-email" id="mobile-user-email">user@example.com</div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -753,50 +703,29 @@ Here is the updated code with the requested changes.
             <div class="login-body" id="login-step-1">
                 <div class="login-input-group">
                     <label class="login-label">Phone Number</label>
-                    <div class="phone-input-wrapper">
-                        <span class="country-code">+91</span>
-                        <input type="tel" id="login-phone" maxlength="10" placeholder="Enter number">
+                    <div class="input-prefix-group">
+                        <span class="input-prefix">+91</span>
+                        <input type="tel" class="login-input-phone" id="login-phone" placeholder="9876543210" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, ''); document.getElementById('btn-send-otp').disabled = this.value.length !== 10;">
                     </div>
                 </div>
                 <div id="recaptcha-container"></div>
-                <button class="login-btn" id="btn-send-otp" onclick="sendOTP()" disabled>
-                    <span>Send OTP</span>
-                    <div class="spinner"></div>
+                <button class="login-btn" id="btn-send-otp" disabled onclick="sendOTP()">
+                    Send OTP <div class="btn-spinner"></div>
                 </button>
             </div>
             <div class="login-body" id="login-step-2" style="display: none;">
                 <div class="login-input-group">
                     <label class="login-label">Enter OTP</label>
-                    <input type="text" class="login-input" id="login-otp" placeholder="123456">
+                    <input type="text" class="login-input" id="login-otp" placeholder="123456" maxlength="6">
                 </div>
-                <button class="login-btn" id="btn-verify-otp" onclick="verifyOTP()">
-                    <span>Verify OTP</span>
-                    <div class="spinner"></div>
-                </button>
+                <button class="login-btn" onclick="verifyOTP()">Verify OTP</button>
             </div>
             <div class="login-body" id="login-step-3" style="display: none;">
                 <div class="login-input-group">
-                    <label class="login-label">What should we call you?</label>
-                    <input type="text" class="login-input" id="login-name" placeholder="Enter your name">
+                    <label class="login-label">Your Name</label>
+                    <input type="text" class="login-input" id="login-name-final" placeholder="Enter your name">
                 </div>
-                <button class="login-btn" id="btn-save-name" onclick="saveName()">
-                    <span>Continue</span>
-                    <div class="spinner"></div>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile Profile Actions Popup -->
-    <div class="modal-overlay" id="mobileProfileModal" onclick="if(event.target === this) this.classList.remove('active')">
-        <div class="modal-content-box">
-            <a href="my-profile.html" class="m-profile-action-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
-                My Profile
-            </a>
-            <div class="m-profile-action-item" onclick="auth.signOut(); location.reload();">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                Logout
+                <button class="login-btn" onclick="saveName()">Continue</button>
             </div>
         </div>
     </div>
@@ -891,27 +820,7 @@ Here is the updated code with the requested changes.
             renderCart();
             initCategoriesScroll();
             initNewArrivalsScroll();
-            initLoginInput();
         });
-
-        function initLoginInput() {
-            const phoneInput = document.getElementById('login-phone');
-            const sendBtn = document.getElementById('btn-send-otp');
-            
-            if(phoneInput) {
-                phoneInput.addEventListener('input', (e) => {
-                    let val = e.target.value.replace(/\D/g, '');
-                    if (val.length > 10) val = val.slice(0, 10);
-                    e.target.value = val;
-                    
-                    if (val.length === 10) {
-                        sendBtn.disabled = false;
-                    } else {
-                        sendBtn.disabled = true;
-                    }
-                });
-            }
-        }
 
         function checkAuth() {
             auth.onAuthStateChanged(user => {
@@ -921,16 +830,10 @@ Here is the updated code with the requested changes.
 
                 if (user) {
                     const name = user.displayName || "User";
-                    // Update Desktop Header
                     document.getElementById('user-name').textContent = name;
                     document.getElementById('user-email').textContent = user.phoneNumber || user.email;
                     document.getElementById('user-avatar').src = user.photoURL || `https://ui-avatars.com/api/?name=${name}&background=8b2635&color=fff`;
                     
-                    // Update Mobile Profile
-                    document.getElementById('mobile-user-name').textContent = name;
-                    document.getElementById('mobile-user-email').textContent = user.phoneNumber || user.email;
-                    document.getElementById('mobile-user-avatar').src = user.photoURL || `https://ui-avatars.com/api/?name=${name}&background=8b2635&color=fff`;
-
                     document.getElementById('login-link').textContent = "Sign Out";
                     document.getElementById('login-link').href = "#";
                     document.getElementById('login-link').onclick = (e) => {
@@ -949,9 +852,24 @@ Here is the updated code with the requested changes.
                         document.getElementById('mobile-admin-link').href = "admin.html";
                     }
                     
-                    // Hide login button, Show Profile Section in Mobile
-                    if (loginBtnContainer) loginBtnContainer.style.display = 'none';
-                    document.getElementById('mobile-profile-section').style.display = 'block';
+                    // Remove existing login button from mobile menu if exists
+                    if (loginBtnContainer) loginBtnContainer.remove();
+                    
+                    // Show Profile at bottom of mobile menu
+                    if (!document.querySelector('.m-drawer-profile')) {
+                        const profileDiv = document.createElement('div');
+                        profileDiv.className = 'm-drawer-profile';
+                        profileDiv.innerHTML = `
+                            <div class="m-profile-header">
+                                <img class="m-profile-img" src="${user.photoURL || `https://ui-avatars.com/api/?name=${name}&background=8b2635&color=fff`}" alt="Profile">
+                                <div class="m-profile-info">
+                                    <div class="m-profile-name">${name}</div>
+                                    <div class="m-profile-email">${user.phoneNumber || user.email}</div>
+                                </div>
+                            </div>
+                        `;
+                        document.querySelector('.m-drawer').appendChild(profileDiv);
+                    }
 
                 } else {
                     document.getElementById('user-name').textContent = "Guest";
@@ -963,17 +881,17 @@ Here is the updated code with the requested changes.
                     };
                     document.getElementById('mobile-admin-link').style.display = 'none';
 
-                    // Show login button, Hide Profile Section in Mobile
-                    document.getElementById('mobile-profile-section').style.display = 'none';
-                    
+                    // Remove Profile if exists
+                    const existingProfile = document.querySelector('.m-drawer-profile');
+                    if(existingProfile) existingProfile.remove();
+
+                    // Add Login Button to Mobile Menu
                     const nav = document.querySelector('.m-drawer-nav');
                     if (!document.querySelector('.mobile-login-btn-container')) {
                         const div = document.createElement('div');
                         div.className = 'mobile-login-btn-container';
                         div.innerHTML = `<button class="login-btn" onclick="document.getElementById('loginModal').classList.add('active')">Login / Sign Up</button>`;
-                        nav.appendChild(div);
-                    } else {
-                        document.querySelector('.mobile-login-btn-container').style.display = 'block';
+                        nav.parentElement.appendChild(div); // Append to m-drawer, after nav
                     }
                 }
             });
@@ -984,15 +902,20 @@ Here is the updated code with the requested changes.
             if (!recaptchaVerifier) {
                 recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
                     'size': 'invisible',
-                    'callback': (response) => {}
+                    'callback': (response) => {
+                        // reCAPTCHA solved, allow signInWithPhoneNumber.
+                    }
                 });
             }
         }
 
         function sendOTP() {
-            const phone = "+91" + document.getElementById('login-phone').value;
+            const phoneVal = document.getElementById('login-phone').value;
+            const phone = "+91" + phoneVal;
             const btn = document.getElementById('btn-send-otp');
-            
+
+            if (phoneVal.length !== 10) return;
+
             btn.classList.add('loading');
             btn.disabled = true;
 
@@ -1004,66 +927,52 @@ Here is the updated code with the requested changes.
                     confirmationResult = result;
                     document.getElementById('login-step-1').style.display = 'none';
                     document.getElementById('login-step-2').style.display = 'flex';
-                    btn.classList.remove('loading');
                     showToast("OTP Sent!");
                 }).catch((error) => {
                     console.error("SMS Error:", error);
+                    showToast("Failed to send OTP. Try again.", "error");
+                    if(recaptchaVerifier) recaptchaVerifier.clear();
+                    recaptchaVerifier = null;
                     btn.classList.remove('loading');
                     btn.disabled = false;
-                    showToast("Failed to send OTP. Try again.", "error");
-                    if(recaptchaVerifier) {
-                        recaptchaVerifier.clear();
-                        recaptchaVerifier = null;
-                    }
                 });
         }
 
         function verifyOTP() {
             const otp = document.getElementById('login-otp').value;
-            const btn = document.getElementById('btn-verify-otp');
-            
             if (!otp) return;
-            
-            btn.classList.add('loading');
 
             confirmationResult.confirm(otp).then((result) => {
                 const user = result.user;
                 
+                // Check if user has name
                 if (user.displayName) {
-                    document.getElementById('loginModal').classList.remove('active');
-                    showToast("Login Successful!");
-                    location.reload();
+                     // Existing User
+                     document.getElementById('loginModal').classList.remove('active');
+                     showToast("Login Successful!");
+                     location.reload(); 
                 } else {
-                    document.getElementById('login-step-2').style.display = 'none';
-                    document.getElementById('login-step-3').style.display = 'flex';
-                    btn.classList.remove('loading');
+                     // New User -> Ask Name
+                     document.getElementById('login-step-2').style.display = 'none';
+                     document.getElementById('login-step-3').style.display = 'flex';
                 }
             }).catch((error) => {
-                btn.classList.remove('loading');
                 showToast("Invalid OTP", "error");
             });
         }
-        
+
         function saveName() {
-            const name = document.getElementById('login-name').value;
-            const btn = document.getElementById('btn-save-name');
-            
-            if (!name) {
-                showToast("Please enter your name", "error");
-                return;
-            }
-            
-            btn.classList.add('loading');
-            
+            const name = document.getElementById('login-name-final').value;
+            if(!name) return;
+
             const user = auth.currentUser;
-            user.updateProfile({ displayName: name }).then(() => {
-                document.getElementById('loginModal').classList.remove('active');
-                showToast("Welcome " + name + "!");
-                location.reload();
-            }).catch((error) => {
-                btn.classList.remove('loading');
-                showToast("Error saving name", "error");
-            });
+            if(user) {
+                user.updateProfile({ displayName: name }).then(() => {
+                    document.getElementById('loginModal').classList.remove('active');
+                    showToast("Welcome " + name + "!");
+                    location.reload();
+                });
+            }
         }
 
         async function loadHero() {
@@ -1141,7 +1050,43 @@ Here is the updated code with the requested changes.
             try {
                 const snap = await db.collection('products').get();
                 allProducts = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                loadBestSellers();
+                
+                const visibleProducts = allProducts.filter(p => {
+                    const isProductActive = p.isAvailable !== false;
+                    const categoryObj = allCategories.find(c => c.name === p.category);
+                    const isCategoryActive = categoryObj ? categoryObj.enabled !== false : true;
+                    return isProductActive && isCategoryActive;
+                }).slice(0, 10);
+
+                const renderCard = (p) => {
+                    const img1 = (p.images && p.images[0]) || 'https://via.placeholder.com/300';
+                    const img2 = (p.images && p.images[1]) || img1;
+                    
+                    return `
+                    <div class="product-card" onclick="window.location.href='view.html?id=${p.id}'">
+                        <div class="product-image-container">
+                            <img src="${img1}" class="product-image default-image">
+                            <img src="${img2}" class="product-image hover-image">
+                            <button class="quick-view-btn" onclick="event.stopPropagation(); openProductModal('${p.id}', 'quickview')">Quick View</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${p.name}</h3>
+                            <p class="product-category">${p.category}</p>
+                            <div class="product-price">
+                                <div class="price-container">
+                                    <span class="current-price">₹${p.price}</span>
+                                    <span class="old-price">₹${p.oldPrice || (p.price * 1.2).toFixed(0)}</span>
+                                </div>
+                                <button class="add-to-cart" onclick="event.stopPropagation(); openProductModal('${p.id}', 'cart')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
+                            </div>
+                        </div>
+                    </div>`;
+                };
+
+                const html = visibleProducts.map(renderCard).join('');
+                document.getElementById('products-grid').innerHTML = html;
+                document.getElementById('products-grid-mobile').innerHTML = html;
+
             } catch (e) { console.error("Product Error:", e); }
         }
 
