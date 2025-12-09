@@ -44,7 +44,8 @@
         body.no-scroll { overflow: hidden; }
 
         /* --- FULL NAVBAR STYLES (Restored from Index) --- */
-        .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
+        /* Fixed: Removed min-height 100vh to prevent content push-down */
+        .page-desktop { display: block; width: 100%; }
         .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
         .d-navbar-container { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
         .d-navbar-logo { height: 60px; width: auto; object-fit: contain; cursor: pointer; }
@@ -85,6 +86,8 @@
         .profile-links { display: flex; flex-direction: column; gap: 8px; }
         .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
         .profile-link:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 20px; transform: translateX(2px); }
+        .admin-link-btn { background-color: var(--text-primary); color: white !important; border: 1px solid var(--text-primary); }
+        .admin-link-btn:hover { background-color: transparent; color: var(--text-primary) !important; }
         
         .auth-hidden { display: none !important; }
 
@@ -124,6 +127,62 @@
         .m-nav-link { display: flex; align-items: center; height: 48px; padding: 0 24px; margin: 2px 0; color: var(--text-primary); text-decoration: none; font-size: 16px; font-weight: 500; transition: background 0.15s ease; border-radius: 0; }
         .m-nav-link:hover { background: var(--surface-hover); }
         .m-nav-link.active { color: var(--brand-primary); background: linear-gradient(135deg, #fdf2f4 0%, #fbe9eb 100%); border-right: 3px solid var(--brand-primary); }
+
+        /* Mobile Categories Dropdown */
+        .m-categories-dropdown { margin: 2px 0; }
+        .m-categories-toggle { display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 24px; color: var(--text-primary); font-size: 16px; font-weight: 500; cursor: pointer; transition: background 0.15s ease; border-radius: 0; }
+        .m-categories-toggle:hover { background: var(--surface-hover); }
+        .m-categories-toggle.active { color: var(--brand-primary); background: linear-gradient(135deg, #fdf2f4 0%, #fbe9eb 100%); }
+        .m-categories-toggle .chevron { width: 16px; height: 16px; stroke: var(--text-light); transition: transform 0.2s ease; }
+        .m-categories-toggle.active .chevron { stroke: var(--brand-primary); transform: rotate(90deg); }
+        .m-categories-content { display: none; margin-left: 28px; padding-left: 16px; border-left: 2px solid var(--border-subtle); margin-top: 4px; margin-bottom: 8px; }
+        .m-categories-content.show { display: block; }
+        .m-category-item { display: block; height: 44px; padding: 0 24px; color: var(--text-light); text-decoration: none; font-size: 15px; font-weight: 400; border-radius: 8px; transition: all 0.15s ease; display: flex; align-items: center; }
+        .m-category-item:hover { background: var(--surface-hover); color: var(--brand-primary); }
+
+        /* Mobile Profile Drawer Section */
+        .m-drawer-profile { padding: 20px 24px; border-top: 1px solid var(--border-subtle); background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-hover) 100%); margin-top: auto; flex-shrink: 0; cursor: pointer; position: relative; }
+        .m-profile-header { display: flex; align-items: center; gap: 12px; }
+        .m-profile-img { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; border: 2px solid var(--surface-card); box-shadow: 0 2px 8px rgba(59, 11, 23, 0.1); }
+        .m-profile-info { flex: 1; }
+        .m-profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
+        .m-profile-email { font-size: 14px; color: var(--text-light); }
+        .m-login-text { font-weight: 600; color: var(--brand-primary); font-size: 16px; }
+
+        .m-profile-popup-menu {
+            position: absolute;
+            bottom: 100%;
+            left: 20px;
+            right: 20px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: var(--shadow-modal);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 12px;
+            z-index: 200;
+        }
+        .m-profile-popup-menu.active { display: flex; animation: slideUpFade 0.2s ease-out; }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .m-profile-option {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+        .m-profile-option:hover { background: var(--surface-hover); color: var(--brand-primary); }
+        .m-profile-option.logout { color: #d33d49; }
+        .m-profile-option.logout:hover { background: #fff1f2; }
 
         /* --- CHECKOUT LAYOUT --- */
         .container {
@@ -482,9 +541,36 @@
                         <a href="shop.html" class="m-nav-link">Shop</a>
                         <a href="wishlist.html" class="m-nav-link">Wishlist</a>
                         <a href="my-orders.html" class="m-nav-link auth-only auth-hidden">My Orders</a>
-                        <a href="my-profile.html" class="m-nav-link auth-only auth-hidden">My Profile</a>
+                        <div class="m-categories-dropdown">
+                            <div class="m-categories-toggle" id="m-categories-toggle">
+                                <span>Categories</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron"><path d="m9 18 6-6-6-6"/></svg>
+                            </div>
+                            <div class="m-categories-content" id="mobile-nav-categories"></div>
+                        </div>
                     </div>
                 </nav>
+                <div class="m-drawer-profile" id="mobile-profile-trigger">
+                    <div class="m-profile-popup-menu" id="m-profile-popup">
+                         <a href="my-profile.html" class="m-profile-option">
+                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                             My Profile
+                         </a>
+                         <div class="m-profile-option logout" id="mobile-logout-btn">
+                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                             Logout
+                         </div>
+                    </div>
+                    <div class="m-profile-header">
+                        <img class="m-profile-img" id="user-avatar-mobile" src="https://ui-avatars.com/api/?name=Guest&background=random" alt="Profile" />
+                        <div class="m-profile-info">
+                            <div class="m-profile-name" id="user-name-mobile">Guest</div>
+                            <div class="m-profile-email" id="user-phone-mobile">
+                                <span class="m-login-text">Login / Sign Up</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -711,6 +797,9 @@
         function checkAuth() {
             auth.onAuthStateChanged(user => {
                 const triggerDesktop = document.getElementById('login-trigger-desktop');
+                const triggerMobile = document.getElementById('mobile-profile-trigger');
+                const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+                const mProfilePopup = document.getElementById('m-profile-popup');
                 const authOnlyLinks = document.querySelectorAll('.auth-only');
 
                 if (user) {
@@ -723,12 +812,36 @@
                     document.getElementById('user-name').innerText = name;
                     document.getElementById('user-email').innerText = email;
                     
+                    document.getElementById('user-name-mobile').textContent = name;
+                    document.getElementById('user-phone-mobile').innerHTML = email;
+                    document.getElementById('user-avatar-mobile').src = avatarUrl;
+
                     authOnlyLinks.forEach(el => el.classList.remove('auth-hidden'));
                     
                     if (triggerDesktop) {
                         triggerDesktop.innerText = "Sign Out";
                         triggerDesktop.onclick = () => { auth.signOut().then(() => window.location.href = 'index.html'); };
                     }
+
+                    // Mobile Profile Popup Trigger
+                    if(triggerMobile) {
+                        triggerMobile.onclick = (e) => {
+                            e.stopPropagation();
+                            if(e.target.closest('.m-profile-popup-menu')) return;
+                            mProfilePopup.classList.toggle('active');
+                        }
+                    }
+                    if(mobileLogoutBtn) {
+                        mobileLogoutBtn.onclick = (e) => {
+                            e.preventDefault();
+                            auth.signOut().then(() => window.location.href = 'index.html');
+                        }
+                    }
+                    document.addEventListener('click', (e) => {
+                         if(triggerMobile && !triggerMobile.contains(e.target)) {
+                             mProfilePopup.classList.remove('active');
+                         }
+                    });
 
                     loadAddress(user.uid);
                 } else {
@@ -737,6 +850,12 @@
                         triggerDesktop.innerText = "Sign In";
                         triggerDesktop.onclick = () => window.location.href = 'index.html';
                     }
+                    
+                    // Reset mobile profile to guest
+                    document.getElementById('user-name-mobile').textContent = "Guest";
+                    document.getElementById('user-phone-mobile').innerHTML = '<span class="m-login-text" onclick="window.location.href=\'index.html\'">Login / Sign Up</span>';
+                    document.getElementById('user-avatar-mobile').src = "https://ui-avatars.com/api/?name=Guest&background=random";
+                    if(mProfilePopup) mProfilePopup.classList.remove('active');
                 }
             });
         }
@@ -745,9 +864,17 @@
             try {
                 const snap = await db.collection('categories').where('enabled', '!=', false).get();
                 const cats = snap.docs.map(d => d.data());
-                const container = document.getElementById('desktop-nav-categories');
-                if(container) {
-                    container.innerHTML = cats.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`).join('');
+                
+                // Desktop
+                const dContainer = document.getElementById('desktop-nav-categories');
+                if(dContainer) {
+                    dContainer.innerHTML = cats.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`).join('');
+                }
+                
+                // Mobile
+                const mContainer = document.getElementById('mobile-nav-categories');
+                if(mContainer) {
+                    mContainer.innerHTML = cats.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="m-category-item">${c.name}</a>`).join('');
                 }
             } catch (e) { console.log("Cat error", e); }
         }
@@ -844,6 +971,16 @@
             if(pToggle) {
                 pToggle.onclick = (e) => { e.stopPropagation(); pPopup.classList.toggle('show'); };
                 document.onclick = () => pPopup.classList.remove('show');
+            }
+
+            // Mobile Category Toggle
+            const mCatToggle = document.getElementById('m-categories-toggle');
+            const mCatContent = document.getElementById('mobile-nav-categories');
+            if(mCatToggle) {
+                mCatToggle.onclick = () => {
+                    mCatContent.style.display = mCatContent.style.display === 'block' ? 'none' : 'block';
+                    mCatToggle.classList.toggle('active');
+                }
             }
         }
 
