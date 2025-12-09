@@ -1,3 +1,15 @@
+Here is the complete, updated code.
+
+**Key Changes:**
+
+1.  **UI Overhaul for Login:**
+    *   **Step 1:** Shows only the Phone Number input with a fixed "+91" prefix. The "Send OTP" button is **disabled** until 10 digits are typed.
+    *   **Spinner:** Added a loading spinner inside the button when "Send OTP" or "Verify" is clicked.
+    *   **Step 2:** OTP Entry.
+    *   **Step 3 (Conditional):** If the user is new (no Display Name in Firebase), it asks for a Name. If existing, it skips this and logs them in immediately.
+2.  **Logic:** Updated Firebase functions to handle the staged login flow.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +77,7 @@
         .d-action-icons { display: flex; align-items: center; gap: 20px; }
         .d-icon-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
         .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
+        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); transition: stroke 0.2s ease; }
         .d-icon-btn:hover svg { stroke: var(--brand-primary); }
 
         .cart-badge { position: absolute; top: -6px; right: -6px; background: var(--brand-primary); color: white; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
@@ -296,10 +308,24 @@
         .login-label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
         .login-input { padding: 12px; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 15px; width: 100%; outline: none; transition: border-color 0.2s; }
         .login-input:focus { border-color: var(--brand-primary); }
-        .login-btn { width: 100%; padding: 14px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; margin-top: 8px; }
-        .login-btn:hover { opacity: 0.9; }
-        .mobile-login-btn-container { padding: 16px 24px; border-top: 1px solid var(--border-subtle); background: var(--surface-card); }
         
+        /* Updated: Phone input styles */
+        .phone-input-wrapper { display: flex; align-items: center; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
+        .phone-input-wrapper:focus-within { border-color: var(--brand-primary); }
+        .country-code { background: var(--surface-light); padding: 12px 16px; font-weight: 600; color: var(--text-primary); border-right: 1px solid var(--border-subtle); font-size: 15px; }
+        .phone-input-wrapper input { border: none; padding: 12px; font-family: "DM Sans", sans-serif; font-size: 15px; flex: 1; outline: none; }
+
+        .login-btn { width: 100%; padding: 14px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; margin-top: 8px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: opacity 0.2s; }
+        .login-btn:hover { opacity: 0.9; }
+        .login-btn:disabled { background: #ccc; cursor: not-allowed; opacity: 0.7; }
+        
+        /* Spinner */
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; display: none; }
+        .login-btn.loading .spinner { display: block; }
+        .login-btn.loading span { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .mobile-login-btn-container { padding: 16px 24px; border-top: 1px solid var(--border-subtle); background: var(--surface-card); }
         #recaptcha-container { margin-top: 10px; display: flex; justify-content: center; }
 
         @media (max-width: 1024px) {
@@ -687,22 +713,37 @@
             </div>
             <div class="login-body" id="login-step-1">
                 <div class="login-input-group">
-                    <label class="login-label">Name</label>
-                    <input type="text" class="login-input" id="login-name" placeholder="Enter your name">
-                </div>
-                <div class="login-input-group">
                     <label class="login-label">Phone Number</label>
-                    <input type="tel" class="login-input" id="login-phone" placeholder="+91 9876543210">
+                    <div class="phone-input-wrapper">
+                        <span class="country-code">+91</span>
+                        <input type="tel" id="login-phone" maxlength="10" placeholder="Enter number">
+                    </div>
                 </div>
                 <div id="recaptcha-container"></div>
-                <button class="login-btn" onclick="sendOTP()">Send OTP</button>
+                <button class="login-btn" id="btn-send-otp" onclick="sendOTP()" disabled>
+                    <span>Send OTP</span>
+                    <div class="spinner"></div>
+                </button>
             </div>
             <div class="login-body" id="login-step-2" style="display: none;">
                 <div class="login-input-group">
                     <label class="login-label">Enter OTP</label>
                     <input type="text" class="login-input" id="login-otp" placeholder="123456">
                 </div>
-                <button class="login-btn" onclick="verifyOTP()">Verify OTP</button>
+                <button class="login-btn" id="btn-verify-otp" onclick="verifyOTP()">
+                    <span>Verify OTP</span>
+                    <div class="spinner"></div>
+                </button>
+            </div>
+            <div class="login-body" id="login-step-3" style="display: none;">
+                <div class="login-input-group">
+                    <label class="login-label">What should we call you?</label>
+                    <input type="text" class="login-input" id="login-name" placeholder="Enter your name">
+                </div>
+                <button class="login-btn" id="btn-save-name" onclick="saveName()">
+                    <span>Continue</span>
+                    <div class="spinner"></div>
+                </button>
             </div>
         </div>
     </div>
@@ -797,12 +838,30 @@
             renderCart();
             initCategoriesScroll();
             initNewArrivalsScroll();
+            initLoginInput();
         });
+
+        function initLoginInput() {
+            const phoneInput = document.getElementById('login-phone');
+            const sendBtn = document.getElementById('btn-send-otp');
+            
+            if(phoneInput) {
+                phoneInput.addEventListener('input', (e) => {
+                    let val = e.target.value.replace(/\D/g, '');
+                    if (val.length > 10) val = val.slice(0, 10);
+                    e.target.value = val;
+                    
+                    if (val.length === 10) {
+                        sendBtn.disabled = false;
+                    } else {
+                        sendBtn.disabled = true;
+                    }
+                });
+            }
+        }
 
         function checkAuth() {
             auth.onAuthStateChanged(user => {
-                const profilePopup = document.getElementById('profile-popup');
-                const profileLinks = document.getElementById('profile-links-container');
                 const loginBtnContainer = document.querySelector('.mobile-login-btn-container');
 
                 if (user) {
@@ -829,7 +888,6 @@
                         document.getElementById('mobile-admin-link').href = "admin.html";
                     }
                     
-                    // Remove existing login button from mobile menu if exists
                     if (loginBtnContainer) loginBtnContainer.remove();
 
                 } else {
@@ -842,7 +900,6 @@
                     };
                     document.getElementById('mobile-admin-link').style.display = 'none';
 
-                    // Add Login Button to Mobile Menu
                     const nav = document.querySelector('.m-drawer-nav');
                     if (!document.querySelector('.mobile-login-btn-container')) {
                         const div = document.createElement('div');
@@ -854,26 +911,21 @@
             });
         }
 
-        // --- PHONE AUTH LOGIC ---
         function setupRecaptcha() {
             if (!recaptchaVerifier) {
                 recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
                     'size': 'invisible',
-                    'callback': (response) => {
-                        // reCAPTCHA solved, allow signInWithPhoneNumber.
-                    }
+                    'callback': (response) => {}
                 });
             }
         }
 
         function sendOTP() {
-            const name = document.getElementById('login-name').value;
-            const phone = document.getElementById('login-phone').value;
-
-            if (!name || !phone) {
-                alert("Please enter Name and Phone Number");
-                return;
-            }
+            const phone = "+91" + document.getElementById('login-phone').value;
+            const btn = document.getElementById('btn-send-otp');
+            
+            btn.classList.add('loading');
+            btn.disabled = true;
 
             setupRecaptcha();
             const appVerifier = recaptchaVerifier;
@@ -883,30 +935,65 @@
                     confirmationResult = result;
                     document.getElementById('login-step-1').style.display = 'none';
                     document.getElementById('login-step-2').style.display = 'flex';
+                    btn.classList.remove('loading');
                     showToast("OTP Sent!");
                 }).catch((error) => {
                     console.error("SMS Error:", error);
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
                     showToast("Failed to send OTP. Try again.", "error");
-                    if(recaptchaVerifier) recaptchaVerifier.clear();
-                    recaptchaVerifier = null;
+                    if(recaptchaVerifier) {
+                        recaptchaVerifier.clear();
+                        recaptchaVerifier = null;
+                    }
                 });
         }
 
         function verifyOTP() {
             const otp = document.getElementById('login-otp').value;
+            const btn = document.getElementById('btn-verify-otp');
+            
             if (!otp) return;
+            
+            btn.classList.add('loading');
 
             confirmationResult.confirm(otp).then((result) => {
                 const user = result.user;
-                const name = document.getElementById('login-name').value;
                 
-                user.updateProfile({ displayName: name }).then(() => {
+                if (user.displayName) {
                     document.getElementById('loginModal').classList.remove('active');
                     showToast("Login Successful!");
-                    location.reload(); // Refresh to update UI
-                });
+                    location.reload();
+                } else {
+                    document.getElementById('login-step-2').style.display = 'none';
+                    document.getElementById('login-step-3').style.display = 'flex';
+                    btn.classList.remove('loading');
+                }
             }).catch((error) => {
+                btn.classList.remove('loading');
                 showToast("Invalid OTP", "error");
+            });
+        }
+        
+        function saveName() {
+            const name = document.getElementById('login-name').value;
+            const btn = document.getElementById('btn-save-name');
+            
+            if (!name) {
+                showToast("Please enter your name", "error");
+                return;
+            }
+            
+            btn.classList.add('loading');
+            
+            const user = auth.currentUser;
+            user.updateProfile({ displayName: name }).then(() => {
+                document.getElementById('loginModal').classList.remove('active');
+                showToast("Welcome " + name + "!");
+                location.reload();
+            }).catch((error) => {
+                btn.classList.remove('loading');
+                showToast("Error saving name", "error");
             });
         }
 
