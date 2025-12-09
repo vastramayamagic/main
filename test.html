@@ -1,3 +1,16 @@
+Here is the complete code.
+
+**Changes made:**
+1.  **Renamed Section:** Changed "New Arrivals" to **"Best Sellers"** in the HTML.
+2.  **Data Logic:** Added `loadBestSellers()` function which:
+    *   Fetches the `landingPage/Sections` document from Firestore.
+    *   Gets the array of product IDs stored in the `bestSellers` field (managed by your admin page).
+    *   Filters `allProducts` to match these IDs.
+    *   Applies the visibility logic (Product `isAvailable` AND Category `enabled` check).
+3.  **UI Consistency:** It uses the exact horizontal scrolling UI (`products-grid`) used by the previous "New Arrivals" section.
+4.  **Init Logic:** Updated the initialization chain to ensure products are loaded before trying to filter the Best Sellers list.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +52,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Roboto, sans-serif; overflow-x: hidden; color: var(--text-primary); width: 100%; }
 
-        /* Desktop Layout */
         .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
         
         .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
@@ -65,7 +77,7 @@
         .d-action-icons { display: flex; align-items: center; gap: 20px; }
         .d-icon-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
         .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
+        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); transition: stroke 0.2s ease; }
         .d-icon-btn:hover svg { stroke: var(--brand-primary); }
 
         .cart-badge { position: absolute; top: -6px; right: -6px; background: var(--brand-primary); color: white; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
@@ -140,11 +152,11 @@
         .nav-arrow svg { width: 24px; height: 24px; stroke: var(--text-primary); stroke-width: 2; }
 
         /* Shared Product Sections */
-        .new-arrivals-section, .category-products-section { padding: 60px 20px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
+        .best-sellers-section, .category-products-section { padding: 60px 20px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding: 0 20px; }
         .section-header h2 { font-size: 32px; font-weight: 700; color: var(--text-primary); position: relative; }
         .section-header h2::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 60px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
-        .new-arrivals-nav, .section-nav { display: flex; gap: 15px; }
+        .section-nav { display: flex; gap: 15px; }
         .nav-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--product-card-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .nav-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); box-shadow: var(--shadow-medium); }
         .nav-btn:hover svg { stroke: white; }
@@ -177,19 +189,11 @@
         .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
         
-        /* New Arrivals Actions (Bottom Row) */
-        .product-actions-row { display: flex; gap: 8px; position: relative; z-index: 5; }
-        .icon-action-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--circle-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
-        .icon-action-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); }
-        .icon-action-btn:hover svg { stroke: white; }
-        .icon-action-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.3s ease; fill: none; }
-
-        /* Category Section Card Actions (Top Right Wishlist) */
+        /* Wishlist Icon Top Right */
         .wishlist-btn-top-right { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-subtle); box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; z-index: 10; transition: all 0.2s ease; }
         .wishlist-btn-top-right:hover { transform: scale(1.1); background: #fff; }
         .wishlist-btn-top-right svg { width: 18px; height: 18px; stroke: var(--brand-primary); fill: none; }
 
-        /* Add to Cart Button for Category Sections */
         .add-to-cart { width: 40px; height: 40px; border-radius: 10px; background: var(--circle-bg); border: 1px solid var(--circle-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 5; }
         .add-to-cart:hover { background: var(--brand-primary); border-color: var(--brand-primary); }
         .add-to-cart:hover svg { stroke: white; }
@@ -306,7 +310,7 @@
             .carousel-nav { padding: 0 15px; pointer-events: auto; }
             .nav-arrow { width: 40px; height: 40px; opacity: 1; transform: translateX(0) !important; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(139, 38, 53, 0.2); }
             .carousel-slide.active .slide-image { transform: scale(1.05); }
-            .new-arrivals-section, .category-products-section { padding: 40px 10px; }
+            .best-sellers-section, .category-products-section { padding: 40px 10px; }
             .section-header { padding: 0 10px; margin-bottom: 30px; }
             .section-header h2 { font-size: 28px; }
             .nav-btn { width: 44px; height: 44px; }
@@ -332,7 +336,7 @@
             .scroll-arrow.hidden { opacity: 0; pointer-events: none; }
             .quick-view-btn { display: none !important; }
             
-            /* Specific 2-column grid for new category sections on mobile */
+            /* 2-column grid for newly added category sections ONLY */
             .category-products-section .products-grid {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -348,9 +352,17 @@
             .category-products-section .product-image-container {
                 height: 200px;
             }
+            /* Hide the bottom action row in the 2-col layout */
             .category-products-section .product-actions-row {
                 display: none !important;
             }
+            /* Ensure the new section header buttons are hidden on mobile since grid doesn't scroll */
+            .category-products-section .section-nav {
+                display: none;
+            }
+            /* Ensure Best Sellers keeps horizontal scroll card size */
+            .best-sellers-section .product-card { width: 260px; }
+            .best-sellers-section .product-image-container { height: 260px; }
         }
 
         @media (min-width: 769px) {
@@ -368,9 +380,9 @@
             .category-circle { width: 85px; height: 85px; }
             .category-name { font-size: 12px; }
             .section-title { font-size: 24px; }
-            /* Default horizontal scroll cards for new arrivals */
-            .new-arrivals-section .product-card { width: 260px; }
-            .new-arrivals-section .product-image-container { height: 260px; }
+            .best-sellers-section .product-card { width: 260px; }
+            .best-sellers-section .product-image-container { height: 260px; }
+            .category-products-section .product-image-container { height: 180px; }
         }
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -378,7 +390,7 @@
         
         @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(139, 38, 53, 0.4); } 50% { box-shadow: 0 0 0 4px rgba(139, 38, 53, 0); } }
         
-        @media (min-width: 1200px) { .new-arrivals-section, .categories-section, .category-products-section { padding-left: 40px; padding-right: 40px; } }
+        @media (min-width: 1200px) { .best-sellers-section, .categories-section, .category-products-section { padding-left: 40px; padding-right: 40px; } }
 
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(40, 10, 15, 0.6); backdrop-filter: blur(6px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -423,6 +435,7 @@
         .btn-secondary:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
         .btn-main { flex: 1.5; background: var(--brand-gradient); color: white; border: none; box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
+
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
         @media (max-width: 1024px) {
@@ -536,16 +549,16 @@
                 </div>
             </section>
 
-            <section class="new-arrivals-section">
+            <section class="best-sellers-section">
                 <div class="section-header">
-                    <h2>New Arrivals</h2>
-                    <div class="new-arrivals-nav">
-                        <button class="nav-btn prev-btn" id="new-arrivals-prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-                        <button class="nav-btn next-btn" id="new-arrivals-next"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                    <h2>Best Sellers</h2>
+                    <div class="section-nav">
+                        <button class="nav-btn prev-btn" id="best-sellers-prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                        <button class="nav-btn next-btn" id="best-sellers-next"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
                     </div>
                 </div>
                 <div class="products-container">
-                    <div class="products-grid" id="products-grid"></div>
+                    <div class="products-grid" id="best-sellers-grid"></div>
                 </div>
             </section>
 
@@ -588,12 +601,12 @@
                     </div>
                 </section>
 
-                <section class="new-arrivals-section">
+                <section class="best-sellers-section">
                     <div class="section-header">
-                        <h2>New Arrivals</h2>
+                        <h2>Best Sellers</h2>
                     </div>
                     <div class="products-container">
-                        <div class="products-grid" id="products-grid-mobile"></div>
+                        <div class="products-grid" id="best-sellers-grid-mobile"></div>
                     </div>
                 </section>
 
@@ -751,7 +764,6 @@
             loadPopup();
             renderCart();
             initCategoriesScroll();
-            initNewArrivalsScroll();
         });
 
         function checkAuth() {
@@ -864,12 +876,29 @@
                 const snap = await db.collection('products').get();
                 allProducts = snap.docs.map(d => ({id: d.id, ...d.data()}));
                 
-                const visibleProducts = allProducts.filter(p => {
-                    const isProductActive = p.isAvailable !== false;
-                    const categoryObj = allCategories.find(c => c.name === p.category);
-                    const isCategoryActive = categoryObj ? categoryObj.enabled !== false : true;
-                    return isProductActive && isCategoryActive;
-                }).slice(0, 10);
+                // Then load Best Sellers
+                loadBestSellers();
+
+            } catch (e) { console.error("Product Error:", e); }
+        }
+
+        async function loadBestSellers() {
+            try {
+                const doc = await db.collection('landingPage').doc('Sections').get();
+                let productsToShow = [];
+
+                if (doc.exists && doc.data().bestSellers) {
+                    const ids = doc.data().bestSellers;
+                    productsToShow = ids.map(id => allProducts.find(p => p.id === id)).filter(p => {
+                        if (!p) return false;
+                        const isProductActive = p.isAvailable !== false;
+                        const categoryObj = allCategories.find(c => c.name === p.category);
+                        const isCategoryActive = categoryObj ? categoryObj.enabled !== false : true;
+                        return isProductActive && isCategoryActive;
+                    });
+                } else {
+                    productsToShow = allProducts.filter(p => p.isAvailable !== false).slice(0, 10);
+                }
 
                 const renderCard = (p) => {
                     const img1 = (p.images && p.images[0]) || 'https://via.placeholder.com/300';
@@ -896,11 +925,15 @@
                     </div>`;
                 };
 
-                const html = visibleProducts.map(renderCard).join('');
-                document.getElementById('products-grid').innerHTML = html;
-                document.getElementById('products-grid-mobile').innerHTML = html;
+                const html = productsToShow.map(renderCard).join('');
+                document.getElementById('best-sellers-grid').innerHTML = html;
+                document.getElementById('best-sellers-grid-mobile').innerHTML = html;
+                
+                setTimeout(() => {
+                    initProductScroll('best-sellers-grid', 'best-sellers-prev', 'best-sellers-next');
+                }, 100);
 
-            } catch (e) { console.error("Product Error:", e); }
+            } catch (e) { console.error("Best Sellers Error:", e); }
         }
 
         async function loadCategorySections() {
@@ -1279,11 +1312,6 @@
                 scrollRightBtn.style.opacity = scrollLeft + clientWidth >= scrollWidth - 10 ? '0' : '1';
                 scrollRightBtn.style.pointerEvents = scrollLeft + clientWidth >= scrollWidth - 10 ? 'none' : 'auto';
             });
-        }
-
-        function initNewArrivalsScroll() {
-            initProductScroll('products-grid', 'new-arrivals-prev', 'new-arrivals-next');
-            initProductScroll('products-grid-mobile', 'new-arrivals-prev-mobile', 'new-arrivals-next-mobile');
         }
 
         function initProductScroll(gridId, prevBtnId, nextBtnId) {
