@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Secure Checkout - Vastramaya</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+    /* =========================================
+       PREMIUM DESIGN SYSTEM
+       ========================================= */
+    :root {
+        --page-bg: #fefcf3;
+        --card-bg: #ffffff;
+        --text-primary: #3f0b17;
+        --text-secondary: #6b422a;
+        --text-light: #a3715f;
+        
+        --brand-primary: #8b2635;
+        --brand-secondary: #d33d49;
+        --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+        
+        --green-success: #4a9c7d;
+        --green-bg: #e6f4ea;
+        --red-warning: #c62828;
+        --red-bg: #ffebee;
+        
+        --border-subtle: #e8d5c4;
+        --surface-light: #fff9f0;
+        --surface-hover: #f9f2e3;
+        
+        --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
+        --font-main: 'DM Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+        font-family: var(--font-main);
+        background-color: var(--page-bg);
+        color: var(--text-primary);
+        line-height: 1.5;
+        min-height: 100vh;
+        padding-bottom: 0; 
+    }
+
+    /* Prevent body scroll when modal is open */
+    body.no-scroll { overflow: hidden; }
+
+    /* --- PREMIUM CLOSE BUTTON (From Reference) --- */
+    .premium-close-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid var(--border-subtle);
+        background: var(--surface-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: absolute; 
+        top: 20px; right: 20px;
+        z-index: 20;
+    }
+
+    .premium-close-btn:hover {
+        background: var(--surface-hover);
+        border-color: var(--brand-primary);
+    }
+
+    .close-icon-lines {
+        width: 14px;
+        height: 14px;
+        position: relative;
+    }
+    
+    .close-icon-lines::before,
+    .close-icon-lines::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 14px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--text-primary);
+        transition: background 0.2s;
+    }
+    
+    .close-icon-lines::before { transform: rotate(45deg); }
+    .close-icon-lines::after { transform: rotate(-45deg); }
+
+    .premium-close-btn:hover .close-icon-lines::before,
+    .premium-close-btn:hover .close-icon-lines::after {
+        background: var(--brand-primary);
+    }
+
+    /* Header */
+    header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border-subtle);
+        text-align: center;
+        position: sticky; top: 0; z-index: 100;
+    }
+    .logo img { height: 50px; display: block; margin: 0 auto; object-fit: contain; }
+
+    /* Layout */
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 50px;
+    }
+
+    h1 { font-family: var(--font-main); font-size: 26px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
+    p.sub-head { color: var(--text-secondary); margin-bottom: 30px; font-size: 15px; }
+    h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; opacity: 0.9; font-weight: 700; color: var(--text-light); }
+
+    /* --- ADDRESS CARD --- */
+    .address-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-subtle);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 30px;
+        display: flex; gap: 15px;
+        cursor: pointer;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 10px rgba(59, 11, 23, 0.03);
+        position: relative;
+    }
+    .address-card:hover { 
+        box-shadow: var(--shadow-rich); 
+        border-color: var(--brand-primary); 
+        transform: translateY(-2px);
+    }
+    
+    .addr-type-tag {
+        background: var(--surface-hover); color: var(--brand-primary);
+        font-size: 11px; font-weight: 700; padding: 4px 10px; 
+        border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+        margin-bottom: 8px; display: inline-block;
+    }
+    .address-details strong { display: block; font-size: 18px; margin-bottom: 6px; color: var(--text-primary); }
+    .address-details span { font-size: 15px; color: var(--text-secondary); line-height: 1.5; display: block;}
+    .address-details .phone { font-size: 14px; color: var(--text-light); margin-top: 6px; }
+    
+    .change-btn { 
+        color: var(--brand-primary); font-weight: 700; font-size: 13px; 
+        text-transform: uppercase; margin-left: auto; cursor: pointer; 
+        align-self: flex-start; padding: 8px 16px; background: var(--surface-light); 
+        border: 1px solid var(--border-subtle);
+        border-radius: 8px; transition: 0.2s;
+    }
+    .change-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
+
+    /* --- PAYMENT UI --- */
+    .payment-option {
+        padding: 24px; border-radius: 16px; margin-bottom: 15px;
+        display: flex; align-items: center; gap: 18px;
+        cursor: pointer; background: var(--card-bg);
+        transition: all 0.2s ease; position: relative;
+        border: 1px solid var(--border-subtle);
+    }
+    .payment-option.prepaid {
+        background: linear-gradient(to right, #ffffff, #fffbfc);
+        border: 2px solid var(--green-success);
+    }
+    .best-value-badge {
+        position: absolute; top: 0; right: 0;
+        background: var(--green-success); color: white;
+        font-size: 11px; font-weight: 700; padding: 6px 14px;
+        border-bottom-left-radius: 12px; letter-spacing: 0.5px;
+    }
+    
+    input[type="radio"] {
+        appearance: none; width: 22px; height: 22px;
+        border: 2px solid #e0d0c8; border-radius: 50%;
+        margin-right: 5px; position: relative; transition: 0.2s;
+    }
+    input[type="radio"]:checked { border-color: var(--brand-primary); background: #fff; }
+    input[type="radio"]:checked::after {
+        content: ''; position: absolute;
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+        width: 12px; height: 12px; background: var(--brand-primary); border-radius: 50%;
+    }
+    
+    .pay-text { flex: 1; }
+    .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
+    .pay-sub { font-size: 14px; color: var(--text-secondary); display: block; }
+    
+    .save-badge {
+        display: inline-block; background: var(--green-bg);
+        color: var(--green-success); font-weight: 700; font-size: 12px;
+        padding: 4px 10px; border-radius: 20px; margin-left: 8px;
+        border: 1px solid rgba(74, 156, 125, 0.3); animation: pulse-green 2s infinite;
+    }
+    @keyframes pulse-green {
+        0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); }
+        70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); }
+    }
+    
+    .fee-warning {
+        display: block; margin-top: 6px; font-weight: 700; font-size: 13px;
+        color: var(--red-warning); background: var(--red-bg);
+        padding: 4px 12px; border-radius: 6px; width: fit-content;
+    }
+
+    /* --- ORDER SUMMARY --- */
+    .order-box {
+        background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
+        border: 1px solid #fff; padding: 30px; border-radius: 16px;
+        box-shadow: var(--shadow-rich); position: sticky; top: 90px;
+    }
+    .product { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
+    .prod-img { 
+        width: 70px; height: 90px; object-fit: cover; 
+        border-radius: 8px; border: 1px solid var(--border-subtle);
+        box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05);
+    }
+    .prod-info h4 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); font-weight: 600; line-height: 1.4; }
+    .prod-info p { font-size: 13px; color: var(--text-light); }
+    
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
+    .total-row { 
+        display: flex; justify-content: space-between; margin-top: 24px; 
+        padding-top: 24px; border-top: 1px dashed var(--border-subtle);
+        font-weight: 700; font-size: 20px; color: var(--text-primary);
+    }
+    .total-row span:last-child { color: var(--brand-primary); font-size: 24px; }
+    
+    .text-green { color: var(--green-success); font-weight: 700; }
+    .text-red { color: var(--red-warning); font-weight: 700; }
+    .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
+
+    /* --- PREMIUM BUTTON (Updated) --- */
+    .btn-main {
+        width: 100%; 
+        padding: 16px;
+        background: var(--brand-gradient);
+        color: white; 
+        border: none; 
+        border-radius: 12px;
+        font-size: 16px; 
+        font-weight: 600; 
+        margin-top: 25px;
+        cursor: pointer; 
+        transition: all 0.3s ease; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3);
+    }
+
+    /* Shine effect */
+    .btn-main::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .btn-main:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4);
+    }
+    
+    .btn-main:hover::before { opacity: 1; }
+
+    /* --- MOBILE BOTTOM BAR --- */
+    .mobile-bottom-bar { display: none; }
+
+    /* --- MODAL SYSTEM --- */
+    .modal-overlay {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(59, 11, 23, 0.4); /* Brand tinted dark */
+        backdrop-filter: blur(8px);
+        z-index: 2000;
+        justify-content: center; align-items: center;
+        padding: 20px;
+    }
+    
+    /* Base Modal Card (Desktop) */
+    .modal-card {
+        background: #fff;
+        border-radius: 20px;
+        width: 100%; max-width: 500px;
+        box-shadow: var(--shadow-rich);
+        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        display: flex; flex-direction: column;
+        max-height: 85vh;
+        border: 1px solid var(--border-subtle);
+    }
+
+    /* Modal Sections */
+    .modal-header {
+        padding: 25px 30px;
+        border-bottom: 1px solid var(--border-subtle);
+        flex-shrink: 0;
+        background: var(--surface-light);
+        border-radius: 20px 20px 0 0;
+    }
+    .modal-body {
+        padding: 30px;
+        overflow-y: auto;
+        flex: 1;
+    }
+    .modal-footer {
+        padding: 20px 30px;
+        border-top: 1px solid var(--border-subtle);
+        background: #fff;
+        border-radius: 0 0 20px 20px;
+        flex-shrink: 0;
+    }
+
+    @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    /* FORM INPUTS */
+    .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 20px; }
+    .full-width { grid-column: span 2; }
+    .modal-input {
+        width: 100%; padding: 14px;
+        border: 1px solid var(--border-subtle); border-radius: 10px;
+        font-family: var(--font-main); font-size: 15px;
+        background: var(--page-bg); color: var(--text-primary); transition: 0.2s;
+    }
+    .modal-input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
+    .modal-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Address Chips */
+    .addr-type-container { display: flex; gap: 10px; margin-top: 5px; }
+    .addr-chip-input { display: none; }
+    .addr-chip-label {
+        padding: 12px 20px; border: 1px solid var(--border-subtle);
+        border-radius: 10px; font-size: 14px; font-weight: 500;
+        cursor: pointer; color: var(--text-secondary); background: #fff;
+        transition: 0.2s; flex: 1; text-align: center;
+    }
+    .addr-chip-input:checked + .addr-chip-label {
+        background: var(--surface-hover); border-color: var(--brand-primary);
+        color: var(--brand-primary); font-weight: 700;
+    }
+
+    /* PSYCHOLOGY MODAL */
+    .psych-content { text-align: center; padding: 40px; }
+    .modal-icon-lg { 
+        width: 80px; height: 80px; background: var(--surface-hover);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-size: 36px; color: var(--brand-primary); margin: 0 auto 20px; 
+    }
+    .psych-content h3 { font-size: 22px; color: var(--text-primary); margin-bottom: 10px; }
+    .psych-content p { color: var(--text-secondary); font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
+
+    .btn-green-modal {
+        background: var(--green-success); color: white; width: 100%; padding: 16px;
+        border: none; border-radius: 12px; font-weight: 600; font-size: 16px;
+        cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(74, 156, 125, 0.3);
+        transition: 0.2s;
+    }
+    .btn-green-modal:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74, 156, 125, 0.4); }
+
+    .btn-outline-modal {
+        background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary);
+        width: 100%; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px;
+        cursor: pointer; transition: 0.2s;
+    }
+    .btn-outline-modal:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+
+    /* Success Screen */
+    #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--page-bg); z-index: 5000; justify-content: center; align-items: center; text-align: center; flex-direction: column;}
+    .success-icon { font-size: 60px; color: var(--brand-primary); margin-bottom: 20px; animation: bounce 1s; }
+    @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
+
+    /* =========================================
+       MOBILE RESPONSIVE ADJUSTMENTS
+       ========================================= */
+    @media (max-width: 900px) {
+        .container { display: flex; flex-direction: column; gap: 30px; }
+        .order-box { position: static; border: none; background: white; padding: 20px; }
+        
+        body { padding-bottom: 110px; }
+
+        /* Floating Bottom Bar */
+        .btn-main { display: none; }
+        .mobile-bottom-bar {
+            display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-subtle); padding: 15px 20px;
+            z-index: 900; box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        }
+        .btn-mobile-fixed {
+            width: 100%; padding: 16px; 
+            background: var(--brand-gradient);
+            color: white; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 38, 53, 0.3);
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative; overflow: hidden;
+        }
+        .btn-mobile-fixed::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .btn-mobile-fixed:active::before { opacity: 1; }
+
+        /* Bottom Sheet Modal Style */
+        .modal-overlay { align-items: flex-end; padding: 0; }
+        .modal-card {
+            border-radius: 24px 24px 0 0; width: 100%; max-width: 100%;
+            margin: 0; max-height: 85vh; border: none;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-header { padding: 20px 25px; border-radius: 24px 24px 0 0; }
+        .modal-body { padding: 25px; }
+        .modal-footer { padding: 20px 25px; border-radius: 0; }
+        
+        .addr-form-grid { grid-template-columns: 1fr; gap: 15px; }
+        .full-width { grid-column: span 1; }
+        
+        /* Adjust close button for mobile bottom sheet */
+        .premium-close-btn { 
+            position: absolute; top: 20px; right: 20px; 
+            background: #fff; border: 1px solid var(--border-subtle); 
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Logo">
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="form-section">
+            <h1>Secure Checkout</h1>
+            <p class="sub-head">Review your order details.</p>
+
+            <h2>Shipping Address</h2>
+            <div class="address-card">
+                <i class="fas fa-map-marker-alt" style="color:var(--brand-primary); margin-top:4px;"></i>
+                <div class="address-details">
+                    <span class="addr-type-tag" id="display-type">Home</span>
+                    <strong id="display-name">Anjali Sharma</strong>
+                    <span id="display-address">102 Palm Grove Heights, Link Road, Andheri West</span>
+                    <span id="display-city-state">Mumbai - 400053, Maharashtra</span>
+                    <span class="phone" id="display-phone">+91 98765 43210</span>
+                </div>
+                <div class="change-btn" onclick="openAddressModal()">Change</div>
+            </div>
+
+            <h2>Payment Method</h2>
+            
+            <label class="payment-option prepaid" id="card-prepaid">
+                <div class="best-value-badge">RECOMMENDED</div>
+                <input type="radio" name="payment" value="prepaid" id="radio-prepaid" checked onchange="togglePayment('prepaid')">
+                <div class="pay-text">
+                    <span class="pay-title">Pay Online <span class="save-badge">Save ₹100</span></span>
+                    <span class="pay-sub">UPI, Cards, Net Banking</span>
+                </div>
+                <i class="fas fa-check-circle" style="color:var(--green-success); font-size: 24px;"></i>
+            </label>
+
+            <label class="payment-option cod" id="card-cod">
+                <input type="radio" name="payment" value="cod" id="radio-cod" onchange="togglePayment('cod')">
+                <div class="pay-text">
+                    <span class="pay-title">Cash on Delivery</span>
+                    <span class="fee-warning"><i class="fas fa-exclamation-triangle"></i> + ₹100 Handling Fee</span>
+                </div>
+            </label>
+        </div>
+
+        <div class="summary-section">
+            <div class="order-box">
+                <div class="product">
+                    <img src="https://i.pinimg.com/736x/8b/69/1a/8b691aeb62447e3f95cfc5343db225f1.jpg" class="prod-img">
+                    <div class="prod-info">
+                        <h4>Cotton Blend Kurti Set</h4>
+                        <p>Qty: 1 • Maroon</p>
+                    </div>
+                    <div style="margin-left:auto; font-weight:700;">₹2,000</div>
+                </div>
+                <div class="product">
+                    <img src="https://i.pinimg.com/736x/62/2b/b8/622bb8bc020aec85aba99945c61ab91b.jpg" class="prod-img">
+                    <div class="prod-info">
+                        <h4>Organza Saree</h4>
+                        <p>Qty: 1 • Lilac</p>
+                    </div>
+                    <div style="margin-left:auto; font-weight:700;">₹1,499</div>
+                </div>
+
+                <hr style="border:0; border-top:1px dashed #ddd; margin: 20px 0;">
+
+                <div class="summary-row"><span>Subtotal</span><span>₹3,499</span></div>
+                <div class="summary-row"><span>Shipping & Handling</span><span id="shipping-display" class="text-green"><span class="strike">₹100</span> FREE</span></div>
+                <div class="total-row"><span>Total to Pay</span><span id="total-display">₹3,499</span></div>
+
+                <button class="btn-main" onclick="handleCheckout()">
+                    <span id="btn-text">Pay ₹3,499</span> <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <div style="text-align:center; margin-top:15px; font-size:12px; color:#a3715f;"><i class="fas fa-lock"></i> Secured by Razorpay</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-bottom-bar">
+        <button class="btn-mobile-fixed" onclick="handleCheckout()">
+            <span id="btn-text-mobile">Pay ₹3,499</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <div id="codModal" class="modal-overlay">
+        <div class="modal-card psych-content">
+            <button class="premium-close-btn" onclick="closeCodModal()"><div class="close-icon-lines"></div></button>
+            <div class="modal-icon-lg"><i class="fas fa-wallet"></i></div>
+            <h3>Wait! Save ₹100 Instantly</h3>
+            <p>You are about to pay <strong>₹100 extra</strong> for COD fees.<br>Switch to online payment now to save.</p>
+            <button class="btn-green-modal" onclick="switchToPrepaid()">Yes, Pay Online & Save ₹100</button>
+            <button class="btn-outline-modal" onclick="confirmCOD()">No, I'll pay ₹100 fee</button>
+        </div>
+    </div>
+
+    <div id="addressModal" class="modal-overlay">
+        <form onsubmit="saveAddress(event)" class="modal-card">
+            
+            <div class="modal-header">
+                <h3 style="margin:0; font-size:22px; color:var(--text-primary);">Update Address</h3>
+                <p style="margin:5px 0 0; font-size:14px; color:var(--text-secondary);">Enter your full delivery details.</p>
+                <button type="button" class="premium-close-btn" onclick="closeAddressModal()"><div class="close-icon-lines"></div></button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="addr-form-grid">
+                    <div>
+                        <label class="modal-label">Full Name</label>
+                        <input type="text" id="input-name" class="modal-input" value="Anjali Sharma" required>
+                    </div>
+                    <div>
+                        <label class="modal-label">Mobile Number</label>
+                        <input type="tel" id="input-phone" class="modal-input" value="+91 98765 43210" required>
+                    </div>
+                </div>
+
+                <div class="addr-form-grid">
+                    <div>
+                        <label class="modal-label">Pincode</label>
+                        <input type="text" id="input-zip" class="modal-input" value="400053" required>
+                    </div>
+                    <div>
+                        <label class="modal-label">Locality / Town</label>
+                        <input type="text" id="input-locality" class="modal-input" value="Andheri West" required>
+                    </div>
+                </div>
+
+                <div class="addr-form-grid">
+                    <div>
+                        <label class="modal-label">City</label>
+                        <input type="text" id="input-city" class="modal-input" value="Mumbai" required>
+                    </div>
+                    <div>
+                        <label class="modal-label">State</label>
+                        <input type="text" id="input-state" class="modal-input" value="Maharashtra" required>
+                    </div>
+                </div>
+
+                <div class="addr-form-grid">
+                    <div class="full-width">
+                        <label class="modal-label">Address (House No, Building, Street)</label>
+                        <input type="text" id="input-street" class="modal-input" value="102 Palm Grove Heights, Link Road" required>
+                    </div>
+                    <div class="full-width">
+                        <label class="modal-label">Landmark (Optional)</label>
+                        <input type="text" id="input-landmark" class="modal-input" placeholder="Near City Mall">
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label class="modal-label">Save Address As</label>
+                    <div class="addr-type-container">
+                        <input type="radio" name="addrType" id="type-home" value="Home" class="addr-chip-input" checked>
+                        <label for="type-home" class="addr-chip-label">Home</label>
+                        <input type="radio" name="addrType" id="type-work" value="Work" class="addr-chip-input">
+                        <label for="type-work" class="addr-chip-label">Work</label>
+                        <input type="radio" name="addrType" id="type-other" value="Other" class="addr-chip-input">
+                        <label for="type-other" class="addr-chip-label">Other</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-main" style="margin:0;">Save Address</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="success-screen">
+        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+        <h1>Order Confirmed!</h1>
+        <p class="sub-head">Thank you for your purchase.</p>
+        <button class="btn-main" style="width:auto; padding: 15px 40px;" onclick="window.location.reload()">Continue Shopping</button>
+    </div>
+
+    <script>
+        const baseTotal = 3499;
+        const codFee = 100;
+        const codModal = document.getElementById('codModal');
+        const addrModal = document.getElementById('addressModal');
+        const totalDisplay = document.getElementById('total-display');
+        const shippingDisplay = document.getElementById('shipping-display');
+        const btnText = document.getElementById('btn-text');
+        const btnTextMobile = document.getElementById('btn-text-mobile');
+        
+        // --- ADDRESS LOGIC ---
+        function openAddressModal() {
+            document.body.classList.add('no-scroll');
+            addrModal.style.display = 'flex';
+        }
+        function closeAddressModal() {
+            document.body.classList.remove('no-scroll');
+            addrModal.style.display = 'none';
+        }
+        
+        function saveAddress(e) {
+            e.preventDefault();
+            const newName = document.getElementById('input-name').value;
+            const newPhone = document.getElementById('input-phone').value;
+            const newStreet = document.getElementById('input-street').value;
+            const newLocality = document.getElementById('input-locality').value;
+            const newCity = document.getElementById('input-city').value;
+            const newZip = document.getElementById('input-zip').value;
+            const newState = document.getElementById('input-state').value;
+            
+            const typeOptions = document.getElementsByName('addrType');
+            let selectedType = 'Home';
+            for(const opt of typeOptions) {
+                if(opt.checked) selectedType = opt.value;
+            }
+
+            document.getElementById('display-name').innerText = newName;
+            document.getElementById('display-address').innerText = `${newStreet}, ${newLocality}`;
+            document.getElementById('display-city-state').innerText = `${newCity} - ${newZip}, ${newState}`;
+            document.getElementById('display-phone').innerText = newPhone;
+            document.getElementById('display-type').innerText = selectedType;
+            
+            closeAddressModal();
+        }
+
+        // --- PAYMENT LOGIC ---
+        function togglePayment(method) {
+            if (method === 'cod') {
+                document.body.classList.add('no-scroll');
+                codModal.style.display = 'flex';
+            } else {
+                setPrepaidUI();
+            }
+        }
+
+        function setPrepaidUI() {
+            document.getElementById('radio-prepaid').checked = true;
+            document.getElementById('card-prepaid').style.borderColor = "var(--green-success)";
+            document.getElementById('card-cod').style.borderColor = "var(--border-subtle)";
+            document.getElementById('card-cod').style.background = "#fff";
+            
+            shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
+            shippingDisplay.className = 'text-green';
+            const priceText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
+            
+            totalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
+            btnText.innerText = priceText;
+            btnTextMobile.innerText = priceText;
+        }
+
+        function setCodUI() {
+            document.getElementById('card-prepaid').style.borderColor = "var(--border-subtle)";
+            document.getElementById('card-cod').style.borderColor = "var(--red-warning)";
+            document.getElementById('card-cod').style.background = "#fff5f5";
+            
+            shippingDisplay.innerHTML = '+ ₹100 Fee';
+            shippingDisplay.className = 'text-red';
+            const newTotal = baseTotal + codFee;
+            const priceText = `Place Order (₹${newTotal.toLocaleString('en-IN')})`;
+
+            totalDisplay.innerText = `₹${newTotal.toLocaleString('en-IN')}`;
+            btnText.innerText = priceText;
+            btnTextMobile.innerText = priceText;
+        }
+
+        function switchToPrepaid() {
+            document.body.classList.remove('no-scroll');
+            codModal.style.display = 'none';
+            setPrepaidUI();
+        }
+
+        function confirmCOD() {
+            document.body.classList.remove('no-scroll');
+            codModal.style.display = 'none';
+            setCodUI();
+        }
+
+        function closeCodModal() {
+            document.body.classList.remove('no-scroll');
+            codModal.style.display = 'none';
+            confirmCOD(); 
+        }
+
+        function handleCheckout() {
+            const isCod = document.getElementById('radio-cod').checked;
+            if(isCod) {
+                document.getElementById('success-screen').style.display = 'flex';
+            } else {
+                const btnDesktop = document.getElementById('btn-text');
+                const btnMobile = document.getElementById('btn-text-mobile');
+                const oldText = btnDesktop.innerText;
+                
+                const loadingHtml = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+                btnDesktop.innerHTML = loadingHtml;
+                btnMobile.innerHTML = loadingHtml;
+
+                setTimeout(() => {
+                    alert("Redirecting to Razorpay/PhonePe...");
+                    btnDesktop.innerText = oldText;
+                    btnMobile.innerText = oldText;
+                }, 1000);
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == codModal) closeCodModal();
+            if (event.target == addrModal) closeAddressModal();
+        }
+    </script>
+</body>
+</html>
