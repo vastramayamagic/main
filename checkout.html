@@ -49,10 +49,9 @@
         padding-bottom: 0; 
     }
 
-    /* Prevent body scroll when modal is open */
     body.no-scroll { overflow: hidden; }
 
-    /* --- PREMIUM CLOSE BUTTON (From Reference) --- */
+    /* --- PREMIUM CLOSE BUTTON --- */
     .premium-close-btn {
         width: 40px;
         height: 40px;
@@ -75,22 +74,13 @@
     }
 
     .close-icon-lines {
-        width: 14px;
-        height: 14px;
-        position: relative;
+        width: 14px; height: 14px; position: relative;
     }
     
-    .close-icon-lines::before,
-    .close-icon-lines::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        margin: auto;
-        width: 14px;
-        height: 2px;
-        border-radius: 999px;
-        background: var(--text-primary);
-        transition: background 0.2s;
+    .close-icon-lines::before, .close-icon-lines::after {
+        content: ""; position: absolute; inset: 0; margin: auto;
+        width: 14px; height: 2px; border-radius: 999px;
+        background: var(--text-primary); transition: background 0.2s;
     }
     
     .close-icon-lines::before { transform: rotate(45deg); }
@@ -171,6 +161,9 @@
         cursor: pointer; background: var(--card-bg);
         transition: all 0.2s ease; position: relative;
         border: 1px solid var(--border-subtle);
+        
+        /* FIX: Prevents Green Badge from poking out */
+        overflow: hidden; 
     }
     .payment-option.prepaid {
         background: linear-gradient(to right, #ffffff, #fffbfc);
@@ -181,12 +174,14 @@
         background: var(--green-success); color: white;
         font-size: 11px; font-weight: 700; padding: 6px 14px;
         border-bottom-left-radius: 12px; letter-spacing: 0.5px;
+        z-index: 2;
     }
     
     input[type="radio"] {
         appearance: none; width: 22px; height: 22px;
         border: 2px solid #e0d0c8; border-radius: 50%;
         margin-right: 5px; position: relative; transition: 0.2s;
+        flex-shrink: 0;
     }
     input[type="radio"]:checked { border-color: var(--brand-primary); background: #fff; }
     input[type="radio"]:checked::after {
@@ -244,7 +239,7 @@
     .text-red { color: var(--red-warning); font-weight: 700; }
     .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
 
-    /* --- PREMIUM BUTTON (Updated) --- */
+    /* --- PREMIUM BUTTON --- */
     .btn-main {
         width: 100%; 
         padding: 16px;
@@ -266,7 +261,6 @@
         box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3);
     }
 
-    /* Shine effect */
     .btn-main::before {
         content: '';
         position: absolute;
@@ -317,6 +311,7 @@
         flex-shrink: 0;
         background: var(--surface-light);
         border-radius: 20px 20px 0 0;
+        position: relative;
     }
     .modal-body {
         padding: 30px;
