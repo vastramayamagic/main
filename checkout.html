@@ -3,450 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Secure Checkout - Vastramaya</title>
-    
+    <title>Vastramaya | My Wishlist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* --- REUSING GLOBAL STYLES FROM INDEX.HTML --- */
         :root {
             --header-height-desktop: 80px;
             --navbar-height-mobile: 70px;
             --page-bg: #fefcf3;
-            --card-bg: #ffffff;
             --text-primary: #3f0b17;
             --text-secondary: #6b422a;
             --text-light: #a3715f;
             --brand-primary: #8b2635;
-            --brand-secondary: #d33d49;
             --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
-            --progress-color: #8b2635;
-            --progress-bg: rgba(59, 11, 23, 0.15);
-            --green-success: #4a9c7d;
-            --green-bg: #e6f4ea;
-            --red-warning: #c62828;
-            --red-bg: #ffebee;
             --border-subtle: #e8d5c4;
             --surface-light: #fff9f0;
             --surface-card: #fffefb;
             --surface-hover: #f9f2e3;
-            --shadow-premium: 0 10px 25px -5px rgba(59, 11, 23, 0.1), 0 5px 10px -5px rgba(59, 11, 23, 0.04);
-            --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
+            --product-card-bg: #fffefb;
             --shadow-light: 0 2px 10px rgba(59, 11, 23, 0.05);
-            --shadow-modal: 0 25px 50px -12px rgba(63, 11, 23, 0.25);
-            --font-main: 'DM Sans', sans-serif;
+            --shadow-medium: 0 8px 30px rgba(59, 11, 23, 0.12);
+            --footer-bg-lux: #0c1f1a;
+            --footer-gold: #e6d2a9;
+            --footer-silver: #b8c9c3;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { min-height: 100vh; background: var(--page-bg); font-family: var(--font-main); overflow-x: hidden; color: var(--text-primary); width: 100%; }
-        body.no-scroll { overflow: hidden; }
+        body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Roboto, sans-serif; overflow-x: hidden; color: var(--text-primary); width: 100%; }
 
-        .page-desktop { display: block; width: 100%; }
+        /* --- DESKTOP NAV --- */
+        .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
         .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
         .d-navbar-container { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
-        .d-navbar-logo { height: 60px; width: auto; object-fit: contain; cursor: pointer; }
-        
+        .d-navbar-logo { height: 60px; width: auto; object-fit: contain; }
         .d-nav-links { display: flex; align-items: center; gap: 32px; margin: 0 40px; }
-        .d-nav-link { font-size: 15px; font-weight: 600; color: var(--text-primary); text-decoration: none; padding: 8px 0; position: relative; transition: color 0.2s ease; white-space: nowrap; }
-        .d-nav-link:hover, .d-nav-link.active { color: var(--brand-primary); }
-        .d-nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--brand-primary); border-radius: 1px; }
-
-        .d-categories-dropdown { position: relative; }
-        .d-categories-content { position: absolute; top: 100%; left: -20px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 12px 0; min-width: 220px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 100; }
-        .d-categories-dropdown:hover .d-categories-content { opacity: 1; visibility: visible; transform: translateY(0); }
-        .d-category-item { display: block; padding: 12px 24px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; }
-        .d-category-item:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 28px; }
-
-        .d-search-container { flex: 1; max-width: 400px; position: relative; }
-        .d-search-bar { width: 100%; padding: 12px 16px 12px 44px; border: 1px solid var(--border-subtle); border-radius: 10px; background: var(--surface-light); font-family: "DM Sans", sans-serif; font-size: 14px; color: var(--text-primary); outline: none; transition: all 0.2s ease; }
-        .d-search-bar:focus { background: var(--surface-card); border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
-        .d-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-light); width: 18px; height: 18px; }
-
+        .d-nav-link { font-size: 15px; font-weight: 600; color: var(--text-primary); text-decoration: none; padding: 8px 0; position: relative; transition: color 0.2s ease; }
+        .d-nav-link:hover { color: var(--brand-primary); }
+        
         .d-action-icons { display: flex; align-items: center; gap: 20px; }
         .d-icon-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; text-decoration: none; color: inherit; }
-        .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
-        .d-icon-btn:hover svg { stroke: var(--brand-primary); }
+        .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
+        .cart-badge { position: absolute; top: -6px; right: -6px; background: var(--brand-primary); color: white; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
 
-        .d-profile-dropdown { position: relative; }
-        .d-profile-btn { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; border: 2px solid var(--border-subtle); cursor: pointer; transition: all 0.2s ease; }
-        .d-profile-btn:hover { border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-profile-img { width: 100%; height: 100%; object-fit: cover; }
-
-        .profile-popup { position: absolute; top: calc(100% + 10px); right: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 20px; min-width: 280px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 1000; }
-        .profile-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .profile-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
-        .profile-info { flex: 1; }
-        .profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
-        .profile-email { font-size: 14px; color: var(--text-light); }
-        .profile-links { display: flex; flex-direction: column; gap: 8px; }
-        .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
-        .profile-link:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 20px; transform: translateX(2px); }
-        .admin-link-btn { background-color: var(--text-primary); color: white !important; border: 1px solid var(--text-primary); }
-        .admin-link-btn:hover { background-color: transparent; color: var(--text-primary) !important; }
+        /* --- WISHLIST CONTENT --- */
+        .d-content { flex: 1; background: var(--page-bg); width: 100%; padding-top: var(--header-height-desktop); }
+        .wishlist-header { padding: 40px 40px 20px; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border-subtle); }
+        .title-block h1 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+        .title-block p { font-size: 16px; color: var(--text-light); letter-spacing: 0.5px; }
         
-        .auth-hidden { display: none !important; }
+        .move-all-btn { background: var(--brand-gradient); color: #fff; border: none; padding: 12px 25px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; border-radius: 8px; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); }
+        .move-all-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3); }
 
-        .page-mobile { display: none; width: 100%; }
+        .wishlist-container { max-width: 1400px; margin: 0 auto; padding: 40px; min-height: 50vh; }
+        .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
+
+        /* --- CARD STYLES --- */
+        .product-card { background: var(--product-card-bg); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-light); transition: all 0.3s ease; border: 1px solid var(--border-subtle); position: relative; cursor: pointer; }
+        .product-card:hover { box-shadow: var(--shadow-medium); border-color: var(--brand-primary); transform: translateY(-5px); }
+        
+        .product-image-container { position: relative; width: 100%; height: 320px; overflow: hidden; border-bottom: 1px solid var(--border-subtle); background: #fcfcfc; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .product-card:hover .product-image { transform: scale(1.08); }
+
+        .delete-btn { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border-subtle); background: rgba(255,255,255,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; transition: all 0.2s ease; }
+        .delete-btn:hover { background: #fff2f2; border-color: var(--brand-primary); }
+        .delete-btn svg { width: 18px; height: 18px; stroke: var(--text-light); }
+        .delete-btn:hover svg { stroke: #d33d49; }
+
+        .product-info { padding: 16px; }
+        .product-category { font-size: 11px; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .product-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .product-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: 5px; }
+        .price-container { display: flex; align-items: baseline; gap: 8px; }
+        .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
+        .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
+
+        .add-to-cart-btn { padding: 8px 16px; border-radius: 8px; background: var(--text-primary); border: 1px solid var(--text-primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .add-to-cart-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); }
+
+        /* --- EMPTY STATE --- */
+        .empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 20px; }
+        .empty-state.visible { display: flex; }
+        .empty-icon-circle { width: 100px; height: 100px; background: var(--surface-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; border: 1px solid var(--border-subtle); }
+        .empty-icon-circle svg { width: 40px; height: 40px; stroke: var(--brand-primary); stroke-width: 1.5; }
+        .empty-state h2 { font-family: 'Cormorant Garamond', serif; font-size: 36px; margin-bottom: 10px; color: var(--text-primary); }
+        .empty-state p { color: var(--text-light); margin-bottom: 30px; }
+        .shop-btn { background: var(--brand-gradient); color: white; padding: 14px 40px; text-decoration: none; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; }
+        .shop-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-medium); }
+
+        /* --- MOBILE STYLES --- */
+        .page-mobile { display: none; width: 100%; min-height: 100vh; flex-direction: column; }
         .m-navbar { height: var(--navbar-height-mobile); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
-        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; z-index: 2; min-width: 40px; }
-        .m-menu-btn:hover { background: var(--surface-hover); }
+        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
         .m-menu-lines { width: 18px; height: 14px; position: relative; }
         .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; border-radius: 999px; background: var(--text-primary); }
         .m-menu-lines::before { top: 0; }
         .m-menu-lines span { top: 6px; }
         .m-menu-lines::after { bottom: 0; }
         .m-logo { height: 50px; width: auto; object-fit: contain; position: absolute; left: 50%; transform: translateX(-50%); }
-        .m-right-icons { display: flex; align-items: center; gap: 12px; z-index: 2; min-width: 92px; justify-content: flex-end; }
-        .m-icon-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; position: relative; }
-        .m-icon-btn:hover { background: var(--surface-hover); }
-        .m-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; }
-
-        .m-overlay { position: fixed; inset: 0; background: rgba(59, 11, 23, 0.3); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.25s ease-out; z-index: 2000; }
-        .m-overlay.open { opacity: 1; pointer-events: auto; }
-        .m-drawer { position: absolute; left: 0; top: 0; width: 320px; max-width: 90vw; height: 100%; background: var(--surface-card); display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.25s ease-out; overflow-y: auto; box-shadow: 2px 0 20px rgba(59, 11, 23, 0.1); }
-        .m-overlay.open .m-drawer { transform: translateX(0); }
         
-        .m-drawer-header { height: 72px; min-height: 72px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--surface-card); position: relative; z-index: 10; }
-        .m-drawer-logo { height: 50px; width: auto; object-fit: contain; display: block; }
-        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; }
-        .m-drawer-close:hover { background: var(--surface-hover); }
-        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
-        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; border-radius: 999px; background: var(--text-primary); }
-        .m-drawer-close-icon::before { transform: rotate(45deg); }
-        .m-drawer-close-icon::after { transform: rotate(-45deg); }
+        .m-content { flex: 1; padding-top: var(--navbar-height-mobile); padding-bottom: 80px; width: 100%; }
 
-        .m-drawer-nav { padding: 20px 0; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
-        .nav-section { padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
-        .nav-section:last-child { border-bottom: none; margin-bottom: 0; }
-        .m-nav-link { display: flex; align-items: center; height: 48px; padding: 0 24px; margin: 2px 0; color: var(--text-primary); text-decoration: none; font-size: 16px; font-weight: 500; transition: background 0.15s ease; border-radius: 0; }
-        .m-nav-link:hover { background: var(--surface-hover); }
-        .m-nav-link.active { color: var(--brand-primary); background: linear-gradient(135deg, #fdf2f4 0%, #fbe9eb 100%); border-right: 3px solid var(--brand-primary); }
+        /* --- FOOTER --- */
+        .site-footer { background: linear-gradient(180deg, var(--footer-bg-lux) 0%, #0a1512 100%); color: var(--footer-silver); padding: 80px 40px 40px; font-family: "Inter", sans-serif; border-top: 1px solid rgba(230, 210, 169, 0.2); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid rgba(230, 210, 169, 0.1); }
+        .footer-brand h3 { font-family: "Cormorant Garamond", serif; font-size: 36px; color: var(--footer-gold); margin-bottom: 20px; letter-spacing: 2px; }
+        .footer-desc { font-size: 14px; line-height: 1.8; margin-bottom: 30px; opacity: 0.8; }
+        .footer-col h4 { font-size: 12px; font-weight: 600; color: var(--footer-gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 15px; }
+        .footer-links a { text-decoration: none; color: var(--footer-silver); font-size: 14px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--footer-gold); }
+        .footer-bottom { text-align: center; padding-top: 30px; font-size: 13px; opacity: 0.6; }
 
-        .m-categories-dropdown { margin: 2px 0; }
-        .m-categories-toggle { display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 24px; color: var(--text-primary); font-size: 16px; font-weight: 500; cursor: pointer; transition: background 0.15s ease; border-radius: 0; }
-        .m-categories-toggle:hover { background: var(--surface-hover); }
-        .m-categories-toggle.active { color: var(--brand-primary); background: linear-gradient(135deg, #fdf2f4 0%, #fbe9eb 100%); }
-        .m-categories-toggle .chevron { width: 16px; height: 16px; stroke: var(--text-light); transition: transform 0.2s ease; }
-        .m-categories-toggle.active .chevron { stroke: var(--brand-primary); transform: rotate(90deg); }
-        .m-categories-content { display: none; margin-left: 28px; padding-left: 16px; border-left: 2px solid var(--border-subtle); margin-top: 4px; margin-bottom: 8px; }
-        .m-categories-content.show { display: block; }
-        .m-category-item { display: block; height: 44px; padding: 0 24px; color: var(--text-light); text-decoration: none; font-size: 15px; font-weight: 400; border-radius: 8px; transition: all 0.15s ease; display: flex; align-items: center; }
-        .m-category-item:hover { background: var(--surface-hover); color: var(--brand-primary); }
+        /* --- LOADING SKELETON --- */
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 4px; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        .m-drawer-profile { padding: 20px 24px; border-top: 1px solid var(--border-subtle); background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-hover) 100%); margin-top: auto; flex-shrink: 0; cursor: pointer; position: relative; }
-        .m-profile-header { display: flex; align-items: center; gap: 12px; }
-        .m-profile-img { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; border: 2px solid var(--surface-card); box-shadow: 0 2px 8px rgba(59, 11, 23, 0.1); }
-        .m-profile-info { flex: 1; }
-        .m-profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
-        .m-profile-email { font-size: 14px; color: var(--text-light); }
-        .m-login-text { font-weight: 600; color: var(--brand-primary); font-size: 16px; }
+        /* --- TOAST --- */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 6000; pointer-events: none; display: flex; flex-direction: column; gap: 10px; }
+        .toast { padding: 1rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 1rem; border-left: 4px solid #8b2635; min-width: 300px; pointer-events: auto; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .m-profile-popup-menu {
-            position: absolute;
-            bottom: 100%;
-            left: 20px;
-            right: 20px;
-            background: var(--surface-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 8px;
-            box-shadow: var(--shadow-modal);
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 12px;
-            z-index: 200;
-        }
-        .m-profile-popup-menu.active { display: flex; animation: slideUpFade 0.2s ease-out; }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .m-profile-option {
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: background 0.2s;
-        }
-        .m-profile-option:hover { background: var(--surface-hover); color: var(--brand-primary); }
-        .m-profile-option.logout { color: #d33d49; }
-        .m-profile-option.logout:hover { background: #fff1f2; }
-
-        .container {
-            max-width: 1100px; margin: 0 auto; padding: 120px 20px 40px; 
-            display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px;
-        }
-
-        .empty-cart-container {
-            grid-column: span 2; text-align: center; padding: 60px 20px;
-            background: #fff; border-radius: 20px; border: 1px solid var(--border-subtle);
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .empty-cart-container.active { display: flex; }
-        .empty-cart-icon { font-size: 64px; color: var(--border-subtle); margin-bottom: 20px; }
-        .empty-cart-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
-        .empty-cart-text { color: var(--text-secondary); margin-bottom: 30px; }
-
-        h1 { font-family: var(--font-main); font-size: 26px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
-        p.sub-head { color: var(--text-secondary); margin-bottom: 30px; font-size: 15px; }
-        h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; opacity: 0.9; font-weight: 700; color: var(--text-light); }
-
-        .address-card {
-            background: var(--card-bg); border: 1px solid var(--border-subtle);
-            border-radius: 16px; padding: 24px; margin-bottom: 30px;
-            display: flex; gap: 15px; cursor: pointer; position: relative;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 10px rgba(59, 11, 23, 0.03);
-        }
-        .address-card:hover { box-shadow: var(--shadow-rich); border-color: var(--brand-primary); transform: translateY(-2px); }
-        
-        .address-empty-state {
-            text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-        }
-        
-        .addr-type-tag {
-            background: var(--surface-hover); color: var(--brand-primary);
-            font-size: 10px; font-weight: 700; padding: 3px 8px; 
-            border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;
-            margin-bottom: 8px; display: inline-block; width: fit-content;
-        }
-        .address-details strong { display: block; font-size: 18px; margin-bottom: 6px; color: var(--text-primary); }
-        .address-details span { font-size: 15px; color: var(--text-secondary); line-height: 1.5; display: block;}
-        .address-details .phone { font-size: 14px; color: var(--text-light); margin-top: 6px; }
-        
-        .change-btn { 
-            color: var(--brand-primary); font-weight: 700; font-size: 13px; 
-            text-transform: uppercase; margin-left: auto; cursor: pointer; 
-            align-self: flex-start; padding: 8px 16px; background: var(--surface-light); 
-            border: 1px solid var(--border-subtle); border-radius: 8px; transition: 0.2s;
-            white-space: nowrap;
-        }
-        .change-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
-
-        .payment-option {
-            padding: 24px; border-radius: 16px; margin-bottom: 15px;
-            display: flex; align-items: center; gap: 18px; position: relative;
-            cursor: pointer; background: var(--card-bg); transition: all 0.2s ease;
-            border: 1px solid var(--border-subtle); overflow: hidden; 
-        }
-        .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
-        .best-value-badge {
-            position: absolute; top: 0; right: 0; background: var(--green-success); color: white;
-            font-size: 11px; font-weight: 700; padding: 6px 14px;
-            border-bottom-left-radius: 12px; letter-spacing: 0.5px; z-index: 2;
-        }
-        input[type="radio"] {
-            appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; 
-            border-radius: 50%; margin-right: 5px; position: relative; transition: 0.2s; flex-shrink: 0;
-        }
-        input[type="radio"]:checked { border-color: var(--brand-primary); background: #fff; }
-        input[type="radio"]:checked::after {
-            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 12px; height: 12px; background: var(--brand-primary); border-radius: 50%;
-        }
-        .pay-text { flex: 1; }
-        .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
-        .pay-sub { font-size: 14px; color: var(--text-secondary); display: block; }
-        .save-badge {
-            display: inline-block; background: var(--green-bg); color: var(--green-success); 
-            font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 20px; 
-            margin-left: 8px; border: 1px solid rgba(74, 156, 125, 0.3); animation: pulse-green 2s infinite;
-        }
-        .fee-warning {
-            display: block; margin-top: 6px; font-weight: 700; font-size: 13px;
-            color: var(--red-warning); background: var(--red-bg);
-            padding: 4px 12px; border-radius: 6px; width: fit-content;
-        }
-        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); } }
-
-        .order-box {
-            background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
-            border: 1px solid #fff; padding: 30px; border-radius: 16px;
-            box-shadow: var(--shadow-rich); position: sticky; top: 100px;
-        }
-        .product { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
-        .prod-img { 
-            width: 70px; height: 90px; object-fit: cover; 
-            border-radius: 8px; border: 1px solid var(--border-subtle);
-            box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05);
-        }
-        .prod-info { flex: 1; }
-        .prod-info h4 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .prod-info p { font-size: 13px; color: var(--text-light); }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
-        .total-row { 
-            display: flex; justify-content: space-between; margin-top: 24px; 
-            padding-top: 24px; border-top: 1px dashed var(--border-subtle);
-            font-weight: 700; font-size: 20px; color: var(--text-primary);
-        }
-        .total-row span:last-child { color: var(--brand-primary); font-size: 24px; }
-        .text-green { color: var(--green-success); font-weight: 700; }
-        .text-red { color: var(--red-warning); font-weight: 700; }
-        .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
-        
-        .remove-btn { color: #999; cursor: pointer; padding: 5px; font-size: 13px; display: flex; align-items: center; gap: 5px; transition: color 0.2s; margin-top: 5px; }
-        .remove-btn:hover { color: var(--red-warning); }
-
-        .btn-main {
-            width: 100%; padding: 16px; background: var(--brand-gradient);
-            color: white; border: none; border-radius: 12px;
-            font-size: 16px; font-weight: 600; margin-top: 25px;
-            cursor: pointer; transition: all 0.3s ease; 
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            position: relative; overflow: hidden;
-            box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3);
-        }
-        .btn-main::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0; transition: opacity 0.3s ease;
-        }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); }
-        .btn-main:hover::before { opacity: 1; }
-
-        .mobile-bottom-bar { display: none; }
-
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px);
-            z-index: 2000; justify-content: center; align-items: center; padding: 20px;
-        }
-        
-        .modal-card {
-            background: #fff; border-radius: 20px; width: 100%; max-width: 500px;
-            box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; display: flex; flex-direction: column;
-            max-height: 85vh; border: 1px solid var(--border-subtle);
-        }
-        .modal-header { padding: 25px 30px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; background: var(--surface-light); border-radius: 20px 20px 0 0; position: relative; }
-        .modal-body { padding: 30px; overflow-y: auto; flex: 1; }
-        .modal-footer { padding: 20px 30px; border-top: 1px solid var(--border-subtle); background: #fff; border-radius: 0 0 20px 20px; flex-shrink: 0; }
-        
-        @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .premium-close-btn {
-            width: 40px; height: 40px; border-radius: 10px;
-            border: 1px solid var(--border-subtle); background: var(--surface-light);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s ease;
-            position: absolute; top: 20px; right: 20px; z-index: 20;
-        }
-        .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
-        .close-icon-lines { width: 14px; height: 14px; position: relative; }
-        .close-icon-lines::before, .close-icon-lines::after {
-            content: ""; position: absolute; inset: 0; margin: auto;
-            width: 14px; height: 2px; border-radius: 999px;
-            background: var(--text-primary); transition: background 0.2s;
-        }
-        .close-icon-lines::before { transform: rotate(45deg); }
-        .close-icon-lines::after { transform: rotate(-45deg); }
-
-        .input-error { border-color: var(--red-warning) !important; background-color: #fff8f8 !important; }
-        .error-msg { color: var(--red-warning); font-size: 11px; margin-top: 4px; font-weight: 600; display: none; }
-        .error-msg.show { display: block; }
-
-        .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 20px; }
-        .full-width { grid-column: span 2; }
-        .modal-input {
-            width: 100%; padding: 14px; border: 1px solid var(--border-subtle); border-radius: 10px;
-            font-family: var(--font-main); font-size: 15px; background: var(--page-bg); color: var(--text-primary); transition: 0.2s;
-        }
-        .modal-input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
-        .modal-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        .addr-type-container { display: flex; gap: 10px; margin-top: 5px; }
-        .addr-chip-input { display: none; }
-        .addr-chip-label {
-            padding: 12px 20px; border: 1px solid var(--border-subtle); border-radius: 10px;
-            font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-secondary); 
-            background: #fff; transition: 0.2s; flex: 1; text-align: center;
-        }
-        .addr-chip-input:checked + .addr-chip-label { background: var(--surface-hover); border-color: var(--brand-primary); color: var(--brand-primary); font-weight: 700; }
-
-        .psych-content { text-align: center; padding: 40px; }
-        .modal-icon-lg { 
-            width: 80px; height: 80px; background: var(--surface-hover); border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-size: 36px; 
-            color: var(--brand-primary); margin: 0 auto 20px; 
-        }
-        .psych-content h3 { font-size: 22px; color: var(--text-primary); margin-bottom: 10px; }
-        .psych-content p { color: var(--text-secondary); font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
-
-        .btn-green-modal {
-            background: var(--green-success); color: white; width: 100%; padding: 16px;
-            border: none; border-radius: 12px; font-weight: 600; font-size: 16px;
-            cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(74, 156, 125, 0.3); transition: 0.2s;
-        }
-        .btn-green-modal:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74, 156, 125, 0.4); }
-        .btn-outline-modal {
-            background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary);
-            width: 100%; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px;
-            cursor: pointer; transition: 0.2s;
-        }
-        .btn-outline-modal:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
-
-        #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--page-bg); z-index: 5000; justify-content: center; align-items: center; text-align: center; flex-direction: column;}
-        .success-icon { font-size: 60px; color: var(--brand-primary); margin-bottom: 20px; animation: bounce 1s; }
-        .success-order-id { font-size: 18px; color: var(--text-primary); font-weight: 700; margin-top: 15px; font-family: monospace; background: #fff; padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border-subtle); }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
-
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
             .page-desktop { display: none; }
-            .page-mobile { display: flex; flex-direction: column; }
-            .container { display: flex; flex-direction: column; gap: 30px; padding-top: 90px; }
-            .order-box { position: static; border: none; background: white; padding: 20px; }
+            .page-mobile { display: flex; }
+            .wishlist-header { flex-direction: column; align-items: flex-start; padding: 25px 20px; gap: 15px; border: none; }
+            .title-block h1 { font-size: 32px; }
+            .wishlist-container { padding: 0 15px; }
+            .wishlist-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .product-image-container { height: 200px; }
+            .site-footer { padding: 50px 20px 30px; }
+            .footer-content { grid-template-columns: 1fr; gap: 40px; text-align: left; }
+            .add-to-cart-btn span { display: none; } 
+            .add-to-cart-btn::after { content: "ADD"; }
             
-            body { padding-bottom: 110px; }
-            .summary-section .btn-main { display: none; }
-
-            .mobile-bottom-bar {
-                display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
-                background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
-                border-top: 1px solid var(--border-subtle); padding: 12px 20px 20px 20px;
-                z-index: 900; box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-            }
-
-            .btn-mobile-fixed {
-                width: 100%; height: 56px; padding: 0 24px;
-                background: var(--brand-gradient);
-                color: white; border: 1px solid rgba(255,255,255,0.2); 
-                border-radius: 30px; font-size: 17px; font-weight: 700; 
-                cursor: pointer; box-shadow: 0 10px 25px -5px rgba(139, 38, 53, 0.5);
-                display: flex; justify-content: center; align-items: center;
-                gap: 12px; position: relative; overflow: hidden; letter-spacing: 0.5px;
-            }
-            .btn-mobile-fixed::before {
-                content: ''; position: absolute; top: 0; left: -100%;
-                width: 100%; height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-                transition: 0.6s;
-            }
-            .btn-mobile-fixed:active::before { left: 100%; transition: 0s; }
-            .btn-mobile-fixed:active { transform: scale(0.98); }
-
-            .modal-overlay { align-items: flex-end; padding: 0; }
-            .modal-card {
-                border-radius: 24px 24px 0 0; width: 100%; max-width: 100%;
-                margin: 0; height: 85vh; max-height: 85vh; border: none;
-                animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                display: flex; flex-direction: column;
-            }
-            .modal-header { padding: 20px 25px; border-radius: 24px 24px 0 0; flex-shrink: 0; }
-            .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
-            .modal-footer { padding: 20px 25px; border-radius: 0; margin-top: auto; flex-shrink: 0; border-top: 1px solid var(--border-subtle); background: #fff; }
-            
-            .addr-form-grid { grid-template-columns: 1fr; gap: 15px; }
-            .full-width { grid-column: span 1; }
-            .premium-close-btn { position: absolute; top: 20px; right: 20px; background: #fff; border: 1px solid var(--border-subtle); }
+            /* Sticky Move All Button on Mobile */
+            .move-all-btn { width: 100%; text-align: center; position: sticky; bottom: 20px; z-index: 99; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         }
     </style>
 </head>
@@ -455,290 +151,135 @@
     <div class="page-desktop">
         <nav class="d-navbar">
             <div class="d-navbar-container">
-                <img class="d-navbar-logo" onclick="window.location.href='index.html'" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" />
+                <img class="d-navbar-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" onclick="window.location.href='index.html'" style="cursor:pointer;"/>
                 <div class="d-nav-links">
                     <a href="index.html" class="d-nav-link">Home</a>
                     <a href="shop.html" class="d-nav-link">Shop</a>
-                    <div class="d-categories-dropdown">
-                        <a href="#" class="d-nav-link">Categories</a>
-                        <div class="d-categories-content" id="desktop-nav-categories">
-                        </div>
-                    </div>
-                </div>
-                <div class="d-search-container">
-                    <svg class="d-search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" class="d-search-bar" placeholder="Search products..." id="desktop-search">
+                    <a href="index.html#categories-section" class="d-nav-link">Categories</a>
                 </div>
                 <div class="d-action-icons">
-                    <a href="wishlist.html" class="d-icon-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                    <a href="#" class="d-icon-btn active" style="border-color:var(--brand-primary); color:var(--brand-primary);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                        <span class="wishlist-badge" id="d-wishlist-badge">0</span>
                     </a>
-                    <div class="d-profile-dropdown">
-                        <button class="d-profile-btn" id="d-profile-toggle">
-                            <img class="d-profile-img" id="user-avatar" src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile" />
-                        </button>
-                        <div class="profile-popup" id="profile-popup">
-                            <div class="profile-header">
-                                <div class="profile-info">
-                                    <div class="profile-name" id="user-name">Guest User</div>
-                                    <div class="profile-email" id="user-email">Sign in to sync</div>
-                                </div>
-                            </div>
-                            <div class="profile-links" id="profile-links-container">
-                                <a href="my-profile.html" class="profile-link auth-only auth-hidden">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                    My Profile
-                                </a>
-                                <a href="my-orders.html" class="profile-link auth-only auth-hidden">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                                    My Orders
-                                </a>
-                                <div id="login-trigger-desktop" class="profile-link" onclick="window.location.href='index.html'">Sign In</div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="d-icon-btn" onclick="window.location.href='index.html'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+                        <span class="cart-badge" id="d-cart-badge" style="display:none">0</span>
+                    </button>
                 </div>
             </div>
         </nav>
+
+        <main class="d-content">
+            <div class="wishlist-header" id="pageTitleSection">
+                <div class="title-block">
+                    <h1>My Wishlist</h1>
+                    <p id="itemCount">Loading items...</p>
+                </div>
+                <button class="move-all-btn" id="moveAllBtn" onclick="moveAllToCart()">Move All to Cart</button>
+            </div>
+
+            <div class="wishlist-container">
+                <div class="wishlist-grid" id="grid">
+                    </div>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </div>
+                    <h2>Your Wishlist is Empty</h2>
+                    <p>It seems you haven't saved anything yet. Explore our premium collection.</p>
+                    <a href="shop.html" class="shop-btn">Start Shopping</a>
+                </div>
+            </div>
+
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <h3>Vastramaya</h3>
+                        <p class="footer-desc">Where heritage craftsmanship meets contemporary elegance.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Collections</h4>
+                        <ul class="footer-links">
+                            <li><a href="shop.html">Haute Couture</a></li>
+                            <li><a href="shop.html">Signature Heirlooms</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contact</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">+91 86394 78312</a></li>
+                            <li><a href="#">support@vastramaya.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div>&copy; 2026 Vastramaya. All rights reserved.</div>
+                </div>
+            </footer>
+        </main>
     </div>
 
     <div class="page-mobile">
         <nav class="m-navbar">
-            <button class="m-menu-btn" id="m-menu-toggle"><div class="m-menu-lines"><span></span></div></button>
-            <img class="m-logo" onclick="window.location.href='index.html'" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" />
-            <div class="m-right-icons">
-                <button class="m-icon-btn" onclick="window.location.href='index.html'">
-                    <i class="fas fa-home" style="color: var(--text-primary);"></i>
-                </button>
-            </div>
+            <button class="m-menu-btn" onclick="window.location.href='index.html'"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <img class="m-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" onclick="window.location.href='index.html'"/>
+            <button class="m-menu-btn" onclick="window.location.href='index.html'" style="border:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3f0b17" stroke-width="1.5"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+                <span class="cart-badge" id="m-cart-badge" style="top:0; right:0; display:none;">0</span>
+            </button>
         </nav>
-        
-        <div class="m-overlay" id="m-overlay">
-            <div class="m-drawer">
-                <div class="m-drawer-header">
-                    <img class="m-drawer-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Logo" />
-                    <button class="m-drawer-close" id="m-drawer-close"><div class="m-drawer-close-icon"></div></button>
-                </div>
-                <nav class="m-drawer-nav">
-                    <div class="nav-section">
-                        <a href="index.html" class="m-nav-link">Home</a>
-                        <a href="shop.html" class="m-nav-link">Shop</a>
-                        <a href="wishlist.html" class="m-nav-link">Wishlist</a>
-                        <a href="my-orders.html" class="m-nav-link auth-only auth-hidden">My Orders</a>
-                        <div class="m-categories-dropdown">
-                            <div class="m-categories-toggle" id="m-categories-toggle">
-                                <span>Categories</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron"><path d="m9 18 6-6-6-6"/></svg>
-                            </div>
-                            <div class="m-categories-content" id="mobile-nav-categories"></div>
-                        </div>
-                    </div>
-                </nav>
-                <div class="m-drawer-profile" id="mobile-profile-trigger">
-                    <div class="m-profile-popup-menu" id="m-profile-popup">
-                         <a href="my-profile.html" class="m-profile-option">
-                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                             My Profile
-                         </a>
-                         <div class="m-profile-option logout" id="mobile-logout-btn">
-                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                             Logout
-                         </div>
-                    </div>
-                    <div class="m-profile-header">
-                        <img class="m-profile-img" id="user-avatar-mobile" src="https://ui-avatars.com/api/?name=Guest&background=random" alt="Profile" />
-                        <div class="m-profile-info">
-                            <div class="m-profile-name" id="user-name-mobile">Guest</div>
-                            <div class="m-profile-email" id="user-phone-mobile">
-                                <span class="m-login-text">Login / Sign Up</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
-        <div class="empty-cart-container" id="empty-cart-msg">
-            <div class="empty-cart-icon"><i class="fas fa-shopping-basket"></i></div>
-            <div class="empty-cart-title">Your Cart is Empty</div>
-            <div class="empty-cart-text">Looks like you haven't added anything to your cart yet.</div>
-            <button class="btn-main" style="width: auto; padding: 15px 40px;" onclick="window.location.href='index.html'">Start Shopping</button>
-        </div>
-
-        <div class="form-section" id="checkout-form-section">
-            <h1>Secure Checkout</h1>
-            <p class="sub-head">Review your order details.</p>
-
-            <h2>Shipping Address</h2>
-            <div class="address-card" id="address-filled" style="display: none;">
-                <i class="fas fa-map-marker-alt" style="color:var(--brand-primary); margin-top:4px;"></i>
-                <div class="address-details">
-                    <span class="addr-type-tag" id="display-type">Home</span>
-                    <strong id="display-name">Loading...</strong>
-                    <span id="display-address">Loading...</span>
-                    <span id="display-city-state">Loading...</span>
-                    <span class="phone" id="display-phone">Loading...</span>
-                </div>
-                <div class="change-btn" onclick="openAddressModal()">Change</div>
-            </div>
-
-            <div class="address-card" id="address-empty" onclick="openAddressModal()">
-                <div class="address-empty-state">
-                    <i class="fas fa-plus-circle" style="font-size: 32px; color: var(--border-subtle);"></i>
-                    <div style="font-weight: 600; color: var(--text-primary);">Add Delivery Address</div>
-                    <div style="font-size: 13px; color: var(--text-light);">We need this to deliver your order</div>
+        <main class="m-content">
+            <div class="wishlist-header" id="pageTitleSectionMobile">
+                <div class="title-block">
+                    <h1>My Wishlist</h1>
+                    <p id="itemCountMobile">Loading...</p>
                 </div>
             </div>
 
-            <h2>Payment Method</h2>
-            
-            <label class="payment-option prepaid" id="card-prepaid">
-                <div class="best-value-badge">RECOMMENDED</div>
-                <input type="radio" name="payment" value="prepaid" id="radio-prepaid" checked onchange="togglePayment('prepaid')">
-                <div class="pay-text">
-                    <span class="pay-title">Pay Online <span class="save-badge">Save ₹100</span></span>
-                    <span class="pay-sub">UPI, Cards, Net Banking</span>
-                </div>
-                <i class="fas fa-check-circle" style="color:var(--green-success); font-size: 24px;"></i>
-            </label>
-
-            <label class="payment-option cod" id="card-cod">
-                <input type="radio" name="payment" value="cod" id="radio-cod" onchange="togglePayment('cod')">
-                <div class="pay-text">
-                    <span class="pay-title">Cash on Delivery</span>
-                    <span class="fee-warning"><i class="fas fa-exclamation-triangle"></i> + ₹100 Handling Fee</span>
-                </div>
-            </label>
-        </div>
-
-        <div class="summary-section" id="checkout-summary-section">
-            <div class="order-box">
-                <div id="order-items-container">
-                </div>
-
-                <hr style="border:0; border-top:1px dashed #ddd; margin: 20px 0;">
-
-                <div class="summary-row"><span>Subtotal</span><span id="subtotal-display">₹0</span></div>
-                <div class="summary-row"><span>Shipping & Handling</span><span id="shipping-display" class="text-green"><span class="strike">₹100</span> FREE</span></div>
-                <div class="total-row"><span>Total to Pay</span><span id="total-display">₹0</span></div>
-
-                <button class="btn-main" onclick="handleCheckout()">
-                    <span id="btn-text">Proceed to Pay</span> <i class="fas fa-arrow-right"></i>
-                </button>
+            <div class="wishlist-container" style="padding: 0 15px;">
+                <div class="wishlist-grid" id="gridMobile"></div>
                 
-                <div style="text-align:center; margin-top:15px; font-size:12px; color:#a3715f;"><i class="fas fa-lock"></i> Secured by Razorpay</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="mobile-bottom-bar" id="mobile-bottom-bar">
-        <button class="btn-mobile-fixed" onclick="handleCheckout()">
-            <span id="btn-text-mobile">Proceed to Pay</span>
-            <i class="fas fa-arrow-right"></i>
-        </button>
-    </div>
-
-    <div id="codModal" class="modal-overlay">
-        <div class="modal-card psych-content" style="height: auto; max-height: auto;">
-            <button class="premium-close-btn" onclick="closeCodModal()"><div class="close-icon-lines"></div></button>
-            <div class="modal-icon-lg"><i class="fas fa-wallet"></i></div>
-            <h3>Wait! Save ₹100 Instantly</h3>
-            <p>You are about to pay <strong>₹100 extra</strong> for COD fees.<br>Switch to online payment now to save.</p>
-            <button class="btn-green-modal" onclick="switchToPrepaid()">Yes, Pay Online & Save ₹100</button>
-            <button class="btn-outline-modal" onclick="confirmCOD()">No, I'll pay ₹100 fee</button>
-        </div>
-    </div>
-
-    <div id="addressModal" class="modal-overlay">
-        <form onsubmit="saveAddress(event)" class="modal-card">
-            <div class="modal-header">
-                <h3 style="margin:0; font-size:22px; color:var(--text-primary);">Update Address</h3>
-                <p style="margin:5px 0 0; font-size:14px; color:var(--text-secondary);">Enter your full delivery details.</p>
-                <button type="button" class="premium-close-btn" onclick="closeAddressModal()"><div class="close-icon-lines"></div></button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="addr-form-grid">
-                    <div>
-                        <label class="modal-label">Full Name</label>
-                        <input type="text" id="input-name" class="modal-input" required>
+                <div class="empty-state" id="emptyStateMobile">
+                    <div class="empty-icon-circle">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </div>
-                    <div>
-                        <label class="modal-label">Mobile Number</label>
-                        <input type="tel" id="input-phone" class="modal-input" required>
-                        <div class="error-msg" id="error-phone">Enter valid 10 digit number</div>
-                    </div>
+                    <h2>Your Wishlist is Empty</h2>
+                    <p>It seems you haven't found anything yet.</p>
+                    <a href="shop.html" class="shop-btn">Start Shopping</a>
                 </div>
-
-                <div class="addr-form-grid">
-                    <div>
-                        <label class="modal-label">Pincode</label>
-                        <input type="text" id="input-zip" class="modal-input" required>
-                        <div class="error-msg" id="error-zip">Enter valid 6 digit pincode</div>
-                    </div>
-                    <div>
-                        <label class="modal-label">Locality / Town</label>
-                        <input type="text" id="input-locality" class="modal-input" required>
-                    </div>
-                </div>
-
-                <div class="addr-form-grid">
-                    <div>
-                        <label class="modal-label">City</label>
-                        <input type="text" id="input-city" class="modal-input" required>
-                    </div>
-                    <div>
-                        <label class="modal-label">State</label>
-                        <input type="text" id="input-state" class="modal-input" required>
-                    </div>
-                </div>
-
-                <div class="addr-form-grid">
-                    <div class="full-width">
-                        <label class="modal-label">Address (House No, Building, Street)</label>
-                        <input type="text" id="input-street" class="modal-input" required>
-                    </div>
-                    <div class="full-width">
-                        <label class="modal-label">Landmark (Optional)</label>
-                        <input type="text" id="input-landmark" class="modal-input">
-                    </div>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <label class="modal-label">Save Address As</label>
-                    <div class="addr-type-container">
-                        <input type="radio" name="addrType" id="type-home" value="Home" class="addr-chip-input" checked>
-                        <label for="type-home" class="addr-chip-label">Home</label>
-                        <input type="radio" name="addrType" id="type-work" value="Work" class="addr-chip-input">
-                        <label for="type-work" class="addr-chip-label">Work</label>
-                        <input type="radio" name="addrType" id="type-other" value="Other" class="addr-chip-input">
-                        <label for="type-other" class="addr-chip-label">Other</label>
-                    </div>
-                </div>
+                
+                <button class="move-all-btn" id="moveAllBtnMobile" onclick="moveAllToCart()">Move All to Cart</button>
             </div>
 
-            <div class="modal-footer">
-                <button type="submit" class="btn-main" style="margin:0;">Save Address</button>
-            </div>
-        </form>
+            <footer class="site-footer" style="padding: 40px 20px;">
+                <div class="footer-brand">
+                    <h3>Vastramaya</h3>
+                </div>
+                <div class="footer-bottom">
+                    <div>&copy; 2026 Vastramaya.</div>
+                </div>
+            </footer>
+        </main>
     </div>
 
-    <div id="success-screen">
-        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-        <h1>Order Confirmed!</h1>
-        <p class="sub-head">Thank you for your purchase.</p>
-        <div class="success-order-id" id="success-order-id">#Generating...</div>
-        <br>
-        <button class="btn-main" style="width:auto; padding: 15px 40px;" onclick="window.location.href='index.html'">Continue Shopping</button>
-    </div>
+    <div id="toast-container"></div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
+        // --- FIREBASE INIT ---
         const firebaseConfig = {
             apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
             authDomain: "vastramaya---magic.firebaseapp.com",
@@ -753,398 +294,251 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        let baseTotal = 0;
-        const codFee = 100;
-        let cartItems = [];
-        let addressExists = false;
+        // --- STATE ---
+        let allProducts = [];
+        let wishlistIDs = [];
+        let cart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
         let currentUser = null;
-        let currentAddressData = null;
 
-        const codModal = document.getElementById('codModal');
-        const addrModal = document.getElementById('addressModal');
-        const totalDisplay = document.getElementById('total-display');
-        const subtotalDisplay = document.getElementById('subtotal-display');
-        const shippingDisplay = document.getElementById('shipping-display');
-        const btnText = document.getElementById('btn-text');
-        const btnTextMobile = document.getElementById('btn-text-mobile');
-
+        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
-            initNavbarUI();
-            checkAuth();
-            loadCart();
-            loadCategories();
+            initApp();
         });
 
-        function checkAuth() {
+        async function initApp() {
+            updateCartBadges();
+            
+            // 1. Fetch All Products first (Cache)
+            try {
+                const snap = await db.collection('products').get();
+                allProducts = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            } catch (e) {
+                console.error("Error loading products", e);
+            }
+
+            // 2. Auth Check to determine Wishlist Source
             auth.onAuthStateChanged(user => {
-                const triggerDesktop = document.getElementById('login-trigger-desktop');
-                const triggerMobile = document.getElementById('mobile-profile-trigger');
-                const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
-                const mProfilePopup = document.getElementById('m-profile-popup');
-                const authOnlyLinks = document.querySelectorAll('.auth-only');
-
+                currentUser = user;
                 if (user) {
-                    currentUser = user;
-                    const name = user.displayName || 'User';
-                    const avatarUrl = user.photoURL || `https://ui-avatars.com/api/?name=${name}&background=8b2635&color=fff`;
-                    const email = user.phoneNumber || user.email || 'Sign in to sync';
-
-                    if(document.getElementById('user-avatar')) document.getElementById('user-avatar').src = avatarUrl;
-                    if(document.getElementById('user-name')) document.getElementById('user-name').innerText = name;
-                    if(document.getElementById('user-email')) document.getElementById('user-email').innerText = email;
-                    
-                    if(document.getElementById('user-name-mobile')) document.getElementById('user-name-mobile').textContent = name;
-                    if(document.getElementById('user-phone-mobile')) document.getElementById('user-phone-mobile').innerHTML = email;
-                    if(document.getElementById('user-avatar-mobile')) document.getElementById('user-avatar-mobile').src = avatarUrl;
-
-                    authOnlyLinks.forEach(el => el.classList.remove('auth-hidden'));
-                    
-                    if (triggerDesktop) {
-                        triggerDesktop.innerText = "Sign Out";
-                        triggerDesktop.onclick = () => { auth.signOut().then(() => window.location.href = 'index.html'); };
-                    }
-
-                    if(triggerMobile) {
-                        triggerMobile.onclick = (e) => {
-                            e.stopPropagation();
-                            if(e.target.closest('.m-profile-popup-menu')) return;
-                            mProfilePopup.classList.toggle('active');
-                        }
-                    }
-                    if(mobileLogoutBtn) {
-                        mobileLogoutBtn.onclick = (e) => {
-                            e.preventDefault();
-                            auth.signOut().then(() => window.location.href = 'index.html');
-                        }
-                    }
-                    document.addEventListener('click', (e) => {
-                         if(triggerMobile && !triggerMobile.contains(e.target)) {
-                             mProfilePopup.classList.remove('active');
-                         }
-                    });
-
-                    loadAddress(user.uid);
+                    loadWishlistFromFirestore();
                 } else {
-                    authOnlyLinks.forEach(el => el.classList.add('auth-hidden'));
-                    if (triggerDesktop) {
-                        triggerDesktop.innerText = "Sign In";
-                        triggerDesktop.onclick = () => window.location.href = 'index.html';
-                    }
+                    loadWishlistFromLocal();
                 }
             });
         }
 
-        async function loadAddress(uid) {
-            try {
-                const doc = await db.collection('users').doc(uid).get();
-                if (doc.exists && doc.data().address) {
-                    const addr = doc.data().address;
-                    currentAddressData = addr;
-                    
-                    document.getElementById('display-name').innerText = addr.name;
-                    document.getElementById('display-phone').innerText = addr.phone;
-                    document.getElementById('display-address').innerText = `${addr.street}, ${addr.locality}`;
-                    document.getElementById('display-city-state').innerText = `${addr.city} - ${addr.zip}, ${addr.state}`;
-                    document.getElementById('display-type').innerText = addr.type || 'Home';
-                    
-                    document.getElementById('input-name').value = addr.name;
-                    document.getElementById('input-phone').value = addr.phone;
-                    document.getElementById('input-zip').value = addr.zip;
-                    document.getElementById('input-locality').value = addr.locality;
-                    document.getElementById('input-city').value = addr.city;
-                    document.getElementById('input-state').value = addr.state;
-                    document.getElementById('input-street').value = addr.street;
-                    document.getElementById('input-landmark').value = addr.landmark || '';
+        // --- DATA LOADING ---
+        function loadWishlistFromLocal() {
+            wishlistIDs = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+            renderWishlist();
+        }
 
-                    addressExists = true;
-                    document.getElementById('address-filled').style.display = 'flex';
-                    document.getElementById('address-empty').style.display = 'none';
+        async function loadWishlistFromFirestore() {
+            try {
+                const doc = await db.collection('users').doc(currentUser.uid).get();
+                if (doc.exists && doc.data().wishlist) {
+                    wishlistIDs = doc.data().wishlist;
                 } else {
-                    addressExists = false;
-                    document.getElementById('address-filled').style.display = 'none';
-                    document.getElementById('address-empty').style.display = 'flex';
+                    // If DB empty but local has items, sync local to DB
+                    const localIds = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+                    if(localIds.length > 0) {
+                        wishlistIDs = localIds;
+                        saveWishlistToFirestore();
+                    } else {
+                        wishlistIDs = [];
+                    }
                 }
-            } catch (e) { console.error("Error loading address:", e); }
+                renderWishlist();
+            } catch (e) {
+                console.error("DB Wishlist Error", e);
+                // Fallback
+                loadWishlistFromLocal();
+            }
         }
 
-        async function loadCategories() {
-            try {
-                const snap = await db.collection('categories').where('enabled', '!=', false).get();
-                const cats = snap.docs.map(d => d.data());
-                const dContainer = document.getElementById('desktop-nav-categories');
-                if(dContainer) dContainer.innerHTML = cats.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`).join('');
-                const mContainer = document.getElementById('mobile-nav-categories');
-                if(mContainer) mContainer.innerHTML = cats.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="m-category-item">${c.name}</a>`).join('');
-            } catch (e) { console.log("Cat error", e); }
-        }
+        function renderWishlist() {
+            // Filter global products by IDs in wishlist
+            const wishProducts = allProducts.filter(p => wishlistIDs.includes(p.id));
+            const count = wishProducts.length;
 
-        function loadCart() {
-            cartItems = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
-            
-            if (cartItems.length === 0) {
-                document.getElementById('checkout-form-section').style.display = 'none';
-                document.getElementById('checkout-summary-section').style.display = 'none';
-                document.getElementById('mobile-bottom-bar').style.display = 'none';
-                document.getElementById('empty-cart-msg').classList.add('active');
+            // Update Header Counts
+            document.getElementById('itemCount').textContent = `${count} Items Saved`;
+            document.getElementById('itemCountMobile').textContent = `${count} Items Saved`;
+            document.getElementById('d-wishlist-badge').textContent = count;
+
+            // Handle Visibility
+            if (count === 0) {
+                document.getElementById('grid').innerHTML = '';
+                document.getElementById('gridMobile').innerHTML = '';
+                document.getElementById('emptyState').classList.add('visible');
+                document.getElementById('emptyStateMobile').classList.add('visible');
+                document.getElementById('moveAllBtn').style.display = 'none';
+                document.getElementById('moveAllBtnMobile').style.display = 'none';
                 return;
+            } else {
+                document.getElementById('emptyState').classList.remove('visible');
+                document.getElementById('emptyStateMobile').classList.remove('visible');
+                document.getElementById('moveAllBtn').style.display = 'block';
+                document.getElementById('moveAllBtnMobile').style.display = 'block';
             }
 
-            const container = document.getElementById('order-items-container');
-            container.innerHTML = '';
-            baseTotal = 0;
+            // Generate HTML
+            const generateHTML = (p) => {
+                const img = (p.images && p.images[0]) || 'https://via.placeholder.com/300';
+                return `
+                <div class="product-card" id="card-${p.id}" onclick="window.location.href='view.html?id=${p.id}'">
+                    <div class="product-image-container">
+                        <img src="${img}" class="product-image">
+                        <button class="delete-btn" onclick="event.stopPropagation(); removeFromWishlist('${p.id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">${p.category || 'Collection'}</p>
+                        <h3 class="product-title">${p.name}</h3>
+                        <div class="product-price-row">
+                            <div class="price-container">
+                                <span class="current-price">₹${p.price}</span>
+                                <span class="old-price">₹${p.oldPrice || (p.price * 1.2).toFixed(0)}</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); moveToCart('${p.id}')">
+                                <span>Move to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            };
 
-            cartItems.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                baseTotal += itemTotal;
-                const div = document.createElement('div');
-                div.className = 'product';
-                div.innerHTML = `
-                    <img src="${item.image}" class="prod-img">
-                    <div class="prod-info">
-                        <h4>${item.name}</h4>
-                        <p>Qty: ${item.quantity} ${item.size ? '• ' + item.size : ''}</p>
-                    </div>
-                    <div style="margin-left:auto; display:flex; flex-direction:column; align-items:flex-end;">
-                        <div style="font-weight:700;">₹${itemTotal.toLocaleString('en-IN')}</div>
-                        <div class="remove-btn" onclick="removeFromCart(${index})"><i class="fas fa-times"></i> Remove</div>
-                    </div>
-                `;
-                container.appendChild(div);
+            const html = wishProducts.map(p => generateHTML(p)).join('');
+            document.getElementById('grid').innerHTML = html;
+            document.getElementById('gridMobile').innerHTML = html;
+        }
+
+        // --- ACTIONS ---
+
+        async function removeFromWishlist(id) {
+            wishlistIDs = wishlistIDs.filter(item => item !== id);
+            
+            // UI Update first for speed
+            renderWishlist();
+            localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlistIDs));
+            showToast("Removed from Wishlist");
+
+            if (currentUser) {
+                await saveWishlistToFirestore();
+            }
+        }
+
+        async function saveWishlistToFirestore() {
+            if(!currentUser) return;
+            try {
+                await db.collection('users').doc(currentUser.uid).update({
+                    wishlist: wishlistIDs
+                });
+            } catch(e) { console.error("Save error", e); }
+        }
+
+        function moveToCart(id) {
+            const product = allProducts.find(p => p.id === id);
+            if (!product) return;
+
+            // Default variant logic
+            const img = (product.images && product.images[0]) || '';
+            
+            const cartItem = {
+                id: product.id,
+                uniqueId: `${product.id}-def-def`, // Simple unique ID
+                name: product.name,
+                price: product.price,
+                image: img,
+                quantity: 1,
+                size: 'M', // Default
+                color: 'Default'
+            };
+
+            // Check if exists
+            const exists = cart.find(i => i.id === id);
+            if(exists) {
+                exists.quantity++;
+            } else {
+                cart.push(cartItem);
+            }
+
+            saveCart();
+            updateCartBadges();
+            removeFromWishlist(id); // Remove from list after adding
+            showToast("Moved to Cart");
+        }
+
+        function moveAllToCart() {
+            // Get all currently visible wishlist items
+            const currentWishlistProducts = allProducts.filter(p => wishlistIDs.includes(p.id));
+            
+            if(currentWishlistProducts.length === 0) return;
+
+            currentWishlistProducts.forEach(product => {
+                const img = (product.images && product.images[0]) || '';
+                const cartItem = {
+                    id: product.id,
+                    uniqueId: `${product.id}-def-def`,
+                    name: product.name,
+                    price: product.price,
+                    image: img,
+                    quantity: 1,
+                    size: 'M',
+                    color: 'Default'
+                };
+                
+                const exists = cart.find(i => i.id === product.id);
+                if(exists) {
+                    exists.quantity++;
+                } else {
+                    cart.push(cartItem);
+                }
             });
 
-            subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
-            setPrepaidUI(); 
-        }
-
-        async function removeFromCart(index) {
-            cartItems.splice(index, 1);
-            localStorage.setItem('vastramaya_cart', JSON.stringify(cartItems));
+            // Clear Wishlist
+            wishlistIDs = [];
+            renderWishlist();
             
-            if(currentUser) {
-                try {
-                    await db.collection('users').doc(currentUser.uid).update({ cart: cartItems });
-                } catch(e) { console.error(e); }
-            }
+            // Save
+            saveCart();
+            localStorage.setItem('vastramaya_wishlist', JSON.stringify([]));
+            if(currentUser) saveWishlistToFirestore();
             
-            if (cartItems.length === 0) {
-                location.reload(); 
-            } else {
-                loadCart();
+            updateCartBadges();
+            showToast("All items moved to Cart");
+        }
+
+        function saveCart() {
+            localStorage.setItem('vastramaya_cart', JSON.stringify(cart));
+            if (currentUser) {
+                db.collection('users').doc(currentUser.uid).update({ cart: cart }).catch(e => console.log(e));
             }
         }
 
-        function initNavbarUI() {
-            const mMenuToggle = document.getElementById('m-menu-toggle');
-            const mDrawerClose = document.getElementById('m-drawer-close');
-            const mOverlay = document.getElementById('m-overlay');
-            const mDrawer = document.querySelector('.m-drawer');
-            function toggleDrawer() { mOverlay.classList.toggle('open'); mDrawer.style.transform = mOverlay.classList.contains('open') ? 'translateX(0)' : 'translateX(-100%)'; }
-            if(mMenuToggle) mMenuToggle.onclick = toggleDrawer;
-            if(mDrawerClose) mDrawerClose.onclick = toggleDrawer;
-            if(mOverlay) mOverlay.onclick = (e) => { if(e.target === mOverlay) toggleDrawer(); };
-            const pToggle = document.getElementById('d-profile-toggle');
-            const pPopup = document.getElementById('profile-popup');
-            if(pToggle) { pToggle.onclick = (e) => { e.stopPropagation(); pPopup.classList.toggle('show'); }; document.onclick = () => pPopup.classList.remove('show'); }
+        function updateCartBadges() {
+            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+            const dBadge = document.getElementById('d-cart-badge');
+            const mBadge = document.getElementById('m-cart-badge');
             
-            const mCatToggle = document.getElementById('m-categories-toggle');
-            const mCatContent = document.getElementById('mobile-nav-categories');
-            if(mCatToggle) {
-                mCatToggle.onclick = () => {
-                    mCatContent.style.display = mCatContent.style.display === 'block' ? 'none' : 'block';
-                    mCatToggle.classList.toggle('active');
-                }
+            if(dBadge) {
+                dBadge.textContent = count;
+                dBadge.style.display = count > 0 ? 'flex' : 'none';
+            }
+            if(mBadge) {
+                mBadge.textContent = count;
+                mBadge.style.display = count > 0 ? 'flex' : 'none';
             }
         }
 
-        function openAddressModal() { document.body.classList.add('no-scroll'); addrModal.style.display = 'flex'; }
-        function closeAddressModal() { document.body.classList.remove('no-scroll'); addrModal.style.display = 'none'; }
-        function closeCodModal() { document.body.classList.remove('no-scroll'); codModal.style.display = 'none'; setPrepaidUI(); }
-        
-        async function saveAddress(e) {
-            e.preventDefault();
-            const newName = document.getElementById('input-name').value;
-            const newPhoneInput = document.getElementById('input-phone');
-            const newZipInput = document.getElementById('input-zip');
-            
-            document.getElementById('error-phone').classList.remove('show');
-            newPhoneInput.classList.remove('input-error');
-            document.getElementById('error-zip').classList.remove('show');
-            newZipInput.classList.remove('input-error');
-
-            let isValid = true;
-            const phoneRegex = /^[6-9]\d{9}$/;
-            const cleanPhone = newPhoneInput.value.replace(/\D/g, '');
-            if (!phoneRegex.test(cleanPhone)) {
-                document.getElementById('error-phone').classList.add('show');
-                newPhoneInput.classList.add('input-error');
-                isValid = false;
-            }
-            const zipRegex = /^\d{6}$/;
-            if (!zipRegex.test(newZipInput.value)) {
-                document.getElementById('error-zip').classList.add('show');
-                newZipInput.classList.add('input-error');
-                isValid = false;
-            }
-            if (!isValid) return;
-
-            const addressData = {
-                name: newName, phone: cleanPhone, zip: newZipInput.value,
-                street: document.getElementById('input-street').value,
-                locality: document.getElementById('input-locality').value,
-                city: document.getElementById('input-city').value,
-                state: document.getElementById('input-state').value,
-                landmark: document.getElementById('input-landmark').value,
-                type: document.querySelector('input[name="addrType"]:checked').value
-            };
-
-            currentAddressData = addressData;
-            document.getElementById('display-name').innerText = addressData.name;
-            document.getElementById('display-address').innerText = `${addressData.street}`;
-            document.getElementById('address-filled').style.display = 'flex';
-            document.getElementById('address-empty').style.display = 'none';
-            addressExists = true;
-
-            if(currentUser) {
-                await db.collection('users').doc(currentUser.uid).set({ address: addressData }, { merge: true });
-            }
-            closeAddressModal();
-        }
-
-        function togglePayment(method) {
-            if (method === 'cod') { document.body.classList.add('no-scroll'); codModal.style.display = 'flex'; } 
-            else { setPrepaidUI(); }
-        }
-        function setPrepaidUI() {
-            document.getElementById('radio-prepaid').checked = true;
-            document.getElementById('card-prepaid').style.borderColor = "var(--green-success)";
-            document.getElementById('card-cod').style.borderColor = "var(--border-subtle)";
-            document.getElementById('card-cod').style.background = "#fff";
-            shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
-            shippingDisplay.className = 'text-green';
-            totalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
-            btnText.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
-            btnTextMobile.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
-        }
-        function setCodUI() {
-            document.getElementById('card-prepaid').style.borderColor = "var(--border-subtle)";
-            document.getElementById('card-cod').style.borderColor = "var(--red-warning)";
-            document.getElementById('card-cod').style.background = "#fff5f5";
-            shippingDisplay.innerHTML = '+ ₹100 Fee';
-            shippingDisplay.className = 'text-red';
-            totalDisplay.innerText = `₹${(baseTotal + codFee).toLocaleString('en-IN')}`;
-            btnText.innerText = "Place Order"; 
-            btnTextMobile.innerText = "Place Order";
-        }
-        function switchToPrepaid() { closeCodModal(); }
-        function confirmCOD() { document.body.classList.remove('no-scroll'); codModal.style.display = 'none'; setCodUI(); }
-
-        async function handleCheckout() {
-            if (!addressExists) {
-                alert("Please add a delivery address.");
-                openAddressModal();
-                return;
-            }
-
-            const isCod = document.getElementById('radio-cod').checked;
-            const btnDesktop = document.getElementById('btn-text');
-            const btnMobile = document.getElementById('btn-text-mobile');
-            const originalText = btnDesktop.innerText;
-
-            const loadingHtml = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
-            btnDesktop.innerHTML = loadingHtml;
-            btnMobile.innerHTML = loadingHtml;
-
-            if (isCod) {
-                setTimeout(() => {
-                    const orderId = `COD-${Math.floor(100000 + Math.random() * 900000)}`;
-                    finalizeOrder(orderId, 'COD', 'Pending', (baseTotal + codFee));
-                }, 1000);
-
-            } else {
-                try {
-                    const response = await fetch('/api/razorpay', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ amount: baseTotal })
-                    });
-
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    const orderData = await response.json();
-
-                    const options = {
-                        key: orderData.key || 'YOUR_LIVE_PUBLIC_KEY_HERE',
-                        amount: orderData.amount,
-                        currency: orderData.currency,
-                        name: "Vastramaya",
-                        description: "Purchase Description",
-                        image: "https://product-ecommerces.netlify.app/vastramaya.png",
-                        order_id: orderData.id, 
-                        handler: function (response) {
-                            finalizeOrder(orderData.id, 'Online', 'Paid', baseTotal, response.razorpay_payment_id);
-                        },
-                        prefill: {
-                            name: currentAddressData.name,
-                            contact: currentAddressData.phone,
-                            email: currentUser ? (currentUser.email || "") : ""
-                        },
-                        theme: {
-                            color: "#8b2635"
-                        },
-                        modal: {
-                            ondismiss: function() {
-                                btnDesktop.innerText = originalText;
-                                btnMobile.innerText = originalText;
-                                alert("Payment Cancelled");
-                            }
-                        }
-                    };
-
-                    const rzp1 = new Razorpay(options);
-                    rzp1.open();
-
-                } catch (error) {
-                    console.error(error);
-                    alert("Payment initiation failed. Please try again.");
-                    btnDesktop.innerText = originalText;
-                    btnMobile.innerText = originalText;
-                }
-            }
-        }
-
-        async function finalizeOrder(orderId, method, status, amount, payId = null) {
-            
-            const orderDetails = {
-                orderId: orderId,
-                userId: currentUser ? currentUser.uid : 'guest',
-                items: cartItems,
-                address: currentAddressData,
-                amount: amount,
-                paymentMethod: method,
-                paymentStatus: status,
-                paymentId: payId,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
-
-            try {
-                await db.collection('orders').doc(orderId).set(orderDetails);
-
-                localStorage.removeItem('vastramaya_cart');
-                if (currentUser) {
-                    await db.collection('users').doc(currentUser.uid).update({ cart: [] });
-                }
-
-                document.getElementById('success-order-id').innerText = `Order ID: #${orderId}`;
-                document.getElementById('success-screen').style.display = 'flex';
-
-            } catch (error) {
-                console.error("Error saving order", error);
-                alert("Order success, but error saving to DB. Please contact support.");
-            }
-        }
-
-        window.onclick = function(event) {
-            if (event.target == codModal) closeCodModal();
-            if (event.target == addrModal) closeAddressModal();
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a9c7d" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>${msg}</span>`;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 3000);
         }
     </script>
 </body>
