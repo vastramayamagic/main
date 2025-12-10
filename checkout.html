@@ -278,6 +278,7 @@
             border-radius: 8px; border: 1px solid var(--border-subtle);
             box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05);
         }
+        .prod-info { flex: 1; }
         .prod-info h4 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .prod-info p { font-size: 13px; color: var(--text-light); }
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
@@ -290,6 +291,9 @@
         .text-green { color: var(--green-success); font-weight: 700; }
         .text-red { color: var(--red-warning); font-weight: 700; }
         .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
+        
+        .remove-btn { color: #999; cursor: pointer; padding: 5px; font-size: 13px; display: flex; align-items: center; gap: 5px; transition: color 0.2s; margin-top: 5px; }
+        .remove-btn:hover { color: var(--red-warning); }
 
         .btn-main {
             width: 100%; padding: 16px; background: var(--brand-gradient);
@@ -889,7 +893,7 @@
             container.innerHTML = '';
             baseTotal = 0;
 
-            cartItems.forEach(item => {
+            cartItems.forEach((item, index) => {
                 const itemTotal = item.price * item.quantity;
                 baseTotal += itemTotal;
                 const div = document.createElement('div');
@@ -900,13 +904,33 @@
                         <h4>${item.name}</h4>
                         <p>Qty: ${item.quantity} ${item.size ? '• ' + item.size : ''}</p>
                     </div>
-                    <div style="margin-left:auto; font-weight:700;">₹${itemTotal.toLocaleString('en-IN')}</div>
+                    <div style="margin-left:auto; display:flex; flex-direction:column; align-items:flex-end;">
+                        <div style="font-weight:700;">₹${itemTotal.toLocaleString('en-IN')}</div>
+                        <div class="remove-btn" onclick="removeFromCart(${index})"><i class="fas fa-times"></i> Remove</div>
+                    </div>
                 `;
                 container.appendChild(div);
             });
 
             subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
             setPrepaidUI(); 
+        }
+
+        async function removeFromCart(index) {
+            cartItems.splice(index, 1);
+            localStorage.setItem('vastramaya_cart', JSON.stringify(cartItems));
+            
+            if(currentUser) {
+                try {
+                    await db.collection('users').doc(currentUser.uid).update({ cart: cartItems });
+                } catch(e) { console.error(e); }
+            }
+            
+            if (cartItems.length === 0) {
+                location.reload(); 
+            } else {
+                loadCart();
+            }
         }
 
         function initNavbarUI() {
@@ -1048,7 +1072,7 @@
                     const orderData = await response.json();
 
                     const options = {
-                        key: orderData.key || 'rzp_live_RpvomVHV4uEGne',
+                        key: orderData.key || 'YOUR_LIVE_PUBLIC_KEY_HERE',
                         amount: orderData.amount,
                         currency: orderData.currency,
                         name: "Vastramaya",
