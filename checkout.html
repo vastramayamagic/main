@@ -1048,7 +1048,7 @@
                     const orderData = await response.json();
 
                     const options = {
-                        key: "rzp_test_RppBQikZAAOWRr",
+                        key: orderData.key || 'YOUR_LIVE_PUBLIC_KEY_HERE',
                         amount: orderData.amount,
                         currency: orderData.currency,
                         name: "Vastramaya",
