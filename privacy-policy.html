@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy | Vastramaya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --header-height-desktop: 80px;
+            --navbar-height-mobile: 70px;
+            --page-bg: #fefcf3;
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --text-light: #a3715f;
+            --brand-primary: #8b2635;
+            --brand-secondary: #d33d49;
+            --surface-card: #fffefb;
+            --border-subtle: #e8d5c4;
+            --surface-hover: #f9f2e3;
+            --shadow-light: 0 2px 10px rgba(59, 11, 23, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", sans-serif; color: var(--text-primary); line-height: 1.6; }
+
+        /* Reusing Navbar Styles for Consistency */
+        .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
+        .d-navbar-container { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .d-navbar-logo { height: 60px; width: auto; object-fit: contain; }
+        .d-nav-links { display: flex; align-items: center; gap: 32px; }
+        .d-nav-link { font-size: 15px; font-weight: 600; color: var(--text-primary); text-decoration: none; transition: color 0.2s ease; }
+        .d-nav-link:hover { color: var(--brand-primary); }
+
+        .m-navbar { height: var(--navbar-height-mobile); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); display: none; align-items: center; justify-content: center; padding: 0 16px; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
+        .m-logo { height: 50px; width: auto; }
+        .m-back-btn { position: absolute; left: 16px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-hover); color: var(--text-primary); text-decoration: none; }
+
+        /* Policy Page Specific Styles */
+        .policy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 20px 60px; /* Top padding accounts for fixed header */
+        }
+
+        .policy-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .policy-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            margin-bottom: 10px;
+        }
+
+        .policy-date {
+            font-size: 14px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .policy-content {
+            background: var(--surface-card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-light);
+        }
+
+        .policy-section {
+            margin-bottom: 30px;
+        }
+
+        .policy-section:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 24px;
+            background: var(--brand-primary);
+            border-radius: 3px;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        li::before {
+            content: '•';
+            color: var(--brand-primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .contact-box {
+            background: #fff5f6;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .contact-box p {
+            margin-bottom: 5px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .contact-link {
+            color: var(--brand-primary);
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .contact-link:hover {
+            border-bottom-color: var(--brand-primary);
+        }
+
+        @media (max-width: 768px) {
+            .page-desktop { display: none; }
+            .m-navbar { display: flex; }
+            .policy-container { padding: 90px 16px 40px; }
+            .policy-content { padding: 24px; border-radius: 16px; }
+            .policy-title { font-size: 28px; }
+            h2 { font-size: 18px; }
+            p, li { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-desktop">
+        <nav class="d-navbar">
+            <div class="d-navbar-container">
+                <a href="index.html">
+                    <img class="d-navbar-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" />
+                </a>
+                <div class="d-nav-links">
+                    <a href="index.html" class="d-nav-link">Home</a>
+                    <a href="shop.html" class="d-nav-link">Shop</a>
+                    <a href="#" class="d-nav-link active">Privacy Policy</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <nav class="m-navbar">
+        <a href="index.html" class="m-back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </a>
+        <img class="m-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" />
+    </nav>
+
+    <main class="policy-container">
+        <div class="policy-header">
+            <h1 class="policy-title">Privacy Policy</h1>
+            <div class="policy-date">Last Updated: December 10, 2025</div>
+        </div>
+
+        <div class="policy-content">
+            <div class="policy-section">
+                <h2>1. Introduction</h2>
+                <p>Welcome to Vastramaya. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>2. Information We Collect</h2>
+                <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
+                <ul>
+                    <li><strong>Identity Data:</strong> includes first name, last name, username or similar identifier.</li>
+                    <li><strong>Contact Data:</strong> includes billing address, delivery address, email address and telephone numbers.</li>
+                    <li><strong>Transaction Data:</strong> includes details about payments to and from you and other details of products you have purchased from us.</li>
+                    <li><strong>Technical Data:</strong> includes internet protocol (IP) address, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform.</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>3. How We Use Your Data</h2>
+                <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
+                <ul>
+                    <li>To register you as a new customer.</li>
+                    <li>To process and deliver your order (manage payments, fees and charges).</li>
+                    <li>To manage our relationship with you (notifying you about changes to our terms or privacy policy).</li>
+                    <li>To enable you to partake in a prize draw, competition or complete a survey.</li>
+                    <li>To use data analytics to improve our website, products/services, marketing, customer relationships and experiences.</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>4. Data Security</h2>
+                <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>5. Cookies</h2>
+                <p>You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of this website may become inaccessible or not function properly.</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>6. Third-Party Links</h2>
+                <p>This website may include links to third-party websites, plug-ins and applications. Clicking on those links or enabling those connections may allow third parties to collect or share data about you. We do not control these third-party websites and are not responsible for their privacy statements.</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>7. Contact Us</h2>
+                <p>If you have any questions about this privacy policy or our privacy practices, please contact us:</p>
+                <div class="contact-box">
+                    <p><strong>Entity Name:</strong> Vastramaya Fashions [Update Legal Name]</p>
+                    <p><strong>Email:</strong> <a href="mailto:support@vastramaya.com" class="contact-link">support@vastramaya.com</a></p>
+                    <p><strong>Address:</strong> [Update Physical Address Here], India</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
