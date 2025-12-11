@@ -314,6 +314,7 @@
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); }
         .btn-main:hover::before { opacity: 1; }
 
+        /* The default display is none (hidden on desktop) */
         .mobile-bottom-bar { display: none; }
 
         .modal-overlay {
@@ -401,6 +402,7 @@
         .success-order-id { font-size: 18px; color: var(--text-primary); font-weight: 700; margin-top: 15px; font-family: monospace; background: #fff; padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border-subtle); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
 
+        /* Mobile specific styles */
         @media (max-width: 900px) {
             .page-desktop { display: none; }
             .page-mobile { display: flex; flex-direction: column; }
@@ -410,6 +412,7 @@
             body { padding-bottom: 110px; }
             .summary-section .btn-main { display: none; }
 
+            /* On mobile, this becomes flex */
             .mobile-bottom-bar {
                 display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
                 background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
@@ -757,8 +760,8 @@
 
         let baseTotal = 0;
         const codFee = 100;
-        let cartItems = []; // The MASTER Cart from DB/Local
-        let checkoutItems = []; // The TEMPORARY Checkout List
+        let masterCart = [];
+        let checkoutItems = [];
         let addressExists = false;
         let currentUser = null;
         let currentAddressData = null;
@@ -774,7 +777,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             initNavbarUI();
             checkAuth();
-            loadCart(); // Loads MASTER cart
+            loadCart();
             loadCategories();
         });
 
@@ -882,41 +885,39 @@
         }
 
         function loadCart() {
-            // 1. Get the Master Cart
-            cartItems = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
+            masterCart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
             
-            // 2. Clone it for Checkout (If checkoutItems is empty, fill it)
-            // We use a flag to only load from cart ONCE on page load
-            if (checkoutItems.length === 0 && cartItems.length > 0) {
-                 // Deep copy to ensure independence
-                checkoutItems = JSON.parse(JSON.stringify(cartItems));
-            }
+            masterCart.forEach((item, index) => {
+                if(!item._checkoutId) {
+                    item._checkoutId = Date.now() + '-' + index + '-' + Math.random().toString(36).substr(2, 9);
+                }
+            });
 
-            // 3. Render logic based on CHECKOUT items, not Cart items
-            renderCheckoutItems();
+            checkoutItems = [...masterCart]; 
+            renderCheckoutList();
         }
 
-        function renderCheckoutItems() {
-            const container = document.getElementById('order-items-container');
-            container.innerHTML = '';
-            baseTotal = 0;
-
+        function renderCheckoutList() {
             if (checkoutItems.length === 0) {
-                // If user removed everything from checkout list, show empty state
-                // (Even if main cart still has items)
                 document.getElementById('checkout-form-section').style.display = 'none';
                 document.getElementById('checkout-summary-section').style.display = 'none';
+                // Force Hide
                 document.getElementById('mobile-bottom-bar').style.display = 'none';
                 document.getElementById('empty-cart-msg').classList.add('active');
                 return;
             } else {
                 document.getElementById('checkout-form-section').style.display = 'block';
                 document.getElementById('checkout-summary-section').style.display = 'block';
-                document.getElementById('mobile-bottom-bar').style.display = 'flex';
+                // Clear inline style so CSS media query takes over
+                document.getElementById('mobile-bottom-bar').style.display = ''; 
                 document.getElementById('empty-cart-msg').classList.remove('active');
             }
 
-            checkoutItems.forEach((item, index) => {
+            const container = document.getElementById('order-items-container');
+            container.innerHTML = '';
+            baseTotal = 0;
+
+            checkoutItems.forEach((item) => {
                 const itemTotal = item.price * item.quantity;
                 baseTotal += itemTotal;
                 const div = document.createElement('div');
@@ -926,7 +927,7 @@
                     <div class="prod-info">
                         <h4>${item.name}</h4>
                         <p>Qty: ${item.quantity} ${item.size ? '• ' + item.size : ''}</p>
-                        <div class="remove-item-btn" onclick="removeItemFromCheckout(${index})">
+                        <div class="remove-item-btn" onclick="removeCheckoutItem('${item._checkoutId}')">
                             <i class="fas fa-trash-alt"></i> Remove
                         </div>
                     </div>
@@ -943,15 +944,9 @@
             }
         }
 
-        async function removeItemFromCheckout(index) {
-            // Remove ONLY from the temporary checkout list
-            checkoutItems.splice(index, 1);
-            
-            // Re-render UI
-            renderCheckoutItems();
-            
-            // NOTE: We do NOT update localStorage or Firebase here.
-            // The item remains in the "Cart", just removed from "Current Order".
+        function removeCheckoutItem(uniqueId) {
+            checkoutItems = checkoutItems.filter(item => item._checkoutId !== uniqueId);
+            renderCheckoutList();
         }
 
         function initNavbarUI() {
@@ -1065,6 +1060,11 @@
                 openAddressModal();
                 return;
             }
+            
+            if (checkoutItems.length === 0) {
+                alert("Your checkout list is empty.");
+                return;
+            }
 
             const isCod = document.getElementById('radio-cod').checked;
             const btnDesktop = document.getElementById('btn-text');
@@ -1134,11 +1134,10 @@
 
         async function finalizeOrder(orderId, method, status, amount, payId = null) {
             
-            // 1. Save the Order to DB
             const orderDetails = {
                 orderId: orderId,
                 userId: currentUser ? currentUser.uid : 'guest',
-                items: checkoutItems, // Use the Checkout Items list (what they actually paid for)
+                items: checkoutItems, 
                 address: currentAddressData,
                 amount: amount,
                 paymentMethod: method,
@@ -1150,29 +1149,16 @@
             try {
                 await db.collection('orders').doc(orderId).set(orderDetails);
 
-                // 2. Logic to Clear Items from Master Cart
-                // We need to remove ONLY the items that were in `checkoutItems` from `cartItems`
-                // Simple logic: We filter the Master Cart.
-                // Keep an item if it is NOT found in the purchased `checkoutItems`.
-                
-                // Helper to generate unique key for product comparison
-                const getKey = (item) => `${item.name}-${item.size || ''}-${item.color || ''}`;
-                
-                // Create Set of purchased item keys
-                const purchasedKeys = new Set(checkoutItems.map(getKey));
-                
-                // Filter Master Cart
-                const remainingCart = cartItems.filter(item => !purchasedKeys.has(getKey(item)));
+                const boughtIds = checkoutItems.map(item => item._checkoutId);
+                const remainingCart = masterCart.filter(item => !boughtIds.includes(item._checkoutId));
+                remainingCart.forEach(item => delete item._checkoutId);
 
-                // 3. Update Local Storage with remaining items
                 localStorage.setItem('vastramaya_cart', JSON.stringify(remainingCart));
-
-                // 4. Update Firebase User Cart with remaining items
+                
                 if (currentUser) {
                     await db.collection('users').doc(currentUser.uid).update({ cart: remainingCart });
                 }
 
-                // Show Success
                 document.getElementById('success-order-id').innerText = `Order ID: #${orderId}`;
                 document.getElementById('success-screen').style.display = 'flex';
 
