@@ -413,7 +413,7 @@
 
             /* Fix for Login Modal on Mobile to stay centered (override bottom sheet behavior) */
             #login-modal-overlay { align-items: center !important; padding: 16px !important; }
-            #login-modal-overlay .login-container { height: auto; max-height: 90vh; border-radius: 16px; width: 100%; margin: 0; }
+            #login-modal-overlay .login-container { height: auto; max-height: 90vh; border-radius: 16px; width: 100%; margin: 0; animation: none; transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -1150,20 +1150,14 @@
         } catch (e) { console.error("Error loading address:", e); }
     }
 
-    // UPDATED TOGGLE PAYMENT LOGIC
     function togglePayment(method) {
         if (method === 'cod') { 
             document.body.classList.add('no-scroll'); 
-            const modal = document.getElementById('codModal');
-            if(modal) {
-                modal.style.display = 'flex';
-                // Also add active class just in case CSS uses it
-                modal.classList.add('active');
-            }
+            const m = document.getElementById('codModal');
+            m.style.display = 'flex'; m.classList.add('active');
         } 
         else { setPrepaidUI(); }
     }
-    
     function setPrepaidUI() {
         document.getElementById('radio-prepaid').checked = true;
         document.getElementById('card-prepaid').style.borderColor = "var(--green-success)";
@@ -1186,18 +1180,11 @@
     }
     function switchToPrepaid() { closeCodModal(); }
     function confirmCOD() { document.body.classList.remove('no-scroll'); closeCodModal(); setCodUI(); }
-    
     function closeCodModal() { 
         document.body.classList.remove('no-scroll'); 
-        const modal = document.getElementById('codModal');
-        if(modal) {
-            modal.style.display = 'none';
-            modal.classList.remove('active');
-        }
-        // If they close without confirming, revert to prepaid visually (optional, but good UX)
-        // setPrepaidUI(); 
+        const m = document.getElementById('codModal');
+        m.style.display = 'none'; m.classList.remove('active');
     }
-    
     function openAddressModal() { document.body.classList.add('no-scroll'); addrModal.style.display = 'flex'; }
     function closeAddressModal() { document.body.classList.remove('no-scroll'); addrModal.style.display = 'none'; }
     
@@ -1251,15 +1238,52 @@
                 finalizeOrder(orderId, 'COD', 'Pending', (baseTotal + codFee));
             }, 1000);
         } else {
-            // This requires a real backend endpoint. Simulating success for UI demo.
             try {
-                // Fake Razorpay Success
-                const orderId = `PRE-${Math.floor(100000 + Math.random() * 900000)}`;
-                finalizeOrder(orderId, 'Online', 'Paid', baseTotal, 'pay_demo_id');
+                const response = await fetch('/api/razorpay', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: baseTotal })
+                });
+
+                if (!response.ok) throw new Error('Network response was not ok');
+                const orderData = await response.json();
+
+                const options = {
+                    key: orderData.key || 'rzp_live_RpvomVHV4uEGne',
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    name: "Vastramaya",
+                    description: "Purchase Description",
+                    image: "https://product-ecommerces.netlify.app/vastramaya.png",
+                    order_id: orderData.id, 
+                    handler: function (response) {
+                        finalizeOrder(orderData.id, 'Online', 'Paid', baseTotal, response.razorpay_payment_id);
+                    },
+                    prefill: {
+                        name: currentAddressData.name,
+                        contact: currentAddressData.phone,
+                        email: currentUser ? (currentUser.email || "") : ""
+                    },
+                    theme: {
+                        color: "#8b2635"
+                    },
+                    modal: {
+                        ondismiss: function() {
+                            btnDesktop.innerText = originalText;
+                            btnMobile.innerText = originalText;
+                            alert("Payment Cancelled");
+                        }
+                    }
+                };
+
+                const rzp1 = new Razorpay(options);
+                rzp1.open();
+
             } catch (error) {
                 console.error(error);
-                alert("Payment initiation failed.");
-                btnDesktop.innerText = originalText; btnMobile.innerText = originalText;
+                alert("Payment initiation failed. Please try again.");
+                btnDesktop.innerText = originalText;
+                btnMobile.innerText = originalText;
             }
         }
     }
@@ -1372,4 +1396,3 @@
 </script>
 </body>
 </html>
-
