@@ -85,8 +85,6 @@
         .profile-links { display: flex; flex-direction: column; gap: 8px; }
         .profile-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-primary); text-decoration: none; border-radius: 10px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
         .profile-link:hover { background: var(--surface-hover); color: var(--brand-primary); padding-left: 20px; transform: translateX(2px); }
-        .admin-link-btn { background-color: var(--text-primary); color: white !important; border: 1px solid var(--text-primary); }
-        .admin-link-btn:hover { background-color: transparent; color: var(--text-primary) !important; }
         
         .auth-hidden { display: none !important; }
 
@@ -281,6 +279,13 @@
         .prod-info { flex: 1; }
         .prod-info h4 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .prod-info p { font-size: 13px; color: var(--text-light); }
+        .remove-item-btn { 
+            display: inline-flex; align-items: center; gap: 5px; margin-top: 8px;
+            font-size: 12px; color: #d33d49; font-weight: 600; cursor: pointer; 
+            padding: 4px 8px; border-radius: 4px; transition: 0.2s;
+        }
+        .remove-item-btn:hover { background: #fff1f2; }
+
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
         .total-row { 
             display: flex; justify-content: space-between; margin-top: 24px; 
@@ -291,9 +296,6 @@
         .text-green { color: var(--green-success); font-weight: 700; }
         .text-red { color: var(--red-warning); font-weight: 700; }
         .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
-        
-        .remove-btn { color: #999; cursor: pointer; padding: 5px; font-size: 13px; display: flex; align-items: center; gap: 5px; transition: color 0.2s; margin-top: 5px; }
-        .remove-btn:hover { color: var(--red-warning); }
 
         .btn-main {
             width: 100%; padding: 16px; background: var(--brand-gradient);
@@ -903,33 +905,39 @@
                     <div class="prod-info">
                         <h4>${item.name}</h4>
                         <p>Qty: ${item.quantity} ${item.size ? '• ' + item.size : ''}</p>
+                        <div class="remove-item-btn" onclick="removeItem(${index})">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </div>
                     </div>
-                    <div style="margin-left:auto; display:flex; flex-direction:column; align-items:flex-end;">
-                        <div style="font-weight:700;">₹${itemTotal.toLocaleString('en-IN')}</div>
-                        <div class="remove-btn" onclick="removeFromCart(${index})"><i class="fas fa-times"></i> Remove</div>
-                    </div>
+                    <div style="margin-left:auto; font-weight:700;">₹${itemTotal.toLocaleString('en-IN')}</div>
                 `;
                 container.appendChild(div);
             });
 
             subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
-            setPrepaidUI(); 
+            // Re-run payment UI to update total on buttons
+            if(document.getElementById('radio-cod').checked) {
+                setCodUI();
+            } else {
+                setPrepaidUI();
+            }
         }
 
-        async function removeFromCart(index) {
+        async function removeItem(index) {
+            // Remove from array
             cartItems.splice(index, 1);
+            
+            // Update LocalStorage
             localStorage.setItem('vastramaya_cart', JSON.stringify(cartItems));
             
+            // Re-render Cart (Updates UI and Totals)
+            loadCart();
+            
+            // If logged in, update Firebase cart immediately to keep in sync
             if(currentUser) {
                 try {
                     await db.collection('users').doc(currentUser.uid).update({ cart: cartItems });
-                } catch(e) { console.error(e); }
-            }
-            
-            if (cartItems.length === 0) {
-                location.reload(); 
-            } else {
-                loadCart();
+                } catch(e) { console.log("Error syncing removal to DB", e); }
             }
         }
 
@@ -1116,7 +1124,7 @@
             const orderDetails = {
                 orderId: orderId,
                 userId: currentUser ? currentUser.uid : 'guest',
-                items: cartItems,
+                items: cartItems, // This array ONLY contains items visible on screen (removed ones are already gone)
                 address: currentAddressData,
                 amount: amount,
                 paymentMethod: method,
@@ -1128,6 +1136,8 @@
             try {
                 await db.collection('orders').doc(orderId).set(orderDetails);
 
+                // Clear Cart (User DB + Local)
+                // We clear everything here because items removed by user were already removed via removeItem()
                 localStorage.removeItem('vastramaya_cart');
                 if (currentUser) {
                     await db.collection('users').doc(currentUser.uid).update({ cart: [] });
