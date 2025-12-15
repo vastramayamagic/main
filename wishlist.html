@@ -67,7 +67,7 @@
         .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
 
-        /* ACTION BUTTONS */
+        /* ACTION BUTTONS (Desktop Defaults) */
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -123,7 +123,6 @@
 
         /* --- MOBILE LAYOUT --- */
         .page-mobile { min-height: 100vh; display: flex; flex-direction: column; display: none; width: 100%; }
-        /* Added padding-bottom to allow scrolling past fixed button */
         .m-content { flex: 1; background: var(--page-bg); padding-top: 0; padding-bottom: 100px; width: 100%; overflow-x: hidden; }
 
         @media (max-width: 768px) {
@@ -151,19 +150,23 @@
 
             .product-image-container {
                 width: 130px; 
-                height: 180px; /* Fixed Height */
+                height: 180px; 
                 min-height: 180px;
                 border-bottom: none;
                 border-right: 1px solid var(--border-subtle);
                 flex-shrink: 0;
             }
 
+            /* --- SPACING FIXES START HERE --- */
+
+            /* 1. Consistent padding on the container */
             .product-info {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                padding: 12px 12px 12px 12px;
+                /* Pad around the whole text area. This creates the gap at the BOTTOM of the buttons */
+                padding: 12px; 
                 min-width: 0;
             }
 
@@ -179,38 +182,50 @@
 
             .product-category { margin-bottom: 4px; font-size: 10px; }
 
-            .price-container {
-                margin-bottom: 0;
-            }
+            .price-container { margin-bottom: 0; }
             
             .current-price { font-size: 17px; }
 
+            /* 2. Consistent Spacing around the separator line */
             .action-buttons {
-                margin-top: 10px;
-                padding-top: 10px;
+                width: 100%;
+                display: flex;
                 gap: 10px;
+                border-top: 1px solid var(--border-subtle);
+                
+                /* Gap ABOVE the line (from price to line) */
+                margin-top: 12px; 
+                /* Gap BELOW the line (from line to buttons) */
+                padding-top: 12px; 
+                /* Remove bottom margin so only .product-info padding controls bottom space */
+                margin-bottom: 0;
             }
             
+            /* 3. Button Text Centering */
             .btn-action {
-                height: 42px;
+                height: 42px; /* Fixed Height */
                 font-size: 14px;
-                /* FIX: Reset padding and rely on flexbox for perfect centering */
-                padding: 0; 
-                line-height: normal;
+                padding: 0; /* No padding, rely on flexbox */
+                display: flex; /* Ensure flexbox */
+                align-items: center; /* Vertical Center */
+                justify-content: center; /* Horizontal Center */
+                line-height: 1; /* Fixes font ascender/descender issues */
             }
             
-            /* FIX: Sticky Footer always at bottom */
+            /* --- SPACING FIXES END HERE --- */
+            
+            /* Sticky Footer */
             .move-all-btn-container {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                padding: 15px 15px 25px 15px; /* Extra bottom padding for safe area */
+                padding: 15px 15px 25px 15px; 
                 background: rgba(254, 252, 243, 0.9);
                 backdrop-filter: blur(8px);
                 border-top: 1px solid var(--border-subtle);
                 z-index: 999;
-                display: none; /* Hidden by default, toggled via JS */
+                display: none; 
                 justify-content: center;
             }
 
