@@ -35,6 +35,7 @@
             font-family: var(--font-main); 
             color: var(--text-primary); 
             padding: 40px 20px;
+            overflow-x: hidden; /* Prevent horizontal scroll from hero width */
         }
 
         /* --- Desktop & Base Styles --- */
@@ -53,7 +54,6 @@
             box-shadow: 0 20px 40px -10px rgba(59, 11, 23, 0.15);
             border: 1px solid rgba(139, 38, 53, 0.08);
             position: relative;
-            /* Important: Allow avatar to overflow on mobile */
             overflow: visible; 
         }
 
@@ -70,7 +70,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             background: #fff;
             position: relative;
-            z-index: 10; /* Force on top */
+            z-index: 10; 
         }
         .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
@@ -93,37 +93,24 @@
             border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
         }
 
-        /* Form Inputs - STRICT SIZING */
+        /* Form Inputs */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .input-group { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .input-group.full { grid-column: span 2; }
         
         label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Fixed sizing for both states to prevent jumping.
-           Using !important to ensure no browser default overrides it.
-        */
         input {
             appearance: none; -webkit-appearance: none;
-            width: 100%; 
-            height: 50px !important;
-            padding: 0 16px !important;
-            border: 1px solid var(--border-subtle) !important;
-            border-radius: 12px; 
-            font-family: var(--font-main); 
-            font-size: 15px;
-            color: var(--text-primary); 
-            background: #fff; 
-            transition: all 0.2s ease;
-            box-sizing: border-box !important;
-            margin: 0;
+            width: 100%; height: 50px !important; padding: 0 16px !important;
+            border: 1px solid var(--border-subtle) !important; border-radius: 12px; 
+            font-family: var(--font-main); font-size: 15px; color: var(--text-primary); 
+            background: #fff; transition: all 0.2s ease; box-sizing: border-box !important; margin: 0;
         }
         
         input:disabled { 
-            background: #fafafa !important; 
-            border-color: var(--border-subtle) !important; /* Keep border width same */
-            color: var(--text-secondary);
-            opacity: 1; /* Fix for iOS safari opacity */
+            background: #fafafa !important; border-color: var(--border-subtle) !important;
+            color: var(--text-secondary); opacity: 1; cursor: default;
         }
         
         input:focus { outline: none; border-color: var(--brand-primary) !important; background: #fff !important; box-shadow: 0 0 0 4px rgba(139, 38, 53, 0.05); }
@@ -158,50 +145,52 @@
         @media (max-width: 768px) {
             body { padding: 0; background: #fff; }
             
-            /* Curved Header Background */
+            /* Curved Half Circle Header Background */
             .mobile-hero {
                 background: var(--brand-gradient);
-                height: 180px; width: 100%; position: absolute; top: 0; left: 0;
-                border-radius: 0 0 30px 30px; z-index: 0;
+                height: 180px; 
+                width: 100%; 
+                position: absolute; 
+                top: 0; 
+                left: 0;
+                /* THIS CREATES THE HALF CIRCLE CURVE */
+                border-radius: 0 0 50% 50%; 
+                z-index: 0;
+                box-shadow: 0 10px 30px rgba(139, 38, 53, 0.3);
             }
             
-            .container { margin-top: 80px; padding: 0 20px 60px 20px; }
+            /* Push container down to accommodate the curve */
+            .container { margin-top: 100px; padding: 0 20px 60px 20px; }
 
-            .back-link { position: absolute; top: -50px; left: 20px; color: rgba(255,255,255,0.9); z-index: 10; }
+            .back-link { position: absolute; top: -70px; left: 20px; color: rgba(255,255,255,0.9); z-index: 10; }
 
             .profile-wrapper {
                 background: #fff; border: none; 
-                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                box-shadow: 0 15px 50px rgba(0,0,0,0.08); /* Softer shadow */
                 border-radius: 24px;
-                overflow: visible; /* CRITICAL for Avatar */
+                overflow: visible; 
             }
 
-            .profile-header-bg { display: none; } /* Hide desktop internal header */
+            .profile-header-bg { display: none; }
             
             .profile-content { padding: 0 20px 30px 20px; margin-top: 0; }
 
+            /* Position Avatar to sit on the curve line */
             .avatar-row { 
                 justify-content: center; 
-                margin-top: -50px; /* Pulls avatar up out of card */
+                margin-top: -60px; /* Pulls avatar up */
                 margin-bottom: 30px;
             }
             
             .avatar-container { 
-                width: 100px; height: 100px; 
-                box-shadow: 0 10px 25px rgba(139, 38, 53, 0.25); /* Stronger shadow for depth */
+                width: 110px; height: 110px; 
+                box-shadow: 0 10px 25px rgba(139, 38, 53, 0.2);
             }
 
-            /* Mobile Edit Button - Floating Top Right */
             .edit-profile-btn {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                margin: 0;
-                padding: 8px 16px;
-                font-size: 12px;
-                border-color: rgba(0,0,0,0.1);
-                background: #fff;
-                color: var(--brand-primary);
+                position: absolute; top: 20px; right: 20px; margin: 0;
+                padding: 8px 16px; font-size: 12px; border-color: rgba(0,0,0,0.1);
+                background: #fff; color: var(--brand-primary);
             }
 
             .form-grid { grid-template-columns: 1fr; gap: 15px; }
@@ -240,7 +229,7 @@
                     <div class="avatar-container">
                         <img id="profile-avatar" src="https://ui-avatars.com/api/?name=User&background=f9f2e3&color=8b2635&size=128" class="avatar-img" alt="Profile">
                     </div>
-                    </div>
+                </div>
 
                 <button class="edit-profile-btn" id="btn-edit-profile" onclick="toggleEditProfile()">Edit Profile</button>
 
