@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vastramaya | Responsive Layout</title>
+    <title>Vastramaya | Premium E-Commerce</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
             -webkit-user-drag: none; -webkit-touch-callout: none; pointer-events: auto;
         }
 
-        /* --- 2. LAYOUT & GRID (DEFAULT: DESKTOP HORIZONTAL SCROLL) --- */
+        /* --- 2. LAYOUT & GRID --- */
         .category-products-section { padding: 30px 40px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .section-header h2 { font-size: 32px; font-weight: 700; color: var(--text-primary); position: relative; margin: 0; }
@@ -52,30 +52,17 @@
         .nav-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 2; transition: stroke 0.3s ease; }
         .nav-btn:hover svg { stroke: white; }
 
-        /* Default Flex Container for Horizontal Scroll (Desktop) */
         .products-grid { 
-            display: flex; 
-            gap: 25px; 
-            padding: 10px 5px 30px; 
-            overflow-x: auto; 
-            scrollbar-width: none; 
-            scroll-behavior: smooth; 
+            display: flex; gap: 25px; padding: 10px 5px 30px; 
+            overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; 
         }
         .products-grid::-webkit-scrollbar { display: none; }
 
         /* --- 3. PRODUCT CARD --- */
         .product-card {
-            flex: 0 0 auto; 
-            width: 300px; /* Fixed width for scroll view */
-            background: var(--product-card-bg); 
-            border-radius: 16px; 
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03); 
-            transition: all 0.3s ease; 
-            scroll-snap-align: start;
-            border: 1px solid var(--border-subtle); 
-            position: relative; 
-            cursor: pointer;
+            flex: 0 0 auto; width: 300px; background: var(--product-card-bg); border-radius: 16px; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: all 0.3s ease; scroll-snap-align: start;
+            border: 1px solid var(--border-subtle); position: relative; cursor: pointer;
         }
         .product-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--brand-primary); transform: translateY(-4px); }
 
@@ -125,9 +112,15 @@
         /* --- 4. PREMIUM MODAL STYLES --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content-box { background: var(--page-bg); width: 100%; max-width: 1050px; height: 85vh; border-radius: 20px; position: relative; box-shadow: var(--shadow-float); transform: scale(0.95); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; display: flex; flex-direction: column; }
+        
+        .modal-content-box { 
+            background: var(--page-bg); width: 100%; max-width: 1050px; height: 85vh; border-radius: 20px; 
+            position: relative; box-shadow: var(--shadow-float); transform: scale(0.95); opacity: 0; 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; display: flex; flex-direction: column; 
+        }
         .modal-overlay.active .modal-content-box { transform: scale(1); opacity: 1; }
         
+        /* Close Button */
         .premium-close-btn { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: rgba(255, 255, 255, 0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 60; transition: background 0.2s ease, transform 0.1s ease; }
         .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
         .premium-close-btn:active { transform: scale(0.95); }
@@ -184,31 +177,39 @@
 
         /* --- 5. RESPONSIVE LAYOUTS --- */
 
-        /* TABLET & LARGE MOBILE (601px - 1024px) -> GRID 3 COLUMNS */
-        @media (min-width: 601px) and (max-width: 1024px) {
+        /* TABLET LANDSCAPE (Horizontal) */
+        @media (min-width: 901px) and (max-width: 1024px) {
             .category-products-section { padding: 30px 20px; }
-            
-            .products-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr); /* 3 Products per row */
-                gap: 15px;
-                overflow-x: visible; /* No scroll */
-                padding-right: 0;
-            }
-
-            .product-card { width: 100%; }
-            .product-image-container { height: 240px; }
-            
-            /* Hide nav arrows in grid mode */
-            .section-nav { display: none !important; }
-
-            /* Modal Adjustments */
+            .products-grid { display: flex; overflow-x: auto; gap: 20px; } /* Keep Scroll */
+            .section-nav { display: flex !important; }
             .modal-content-box { height: 90vh; width: 95vw; }
             .modal-container { padding: 30px; gap: 30px; }
-            .gallery-wrapper { height: 400px; }
         }
 
-        /* MOBILE (Max 600px) -> GRID 2 COLUMNS */
+        /* TABLET PORTRAIT (Vertical) & LARGE PHONES (601px - 900px) */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .category-products-section { padding: 30px 20px; }
+            
+            /* Grid 3 Cols */
+            .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; overflow-x: visible; padding-right: 0; }
+            .product-card { width: 100%; }
+            .product-image-container { height: 240px; }
+            .section-nav { display: none !important; }
+
+            /* MODAL - STACKED LAYOUT (Fixes "not good" look) */
+            .modal-content-box { height: 90vh; width: 90vw; }
+            .modal-container { 
+                display: flex; flex-direction: column; /* Stack vertically */
+                padding: 30px; gap: 20px; 
+            }
+            .gallery-wrapper { 
+                position: relative; top: 0; width: 100%; height: 400px; 
+            }
+            .main-stage { width: 100%; }
+            .product-details { padding-top: 0; }
+        }
+
+        /* MOBILE (Max 600px) */
         @media (max-width: 600px) {
             .category-products-section { padding: 20px 10px; }
             .section-header { padding: 0 10px; margin-bottom: 20px; }
@@ -216,17 +217,9 @@
             .section-nav, .quick-view-btn { display: none !important; }
 
             /* Grid 2 Cols */
-            .products-grid { 
-                display: grid; 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 12px; 
-                padding: 0 0 10px; 
-                overflow-x: visible; 
-                scroll-snap-type: none; 
-            }
+            .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 0 10px; overflow-x: visible; scroll-snap-type: none; }
             .product-card { width: 100%; border-radius: 12px; }
             .product-image-container { height: 200px; }
-            
             .product-info { padding: 12px; min-height: 100px; }
             .product-title { font-size: 14px; height: 36px; }
             .current-price { font-size: 16px; }
@@ -241,9 +234,12 @@
             .premium-close-btn { top: 16px; right: 16px; width: 36px; height: 36px; background: rgba(255,255,255,0.95); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-color: transparent; }
             
             .modal-container { display: block; padding: 0; padding-bottom: 100px; }
-            .gallery-wrapper, .actions-desktop { display: none; }
+            .gallery-wrapper { display: none; } /* Hide Desktop Gallery */
             
-            /* Taller Mobile Gallery */
+            /* HIDE DESKTOP ACTIONS forcefully */
+            .actions-desktop { display: none !important; } 
+
+            /* Mobile Gallery */
             .mobile-gallery { display: flex; position: relative; width: 100%; height: 55vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
             .mobile-gallery::-webkit-scrollbar { display: none; }
             .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
@@ -575,19 +571,30 @@
             closeBtn.addEventListener('click', closeModalFn);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFn(); });
 
+            // --- CLICK HANDLING (REDIRECT vs MODAL) ---
             document.getElementById('demo-grid').addEventListener('click', (e) => {
                 const card = e.target.closest('.product-card');
                 if (!card) return;
                 
+                // If Wishlist -> Stop (Handled by specific listener)
+                if (e.target.closest('.wishlist-btn-top-right')) return;
+
+                // If Quick View -> Open Modal
                 if (e.target.closest('.quick-view-btn')) {
                     e.stopPropagation();
                     openModal(card.dataset.id, 'quickview');
-                } else if (e.target.closest('.add-to-cart')) {
+                    return;
+                } 
+                
+                // If Add to Cart -> Open Modal (Cart Mode)
+                if (e.target.closest('.add-to-cart')) {
                     e.stopPropagation();
                     openModal(card.dataset.id, 'cart');
-                } else {
-                    openModal(card.dataset.id, 'quickview');
-                }
+                    return;
+                } 
+                
+                // Any other click on card -> Redirect to Product Page
+                window.location.href = 'product.html?id=' + card.dataset.id;
             });
         }
     </script>
