@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -20,18 +20,27 @@
             --brand-primary: #8b2635;
             --brand-secondary: #d33d49;
             --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            --gold-accent: #e6d2a9;
             --border-subtle: #e8d5c4;
             --surface-hover: #f9f2e3;
             --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
+            --shadow-premium: 0 20px 40px -10px rgba(59, 11, 23, 0.15);
             --font-main: 'DM Sans', sans-serif;
-            --green-success: #4a9c7d;
-            --red-warning: #c62828;
+            --font-serif: 'Cormorant Garamond', serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { min-height: 100vh; background: var(--page-bg); font-family: var(--font-main); color: var(--text-primary); padding: 20px; }
+        
+        body { 
+            min-height: 100vh; 
+            background: var(--page-bg); 
+            font-family: var(--font-main); 
+            color: var(--text-primary); 
+            padding: 40px 20px;
+        }
 
-        .container { max-width: 800px; margin: 0 auto; }
+        /* --- Desktop Layout (Base) --- */
+        .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; }
 
         .back-link {
             display: inline-flex; align-items: center; gap: 8px;
@@ -40,199 +49,330 @@
         }
         .back-link:hover { color: var(--brand-primary); transform: translateX(-3px); }
 
-        h1 { font-size: 28px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
-        p.subtitle { color: var(--text-light); margin-bottom: 30px; font-size: 15px; }
-
-        /* --- Card Styles --- */
-        .profile-card {
-            background: var(--card-bg); border: 1px solid var(--border-subtle);
-            border-radius: 20px; padding: 30px; margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(59, 11, 23, 0.03);
-            position: relative; overflow: hidden;
+        h1 { 
+            font-family: var(--font-serif); 
+            font-size: 36px; 
+            font-weight: 600; 
+            margin-bottom: 5px; 
+            color: var(--text-primary); 
         }
-        
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .section-title { font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
-        .section-title i { color: var(--brand-primary); }
+        p.subtitle { color: var(--text-light); margin-bottom: 40px; font-size: 16px; }
 
-        /* --- Section 1: Personal Details --- */
-        .details-grid { display: grid; grid-template-columns: 120px 1fr; gap: 30px; align-items: start; }
-        
-        .avatar-container {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 3px solid var(--border-subtle); padding: 4px;
+        .profile-wrapper {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid rgba(139, 38, 53, 0.08);
+            overflow: hidden;
+        }
+
+        /* --- Profile Header Section --- */
+        .profile-header-bg {
+            height: 120px;
+            background: var(--brand-gradient);
             position: relative;
         }
-        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: var(--surface-hover); }
         
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .profile-content {
+            padding: 0 40px 40px 40px;
+            margin-top: -60px;
+        }
+
+        .avatar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .avatar-container {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 4px solid #fff; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            background: #fff;
+        }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        
+        .edit-profile-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 1px solid var(--border-subtle);
+            background: #fff;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 10px;
+        }
+        .edit-profile-btn:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            transform: translateY(-2px);
+        }
+
+        /* --- Sections --- */
+        .info-section { margin-bottom: 40px; }
+        .section-label {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 10px;
+        }
+        
+        /* Personal Details Form */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .input-group { display: flex; flex-direction: column; gap: 8px; }
         .input-group.full { grid-column: span 2; }
         
-        label { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+        label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
         
         input {
-            width: 100%; padding: 12px 16px; border: 1px solid var(--border-subtle);
-            border-radius: 10px; font-family: var(--font-main); font-size: 15px;
+            width: 100%; padding: 14px 16px; border: 1px solid var(--border-subtle);
+            border-radius: 12px; font-family: var(--font-main); font-size: 15px;
             color: var(--text-primary); background: #fff; transition: 0.2s;
         }
-        input:disabled { background: #fafafa; color: var(--text-secondary); border-color: transparent; padding-left: 0; }
-        input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
+        input:disabled { background: #fafafa; border-color: transparent; color: var(--text-secondary); }
+        input:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(139, 38, 53, 0.05); }
 
-        .edit-btn {
-            background: transparent; border: 1px solid var(--border-subtle);
-            color: var(--brand-primary); padding: 8px 16px; border-radius: 8px;
-            font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 13px;
-        }
-        .edit-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
-        
-        .action-btns { display: none; gap: 10px; margin-top: 20px; }
-        .btn-save { background: var(--brand-gradient); color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-        .btn-cancel { background: transparent; color: var(--text-secondary); border: none; padding: 10px 16px; font-weight: 600; cursor: pointer; }
+        .action-btns { display: none; gap: 15px; margin-top: 25px; }
+        .btn-save { background: var(--brand-gradient); color: white; border: none; padding: 14px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); transition: 0.2s; }
+        .btn-cancel { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 14px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; }
 
-        /* --- Section 2: Address --- */
-        .address-container { display: flex; flex-direction: column; gap: 15px; }
-        
-        .address-item {
-            border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: 0.2s; background: #fff;
+        /* Address Card Styles */
+        .address-card {
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 25px;
+            background: #fff;
+            position: relative;
+            transition: 0.2s;
+            display: flex; justify-content: space-between; align-items: flex-start;
         }
-        .address-item:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-rich); }
+        .address-card:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-rich); }
         
-        .addr-content { display: flex; flex-direction: column; gap: 5px; }
-        .addr-tag { 
+        .addr-type { 
             font-size: 10px; font-weight: 700; text-transform: uppercase; 
             background: var(--surface-hover); color: var(--brand-primary); 
-            padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 5px;
+            padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; display: inline-block;
         }
-        .addr-name { font-weight: 700; font-size: 16px; color: var(--text-primary); }
-        .addr-text { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+        .addr-details h4 { font-size: 18px; margin-bottom: 6px; color: var(--text-primary); font-weight: 700; }
+        .addr-details p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
         
-        .addr-actions { display: flex; gap: 10px; }
-        .icon-action { 
-            width: 36px; height: 36px; border-radius: 8px; 
-            display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; transition: 0.2s; color: var(--text-light); border: 1px solid transparent;
+        .edit-addr-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: var(--surface-hover); color: var(--brand-primary);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.2s; font-size: 14px;
         }
-        .icon-action:hover { background: var(--surface-hover); color: var(--brand-primary); }
+        .edit-addr-icon:hover { background: var(--brand-primary); color: white; }
 
-        .add-addr-btn {
-            border: 2px dashed var(--border-subtle); border-radius: 12px; padding: 20px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            color: var(--brand-primary); font-weight: 600; cursor: pointer;
-            transition: 0.2s; background: rgba(255,255,255,0.5);
+        .empty-addr {
+            text-align: center; padding: 40px; border: 2px dashed var(--border-subtle);
+            border-radius: 16px; color: var(--text-light); cursor: pointer; transition: 0.2s;
         }
-        .add-addr-btn:hover { background: #fff; border-color: var(--brand-primary); }
+        .empty-addr:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
 
-        /* --- Modal Styles (Reused) --- */
+        /* --- Mobile Premium Overhaul --- */
+        @media (max-width: 768px) {
+            body { padding: 0; background: #fff; }
+            
+            /* Mobile Hero Header */
+            .mobile-hero {
+                background: var(--brand-gradient);
+                height: 220px;
+                width: 100%;
+                position: absolute;
+                top: 0; left: 0;
+                border-radius: 0 0 30px 30px;
+                z-index: 0;
+            }
+            
+            .container {
+                margin-top: 100px;
+                padding: 0 20px 40px 20px;
+            }
+
+            .back-link {
+                position: absolute; top: -70px; left: 20px; 
+                color: rgba(255,255,255,0.9); z-index: 10;
+            }
+            .back-link:hover { color: #fff; transform: none; }
+
+            /* Mobile Card Design */
+            .profile-wrapper {
+                background: #fff;
+                border: none;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                border-radius: 24px;
+                overflow: visible; /* Allow avatar to float out */
+            }
+
+            .profile-header-bg { display: none; } /* Hide default header bg */
+            
+            .profile-content {
+                padding: 0 25px 30px 25px;
+                margin-top: 0;
+                display: flex; flex-direction: column; align-items: center;
+            }
+
+            .avatar-row {
+                width: 100%;
+                justify-content: center;
+                margin-top: -60px; /* Pull avatar up */
+                margin-bottom: 20px;
+                position: relative;
+            }
+
+            .avatar-container {
+                width: 110px; height: 110px;
+                border: 4px solid #fff;
+                box-shadow: 0 10px 20px rgba(139, 38, 53, 0.2);
+            }
+
+            /* Typography Adjustments */
+            h1 { font-size: 28px; text-align: center; margin-bottom: 5px; }
+            p.subtitle { text-align: center; font-size: 14px; margin-bottom: 30px; }
+
+            .section-label { 
+                font-size: 20px; border-bottom: none; 
+                background: var(--surface-hover); 
+                padding: 10px 15px; border-radius: 10px;
+                margin-bottom: 25px;
+            }
+
+            /* Form Mobile */
+            .form-grid { grid-template-columns: 1fr; gap: 20px; }
+            .input-group.full { grid-column: span 1; }
+            
+            .edit-profile-btn {
+                position: absolute; top: 0; right: 0;
+                background: transparent; border: none; padding: 0;
+                box-shadow: none; font-size: 13px; color: var(--brand-primary);
+                margin-top: 10px; /* Offset below avatar row if needed, or place inside */
+            }
+            /* Reposition edit button for mobile */
+            .avatar-row { flex-direction: column; align-items: center; }
+            #btn-edit-profile {
+                margin: 15px 0 0 0;
+                border: 1px solid var(--border-subtle);
+                padding: 8px 20px;
+                width: auto;
+            }
+
+            /* Address Mobile */
+            .address-card { 
+                flex-direction: column; gap: 15px; 
+                border: 1px solid rgba(139, 38, 53, 0.1);
+                background: linear-gradient(180deg, #fff 0%, #fffcfc 100%);
+            }
+            .edit-addr-icon {
+                align-self: flex-end;
+                margin-top: -40px; /* Pull up next to text */
+                background: white; border: 1px solid var(--border-subtle);
+            }
+        }
+
+        /* --- Modal (Reused) --- */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px);
-            z-index: 2000; justify-content: center; align-items: center; padding: 20px;
+            background: rgba(59, 11, 23, 0.5); backdrop-filter: blur(8px);
+            z-index: 3000; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-card {
-            background: #fff; border-radius: 20px; width: 100%; max-width: 500px;
-            box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-height: 85vh; border: 1px solid var(--border-subtle); display: flex; flex-direction: column;
+            background: #fff; border-radius: 24px; width: 100%; max-width: 500px;
+            box-shadow: var(--shadow-rich); animation: slideUp 0.3s ease;
+            max-height: 90vh; display: flex; flex-direction: column;
         }
-        .modal-header { padding: 25px 30px; border-bottom: 1px solid var(--border-subtle); background: var(--surface-hover); border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
-        .modal-body { padding: 30px; overflow-y: auto; }
-        .modal-footer { padding: 20px 30px; border-top: 1px solid var(--border-subtle); }
-        
-        .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        .full-width { grid-column: span 2; }
-        .modal-input { width: 100%; padding: 12px; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: var(--font-main); }
-        
-        .addr-type-container { display: flex; gap: 10px; margin-top: 10px; }
-        .addr-chip-input { display: none; }
-        .addr-chip-label {
-            padding: 10px 20px; border: 1px solid var(--border-subtle); border-radius: 8px;
-            font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text-secondary); 
-            background: #fff; flex: 1; text-align: center;
-        }
-        .addr-chip-input:checked + .addr-chip-label { background: var(--surface-hover); border-color: var(--brand-primary); color: var(--brand-primary); font-weight: 700; }
+        .modal-header { padding: 20px 25px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 25px; overflow-y: auto; }
+        .modal-footer { padding: 20px 25px; border-top: 1px solid var(--border-subtle); }
         
         .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-secondary); }
         
-        @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        @media (max-width: 768px) {
-            .details-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 20px; }
-            .form-grid { grid-template-columns: 1fr; text-align: left; }
-            .input-group.full { grid-column: span 1; }
-            .avatar-container { margin: 0 auto; }
-            .address-item { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .addr-actions { width: 100%; justify-content: flex-end; border-top: 1px solid var(--border-subtle); padding-top: 10px; }
-        }
-        
-        /* Toast Notification */
+        /* Toast */
         #toast {
-            visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
-            text-align: center; border-radius: 8px; padding: 16px; position: fixed;
-            z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%);
-            font-size: 14px;
+            visibility: hidden; min-width: 280px; background-color: #1a1a1a; color: #fff;
+            text-align: center; border-radius: 50px; padding: 16px 24px; position: fixed;
+            z-index: 4000; left: 50%; bottom: 30px; transform: translateX(-50%);
+            font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
     </style>
 </head>
 <body>
 
+    <div class="mobile-hero"></div>
+
     <div class="container">
         <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
         
-        <h1>My Profile</h1>
-        <p class="subtitle">Manage your personal information and delivery details.</p>
+        <div class="profile-wrapper">
+            <div class="profile-header-bg"></div>
 
-        <div class="profile-card">
-            <div class="section-header">
-                <div class="section-title"><i class="far fa-id-card"></i> Personal Details</div>
-                <button class="edit-btn" id="btn-edit-profile" onclick="toggleEditProfile()">Edit Details</button>
-            </div>
-            
-            <div class="details-grid">
-                <div class="avatar-container">
-                    <img id="profile-avatar" src="https://ui-avatars.com/api/?name=User&background=f9f2e3&color=8b2635" class="avatar-img" alt="Profile">
+            <div class="profile-content">
+                <div class="avatar-row">
+                    <div class="avatar-container">
+                        <img id="profile-avatar" src="https://ui-avatars.com/api/?name=User&background=f9f2e3&color=8b2635&size=128" class="avatar-img" alt="Profile">
+                    </div>
+                    <button class="edit-profile-btn" id="btn-edit-profile" onclick="toggleEditProfile()">Edit Details</button>
                 </div>
-                
-                <form id="profile-form" onsubmit="saveProfile(event)">
-                    <div class="form-grid">
-                        <div class="input-group full">
-                            <label>Full Name</label>
-                            <input type="text" id="input-name" value="Loading..." disabled required>
-                        </div>
-                        <div class="input-group">
-                            <label>Mobile Number</label>
-                            <input type="text" id="input-phone" value="..." disabled style="cursor: not-allowed; opacity: 0.7;">
-                        </div>
-                        <div class="input-group">
-                            <label>Email Address</label>
-                            <input type="email" id="input-email" value="..." disabled>
-                        </div>
+
+                <div style="text-align: center; display: none;" id="mobile-header-text">
+                    <h1>My Profile</h1>
+                    <p class="subtitle">Manage your personal information</p>
+                </div>
+
+                <div class="info-section">
+                    <div class="section-label">
+                        <i class="far fa-user-circle" style="color: var(--brand-primary);"></i> Personal Details
                     </div>
                     
-                    <div class="action-btns" id="profile-actions">
-                        <button type="button" class="btn-cancel" onclick="cancelEditProfile()">Cancel</button>
-                        <button type="submit" class="btn-save">Save Changes</button>
+                    <form id="profile-form" onsubmit="saveProfile(event)">
+                        <div class="form-grid">
+                            <div class="input-group full">
+                                <label>Full Name</label>
+                                <input type="text" id="input-name" value="Loading..." disabled required>
+                            </div>
+                            <div class="input-group">
+                                <label>Mobile Number</label>
+                                <input type="text" id="input-phone" value="..." disabled style="cursor: not-allowed; opacity: 0.7; background: #f5f5f5;">
+                            </div>
+                            <div class="input-group">
+                                <label>Email Address</label>
+                                <input type="email" id="input-email" value="..." disabled>
+                            </div>
+                        </div>
+                        
+                        <div class="action-btns" id="profile-actions">
+                            <button type="button" class="btn-cancel" onclick="cancelEditProfile()">Cancel</button>
+                            <button type="submit" class="btn-save">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="info-section" style="margin-bottom: 0;">
+                    <div class="section-label">
+                        <i class="fas fa-map-marker-alt" style="color: var(--brand-primary);"></i> Delivery Address
                     </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="profile-card">
-            <div class="section-header">
-                <div class="section-title"><i class="fas fa-map-marker-alt"></i> Saved Addresses</div>
-            </div>
-            
-            <div class="address-container" id="address-list">
-                <div style="text-align:center; padding:20px; color:var(--text-light);">Loading addresses...</div>
-            </div>
-
-            <div class="add-addr-btn" onclick="openAddressModal()" style="margin-top:15px;">
-                <i class="fas fa-plus"></i> Add New Address
+                    
+                    <div id="address-list">
+                        <div class="empty-addr" onclick="openAddressModal()">
+                            <i class="fas fa-plus-circle" style="font-size: 24px; margin-bottom: 10px; color: var(--border-subtle);"></i>
+                            <div>Add Delivery Address</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -240,58 +380,60 @@
     <div id="addressModal" class="modal-overlay">
         <form onsubmit="saveAddress(event)" class="modal-card">
             <div class="modal-header">
-                <h3 style="margin:0; font-size:20px;">Address Details</h3>
+                <h3 style="margin:0; font-family: var(--font-serif); font-size: 24px;">Edit Address</h3>
                 <button type="button" class="close-btn" onclick="closeAddressModal()">&times;</button>
             </div>
             
             <div class="modal-body">
-                <div class="addr-form-grid">
-                    <div class="full-width">
-                        <label>Full Name</label>
-                        <input type="text" id="modal-name" class="modal-input" required>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div style="grid-column: span 2;">
+                        <label style="display:block; margin-bottom:5px;">Full Name</label>
+                        <input type="text" id="modal-name" required>
                     </div>
                     <div>
-                        <label>Mobile</label>
-                        <input type="tel" id="modal-phone" class="modal-input" required pattern="[0-9]{10}">
+                        <label style="display:block; margin-bottom:5px;">Mobile</label>
+                        <input type="tel" id="modal-phone" required pattern="[0-9]{10}">
                     </div>
                     <div>
-                        <label>Pincode</label>
-                        <input type="text" id="modal-zip" class="modal-input" required pattern="[0-9]{6}">
+                        <label style="display:block; margin-bottom:5px;">Pincode</label>
+                        <input type="text" id="modal-zip" required pattern="[0-9]{6}">
                     </div>
                 </div>
 
-                <div class="addr-form-grid">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div>
-                        <label>City</label>
-                        <input type="text" id="modal-city" class="modal-input" required>
+                        <label style="display:block; margin-bottom:5px;">City</label>
+                        <input type="text" id="modal-city" required>
                     </div>
                     <div>
-                        <label>State</label>
-                        <input type="text" id="modal-state" class="modal-input" required>
+                        <label style="display:block; margin-bottom:5px;">State</label>
+                        <input type="text" id="modal-state" required>
                     </div>
-                    <div class="full-width">
-                        <label>Address (House No, Street)</label>
-                        <input type="text" id="modal-street" class="modal-input" required>
+                    <div style="grid-column: span 2;">
+                        <label style="display:block; margin-bottom:5px;">Address (House No, Street)</label>
+                        <input type="text" id="modal-street" required>
                     </div>
-                    <div class="full-width">
-                        <label>Locality / Town</label>
-                        <input type="text" id="modal-locality" class="modal-input" required>
+                    <div style="grid-column: span 2;">
+                        <label style="display:block; margin-bottom:5px;">Locality / Town</label>
+                        <input type="text" id="modal-locality" required>
                     </div>
-                    <div class="full-width">
-                        <label>Landmark (Optional)</label>
-                        <input type="text" id="modal-landmark" class="modal-input">
+                    <div style="grid-column: span 2;">
+                        <label style="display:block; margin-bottom:5px;">Landmark (Optional)</label>
+                        <input type="text" id="modal-landmark">
                     </div>
                 </div>
 
-                <div style="margin-top: 15px;">
-                    <label>Address Type</label>
-                    <div class="addr-type-container">
-                        <input type="radio" name="addrType" id="type-home" value="Home" class="addr-chip-input" checked>
-                        <label for="type-home" class="addr-chip-label">Home</label>
-                        <input type="radio" name="addrType" id="type-work" value="Work" class="addr-chip-input">
-                        <label for="type-work" class="addr-chip-label">Work</label>
-                        <input type="radio" name="addrType" id="type-other" value="Other" class="addr-chip-input">
-                        <label for="type-other" class="addr-chip-label">Other</label>
+                <div style="margin-top: 20px;">
+                    <label style="display:block; margin-bottom:8px;">Save As</label>
+                    <div style="display: flex; gap: 10px;">
+                        <label style="flex:1; cursor:pointer;">
+                            <input type="radio" name="addrType" value="Home" checked style="display:none;" onchange="updateChips(this)">
+                            <div class="chip active" style="text-align:center; padding:10px; border:1px solid var(--brand-primary); background:var(--surface-hover); color:var(--brand-primary); border-radius:8px; font-weight:600; font-size:13px;">Home</div>
+                        </label>
+                        <label style="flex:1; cursor:pointer;">
+                            <input type="radio" name="addrType" value="Work" style="display:none;" onchange="updateChips(this)">
+                            <div class="chip" style="text-align:center; padding:10px; border:1px solid var(--border-subtle); background:#fff; color:var(--text-secondary); border-radius:8px; font-weight:500; font-size:13px;">Work</div>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -302,7 +444,7 @@
         </form>
     </div>
 
-    <div id="toast">Saved Successfully</div>
+    <div id="toast"><i class="fas fa-check-circle" style="color:#4a9c7d;"></i> <span>Saved Successfully</span></div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -330,29 +472,24 @@
                 currentUser = user;
                 loadUserProfile(user);
             } else {
-                window.location.href = 'index.html'; // Redirect if not logged in
+                window.location.href = 'index.html'; 
             }
         });
 
         // --- Profile Logic ---
         async function loadUserProfile(user) {
-            // Setup default form from Auth object
             originalProfileData = {
                 name: user.displayName || '',
                 email: user.email || '',
                 phone: user.phoneNumber || ''
             };
             
-            // Try fetching extra data from Firestore
             try {
                 const doc = await db.collection('users').doc(user.uid).get();
                 if (doc.exists) {
                     const data = doc.data();
                     if(data.name) originalProfileData.name = data.name;
                     if(data.email) originalProfileData.email = data.email;
-                    // phone is usually authoritative from Auth, but check DB if needed
-                    
-                    // Also load addresses
                     renderAddressList(data.address); 
                 } else {
                     renderAddressList(null);
@@ -367,7 +504,6 @@
             document.getElementById('input-email').value = originalProfileData.email;
             document.getElementById('input-phone').value = originalProfileData.phone;
             
-            // Update Avatar
             const nameParam = originalProfileData.name || 'User';
             document.getElementById('profile-avatar').src = `https://ui-avatars.com/api/?name=${nameParam}&background=f9f2e3&color=8b2635&size=128`;
         }
@@ -375,21 +511,17 @@
         function toggleEditProfile() {
             document.getElementById('btn-edit-profile').style.display = 'none';
             document.getElementById('profile-actions').style.display = 'flex';
-            
             document.getElementById('input-name').disabled = false;
             document.getElementById('input-email').disabled = false;
-            // Phone remains disabled
             document.getElementById('input-name').focus();
         }
 
         function cancelEditProfile() {
             document.getElementById('btn-edit-profile').style.display = 'block';
             document.getElementById('profile-actions').style.display = 'none';
-            
             document.getElementById('input-name').disabled = true;
             document.getElementById('input-email').disabled = true;
-            
-            updateProfileUI(); // Reset values
+            updateProfileUI(); 
         }
 
         async function saveProfile(e) {
@@ -401,14 +533,11 @@
             saveBtn.innerText = 'Saving...';
             
             try {
-                // Update Auth Profile
                 await currentUser.updateProfile({ displayName: newName });
                 if(newEmail !== currentUser.email && newEmail !== '') {
-                    // Note: updateEmail requires recent login, might fail if session old
-                    try { await currentUser.updateEmail(newEmail); } catch(err) { console.log("Email update requires re-login"); }
+                    try { await currentUser.updateEmail(newEmail); } catch(err) {}
                 }
 
-                // Update Firestore
                 await db.collection('users').doc(currentUser.uid).set({
                     name: newName,
                     email: newEmail
@@ -417,10 +546,10 @@
                 originalProfileData.name = newName;
                 originalProfileData.email = newEmail;
                 
-                showToast("Profile Updated!");
+                showToast("Profile Updated");
                 cancelEditProfile();
             } catch (error) {
-                console.error("Error updating profile", error);
+                console.error(error);
                 showToast("Error updating profile");
             } finally {
                 saveBtn.innerText = 'Save Changes';
@@ -433,28 +562,29 @@
             container.innerHTML = '';
 
             if (!addressData) {
-                container.innerHTML = '<div style="text-align:center; padding:10px; color:var(--text-secondary);">No addresses saved.</div>';
+                // Empty state trigger
+                container.innerHTML = `
+                    <div class="empty-addr" onclick="openAddressModal()">
+                        <i class="fas fa-plus-circle" style="font-size: 24px; margin-bottom: 10px; color: var(--border-subtle);"></i>
+                        <div style="font-weight:600; color: var(--text-secondary);">Add Delivery Address</div>
+                    </div>`;
                 return;
             }
 
-            // In this simplified version, we are storing a SINGLE address object in 'address' field based on checkout.html logic.
-            // If you want array of addresses, logic changes. Assuming single for now based on previous code.
-            
-            const addr = addressData; // Object: { name, street, city... }
+            const addr = addressData; 
             
             const div = document.createElement('div');
-            div.className = 'address-item';
+            div.className = 'address-card';
             div.innerHTML = `
-                <div class="addr-content">
-                    <span class="addr-tag">${addr.type || 'Home'}</span>
-                    <div class="addr-name">${addr.name} <span style="font-weight:400; font-size:13px; color:var(--text-light); margin-left:5px;">${addr.phone}</span></div>
-                    <div class="addr-text">
-                        ${addr.street}, ${addr.locality}<br>
-                        ${addr.city}, ${addr.state} - <strong>${addr.zip}</strong>
-                    </div>
+                <div class="addr-details">
+                    <span class="addr-type">${addr.type || 'Home'}</span>
+                    <h4>${addr.name}</h4>
+                    <p>${addr.street}, ${addr.locality}</p>
+                    <p>${addr.city}, ${addr.state} - <strong>${addr.zip}</strong></p>
+                    <p style="margin-top:5px; font-size:13px; color:var(--text-light);"><i class="fas fa-phone-alt" style="font-size:11px;"></i> ${addr.phone}</p>
                 </div>
-                <div class="addr-actions">
-                    <div class="icon-action" onclick="editAddress()"><i class="fas fa-pen"></i></div>
+                <div class="edit-addr-icon" onclick="editAddress()">
+                    <i class="fas fa-pen"></i>
                 </div>
             `;
             container.appendChild(div);
@@ -465,7 +595,6 @@
 
         function openAddressModal() {
             modal.style.display = 'flex';
-            // Clear form
             document.getElementById('modal-name').value = '';
             document.getElementById('modal-phone').value = '';
             document.getElementById('modal-zip').value = '';
@@ -476,7 +605,6 @@
             document.getElementById('modal-landmark').value = '';
         }
 
-        // Pre-fill modal for editing
         async function editAddress() {
             try {
                 const doc = await db.collection('users').doc(currentUser.uid).get();
@@ -490,21 +618,12 @@
                     document.getElementById('modal-street').value = addr.street;
                     document.getElementById('modal-locality').value = addr.locality;
                     document.getElementById('modal-landmark').value = addr.landmark || '';
-                    
-                    // Set radio
-                    const radios = document.getElementsByName('addrType');
-                    for(let r of radios) {
-                        if(r.value === addr.type) r.checked = true;
-                    }
-                    
                     modal.style.display = 'flex';
                 }
             } catch(e) { console.error(e); }
         }
 
-        function closeAddressModal() {
-            modal.style.display = 'none';
-        }
+        function closeAddressModal() { modal.style.display = 'none'; }
 
         async function saveAddress(e) {
             e.preventDefault();
@@ -521,29 +640,38 @@
             };
 
             try {
-                await db.collection('users').doc(currentUser.uid).set({
-                    address: addressData
-                }, { merge: true });
-                
+                await db.collection('users').doc(currentUser.uid).set({ address: addressData }, { merge: true });
                 renderAddressList(addressData);
                 closeAddressModal();
-                showToast("Address Saved!");
+                showToast("Address Saved");
             } catch (error) {
-                console.error("Error saving address", error);
+                console.error(error);
                 showToast("Error saving address");
             }
         }
 
-        function showToast(msg) {
-            const t = document.getElementById("toast");
-            t.textContent = msg;
-            t.className = "show";
-            setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
+        function updateChips(input) {
+            document.querySelectorAll('.chip').forEach(c => {
+                c.style.background = '#fff';
+                c.style.borderColor = 'var(--border-subtle)';
+                c.style.color = 'var(--text-secondary)';
+                c.classList.remove('active');
+            });
+            const activeChip = input.nextElementSibling;
+            activeChip.style.background = 'var(--surface-hover)';
+            activeChip.style.borderColor = 'var(--brand-primary)';
+            activeChip.style.color = 'var(--brand-primary)';
+            activeChip.classList.add('active');
         }
 
-        window.onclick = function(event) {
-            if (event.target == modal) closeAddressModal();
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.querySelector('span').textContent = msg;
+            t.className = "show";
+            setTimeout(() => t.className = t.className.replace("show", ""), 3000);
         }
+
+        window.onclick = (e) => { if (e.target == modal) closeAddressModal(); }
     </script>
 </body>
 </html>
