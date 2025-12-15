@@ -29,7 +29,6 @@
 
         /* === RESET & CORE === */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        /* Adjusted padding-top since navbar is removed */
         body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--text-primary); overflow-x: hidden; padding-top: 20px; }
         button, img, a { outline: none; -webkit-tap-highlight-color: transparent; text-decoration: none; color: inherit; border: none; }
         button { user-select: none; cursor: pointer; }
@@ -41,7 +40,6 @@
         .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
         .right-section { width: 45%; }
         
-        /* Restored Height */
         .left-content { display: flex; gap: 20px; position: relative; align-items: flex-start; height: 700px; }
 
         .thumbnail-list { display: flex; flex-direction: column; gap: 15px; width: 90px; flex-shrink: 0; overflow-y: auto; height: 100%; padding-right: 5px; }
@@ -75,10 +73,14 @@
         .qty-btn:hover { color: var(--brand-primary); }
         #qtyValue { font-weight: 600; font-size: 16px; }
 
+        /* --- BUTTON UPDATE: SAME SIZE --- */
         .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
         .action-button { height: 52px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; transition: all 0.3s ease; font-family: "DM Sans", sans-serif; }
-        .add-cart { flex: 1.5; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        
+        /* Set both buttons to flex: 1 to make them equal width */
+        .add-cart { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
         .add-cart:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+        
         .wishlist-btn-desktop { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); }
         .wishlist-btn-desktop:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
         .wishlist-btn-desktop.active { background: var(--brand-secondary); color: white; border-color: var(--brand-secondary); }
@@ -134,7 +136,6 @@
         }
 
         @media (max-width: 768px) {
-            /* Removed header offset since header is gone */
             body { padding-top: 10px; }
             
             .container { flex-direction: column; padding: 0; gap: 0; }
@@ -287,9 +288,6 @@
         let mobileCarouselInterval;
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Navbar Init Removed
-            // Load Categories Removed (UI containers gone)
-
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
 
@@ -303,13 +301,11 @@
                 currentUser = user;
                 if(user) {
                     syncUserData();
-                    // User Profile UI updates removed as Navbar is gone
                 }
                 updateCartBadge();
             });
 
             fetchProductDetails(productId);
-            // Cart Popup Render removed
             
             document.querySelector(".accordion-header").onclick = function() {
                 this.classList.toggle("active");
@@ -516,8 +512,33 @@
             }
             saveCart();
             updateCartBadge();
-            // renderCartPopup(); // Popup removed
             showToast("Added to Cart!");
+        }
+
+        /* === BUY NOW LOGIC (DIRECT) === */
+        function buyNowFromModal() {
+            if (!currentProduct) return;
+            
+            const variant = currentProduct.colorVariants ? currentProduct.colorVariants[activeVariantIndex] : {};
+            const colorName = variant.name || 'Default';
+            
+            // Construct item just for direct buy
+            const directItem = {
+                id: currentProduct.id,
+                uniqueId: `${currentProduct.id}-${colorName}-${selectedSize}-direct`,
+                name: currentProduct.name,
+                price: currentProduct.price,
+                image: (variant.images && variant.images[0]) || currentProduct.images[0],
+                quantity: quantity,
+                size: selectedSize,
+                color: colorName
+            };
+
+            // Save to temporary storage, do not touch main cart
+            localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
+            
+            // Redirect using the specific flag
+            window.location.href = "checkout.html?buy_now=true";
         }
 
         function saveCart() {
@@ -526,10 +547,8 @@
         }
 
         function updateCartBadge() {
-            // Badges removed from DOM, logic kept for state
+            // No UI badge to update in this version, but logic retained
             const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-            const wCount = wishlist.length;
-            // No UI elements to update
         }
 
         function toggleWishlist() {
@@ -556,8 +575,22 @@
         document.getElementById('desktopAddCart').onclick = addToCart;
         document.getElementById('mobileAddCartBtn').onclick = addToCart;
         document.getElementById('wishlistBtnDesktop').onclick = toggleWishlist;
-        document.getElementById('desktopBuyNow').onclick = () => { addToCart(); window.location.href = 'checkout.html'; };
-        document.getElementById('mobileBuyNow').onclick = () => { addToCart(); window.location.href = 'checkout.html'; };
+        
+        // Updated Click Handlers for Buy Now
+        document.getElementById('desktopBuyNow').onclick = buyNowFromModal;
+        document.getElementById('mobileBuyNow').onclick = buyNowFromModal;
+
+        document.getElementById('incQty').onclick = () => {
+            quantity++;
+            document.getElementById('qtyValue').textContent = quantity;
+        };
+        
+        document.getElementById('decQty').onclick = () => {
+            if(quantity > 1) {
+                quantity--;
+                document.getElementById('qtyValue').textContent = quantity;
+            }
+        };
 
         function showToast(msg) {
             const container = document.getElementById('toast-container');
