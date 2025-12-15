@@ -190,7 +190,9 @@
         }
         .product-card:hover .quick-view-btn { transform: translateY(0); }
 
-        .product-info { padding: 15px; }
+        /* FIX: Reduced Padding Desktop */
+        .product-info { padding: 10px 12px; }
+
         .product-text-group { margin-bottom: 6px; }
         .product-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .product-category { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -352,27 +354,29 @@
             .section-header { margin-bottom: 20px; }
             .section-header h2, .reviews-header h2 { font-size: 22px; }
             
-            /* GRID FIX: Mobile 2-column Layout */
+            /* GRID FIX: Mobile 2-column Layout - Wider Cards */
             .products-grid { 
                 display: grid !important; /* Force Grid */
                 grid-template-columns: 1fr 1fr; /* 2 Columns */
-                padding: 0 15px !important; /* Equal side padding */
-                gap: 15px; 
+                padding: 0 8px !important; /* Small outer padding to maximize width */
+                gap: 8px; /* Tighter gap for wider cards */
                 overflow-x: visible; /* Remove scroll */
             }
             
             .product-card { width: auto !important; border-radius: 12px; } /* Auto width for grid */
             .product-image-container { height: 200px; }
             
-            /* FIX: Reduce text gap in mobile products */
-            .product-info { padding: 8px 10px 12px; min-height: 80px; }
+            /* FIX: Reduced Vertical Padding for Info */
+            .product-info { padding: 6px 8px 8px; min-height: auto; }
             .product-text-group { margin-bottom: 0; }
             
             .product-title { font-size: 13px; height: 32px; margin-bottom: 2px; }
             .current-price { font-size: 15px; }
             .old-price { font-size: 11px; }
-            .add-to-cart-icon { width: 30px; height: 30px; }
-            .add-to-cart-icon svg { width: 16px; height: 16px; }
+            
+            /* FIX: Larger Cart Icon Mobile */
+            .add-to-cart-icon { width: 38px; height: 38px; }
+            .add-to-cart-icon svg { width: 20px; height: 20px; }
 
             .modal-overlay { padding: 0; align-items: flex-end; }
             .modal-content-box { height: 85vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; }
@@ -836,7 +840,10 @@
             if(mobileCarousel) {
                 mobileCarousel.innerHTML = images.map(src => `<img src="${src}">`).join('');
                 if(dotsContainer) dotsContainer.innerHTML = images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
-                if (mobileCarouselInterval) clearInterval(mobileCarouselInterval);
+                
+                // Start Mobile Auto-Scroll logic
+                startMobileMainCarousel();
+                
                 let idx = 0;
                 mobileCarousel.addEventListener('scroll', () => {
                     const width = mobileCarousel.offsetWidth;
@@ -844,6 +851,24 @@
                     if(newIndex !== idx) { idx = newIndex; document.querySelectorAll('.dot').forEach(d => d.classList.remove('active')); if(dotsContainer.children[idx]) dotsContainer.children[idx].classList.add('active'); }
                 });
             }
+        }
+        
+        function startMobileMainCarousel() {
+            const carousel = document.getElementById('mobileCarousel');
+            if(!carousel) return;
+            // Prevent multiple intervals
+            if(mobileCarouselInterval) clearInterval(mobileCarouselInterval);
+
+            mobileCarouselInterval = setInterval(() => {
+                const width = carousel.offsetWidth;
+                const maxScroll = carousel.scrollWidth - width;
+                // If at end, scroll to start, else scroll next
+                if(carousel.scrollLeft >= maxScroll - 10) { // tolerance
+                    carousel.scrollTo({left: 0, behavior: 'smooth'});
+                } else {
+                    carousel.scrollBy({left: width, behavior: 'smooth'});
+                }
+            }, 3000); // 3 seconds
         }
 
         // ================= RELATED PRODUCTS LOGIC (PREMIUM UI) =================
