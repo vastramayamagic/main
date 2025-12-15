@@ -1,1 +1,369 @@
-1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Policy | Vastramayamagic.in</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --bg-color: #FDFBF7;       
+            --card-bg: #FFFFFF;        
+            --primary-color: #7A1E26;  /* Deep Maroon */
+            --accent-gold: #C5A059;    /* Gold accent for bullets */
+            --text-dark: #2C2C2C;      
+            --text-body: #555555;
+            --highlight-bg: #FFF0F0;   /* Light red for warnings */
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-body);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 4px; }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out forwards;
+            padding: 0 10px;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-block;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+            max-width: 100%;
+        }
+
+        .logo-text:hover { border-bottom-color: var(--accent-gold); }
+
+        /* --- CARD DESIGN --- */
+        .policy-card {
+            background: var(--card-bg);
+            padding: 80px 70px;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(122, 30, 38, 0.05); 
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        /* --- TYPOGRAPHY & SECTIONS --- */
+        .page-intro {
+            margin-bottom: 60px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+
+        .page-intro h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        /* --- DATE BADGE STYLING --- */
+        .date-badge {
+            display: inline-block;
+            background-color: #F5F5F5;
+            color: #666;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 35px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        /* Intro paragraph text alignment fix */
+        .page-intro p:not(.date-badge) {
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 1.1rem; 
+        }
+
+        .section {
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p { margin-bottom: 15px; font-weight: 300; font-size: 1.05rem;}
+
+        /* --- LIST STYLING --- */
+        ul { list-style: none; margin-bottom: 20px; padding-left: 10px; }
+        ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--accent-gold);
+            font-size: 20px;
+            position: absolute;
+            left: 0;
+            top: -4px;
+        }
+
+        /* --- LINKS --- */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: 0.3s;
+            border-bottom: 1px dotted var(--primary-color);
+        }
+        a:hover { border-bottom-style: solid; }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.85rem;
+            color: #999;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 1s forwards;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            
+            /* LOGO FIX FOR MOBILE */
+            .logo-text {
+                font-size: 1.4rem; 
+                line-height: 1.2;
+                word-wrap: break-word; 
+            }
+
+            .container { padding: 30px 15px; }
+            .policy-card { padding: 40px 25px; }
+            
+            .page-intro h1 { 
+                font-size: 1.8rem;
+                line-height: 1.3;
+                padding: 0 5px;
+            }
+            
+            .page-intro p:not(.date-badge) { 
+                font-size: 0.95rem; 
+                line-height: 1.6;
+                text-align: left;
+            }
+
+            p, ul li { font-size: 0.95rem; }
+            .section h2 { font-size: 1.3rem; }
+        }
+        
+        @media (max-width: 380px) {
+             .logo-text { font-size: 1.2rem; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Branding -->
+        <div class="brand-header">
+            <a href="index.html" class="logo-text">Vastramayamagic.in</a>
+        </div>
+
+        <!-- Content Card -->
+        <div class="policy-card">
+            
+            <div class="page-intro section">
+                <h1>Shipping Policy</h1>
+                
+                <!-- Date Badge -->
+                <span class="date-badge">Last Updated: 14 December 2025</span>
+                
+                <p>Welcome to our Shipping Policy page. Please read the details below to understand how your orders are processed and delivered.</p>
+            </div>
+
+            <!-- 1. Locations -->
+            <div class="section">
+                <h2>1. Shipping Locations</h2>
+                <ul>
+                    <li>We currently ship within India only.</li>
+                    <li>Orders placed from outside India will not be processed.</li>
+                </ul>
+            </div>
+
+            <!-- 2. Order Processing -->
+            <div class="section">
+                <h2>2. Order Processing Time</h2>
+                <ul>
+                    <li>Orders are processed within 1–3 business days after successful payment confirmation.</li>
+                    <li>Orders placed on Sundays or public holidays will be processed on the next working day.</li>
+                    <li>You will receive an order confirmation via email or SMS once your order is placed.</li>
+                </ul>
+            </div>
+
+            <!-- 3. Shipping Time -->
+            <div class="section">
+                <h2>3. Shipping Time & Delivery</h2>
+                <ul>
+                    <li>Estimated delivery time is 3–7 business days after dispatch, depending on your location.</li>
+                    <li>Delivery timelines are indicative and may vary due to courier operations, weather conditions, or unforeseen circumstances.</li>
+                    <li>Remote or non-serviceable pin codes may require additional delivery time.</li>
+                </ul>
+            </div>
+
+            <!-- 4. Shipping Charges -->
+            <div class="section">
+                <h2>4. Shipping Charges</h2>
+                <ul>
+                    <li>Shipping charges, if applicable, will be clearly displayed at checkout before payment.</li>
+                    <li>Any additional charges such as COD fees (if offered) will be mentioned during checkout.</li>
+                </ul>
+            </div>
+
+            <!-- 5. Courier Partners -->
+            <div class="section">
+                <h2>5. Courier & Logistics Partners</h2>
+                <p>We work with trusted third-party courier and logistics partners to ensure safe delivery. Once an order is dispatched, tracking details will be shared via email or SMS.</p>
+            </div>
+
+            <!-- 6. Order Tracking -->
+            <div class="section">
+                <h2>6. Order Tracking</h2>
+                <p>You can track your order using the tracking link provided after dispatch. For any issues related to tracking, you may contact our support team.</p>
+            </div>
+
+            <!-- 7. Delays -->
+            <div class="section">
+                <h2>7. Delays in Delivery</h2>
+                <p>We are not responsible for delivery delays caused by:</p>
+                <ul>
+                    <li>Incorrect or incomplete shipping address</li>
+                    <li>Customer unavailability at the time of delivery</li>
+                    <li>Natural disasters, strikes, or government restrictions</li>
+                    <li>Delays caused by courier partners beyond our control</li>
+                </ul>
+            </div>
+
+            <!-- 8. Address Accuracy -->
+            <div class="section">
+                <h2>8. Address Accuracy</h2>
+                <ul>
+                    <li>Customers are responsible for providing accurate and complete shipping details.</li>
+                    <li>Orders with incorrect addresses may be delayed, returned, or cancelled.</li>
+                    <li>Additional shipping costs due to incorrect address details may be borne by the customer.</li>
+                </ul>
+            </div>
+
+            <!-- 9. Undelivered or Returned -->
+            <div class="section">
+                <h2>9. Undelivered or Returned Shipments</h2>
+                <p>If an order is returned to us due to failed delivery attempts or incorrect address details, re-shipping charges may apply.</p>
+                <p>In such cases, refunds (if applicable) will be processed after deducting shipping and handling charges.</p>
+            </div>
+
+            <!-- 10. Damaged Packages -->
+            <div class="section">
+                <h2>10. Damaged Packages During Transit</h2>
+                <p>If you receive a visibly damaged package, <strong>please refuse delivery and contact us immediately</strong>.</p>
+                <p>If damage is noticed after delivery, report it within 48 hours with clear photos or videos.</p>
+            </div>
+
+            <!-- 11. Contact Information -->
+            <div class="section">
+                <h2>11. Contact Information</h2>
+                <p>For shipping-related questions or assistance, please contact:</p>
+                <p>
+                    <strong>Website:</strong> <a href="https://vastramayamagic.in">https://vastramayamagic.in</a><br>
+                    <strong>Email:</strong> <a href="mailto:vastramayamagic@gmail.com">vastramayamagic@gmail.com</a><br>
+                    <strong>Phone:</strong> +91 86394 78312
+                </p>
+            </div>
+
+        </div>
+
+        <footer>
+            &copy; 2025 Vastramayamagic.in. All Rights Reserved.
+        </footer>
+    </div>
+
+    <!-- Script for Scroll Animation -->
+    <script>
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
