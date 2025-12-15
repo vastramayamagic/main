@@ -320,7 +320,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-    <script>
+<script>
         const firebaseConfig = {
             apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
             authDomain: "vastramaya---magic.firebaseapp.com",
@@ -349,62 +349,92 @@
             const productId = urlParams.get('id');
 
             if (!productId) {
+                console.warn("No Product ID in URL");
                 alert("Product not found. Redirecting to shop.");
-                window.location.href = 'shop.html'; // Adjust as needed
+                window.location.href = 'shop.html'; 
                 return;
             }
 
             auth.onAuthStateChanged(user => {
                 currentUser = user;
-                if(user) {
-                    syncUserData();
-                }
+                if(user) syncUserData();
                 updateCartBadge();
             });
 
             fetchProductDetails(productId);
             
-            document.querySelector(".accordion-header").onclick = function() {
-                this.classList.toggle("active");
-                const panel = this.nextElementSibling;
-                panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
-            };
+            // Accordion Logic
+            const acc = document.querySelector(".accordion-header");
+            if(acc) {
+                acc.onclick = function() {
+                    this.classList.toggle("active");
+                    const panel = this.nextElementSibling;
+                    panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+                };
+            }
 
             // View More Logic
-            document.getElementById('viewMoreBtn').onclick = function() {
-                document.getElementById('productDesc').classList.remove('mobile-clamp');
-                this.style.display = 'none';
-            };
+            const viewMore = document.getElementById('viewMoreBtn');
+            if(viewMore) {
+                viewMore.onclick = function() {
+                    document.getElementById('productDesc').classList.remove('mobile-clamp');
+                    this.style.display = 'none';
+                };
+            }
             
-            // Reviews Navigation Logic
+            // Reviews Navigation
             const revContainer = document.getElementById('reviewsContainer');
-            document.getElementById('revNext').onclick = () => {
-                revContainer.scrollBy({ left: 320, behavior: 'smooth' });
-            };
-            document.getElementById('revPrev').onclick = () => {
-                revContainer.scrollBy({ left: -320, behavior: 'smooth' });
-            };
+            const nextBtn = document.getElementById('revNext');
+            const prevBtn = document.getElementById('revPrev');
+            
+            if(nextBtn) nextBtn.onclick = () => revContainer.scrollBy({ left: 320, behavior: 'smooth' });
+            if(prevBtn) prevBtn.onclick = () => revContainer.scrollBy({ left: -320, behavior: 'smooth' });
         });
 
         async function fetchProductDetails(id) {
             try {
                 const doc = await db.collection('products').doc(id).get();
-                if (!doc.exists) return;
+                if (!doc.exists) {
+                    console.error("Product document does not exist in Firestore");
+                    return;
+                }
                 currentProduct = { id: doc.id, ...doc.data() };
+                console.log("Current Product Loaded:", currentProduct); // Debug
+                
                 renderProduct();
-                // Pass categoryId correctly for related products
-                loadRelatedProducts(currentProduct.categoryId, currentProduct.id);
-            } catch (error) { console.error(error); }
+                
+                // === ROBUST RELATED PRODUCTS LOGIC ===
+                // 1. Try categoryId (Schema Standard)
+                // 2. Fallback to categoryName
+                // 3. Fallback to 'category' (Old code standard)
+                let searchField = 'categoryId';
+                let searchValue = currentProduct.categoryId;
+
+                if (!searchValue && currentProduct.categoryName) {
+                    searchField = 'categoryName';
+                    searchValue = currentProduct.categoryName;
+                } else if (!searchValue && currentProduct.category) {
+                    searchField = 'category';
+                    searchValue = currentProduct.category;
+                }
+
+                console.log(`Fetching related items using Field: ${searchField}, Value: ${searchValue}`);
+                loadRelatedProducts(searchField, searchValue, currentProduct.id);
+
+            } catch (error) { console.error("Error fetching details:", error); }
         }
 
         function renderProduct() {
+            // Remove Loading Skeletons
             document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
             document.querySelectorAll('.loading-hide').forEach(el => el.classList.remove('loading-hide'));
 
+            // Basic Info
             document.getElementById('productTitle').textContent = currentProduct.name;
             document.getElementById('priceCurrent').textContent = `₹${currentProduct.price}`;
             
-            if (currentProduct.oldPrice) {
+            // Old Price / Save Badge
+            if (currentProduct.oldPrice && currentProduct.oldPrice > currentProduct.price) {
                 document.getElementById('priceOld').textContent = `₹${currentProduct.oldPrice}`;
                 const save = Math.round(((currentProduct.oldPrice - currentProduct.price) / currentProduct.oldPrice) * 100);
                 document.getElementById('saveBadge').textContent = `SAVE ${save}%`;
@@ -413,73 +443,91 @@
                 document.getElementById('saveBadge').style.display = 'none';
             }
 
+            // Description
             document.getElementById('productDesc').textContent = currentProduct.description || "No description available.";
-            
-            if(currentProduct.description && currentProduct.description.length < 150) {
-                document.getElementById('viewMoreBtn').style.display = 'none';
+            if(!currentProduct.description || currentProduct.description.length < 150) {
+                const vm = document.getElementById('viewMoreBtn');
+                if(vm) vm.style.display = 'none';
                 document.getElementById('productDesc').classList.remove('mobile-clamp');
             }
 
             renderColorOptions();
-            // Initial render of variants will handle size rendering
-            selectVariant(0); 
+            selectVariant(0); // This triggers Size and Gallery rendering
             renderReviews();
             updateWishlistState();
         }
 
-        function renderReviews() {
-            const container = document.getElementById('reviewsContainer');
-            const section = document.getElementById('reviewsSection');
+        async function loadRelatedProducts(field, value, currentId) {
+            const relatedSection = document.querySelector('.related-section');
+            const relatedGrid = document.getElementById('relatedGrid');
             
-            if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
-                section.style.display = 'none';
+            if (!value) {
+                console.warn("No category value found for this product. Cannot load related items.");
+                relatedGrid.innerHTML = '<p style="padding:20px; color:#888;">No related products found.</p>';
                 return;
             }
 
-            section.style.display = 'block';
-            container.innerHTML = '';
+            try {
+                // Query Firestore
+                const snap = await db.collection('products')
+                    .where(field, '==', value)
+                    .limit(5)
+                    .get();
+                
+                let html = '';
+                let count = 0;
 
-            currentProduct.reviews.forEach(review => {
-                let stars = '';
-                for(let i=1; i<=5; i++) {
-                    stars += i <= review.rating ? '★' : '☆';
+                if (snap.empty) {
+                    console.log("Query returned 0 results.");
                 }
 
-                let dateStr = '';
-                if(review.date) {
-                    const d = new Date(review.date);
-                    dateStr = d.toLocaleDateString(); 
+                snap.docs.forEach(doc => {
+                    if (doc.id === currentId) return; // Skip current product
+                    if (count >= 4) return; // Max 4
+
+                    const p = doc.data();
+                    const img = (p.images && p.images[0]) || p.image || 'https://via.placeholder.com/300';
+                    
+                    html += `
+                    <div class="related-card" onclick="window.location.href='view.html?id=${doc.id}'">
+                        <div class="related-image-box"><img src="${img}" alt="${p.name}"></div>
+                        <div class="related-info">
+                            <div class="related-name">${p.name}</div>
+                            <div class="related-price">₹${p.price}</div>
+                        </div>
+                    </div>`;
+                    count++;
+                });
+
+                if (count === 0) {
+                    // Show message instead of hiding, for debugging
+                    relatedGrid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#999;">No other products in this category yet.</p>';
+                } else {
+                    relatedGrid.innerHTML = html;
                 }
 
-                const card = document.createElement('div');
-                card.className = 'review-card';
-                card.innerHTML = `
-                    <div class="review-header-line">
-                        <span class="review-name">${review.name}</span>
-                        <span class="review-date">${dateStr}</span>
-                    </div>
-                    <div class="review-stars">${stars}</div>
-                    <div class="review-text">${review.comment}</div>
-                `;
-                container.appendChild(card);
-            });
+            } catch(e) { 
+                console.error("Related Products Error:", e);
+                relatedGrid.innerHTML = `<p>Error loading items: ${e.message}</p>`;
+            }
         }
 
         function renderColorOptions() {
             const container = document.getElementById('colorOptions');
+            if(!container) return;
             container.innerHTML = '';
             
             if (currentProduct.colorVariants && currentProduct.colorVariants.length > 0) {
                 currentProduct.colorVariants.forEach((variant, index) => {
                     const img = document.createElement('img');
-                    // Use hex URL for swatch, fallback to first variant image, fallback to placeholder
                     img.src = variant.hex || variant.images?.[0] || 'https://via.placeholder.com/60'; 
                     img.onclick = () => selectVariant(index);
                     if (index === 0) img.classList.add('active');
                     container.appendChild(img);
                 });
             } else {
-                document.getElementById('colorHeader').style.display = 'none';
+                const hdr = document.getElementById('colorHeader');
+                if(hdr) hdr.style.display = 'none';
             }
         }
 
@@ -492,30 +540,22 @@
 
             if (currentProduct.colorVariants && currentProduct.colorVariants[index]) {
                 const variant = currentProduct.colorVariants[index];
-                
-                // Get Images
                 images = variant.images || currentProduct.images;
-                
-                // Get Name
                 if(variant.name) document.getElementById('selectedColorName').textContent = variant.name;
-                
-                // Get Sizes from nested array
                 variantSizes = variant.sizes || [];
             } else {
                 images = currentProduct.images || [];
-                // Fallback if no variants defined
-                variantSizes = currentProduct.sizes || []; 
+                variantSizes = currentProduct.sizes || []; // Fallback
             }
             
             activeImageIndex = 0;
             renderGallery(images);
-            
-            // Re-render sizes specifically for this color
             renderSizeOptions(variantSizes);
         }
 
         function renderSizeOptions(specificSizes) {
             const container = document.getElementById('sizeBoxes');
+            if(!container) return;
             container.innerHTML = '';
             
             const sizesToRender = specificSizes || [];
@@ -527,32 +567,38 @@
 
             sizesToRender.forEach((sizeObj, index) => {
                 const btn = document.createElement('button');
-                btn.textContent = sizeObj.name;
+                // Handle both object {name:'S', available:true} and string 'S'
+                const sizeName = sizeObj.name || sizeObj;
+                const isAvailable = (sizeObj.available !== undefined) ? sizeObj.available : true;
+
+                btn.textContent = sizeName;
                 
-                if (!sizeObj.available) {
+                if (!isAvailable) {
                     btn.disabled = true;
                 } else {
                     btn.onclick = () => {
                         document.querySelectorAll('.size-boxes button').forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
-                        selectedSize = sizeObj.name;
+                        selectedSize = sizeName;
                         document.getElementById('sizeLabel').textContent = selectedSize;
                     };
                 }
                 container.appendChild(btn);
             });
             
-            // Reset selection when color changes
             selectedSize = null;
             document.getElementById('sizeLabel').textContent = "Select Size";
         }
 
         function renderGallery(images) {
+            if(!images || images.length === 0) return;
+
             const mainImg = document.getElementById('mainImage');
             const mobileCarousel = document.getElementById('mobileCarousel');
             const thumbsContainer = document.getElementById('thumbs');
             const dotsContainer = document.getElementById('dots');
 
+            // Desktop Main
             mainImg.src = images[0];
             mainImg.style.opacity = 0;
             setTimeout(() => mainImg.style.opacity = 1, 50);
@@ -573,16 +619,17 @@
             });
 
             // Mobile Carousel
-            mobileCarousel.innerHTML = images.map(src => `<img src="${src}">`).join('');
-            dotsContainer.innerHTML = images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
-            
-            // Auto Scroll Logic for Mobile
-            startMobileAutoScroll(images.length);
+            if(mobileCarousel) {
+                mobileCarousel.innerHTML = images.map(src => `<img src="${src}">`).join('');
+                if(dotsContainer) dotsContainer.innerHTML = images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
+                startMobileAutoScroll(images.length);
+            }
         }
 
         function startMobileAutoScroll(count) {
             if (mobileCarouselInterval) clearInterval(mobileCarouselInterval);
             const container = document.getElementById('mobileCarousel');
+            if(!container) return;
             const dots = document.querySelectorAll('.dot');
             let index = 0;
 
@@ -599,50 +646,42 @@
             mobileCarouselInterval = setInterval(() => {
                 index = (index + 1) % count;
                 container.scrollTo({ left: index * container.offsetWidth, behavior: 'smooth' });
-                dots.forEach(d => d.classList.remove('active'));
-                if(dots[index]) dots[index].classList.add('active');
             }, 5000);
         }
 
-        async function loadRelatedProducts(categoryId, currentId) {
-            try {
-                if (!categoryId) {
-                    document.querySelector('.related-section').style.display = 'none';
-                    return;
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            const section = document.getElementById('reviewsSection');
+            if(!container || !section) return;
+            
+            if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            container.innerHTML = '';
+
+            currentProduct.reviews.forEach(review => {
+                let stars = '';
+                for(let i=1; i<=5; i++) {
+                    stars += i <= review.rating ? '★' : '☆';
                 }
-
-                // Query for same categoryId
-                const snap = await db.collection('products')
-                    .where('categoryId', '==', categoryId)
-                    .limit(5).get(); // Limit 5 to allow for excluding current
                 
-                const relatedGrid = document.getElementById('relatedGrid');
-                let html = '';
-                let count = 0;
+                let dateStr = review.date ? new Date(review.date).toLocaleDateString() : '';
 
-                snap.docs.forEach(doc => {
-                    if (doc.id === currentId) return; // Skip current product
-                    if (count >= 4) return; // Max 4 items
-
-                    const p = doc.data();
-                    // Handle image structure based on Schema
-                    const img = (p.images && p.images[0]) || p.image || 'https://via.placeholder.com/300';
-                    
-                    html += `
-                    <div class="related-card" onclick="window.location.href='view.html?id=${doc.id}'">
-                        <div class="related-image-box"><img src="${img}" alt="${p.name}"></div>
-                        <div class="related-info">
-                            <div class="related-name">${p.name}</div>
-                            <div class="related-price">₹${p.price}</div>
-                        </div>
-                    </div>`;
-                    count++;
-                });
-
-                if (count === 0) document.querySelector('.related-section').style.display = 'none';
-                else relatedGrid.innerHTML = html;
-
-            } catch(e) { console.log(e); }
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-header-line">
+                        <span class="review-name">${review.name}</span>
+                        <span class="review-date">${dateStr}</span>
+                    </div>
+                    <div class="review-stars">${stars}</div>
+                    <div class="review-text">${review.comment}</div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         function addToCart() {
@@ -663,7 +702,7 @@
                     uniqueId: uniqueId,
                     name: currentProduct.name,
                     price: currentProduct.price,
-                    image: (variant.images && variant.images[0]) || currentProduct.images[0],
+                    image: (variant.images && variant.images[0]) || currentProduct.images?.[0],
                     quantity: quantity,
                     size: selectedSize,
                     color: colorName
@@ -680,21 +719,18 @@
                 showToast("Please select a size");
                 return;
             }
-            
             const variant = currentProduct.colorVariants ? currentProduct.colorVariants[activeVariantIndex] : {};
             const colorName = variant.name || 'Default';
-            
             const directItem = {
                 id: currentProduct.id,
                 uniqueId: `${currentProduct.id}-${colorName}-${selectedSize}-direct`,
                 name: currentProduct.name,
                 price: currentProduct.price,
-                image: (variant.images && variant.images[0]) || currentProduct.images[0],
+                image: (variant.images && variant.images[0]) || currentProduct.images?.[0],
                 quantity: quantity,
                 size: selectedSize,
                 color: colorName
             };
-
             localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
             window.location.href = "checkout.html?buy_now=true";
         }
@@ -706,7 +742,6 @@
 
         function updateCartBadge() {
             const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-            // Implement badge update if you have a navbar
         }
 
         function toggleWishlist() {
@@ -729,25 +764,6 @@
             }
         }
 
-        document.getElementById('desktopAddCart').onclick = addToCart;
-        document.getElementById('mobileAddCartBtn').onclick = addToCart;
-        document.getElementById('wishlistBtnDesktop').onclick = toggleWishlist;
-        
-        document.getElementById('desktopBuyNow').onclick = buyNowFromModal;
-        document.getElementById('mobileBuyNow').onclick = buyNowFromModal;
-
-        document.getElementById('incQty').onclick = () => {
-            quantity++;
-            document.getElementById('qtyValue').textContent = quantity;
-        };
-        
-        document.getElementById('decQty').onclick = () => {
-            if(quantity > 1) {
-                quantity--;
-                document.getElementById('qtyValue').textContent = quantity;
-            }
-        };
-
         function showToast(msg) {
             const container = document.getElementById('toast-container');
             const el = document.createElement('div');
@@ -769,6 +785,28 @@
                 }
             } catch (e) { console.error(e); }
         }
+        
+        // Listeners
+        const addCartBtn = document.getElementById('desktopAddCart');
+        if(addCartBtn) addCartBtn.onclick = addToCart;
+        
+        const mAddCartBtn = document.getElementById('mobileAddCartBtn');
+        if(mAddCartBtn) mAddCartBtn.onclick = addToCart;
+        
+        const wishBtn = document.getElementById('wishlistBtnDesktop');
+        if(wishBtn) wishBtn.onclick = toggleWishlist;
+        
+        const buyBtn = document.getElementById('desktopBuyNow');
+        if(buyBtn) buyBtn.onclick = buyNowFromModal;
+        
+        const mBuyBtn = document.getElementById('mobileBuyNow');
+        if(mBuyBtn) mBuyBtn.onclick = buyNowFromModal;
+
+        const incBtn = document.getElementById('incQty');
+        if(incBtn) incBtn.onclick = () => { quantity++; document.getElementById('qtyValue').textContent = quantity; };
+        
+        const decBtn = document.getElementById('decQty');
+        if(decBtn) decBtn.onclick = () => { if(quantity > 1) { quantity--; document.getElementById('qtyValue').textContent = quantity; } };
     </script>
 </body>
 </html>
