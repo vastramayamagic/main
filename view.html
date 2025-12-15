@@ -29,7 +29,6 @@
 
         /* === RESET & CORE === */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        /* Adjusted padding-top since navbar is removed */
         body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--text-primary); overflow-x: hidden; padding-top: 20px; }
         button, img, a { outline: none; -webkit-tap-highlight-color: transparent; text-decoration: none; color: inherit; border: none; }
         button { user-select: none; cursor: pointer; }
@@ -41,7 +40,6 @@
         .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
         .right-section { width: 45%; }
         
-        /* Restored Height */
         .left-content { display: flex; gap: 20px; position: relative; align-items: flex-start; height: 700px; }
 
         .thumbnail-list { display: flex; flex-direction: column; gap: 15px; width: 90px; flex-shrink: 0; overflow-y: auto; height: 100%; padding-right: 5px; }
@@ -55,7 +53,7 @@
         /* Typography & Spacing */
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; }
         
-        .price { display: flex; gap: 12px; align-items: baseline; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); }
+        .price { display: flex; gap: 8px; align-items: baseline; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); }
         .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; }
         .price .old { text-decoration: line-through; color: var(--text-light); font-size: 16px; font-weight: 500; }
         .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; transform: translateY(-3px); }
@@ -77,8 +75,10 @@
 
         .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
         .action-button { height: 52px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; transition: all 0.3s ease; font-family: "DM Sans", sans-serif; }
-        .add-cart { flex: 1.5; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        
+        .add-cart { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
         .add-cart:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+        
         .wishlist-btn-desktop { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); }
         .wishlist-btn-desktop:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
         .wishlist-btn-desktop.active { background: var(--brand-secondary); color: white; border-color: var(--brand-secondary); }
@@ -90,6 +90,8 @@
         .product-description h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
         .product-description p { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 15px; }
 
+        .view-more-btn { display: none; }
+
         /* Trust Badges */
         .trust-badges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--border-subtle); }
         .badge-item { display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; }
@@ -99,6 +101,28 @@
         .accordion-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; background: none; border: none; font-size: 15px; font-weight: 600; cursor: pointer; color: var(--text-primary); }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; }
         .accordion-content p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); padding-bottom: 20px; }
+
+        /* === REVIEWS SECTION STYLE === */
+        .reviews-section { margin-top: 40px; border-top: 1px solid var(--border-subtle); padding-top: 30px; }
+        .reviews-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .reviews-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        
+        .reviews-nav { display: flex; gap: 10px; }
+        .review-arrow { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--surface-card); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .review-arrow:hover { border-color: var(--brand-primary); background: var(--surface-hover); color: var(--brand-primary); }
+        .review-arrow.disabled { opacity: 0.5; cursor: default; pointer-events: none; }
+
+        .reviews-container { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding-bottom: 10px; margin: 0 -5px; padding: 5px 5px 15px 5px; -webkit-overflow-scrolling: touch; }
+        .reviews-container::-webkit-scrollbar { height: 4px; }
+        .reviews-container::-webkit-scrollbar-track { background: var(--surface-light); }
+        .reviews-container::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
+
+        .review-card { min-width: 300px; max-width: 300px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; flex-shrink: 0; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-light); }
+        .review-header-line { display: flex; justify-content: space-between; align-items: center; }
+        .review-name { font-weight: 700; font-size: 14px; color: var(--text-primary); }
+        .review-date { font-size: 12px; color: var(--text-light); }
+        .review-stars { color: #f59e0b; font-size: 14px; letter-spacing: 1px; }
+        .review-text { font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* Related Products */
         .related-section { max-width: 1400px; margin: 0 auto 80px auto; padding: 0 40px; }
@@ -134,7 +158,6 @@
         }
 
         @media (max-width: 768px) {
-            /* Removed header offset since header is gone */
             body { padding-top: 10px; }
             
             .container { flex-direction: column; padding: 0; gap: 0; }
@@ -158,7 +181,8 @@
             .dot { width: 6px; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 10px; transition: all 0.3s; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.2); }
             .dot.active { width: 20px; background: white; border-color: white; }
 
-            .right-section { padding: 25px 20px 100px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
+            .right-section { padding: 40px 20px 100px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
+            
             .title-header h1 { font-size: 22px; margin-bottom: 5px; }
             .price .current { font-size: 24px; }
             
@@ -174,6 +198,24 @@
             .mobile-btn { flex: 1; height: 48px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; font-family: "DM Sans", sans-serif; cursor: pointer; }
             .m-add { background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); }
             .m-buy { background: var(--brand-gradient); color: white; }
+
+            /* Mobile Description Clamping */
+            .desc-content.mobile-clamp {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .view-more-btn {
+                display: inline-block;
+                color: var(--brand-primary);
+                font-weight: 600;
+                font-size: 14px;
+                margin-top: 5px;
+                cursor: pointer;
+            }
+            
+            .review-card { min-width: 85%; max-width: 85%; }
         }
     </style>
 </head>
@@ -231,7 +273,10 @@
 
             <div class="product-description">
                 <h4>Product Description</h4>
-                <p id="productDesc" class="skeleton" style="min-height: 100px;"></p>
+                <div id="descContainer">
+                    <p id="productDesc" class="skeleton desc-content mobile-clamp" style="min-height: 60px;"></p>
+                    <span id="viewMoreBtn" class="view-more-btn">View more</span>
+                </div>
             </div>
 
             <div class="trust-badges loading-hide">
@@ -239,6 +284,21 @@
                 <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M2 8h-2"/><path d="M1 11h-2"/><rect x="3" y="4" width="13" height="12" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="7.5" cy="19" r="2.5" /><circle cx="18.5" cy="19" r="2.5" /></svg><span>Fast<br>Shipping</span></div>
                 <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Best Price<br>Guarantee</span></div>
                 <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg><span>Easy<br>Returns</span></div>
+            </div>
+
+            <div class="reviews-section loading-hide" id="reviewsSection" style="display:none;">
+                <div class="reviews-header">
+                    <h2 class="reviews-title">Customer Reviews</h2>
+                    <div class="reviews-nav">
+                        <button class="review-arrow" id="revPrev">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <button class="review-arrow" id="revNext">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="reviews-container" id="reviewsContainer"></div>
             </div>
 
             <div class="accordion-wrapper loading-hide">
@@ -287,9 +347,6 @@
         let mobileCarouselInterval;
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Navbar Init Removed
-            // Load Categories Removed (UI containers gone)
-
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
 
@@ -303,18 +360,31 @@
                 currentUser = user;
                 if(user) {
                     syncUserData();
-                    // User Profile UI updates removed as Navbar is gone
                 }
                 updateCartBadge();
             });
 
             fetchProductDetails(productId);
-            // Cart Popup Render removed
             
             document.querySelector(".accordion-header").onclick = function() {
                 this.classList.toggle("active");
                 const panel = this.nextElementSibling;
                 panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+            };
+
+            // View More Logic
+            document.getElementById('viewMoreBtn').onclick = function() {
+                document.getElementById('productDesc').classList.remove('mobile-clamp');
+                this.style.display = 'none';
+            };
+            
+            // Reviews Navigation Logic
+            const revContainer = document.getElementById('reviewsContainer');
+            document.getElementById('revNext').onclick = () => {
+                revContainer.scrollBy({ left: 320, behavior: 'smooth' });
+            };
+            document.getElementById('revPrev').onclick = () => {
+                revContainer.scrollBy({ left: -320, behavior: 'smooth' });
             };
         });
 
@@ -345,11 +415,57 @@
             }
 
             document.getElementById('productDesc').textContent = currentProduct.description || "No description available.";
+            
+            if(currentProduct.description && currentProduct.description.length < 150) {
+                document.getElementById('viewMoreBtn').style.display = 'none';
+                document.getElementById('productDesc').classList.remove('mobile-clamp');
+            }
 
             renderColorOptions();
             renderSizeOptions();
+            renderReviews(); // Render the reviews here
             selectVariant(0);
             updateWishlistState();
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            const section = document.getElementById('reviewsSection');
+            
+            if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            container.innerHTML = '';
+
+            currentProduct.reviews.forEach(review => {
+                // Generate Stars
+                let stars = '';
+                for(let i=1; i<=5; i++) {
+                    stars += i <= review.rating ? '★' : '☆';
+                }
+
+                // Format Date
+                let dateStr = '';
+                if(review.date) {
+                    const d = new Date(review.date);
+                    dateStr = d.toLocaleDateString(); 
+                }
+
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-header-line">
+                        <span class="review-name">${review.name}</span>
+                        <span class="review-date">${dateStr}</span>
+                    </div>
+                    <div class="review-stars">${stars}</div>
+                    <div class="review-text">${review.comment}</div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         function renderColorOptions() {
@@ -516,8 +632,29 @@
             }
             saveCart();
             updateCartBadge();
-            // renderCartPopup(); // Popup removed
             showToast("Added to Cart!");
+        }
+
+        /* === BUY NOW LOGIC (DIRECT) === */
+        function buyNowFromModal() {
+            if (!currentProduct) return;
+            
+            const variant = currentProduct.colorVariants ? currentProduct.colorVariants[activeVariantIndex] : {};
+            const colorName = variant.name || 'Default';
+            
+            const directItem = {
+                id: currentProduct.id,
+                uniqueId: `${currentProduct.id}-${colorName}-${selectedSize}-direct`,
+                name: currentProduct.name,
+                price: currentProduct.price,
+                image: (variant.images && variant.images[0]) || currentProduct.images[0],
+                quantity: quantity,
+                size: selectedSize,
+                color: colorName
+            };
+
+            localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
+            window.location.href = "checkout.html?buy_now=true";
         }
 
         function saveCart() {
@@ -526,10 +663,7 @@
         }
 
         function updateCartBadge() {
-            // Badges removed from DOM, logic kept for state
             const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-            const wCount = wishlist.length;
-            // No UI elements to update
         }
 
         function toggleWishlist() {
@@ -556,8 +690,752 @@
         document.getElementById('desktopAddCart').onclick = addToCart;
         document.getElementById('mobileAddCartBtn').onclick = addToCart;
         document.getElementById('wishlistBtnDesktop').onclick = toggleWishlist;
-        document.getElementById('desktopBuyNow').onclick = () => { addToCart(); window.location.href = 'checkout.html'; };
-        document.getElementById('mobileBuyNow').onclick = () => { addToCart(); window.location.href = 'checkout.html'; };
+        
+        document.getElementById('desktopBuyNow').onclick = buyNowFromModal;
+        document.getElementById('mobileBuyNow').onclick = buyNowFromModal;
+
+        document.getElementById('incQty').onclick = () => {
+            quantity++;
+            document.getElementById('qtyValue').textContent = quantity;
+        };
+        
+        document.getElementById('decQty').onclick = () => {
+            if(quantity > 1) {
+                quantity--;
+                document.getElementById('qtyValue').textContent = quantity;
+            }
+        };
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a9c7d" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>${msg}</span>`;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 3000);
+        }
+
+        async function syncUserData() {
+            try {
+                const doc = await db.collection('users').doc(currentUser.uid).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.cart) cart = data.cart;
+                    if (data.wishlist) wishlist = data.wishlist;
+                    updateCartBadge();
+                    updateWishlistState();
+                }
+            } catch (e) { console.error(e); }
+        }
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vastramaya | Product Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === VASTRAMAYA DESIGN SYSTEM === */
+        :root {
+            --page-bg: #fefcf3;
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --text-light: #a3715f;
+            --brand-primary: #8b2635;
+            --brand-secondary: #d33d49;
+            --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            --border-subtle: #e8d5c4;
+            --surface-light: #fff9f0;
+            --surface-card: #fffefb;
+            --surface-hover: #f9f2e3;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-premium: 0 10px 25px -5px rgba(59, 11, 23, 0.1), 0 5px 10px -5px rgba(59, 11, 23, 0.04);
+            --shadow-light: 0 2px 10px rgba(59, 11, 23, 0.05);
+            --shadow-modal: 0 25px 50px -12px rgba(63, 11, 23, 0.25);
+        }
+
+        /* === RESET & CORE === */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--text-primary); overflow-x: hidden; padding-top: 20px; }
+        button, img, a { outline: none; -webkit-tap-highlight-color: transparent; text-decoration: none; color: inherit; border: none; }
+        button { user-select: none; cursor: pointer; }
+
+        /* =========================================
+           PRODUCT PAGE LAYOUT 
+           ========================================= */
+        .container { display: flex; align-items: flex-start; padding: 0 40px; max-width: 1400px; width: 100%; margin: auto; gap: 50px; min-height: 100vh; }
+        .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
+        .right-section { width: 45%; }
+        
+        .left-content { display: flex; gap: 20px; position: relative; align-items: flex-start; height: 700px; }
+
+        .thumbnail-list { display: flex; flex-direction: column; gap: 15px; width: 90px; flex-shrink: 0; overflow-y: auto; height: 100%; padding-right: 5px; }
+        .thumbnail-list::-webkit-scrollbar { width: 0; }
+        .thumbnail-list img { width: 100%; height: 110px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-subtle); cursor: pointer; opacity: 0.6; transition: all 0.2s; }
+        .thumbnail-list img.active { border-color: var(--brand-primary); opacity: 1; transform: scale(1.02); }
+
+        .main-image { position: relative; flex: 1; height: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--surface-card); border-radius: 20px; border: 1px solid var(--border-subtle); }
+        .main-image img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
+
+        /* Typography & Spacing */
+        .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; }
+        
+        .price { display: flex; gap: 8px; align-items: baseline; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); }
+        .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; }
+        .price .old { text-decoration: line-through; color: var(--text-light); font-size: 16px; font-weight: 500; }
+        .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-block; transform: translateY(-3px); }
+
+        h3 { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px 0; text-transform: uppercase; letter-spacing: 0.08em; }
+
+        .color-options img { width: 56px; height: 76px; object-fit: cover; border-radius: 8px; margin-right: 12px; border: 2px solid transparent; padding: 2px; transition: all 0.2s; cursor: pointer; }
+        .color-options img.active { border-color: var(--brand-primary); }
+
+        .size-boxes { display: flex; flex-wrap: wrap; gap: 10px; }
+        .size-boxes button { min-width: 52px; height: 44px; border: 1px solid var(--border-subtle); background: var(--surface-card); border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; font-family: "DM Sans", sans-serif; }
+        .size-boxes button:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+        .size-boxes button.active { background: var(--brand-primary); border-color: var(--brand-primary); color: #fff; }
+
+        .quantity-container { display: inline-flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 8px 16px; min-width: 140px; margin: 5px 0 30px 0; background-color: var(--surface-card); height: 46px; }
+        .qty-btn { border: none; background: transparent; font-size: 22px; color: var(--text-primary); transition: color 0.2s; }
+        .qty-btn:hover { color: var(--brand-primary); }
+        #qtyValue { font-weight: 600; font-size: 16px; }
+
+        .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
+        .action-button { height: 52px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; transition: all 0.3s ease; font-family: "DM Sans", sans-serif; }
+        
+        .add-cart { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .add-cart:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+        
+        .wishlist-btn-desktop { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); }
+        .wishlist-btn-desktop:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+        .wishlist-btn-desktop.active { background: var(--brand-secondary); color: white; border-color: var(--brand-secondary); }
+        
+        .buy-now { width: 100%; padding: 16px; background: var(--brand-gradient); color: #fff; border: none; margin-top: 16px; height: 52px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); transition: transform 0.2s, box-shadow 0.2s; font-family: "DM Sans", sans-serif; }
+        .buy-now:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
+
+        .product-description { margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border-subtle); }
+        .product-description h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .product-description p { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 15px; }
+
+        .view-more-btn { display: none; }
+
+        /* Trust Badges */
+        .trust-badges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--border-subtle); }
+        .badge-item { display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; }
+        .badge-item svg { width: 22px; height: 22px; margin-bottom: 10px; stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
+
+        .accordion-wrapper { margin-top: 30px; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+        .accordion-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; background: none; border: none; font-size: 15px; font-weight: 600; cursor: pointer; color: var(--text-primary); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; }
+        .accordion-content p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); padding-bottom: 20px; }
+
+        /* === REVIEWS SECTION STYLE === */
+        .reviews-section { margin-top: 40px; border-top: 1px solid var(--border-subtle); padding-top: 30px; }
+        .reviews-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .reviews-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        
+        .reviews-nav { display: flex; gap: 10px; }
+        .review-arrow { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--surface-card); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .review-arrow:hover { border-color: var(--brand-primary); background: var(--surface-hover); color: var(--brand-primary); }
+        .review-arrow.disabled { opacity: 0.5; cursor: default; pointer-events: none; }
+
+        .reviews-container { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding-bottom: 10px; margin: 0 -5px; padding: 5px 5px 15px 5px; -webkit-overflow-scrolling: touch; }
+        .reviews-container::-webkit-scrollbar { height: 4px; }
+        .reviews-container::-webkit-scrollbar-track { background: var(--surface-light); }
+        .reviews-container::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
+
+        .review-card { min-width: 300px; max-width: 300px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; flex-shrink: 0; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-light); }
+        .review-header-line { display: flex; justify-content: space-between; align-items: center; }
+        .review-name { font-weight: 700; font-size: 14px; color: var(--text-primary); }
+        .review-date { font-size: 12px; color: var(--text-light); }
+        .review-stars { color: #f59e0b; font-size: 14px; letter-spacing: 1px; }
+        .review-text { font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* Related Products */
+        .related-section { max-width: 1400px; margin: 0 auto 80px auto; padding: 0 40px; }
+        .related-title { font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 30px; position: relative; padding-bottom: 15px; border-bottom: 2px solid var(--border-subtle); display: inline-block; }
+        .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .related-card { display: flex; flex-direction: column; cursor: pointer; background: var(--surface-card); border-radius: 16px; border: 1px solid var(--border-subtle); overflow: hidden; transition: all 0.3s ease; }
+        .related-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-premium); border-color: var(--brand-primary); }
+        .related-image-box { width: 100%; height: 320px; overflow: hidden; position: relative; border-bottom: 1px solid var(--border-subtle); }
+        .related-image-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .related-card:hover .related-image-box img { transform: scale(1.05); }
+        .related-info { padding: 16px; }
+        .related-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-primary); }
+        .related-price { font-size: 16px; font-weight: 700; color: var(--brand-primary); }
+
+        /* Toast */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 6000; display: flex; flex-direction: column; gap: 10px; }
+        .toast { padding: 1rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 1rem; border-left: 4px solid #8b2635; min-width: 300px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Skeleton */
+        .skeleton { background: #eee; background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%); background-size: 200% 100%; animation: 1.5s shine linear infinite; border-radius: 4px; }
+        @keyframes shine { to { background-position-x: -200%; } }
+        .loading-hide { display: none !important; }
+
+        /* === MOBILE ADJUSTMENTS === */
+        .mobile-wrapper { display: none; }
+        .mobile-add-cart-container { display: none; }
+
+        @media (max-width: 1024px) {
+            .container { padding: 30px; gap: 30px; }
+            .left-content { height: 500px; }
+            .related-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 10px; }
+            
+            .container { flex-direction: column; padding: 0; gap: 0; }
+            .left-section, .right-section { width: 100%; position: static; }
+            .left-content { display: none; }
+            
+            /* Mobile Carousel - Auto Scroll + Smooth Touch */
+            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 450px; }
+            .mobile-image { 
+                height: 100%; width: 100%; display: flex; 
+                overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; 
+                -webkit-overflow-scrolling: touch; 
+            }
+            .mobile-image::-webkit-scrollbar { display: none; }
+            .mobile-image img { 
+                min-width: 100%; height: 100%; object-fit: cover; object-position: top; 
+                scroll-snap-align: center; 
+            }
+            
+            .dots { position: absolute; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; z-index: 5; pointer-events: none; }
+            .dot { width: 6px; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 10px; transition: all 0.3s; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.2); }
+            .dot.active { width: 20px; background: white; border-color: white; }
+
+            .right-section { padding: 40px 20px 100px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
+            
+            .title-header h1 { font-size: 22px; margin-bottom: 5px; }
+            .price .current { font-size: 24px; }
+            
+            .desktop-actions, .buy-now { display: none; }
+            
+            .related-section { padding: 0 20px; }
+            .related-title { font-size: 20px; margin-bottom: 20px; }
+            .related-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .related-image-box { height: 200px; }
+            
+            /* Sticky Bottom Bar */
+            .mobile-add-cart-container { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px 16px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); gap: 12px; z-index: 100; border-top: 1px solid var(--border-subtle); }
+            .mobile-btn { flex: 1; height: 48px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; font-family: "DM Sans", sans-serif; cursor: pointer; }
+            .m-add { background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); }
+            .m-buy { background: var(--brand-gradient); color: white; }
+
+            /* Mobile Description Clamping */
+            .desc-content.mobile-clamp {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .view-more-btn {
+                display: inline-block;
+                color: var(--brand-primary);
+                font-weight: 600;
+                font-size: 14px;
+                margin-top: 5px;
+                cursor: pointer;
+            }
+            
+            .review-card { min-width: 85%; max-width: 85%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-section">
+            <div class="mobile-wrapper">
+                <div class="mobile-image" id="mobileCarousel">
+                    <img id="mobileMain" class="skeleton" src="" alt="Product Image">
+                </div>
+                <div class="dots" id="dots"></div>
+            </div>
+            <div class="left-content">
+                <div class="thumbnail-list" id="thumbs"></div>
+                <div class="main-image">
+                    <img id="mainImage" class="skeleton" src="" alt="Main Product Image">
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="title-header">
+                <h1 id="productTitle" class="skeleton" style="min-height: 40px; width: 100%;"></h1>
+            </div>
+
+            <div class="price">
+                <span id="priceCurrent" class="current skeleton" style="min-width:100px"></span>
+                <span id="priceOld" class="old"></span>
+                <span id="saveBadge" class="save loading-hide">SAVE 20%</span>
+            </div>
+            
+            <h3 id="colorHeader" class="loading-hide">Color: <span style="font-weight:400; color:var(--text-primary)" id="selectedColorName"></span></h3>
+            <div class="color-options" id="colorOptions"></div>
+            
+            <h3 id="sizeHeader" class="loading-hide">Size: <span id="sizeLabel" style="font-weight:400; color:var(--text-primary);">Select Size</span></h3>
+            <div class="size-boxes" id="sizeBoxes"></div>
+            
+            <h3 class="loading-hide">Quantity:</h3>
+            <div class="quantity-container loading-hide">
+                <button class="qty-btn" id="decQty">&minus;</button><span id="qtyValue">1</span><button class="qty-btn" id="incQty">&plus;</button>
+            </div>
+            
+            <div class="desktop-actions loading-hide">
+                <button class="action-button add-cart" id="desktopAddCart">Add to Cart</button>
+                <button class="action-button wishlist-btn-desktop" id="wishlistBtnDesktop">Add to Wishlist</button>
+            </div>
+            
+            <button class="buy-now loading-hide" id="desktopBuyNow">BUY NOW</button>
+
+            <div class="mobile-add-cart-container loading-hide">
+                <button class="mobile-btn m-add" id="mobileAddCartBtn">Add to Cart</button>
+                <button class="mobile-btn m-buy" id="mobileBuyNow">Buy Now</button>
+            </div>
+
+            <div class="product-description">
+                <h4>Product Description</h4>
+                <div id="descContainer">
+                    <p id="productDesc" class="skeleton desc-content mobile-clamp" style="min-height: 60px;"></p>
+                    <span id="viewMoreBtn" class="view-more-btn">View more</span>
+                </div>
+            </div>
+
+            <div class="trust-badges loading-hide">
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13-10-7z"></path><path d="M2 9h20"></path><path d="M12 2v20"></path></svg><span>Premium<br>Quality</span></div>
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M2 8h-2"/><path d="M1 11h-2"/><rect x="3" y="4" width="13" height="12" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="7.5" cy="19" r="2.5" /><circle cx="18.5" cy="19" r="2.5" /></svg><span>Fast<br>Shipping</span></div>
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Best Price<br>Guarantee</span></div>
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg><span>Easy<br>Returns</span></div>
+            </div>
+
+            <div class="reviews-section loading-hide" id="reviewsSection" style="display:none;">
+                <div class="reviews-header">
+                    <h2 class="reviews-title">Customer Reviews</h2>
+                    <div class="reviews-nav">
+                        <button class="review-arrow" id="revPrev">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <button class="review-arrow" id="revNext">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="reviews-container" id="reviewsContainer"></div>
+            </div>
+
+            <div class="accordion-wrapper loading-hide">
+                <button class="accordion-header">Shipping & Returns</button>
+                <div class="accordion-content">
+                    <p><strong>Shipping:</strong> We offer free standard shipping on all orders over ₹999. Orders are typically processed within 24-48 hours.</p>
+                    <p><strong>Returns:</strong> We accept returns within 7 days of delivery for unworn, unwashed items with original tags attached.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="related-section">
+        <h2 class="related-title">You may also like</h2>
+        <div class="related-grid" id="relatedGrid"></div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
+            authDomain: "vastramaya---magic.firebaseapp.com",
+            projectId: "vastramaya---magic",
+            storageBucket: "vastramaya---magic.firebasestorage.app",
+            messagingSenderId: "543460072082",
+            appId: "1:543460072082:web:f3d1140e8f81ad338ae44b",
+            measurementId: "G-E39VNDCFVE"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        let currentProduct = null;
+        let activeVariantIndex = 0;
+        let selectedSize = null;
+        let activeImageIndex = 0;
+        let quantity = 1;
+        let cart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+        let currentUser = null;
+        let mobileCarouselInterval;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                alert("Product not found. Redirecting to shop.");
+                window.location.href = 'shop.html';
+                return;
+            }
+
+            auth.onAuthStateChanged(user => {
+                currentUser = user;
+                if(user) {
+                    syncUserData();
+                }
+                updateCartBadge();
+            });
+
+            fetchProductDetails(productId);
+            
+            document.querySelector(".accordion-header").onclick = function() {
+                this.classList.toggle("active");
+                const panel = this.nextElementSibling;
+                panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+            };
+
+            // View More Logic
+            document.getElementById('viewMoreBtn').onclick = function() {
+                document.getElementById('productDesc').classList.remove('mobile-clamp');
+                this.style.display = 'none';
+            };
+            
+            // Reviews Navigation Logic
+            const revContainer = document.getElementById('reviewsContainer');
+            document.getElementById('revNext').onclick = () => {
+                revContainer.scrollBy({ left: 320, behavior: 'smooth' });
+            };
+            document.getElementById('revPrev').onclick = () => {
+                revContainer.scrollBy({ left: -320, behavior: 'smooth' });
+            };
+        });
+
+        async function fetchProductDetails(id) {
+            try {
+                const doc = await db.collection('products').doc(id).get();
+                if (!doc.exists) return;
+                currentProduct = { id: doc.id, ...doc.data() };
+                renderProduct();
+                loadRelatedProducts(currentProduct.category, currentProduct.id);
+            } catch (error) { console.error(error); }
+        }
+
+        function renderProduct() {
+            document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
+            document.querySelectorAll('.loading-hide').forEach(el => el.classList.remove('loading-hide'));
+
+            document.getElementById('productTitle').textContent = currentProduct.name;
+            document.getElementById('priceCurrent').textContent = `₹${currentProduct.price}`;
+            
+            if (currentProduct.oldPrice) {
+                document.getElementById('priceOld').textContent = `₹${currentProduct.oldPrice}`;
+                const save = Math.round(((currentProduct.oldPrice - currentProduct.price) / currentProduct.oldPrice) * 100);
+                document.getElementById('saveBadge').textContent = `SAVE ${save}%`;
+            } else {
+                document.getElementById('priceOld').style.display = 'none';
+                document.getElementById('saveBadge').style.display = 'none';
+            }
+
+            document.getElementById('productDesc').textContent = currentProduct.description || "No description available.";
+            
+            if(currentProduct.description && currentProduct.description.length < 150) {
+                document.getElementById('viewMoreBtn').style.display = 'none';
+                document.getElementById('productDesc').classList.remove('mobile-clamp');
+            }
+
+            renderColorOptions();
+            renderSizeOptions();
+            renderReviews(); // Render the reviews here
+            selectVariant(0);
+            updateWishlistState();
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            const section = document.getElementById('reviewsSection');
+            
+            if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            container.innerHTML = '';
+
+            currentProduct.reviews.forEach(review => {
+                // Generate Stars
+                let stars = '';
+                for(let i=1; i<=5; i++) {
+                    stars += i <= review.rating ? '★' : '☆';
+                }
+
+                // Format Date
+                let dateStr = '';
+                if(review.date) {
+                    const d = new Date(review.date);
+                    dateStr = d.toLocaleDateString(); 
+                }
+
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-header-line">
+                        <span class="review-name">${review.name}</span>
+                        <span class="review-date">${dateStr}</span>
+                    </div>
+                    <div class="review-stars">${stars}</div>
+                    <div class="review-text">${review.comment}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderColorOptions() {
+            const container = document.getElementById('colorOptions');
+            container.innerHTML = '';
+            
+            if (currentProduct.colorVariants && currentProduct.colorVariants.length > 0) {
+                currentProduct.colorVariants.forEach((variant, index) => {
+                    const img = document.createElement('img');
+                    img.src = variant.images?.[0] || variant.hex || 'https://via.placeholder.com/60'; 
+                    if (!variant.images && variant.hex) img.style.backgroundColor = variant.hex;
+                    img.onclick = () => selectVariant(index);
+                    if (index === 0) img.classList.add('active');
+                    container.appendChild(img);
+                });
+            } else {
+                document.getElementById('colorHeader').style.display = 'none';
+            }
+        }
+
+        function renderSizeOptions() {
+            const container = document.getElementById('sizeBoxes');
+            container.innerHTML = '';
+            const sizes = currentProduct.sizes || ['S', 'M', 'L', 'XL', 'XXL'];
+            sizes.forEach((size, index) => {
+                const btn = document.createElement('button');
+                btn.textContent = size.name || size;
+                btn.onclick = () => {
+                    document.querySelectorAll('.size-boxes button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedSize = size.name || size;
+                    document.getElementById('sizeLabel').textContent = selectedSize;
+                };
+                if (index === 1) btn.click();
+                container.appendChild(btn);
+            });
+        }
+
+        function selectVariant(index) {
+            activeVariantIndex = index;
+            document.querySelectorAll('.color-options img').forEach((img, i) => img.classList.toggle('active', i === index));
+            let images = [];
+            if (currentProduct.colorVariants && currentProduct.colorVariants[index]) {
+                const variant = currentProduct.colorVariants[index];
+                images = variant.images || currentProduct.images;
+                if(variant.name) document.getElementById('selectedColorName').textContent = variant.name;
+            } else {
+                images = currentProduct.images || [];
+            }
+            activeImageIndex = 0;
+            renderGallery(images);
+        }
+
+        function renderGallery(images) {
+            const mainImg = document.getElementById('mainImage');
+            const mobileCarousel = document.getElementById('mobileCarousel');
+            const thumbsContainer = document.getElementById('thumbs');
+            const dotsContainer = document.getElementById('dots');
+
+            mainImg.src = images[0];
+            mainImg.style.opacity = 0;
+            setTimeout(() => mainImg.style.opacity = 1, 50);
+
+            // Thumbnails
+            thumbsContainer.innerHTML = '';
+            images.forEach((src, i) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.onclick = () => {
+                    mainImg.src = src;
+                    activeImageIndex = i;
+                    document.querySelectorAll('.thumbnail-list img').forEach(t => t.classList.remove('active'));
+                    img.classList.add('active');
+                };
+                if (i === 0) img.classList.add('active');
+                thumbsContainer.appendChild(img);
+            });
+
+            // Mobile Carousel
+            mobileCarousel.innerHTML = images.map(src => `<img src="${src}">`).join('');
+            dotsContainer.innerHTML = images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
+            
+            // Auto Scroll Logic for Mobile
+            startMobileAutoScroll(images.length);
+        }
+
+        function startMobileAutoScroll(count) {
+            if (mobileCarouselInterval) clearInterval(mobileCarouselInterval);
+            const container = document.getElementById('mobileCarousel');
+            const dots = document.querySelectorAll('.dot');
+            let index = 0;
+
+            // Scroll Event for manual swipe updates
+            container.addEventListener('scroll', () => {
+                const width = container.offsetWidth;
+                const newIndex = Math.round(container.scrollLeft / width);
+                if(newIndex !== index && newIndex < count) {
+                    index = newIndex;
+                    dots.forEach(d => d.classList.remove('active'));
+                    if(dots[index]) dots[index].classList.add('active');
+                }
+            });
+
+            mobileCarouselInterval = setInterval(() => {
+                index = (index + 1) % count;
+                container.scrollTo({ left: index * container.offsetWidth, behavior: 'smooth' });
+                dots.forEach(d => d.classList.remove('active'));
+                if(dots[index]) dots[index].classList.add('active');
+            }, 5000);
+        }
+
+        async function loadRelatedProducts(category, currentId) {
+            try {
+                const snap = await db.collection('products')
+                    .where('category', '==', category)
+                    .where('isAvailable', '!=', false)
+                    .limit(5).get();
+                
+                const relatedGrid = document.getElementById('relatedGrid');
+                let html = '';
+                let count = 0;
+
+                snap.docs.forEach(doc => {
+                    if (doc.id === currentId) return;
+                    if (count >= 4) return;
+                    const p = doc.data();
+                    const img = (p.images && p.images[0]) || 'https://via.placeholder.com/300';
+                    html += `
+                    <div class="related-card" onclick="window.location.href='view.html?id=${doc.id}'">
+                        <div class="related-image-box"><img src="${img}" alt="${p.name}"></div>
+                        <div class="related-info">
+                            <div class="related-name">${p.name}</div>
+                            <div class="related-price">₹${p.price}</div>
+                        </div>
+                    </div>`;
+                    count++;
+                });
+
+                if (html === '') document.querySelector('.related-section').style.display = 'none';
+                else relatedGrid.innerHTML = html;
+
+            } catch(e) { console.log(e); }
+        }
+
+        function addToCart() {
+            if (!currentProduct) return;
+            const variant = currentProduct.colorVariants ? currentProduct.colorVariants[activeVariantIndex] : {};
+            const colorName = variant.name || 'Default';
+            const uniqueId = `${currentProduct.id}-${colorName}-${selectedSize}`;
+            
+            const existingItem = cart.find(item => item.uniqueId === uniqueId);
+            if (existingItem) existingItem.quantity += quantity;
+            else {
+                cart.push({
+                    id: currentProduct.id,
+                    uniqueId: uniqueId,
+                    name: currentProduct.name,
+                    price: currentProduct.price,
+                    image: (variant.images && variant.images[0]) || currentProduct.images[0],
+                    quantity: quantity,
+                    size: selectedSize,
+                    color: colorName
+                });
+            }
+            saveCart();
+            updateCartBadge();
+            showToast("Added to Cart!");
+        }
+
+        /* === BUY NOW LOGIC (DIRECT) === */
+        function buyNowFromModal() {
+            if (!currentProduct) return;
+            
+            const variant = currentProduct.colorVariants ? currentProduct.colorVariants[activeVariantIndex] : {};
+            const colorName = variant.name || 'Default';
+            
+            const directItem = {
+                id: currentProduct.id,
+                uniqueId: `${currentProduct.id}-${colorName}-${selectedSize}-direct`,
+                name: currentProduct.name,
+                price: currentProduct.price,
+                image: (variant.images && variant.images[0]) || currentProduct.images[0],
+                quantity: quantity,
+                size: selectedSize,
+                color: colorName
+            };
+
+            localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
+            window.location.href = "checkout.html?buy_now=true";
+        }
+
+        function saveCart() {
+            localStorage.setItem('vastramaya_cart', JSON.stringify(cart));
+            if (currentUser) db.collection('users').doc(currentUser.uid).update({ cart: cart }).catch(console.error);
+        }
+
+        function updateCartBadge() {
+            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+        }
+
+        function toggleWishlist() {
+            if (!currentProduct) return;
+            const index = wishlist.indexOf(currentProduct.id);
+            if (index === -1) { wishlist.push(currentProduct.id); showToast("Added to Wishlist"); } 
+            else { wishlist.splice(index, 1); showToast("Removed from Wishlist"); }
+            localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
+            if (currentUser) db.collection('users').doc(currentUser.uid).update({ wishlist: wishlist }).catch(console.error);
+            updateWishlistState();
+            updateCartBadge();
+        }
+
+        function updateWishlistState() {
+            if (!currentProduct) return;
+            const inWishlist = wishlist.includes(currentProduct.id);
+            const btnDesktop = document.getElementById('wishlistBtnDesktop');
+            if (btnDesktop) {
+                btnDesktop.textContent = inWishlist ? "Wishlisted" : "Add to Wishlist";
+                btnDesktop.classList.toggle('active', inWishlist);
+            }
+        }
+
+        document.getElementById('desktopAddCart').onclick = addToCart;
+        document.getElementById('mobileAddCartBtn').onclick = addToCart;
+        document.getElementById('wishlistBtnDesktop').onclick = toggleWishlist;
+        
+        document.getElementById('desktopBuyNow').onclick = buyNowFromModal;
+        document.getElementById('mobileBuyNow').onclick = buyNowFromModal;
+
+        document.getElementById('incQty').onclick = () => {
+            quantity++;
+            document.getElementById('qtyValue').textContent = quantity;
+        };
+        
+        document.getElementById('decQty').onclick = () => {
+            if(quantity > 1) {
+                quantity--;
+                document.getElementById('qtyValue').textContent = quantity;
+            }
+        };
 
         function showToast(msg) {
             const container = document.getElementById('toast-container');
