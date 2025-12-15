@@ -233,9 +233,6 @@
             box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3); 
         }
         
-        /* Outline variant override for secondary if needed, but request said "same design" */
-        /* Currently making them identical based on "make it same" */
-        
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
         @media (max-width: 1024px) {
@@ -815,8 +812,11 @@
             const item = getSelectedProductDetails(productId);
             if (!item) return;
 
+            // Keep the data storage
             localStorage.setItem('vastramaya_direct_buy', JSON.stringify([item]));
-            window.location.href = 'checkout.html?source=direct';
+
+            // Update the URL to the exact format requested
+            window.location.href = "checkout.html?buy_now=true";
         }
 
         function addToCartFromModal(productId) {
