@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -18,321 +18,237 @@
             --text-secondary: #6b422a;
             --text-light: #a3715f;
             --brand-primary: #8b2635;
+            --brand-gold: #d4b066;
             --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
-            --gold-accent: #e6d2a9;
-            --border-subtle: #f0e6dd;
-            --shadow-luxury: 0 20px 40px -10px rgba(59, 11, 23, 0.08);
-            --shadow-hover: 0 25px 50px -12px rgba(139, 38, 53, 0.15);
+            --border-subtle: #e8d5c4;
+            --shadow-soft: 0 10px 40px -10px rgba(59, 11, 23, 0.08);
+            --font-main: 'DM Sans', sans-serif;
             --font-heading: 'Cormorant Garamond', serif;
-            --font-body: 'DM Sans', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             min-height: 100vh; 
             background: var(--page-bg); 
-            font-family: var(--font-body); 
-            color: var(--text-primary); 
-            overflow-x: hidden;
-            /* Subtle texture overlay */
-            background-image: radial-gradient(#8b2635 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
-            background-color: var(--page-bg);
+            font-family: var(--font-main); 
+            color: var(--text-primary);
+            padding-bottom: 40px;
         }
 
         /* --- Header Section --- */
-        .page-header {
-            padding: 40px 20px 20px;
+        .premium-header {
+            padding: 40px 20px;
             max-width: 800px;
             margin: 0 auto;
             position: relative;
+            text-align: center;
         }
 
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .back-link {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             text-decoration: none;
             color: var(--text-secondary);
-            font-weight: 500;
             font-size: 14px;
-            margin-bottom: 25px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-subtle);
-            border-radius: 30px;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
         }
-        .back-btn:hover {
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transform: translateX(-3px);
-            color: var(--brand-primary);
-        }
+        .back-link:hover { color: var(--brand-primary); }
 
         .page-title {
             font-family: var(--font-heading);
             font-size: 42px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 5px;
+            margin: 0;
             letter-spacing: -0.5px;
         }
 
-        .page-subtitle {
-            color: var(--text-light);
-            font-size: 16px;
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        /* --- Main Container --- */
-        .orders-container {
+        /* --- Main Layout --- */
+        .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px 60px;
+            padding: 0 20px;
         }
 
         /* --- Order Card Premium --- */
         .order-card {
-            background: var(--card-bg);
-            border-radius: 24px;
+            background: linear-gradient(145deg, #ffffff 0%, #fffbf7 100%);
+            border: 1px solid rgba(232, 213, 196, 0.6);
+            border-radius: 16px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: var(--shadow-luxury);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255,255,255,0.8);
             position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
-            animation: slideUp 0.5s ease forwards;
-            opacity: 0;
-            transform: translateY(20px);
         }
-
-        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
         .order-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--brand-gold);
         }
 
-        /* Decorative top accent */
         .order-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--gold-accent), transparent);
-            opacity: 0.5;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--brand-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
+        .order-card:hover::before { opacity: 1; }
 
-        .order-header-row {
+        .order-top {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-subtle);
+            align-items: flex-end;
+            border-bottom: 1px solid rgba(232, 213, 196, 0.4);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .order-id {
-            font-family: var(--font-heading);
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: 0.5px;
-        }
+        .order-id-group { display: flex; flex-direction: column; gap: 4px; }
+        .order-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); font-weight: 700; }
+        .order-id { font-family: var(--font-heading); font-size: 24px; color: var(--text-primary); font-weight: 700; }
+        .order-date { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
 
-        .order-date {
-            font-size: 13px;
-            color: var(--text-light);
-            margin-top: 4px;
-            display: block;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            font-weight: 700;
+        .status-chip {
             padding: 6px 14px;
             border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            letter-spacing: 0.5px;
+            border: 1px solid transparent;
         }
-        .status-paid { background: #e6f4ea; color: #1e6f5c; border: 1px solid rgba(30, 111, 92, 0.1); }
-        .status-cod { background: #fff8e1; color: #b45309; border: 1px solid rgba(180, 83, 9, 0.1); }
-        .status-pending { background: #fef2f2; color: #991b1b; border: 1px solid rgba(153, 27, 27, 0.1); }
+        .status-paid { background: #eafbf2; color: #1b6f46; border-color: #c9eadd; }
+        .status-cod { background: #fff5f5; color: #c62828; border-color: #ffe0e0; }
+        .status-pending { background: #fff8e1; color: #b7791f; border-color: #ffeebb; }
 
-        .order-items-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .item-row {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .item-img {
-            width: 80px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 12px;
+        /* --- Items --- */
+        .order-items { display: flex; flex-direction: column; gap: 20px; }
+        .item-row { display: flex; gap: 20px; align-items: center; }
+        
+        .item-img-box {
+            width: 70px; height: 90px;
+            border-radius: 8px;
+            overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+            flex-shrink: 0;
         }
+        .item-img { width: 100%; height: 100%; object-fit: cover; }
 
         .item-details { flex: 1; }
-        
         .item-name { 
-            font-weight: 600; 
-            font-size: 16px; 
-            color: var(--text-primary); 
-            margin-bottom: 6px;
             font-family: var(--font-heading); 
-            letter-spacing: 0.3px;
-        }
-        
-        .item-specs { 
-            font-size: 13px; 
-            color: var(--text-light); 
-            display: flex;
-            gap: 12px;
-        }
-        .item-specs span { background: var(--page-bg); padding: 2px 8px; border-radius: 4px; }
-
-        .item-price { 
+            font-size: 18px; 
             font-weight: 600; 
-            font-size: 15px; 
-            color: var(--brand-primary); 
-            text-align: right;
+            color: var(--text-primary); 
+            margin-bottom: 4px; 
+            line-height: 1.2;
         }
+        .item-specs { font-size: 13px; color: var(--text-light); }
+        .item-price { font-weight: 700; color: var(--brand-primary); margin-top: 4px; font-size: 15px; }
 
+        /* --- Footer --- */
         .order-footer {
             margin-top: 25px;
             padding-top: 20px;
             border-top: 1px dashed var(--border-subtle);
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
         }
 
-        .payment-info {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        .payment-info i { margin-right: 6px; color: var(--gold-accent); }
+        .total-group { text-align: right; }
+        .total-label { font-size: 12px; color: var(--text-light); margin-bottom: 2px; }
+        .total-amount { font-family: var(--font-heading); font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1; }
 
-        .total-display {
-            text-align: right;
-        }
-        .total-label { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
-        .total-value { 
-            font-family: var(--font-heading);
-            font-size: 28px; 
-            font-weight: 700; 
-            color: var(--text-primary);
-            line-height: 1;
-            margin-top: 4px;
-        }
+        .payment-info { font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+        .payment-icon { color: var(--brand-gold); }
 
-        /* --- State Views --- */
-        .state-view {
-            text-align: center;
-            padding: 80px 20px;
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .state-icon-box {
-            width: 80px; height: 80px;
-            background: #fff;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 25px;
-            box-shadow: var(--shadow-luxury);
-            font-size: 32px;
-            color: var(--brand-primary);
-        }
+        /* --- States --- */
+        .state-view { padding: 80px 20px; text-align: center; display: none; }
+        .state-icon { font-size: 40px; color: var(--border-subtle); margin-bottom: 20px; }
+        .state-msg { font-family: var(--font-heading); font-size: 24px; color: var(--text-primary); margin-bottom: 10px; }
+        .state-sub { color: var(--text-light); font-size: 15px; max-width: 300px; margin: 0 auto 30px; }
 
-        .btn-premium {
-            background: var(--brand-gradient);
-            color: white;
-            padding: 16px 40px;
+        .btn-elegant {
+            background: var(--text-primary);
+            color: #fff;
+            padding: 14px 32px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 25px;
-            box-shadow: 0 10px 20px rgba(139, 38, 53, 0.25);
-            transition: all 0.3s ease;
-            font-size: 15px;
+            font-weight: 500;
+            font-size: 14px;
             letter-spacing: 0.5px;
+            transition: all 0.3s;
+            display: inline-block;
+            border: 1px solid var(--text-primary);
         }
-        .btn-premium:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(139, 38, 53, 0.35);
+        .btn-elegant:hover {
+            background: transparent;
+            color: var(--text-primary);
         }
 
-        /* Loading Animation */
-        .loader {
-            width: 48px; height: 48px;
-            border: 3px solid #FFF;
-            border-bottom-color: var(--brand-primary);
+        .spinner {
+            width: 40px; height: 40px;
+            border: 2px solid var(--border-subtle);
+            border-top-color: var(--brand-primary);
             border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         @media (max-width: 600px) {
+            .premium-header { padding: 30px 20px 20px; text-align: left; }
+            .back-link { position: relative; left: 0; transform: none; margin-bottom: 15px; display: inline-flex; }
             .page-title { font-size: 32px; }
-            .order-card { padding: 20px; border-radius: 20px; }
-            .item-img { width: 60px; height: 80px; }
-            .item-name { font-size: 15px; }
-            .total-value { font-size: 24px; }
+            .order-card { padding: 20px; }
+            .order-top { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .status-chip { align-self: flex-start; }
+            .order-footer { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .total-group { text-align: left; width: 100%; display: flex; justify-content: space-between; align-items: center; }
+            .total-amount { font-size: 22px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="page-header">
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+    <div class="premium-header">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Shop</a>
         <h1 class="page-title">Order History</h1>
-        <p class="page-subtitle">Your collection of Vastramaya purchases.</p>
-    </header>
+    </div>
 
-    <div class="orders-container">
-        
+    <div class="container">
         <div id="loading-state" class="state-view" style="display: block;">
-            <div class="state-icon-box" style="box-shadow:none; background:transparent;">
-                <span class="loader"></span>
-            </div>
-            <p style="color:var(--text-secondary);">Retrieving your orders...</p>
+            <div class="spinner"></div>
+            <p style="margin-top:20px; color:var(--text-light); font-size:14px;">Retrieving your collection...</p>
         </div>
 
         <div id="login-state" class="state-view">
-            <div class="state-icon-box"><i class="fas fa-lock"></i></div>
-            <h2 style="font-family:var(--font-heading); margin-bottom:10px;">Member Access Only</h2>
-            <p style="color:var(--text-secondary); max-width:300px; margin:0 auto;">Please sign in to view your order history and track deliveries.</p>
-            <a href="index.html" class="btn-premium">Sign In Now</a>
+            <div class="state-icon"><i class="fas fa-lock"></i></div>
+            <h2 class="state-msg">Sign In Required</h2>
+            <p class="state-sub">Access your personal order history by logging into your account.</p>
+            <a href="index.html" class="btn-elegant">Login Now</a>
         </div>
 
         <div id="empty-state" class="state-view">
-            <div class="state-icon-box"><i class="fas fa-shopping-bag"></i></div>
-            <h2 style="font-family:var(--font-heading); margin-bottom:10px;">No Orders Found</h2>
-            <p style="color:var(--text-secondary); max-width:350px; margin:0 auto;">You haven't placed any orders yet. Discover our latest ethnic collection today.</p>
-            <a href="shop.html" class="btn-premium">Explore Collection</a>
+            <div class="state-icon"><i class="fas fa-shopping-bag"></i></div>
+            <h2 class="state-msg">No Orders Found</h2>
+            <p class="state-sub">You haven't placed any orders yet. Discover our latest collection.</p>
+            <a href="shop.html" class="btn-elegant">Start Shopping</a>
         </div>
 
         <div id="orders-list"></div>
-
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -384,7 +300,6 @@
         async function fetchOrders(uid) {
             showState('loading');
             try {
-                // Securely fetching from users/{uid}/orders
                 const snapshot = await db.collection('users')
                     .doc(uid)
                     .collection('orders')
@@ -398,89 +313,81 @@
 
                 renderOrders(snapshot.docs);
                 showState('list');
-
             } catch (error) {
-                console.error("Error fetching orders:", error);
-                // If index error, it might show empty, but we'll stick to logic
-                showState('empty'); 
+                console.error("Error:", error);
+                alert("Error loading orders.");
+                showState('empty');
             }
         }
 
         function renderOrders(docs) {
-            ordersList.innerHTML = ''; 
-
-            docs.forEach((doc, index) => {
+            ordersList.innerHTML = '';
+            
+            docs.forEach(doc => {
                 const data = doc.data();
                 const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString('en-IN', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                }) : 'Date unavailable';
+                    day: 'numeric', month: 'short', year: 'numeric'
+                }) : 'N/A';
 
-                const total = data.amount || 0;
                 const status = data.paymentStatus || 'Pending';
                 const method = data.paymentMethod || 'Online';
-                const items = data.items || [];
+                let statusClass = 'status-pending';
+                let statusLabel = status;
 
-                // Styling logic for status
-                let badgeClass = 'status-pending';
-                let icon = '<i class="fas fa-clock"></i>';
-                
                 if (method === 'COD') {
-                    badgeClass = 'status-cod';
-                    icon = '<i class="fas fa-box"></i>';
+                    statusClass = 'status-cod';
+                    statusLabel = 'Cash on Delivery';
                 } else if (status === 'Paid') {
-                    badgeClass = 'status-paid';
-                    icon = '<i class="fas fa-check-circle"></i>';
+                    statusClass = 'status-paid';
+                    statusLabel = 'Paid';
                 }
 
                 const card = document.createElement('div');
                 card.className = 'order-card';
-                card.style.animationDelay = `${index * 0.1}s`; // Staggered animation
 
                 let itemsHtml = '';
-                items.forEach(item => {
+                (data.items || []).forEach(item => {
                     itemsHtml += `
                         <div class="item-row">
-                            <img src="${item.image}" alt="${item.name}" class="item-img" onerror="this.src='https://via.placeholder.com/80'">
+                            <div class="item-img-box">
+                                <img src="${item.image}" class="item-img" alt="${item.name}" onerror="this.src='https://via.placeholder.com/70'">
+                            </div>
                             <div class="item-details">
                                 <div class="item-name">${item.name}</div>
                                 <div class="item-specs">
-                                    <span>Qty: ${item.quantity}</span>
-                                    ${item.size ? `<span>Size: ${item.size}</span>` : ''}
-                                    ${item.color ? `<span>Color: ${item.color}</span>` : ''}
+                                    Qty: ${item.quantity} ${item.size ? `• Size: ${item.size}` : ''} ${item.color ? `• ${item.color}` : ''}
                                 </div>
+                                <div class="item-price">₹${item.price.toLocaleString('en-IN')}</div>
                             </div>
-                            <div class="item-price">₹${item.price.toLocaleString('en-IN')}</div>
                         </div>
                     `;
                 });
 
                 card.innerHTML = `
-                    <div class="order-header-row">
-                        <div>
-                            <div class="order-id">#${data.orderId || doc.id.substring(0,8).toUpperCase()}</div>
-                            <span class="order-date">${date}</span>
+                    <div class="order-top">
+                        <div class="order-id-group">
+                            <span class="order-label">Order ID</span>
+                            <span class="order-id">#${data.orderId || doc.id}</span>
+                            <span class="order-date">Placed on ${date}</span>
                         </div>
-                        <div class="status-badge ${badgeClass}">
-                            ${icon} ${status === 'Paid' ? 'Successful' : (method === 'COD' ? 'Cash on Delivery' : status)}
-                        </div>
+                        <div class="status-chip ${statusClass}">${statusLabel}</div>
                     </div>
                     
-                    <div class="order-items-grid">
+                    <div class="order-items">
                         ${itemsHtml}
                     </div>
 
                     <div class="order-footer">
                         <div class="payment-info">
-                            <i class="fas ${method === 'COD' ? 'fa-money-bill-wave' : 'fa-credit-card'}"></i>
-                            ${method === 'COD' ? 'Pay on Delivery' : 'Paid Online via Razorpay'}
+                            <i class="fas ${method === 'COD' ? 'fa-wallet' : 'fa-credit-card'} payment-icon"></i>
+                            Paid via ${method}
                         </div>
-                        <div class="total-display">
+                        <div class="total-group">
                             <div class="total-label">Total Amount</div>
-                            <div class="total-value">₹${total.toLocaleString('en-IN')}</div>
+                            <div class="total-amount">₹${(data.amount || 0).toLocaleString('en-IN')}</div>
                         </div>
                     </div>
                 `;
-
                 ordersList.appendChild(card);
             });
         }
