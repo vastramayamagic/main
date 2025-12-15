@@ -10,8 +10,6 @@
     <style>
         /* --- CORE VARIABLES --- */
         :root {
-            --header-height-desktop: 80px;
-            --navbar-height-mobile: 70px;
             --page-bg: #fefcf3;
             --text-primary: #3f0b17;
             --text-secondary: #6b422a;
@@ -26,77 +24,31 @@
             --product-card-bg: #fffefb;
             --shadow-light: 0 2px 10px rgba(59, 11, 23, 0.05);
             --shadow-medium: 0 8px 30px rgba(59, 11, 23, 0.12);
-            --shadow-premium: 0 10px 25px -5px rgba(59, 11, 23, 0.1), 0 5px 10px -5px rgba(59, 11, 23, 0.04);
-            
-            --footer-bg-lux: #0c1f1a;
-            --footer-gold: #e6d2a9;
-            --footer-gold-glow: rgba(230, 210, 169, 0.3);
-            --footer-silver: #b8c9c3;
-            --border-glow: rgba(227, 207, 169, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Roboto, sans-serif; overflow-x: hidden; color: var(--text-primary); width: 100%; }
 
-        /* --- DESKTOP NAVBAR --- */
+        /* --- DESKTOP LAYOUT --- */
         .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
+        .d-content { flex: 1; background: var(--page-bg); width: 100%; padding-top: 0; }
         
-        .d-navbar { height: var(--header-height-desktop); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
-        .d-navbar-container { max-width: 1440px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
-        .d-navbar-logo { height: 60px; width: auto; object-fit: contain; cursor: pointer; }
-        
-        .d-nav-links { display: flex; align-items: center; gap: 32px; margin: 0 40px; }
-        .d-nav-link { font-size: 15px; font-weight: 600; color: var(--text-primary); text-decoration: none; padding: 8px 0; position: relative; transition: color 0.2s ease; white-space: nowrap; }
-        .d-nav-link:hover, .d-nav-link.active { color: var(--brand-primary); }
-        .d-nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--brand-primary); border-radius: 1px; }
-
-        .d-search-container { flex: 1; max-width: 400px; position: relative; }
-        .d-search-bar { width: 100%; padding: 12px 16px 12px 44px; border: 1px solid var(--border-subtle); border-radius: 10px; background: var(--surface-light); font-family: "DM Sans", sans-serif; font-size: 14px; color: var(--text-primary); outline: none; transition: all 0.2s ease; }
-        .d-search-bar:focus { background: var(--surface-card); border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
-        .d-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-light); width: 18px; height: 18px; }
-
-        .d-action-icons { display: flex; align-items: center; gap: 20px; }
-        .d-icon-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; text-decoration: none; color: inherit; }
-        .d-icon-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
-        .d-icon-btn:hover svg { stroke: var(--brand-primary); }
-
-        .cart-badge, .wishlist-badge { position: absolute; top: -6px; right: -6px; background: var(--brand-primary); color: white; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
-
-        .d-profile-dropdown { position: relative; }
-        .d-profile-btn { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; border: 2px solid var(--border-subtle); cursor: pointer; transition: all 0.2s ease; }
-        .d-profile-btn:hover { border-color: var(--brand-primary); transform: translateY(-1px); }
-        .d-profile-img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Cart Popup */
-        .cart-popup { position: absolute; top: calc(100% + 10px); right: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 16px; width: 420px; max-height: 520px; box-shadow: var(--shadow-premium); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; z-index: 1000; display: flex; flex-direction: column; overflow: hidden; }
-        .cart-popup.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .cart-popup-header { padding: 20px; border-bottom: 1px solid var(--border-subtle); background: var(--surface-light); flex-shrink: 0; }
-        .cart-popup-title { font-weight: 700; font-size: 18px; color: var(--text-primary); margin-bottom: 4px; }
-        .cart-popup-subtitle { font-size: 14px; color: var(--text-light); }
-        .cart-popup-body { flex: 1; overflow-y: auto; padding: 0; min-height: 280px; max-height: 280px; }
-        .cart-item { display: flex; align-items: center; padding: 16px; border-bottom: 1px solid var(--border-subtle); gap: 16px; transition: all 0.2s ease; position: relative; }
-        .cart-item-img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-subtle); }
-        .cart-item-details { flex: 1; min-width: 0; }
-        .cart-item-title { font-weight: 600; font-size: 14px; color: var(--text-primary); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .cart-item-price { font-weight: 700; font-size: 15px; color: var(--brand-primary); }
-        .cart-popup-footer { padding: 20px; border-top: 1px solid var(--border-subtle); background: var(--surface-card); box-shadow: 0 -2px 10px rgba(59, 11, 23, 0.05); flex-shrink: 0; }
-        .buy-btn { width: 100%; padding: 14px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-        /* --- WISHLIST STYLES --- */
-        .d-content { flex: 1; background: var(--page-bg); width: 100%; padding-top: var(--header-height-desktop); }
-        .wishlist-header { padding: 60px 40px 30px; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border-subtle); }
+        /* Header & Titles */
+        .wishlist-header { padding: 40px 40px 30px; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border-subtle); }
         .title-block h1 { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
         .title-block p { font-size: 16px; color: var(--text-light); letter-spacing: 0.5px; }
         
         .move-all-btn { background: var(--brand-gradient); color: #fff; border: none; padding: 14px 30px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; border-radius: 10px; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); display: flex; align-items: center; gap: 8px; }
         .move-all-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3); }
 
+        /* Product Grid */
         .wishlist-container { max-width: 1400px; margin: 0 auto; padding: 40px; min-height: 60vh; }
         .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
 
-        .product-card { background: var(--product-card-bg); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-light); transition: all 0.3s ease; border: 1px solid var(--border-subtle); position: relative; cursor: pointer; }
+        /* Card Styles */
+        .product-card { background: var(--product-card-bg); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-light); transition: all 0.3s ease; border: 1px solid var(--border-subtle); position: relative; cursor: pointer; display: flex; flex-direction: column; }
         .product-card:hover { box-shadow: var(--shadow-medium); border-color: var(--brand-primary); transform: translateY(-5px); }
+        
         .product-image-container { position: relative; width: 100%; height: 340px; overflow: hidden; border-bottom: 1px solid var(--border-subtle); background: #fcfcfc; }
         .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
         .product-card:hover .product-image { transform: scale(1.08); }
@@ -106,18 +58,56 @@
         .delete-btn svg { width: 18px; height: 18px; stroke: var(--text-light); transition: stroke 0.2s; }
         .delete-btn:hover svg { stroke: #d33d49; }
 
-        .product-info { padding: 18px; }
+        .product-info { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-category { font-size: 11px; color: var(--text-light); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-        .product-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .product-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: 5px; }
-        .price-container { display: flex; align-items: baseline; gap: 8px; }
+        .product-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .price-container { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
         .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
 
-        /* ADD TO CART BUTTON (Desktop & Mobile Modes) */
-        .add-to-cart-btn { padding: 10px 18px; border-radius: 8px; background: var(--text-primary); border: 1px solid var(--text-primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 13px; font-weight: 600; gap: 8px; }
-        .add-to-cart-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); }
-        .add-to-cart-btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; }
+        /* NEW ACTION BUTTONS STYLES */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-subtle); /* Line separator */
+            width: 100%;
+        }
+
+        .btn-action {
+            flex: 1; /* Makes buttons equal size */
+            height: 38px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-buy {
+            background: var(--text-primary);
+            color: white;
+            border: 1px solid var(--text-primary);
+        }
+        .btn-buy:hover {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .btn-cart {
+            background: transparent;
+            color: var(--brand-primary);
+            border: 1px solid var(--brand-primary);
+        }
+        .btn-cart:hover {
+            background: #fff2f2;
+        }
 
         /* Empty State */
         .empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 20px; animation: fadeIn 0.5s ease; }
@@ -130,129 +120,91 @@
         .shop-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px -5px rgba(139, 38, 53, 0.4); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- FOOTER --- */
-        .site-footer { background: linear-gradient(180deg, var(--footer-bg-lux) 0%, #0a1512 100%); color: var(--footer-silver); padding: 120px 40px 50px; margin-top: auto; width: 100%; font-family: "Inter", sans-serif; position: relative; overflow: hidden; }
-        .site-footer::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 94%; max-width: 1400px; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--footer-gold) 20%, var(--footer-gold) 50%, var(--footer-gold) 80%, transparent 100%); box-shadow: 0 0 20px var(--footer-gold-glow); }
-        .site-footer::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.827zM11.03 0L7.372 3.657l1.415 1.414L13.857 0H11.03zM32.343 0l6.485 6.485-1.414 1.414L29.515 0h2.828zM27.657 0l-6.485 6.485 1.414 1.414L30.485 0h-2.828zM21.03 0l-3.656 3.657 1.414 1.414L23.857 0H21.03zM38.97 0l3.657-3.657L41.213-5.07 36.143 0h2.827z' fill='%231a2e28' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E"); opacity: 0.1; z-index: 0; pointer-events: none; }
-        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.2fr; gap: 80px; padding-bottom: 90px; border-bottom: 1px solid rgba(227, 207, 169, 0.08); position: relative; z-index: 1; }
-        .footer-brand h3 { font-size: 42px; font-weight: 300; margin: 0 0 35px 0; letter-spacing: 6px; text-transform: uppercase; color: var(--footer-gold); font-family: "Cormorant Garamond", serif; position: relative; display: inline-block; }
-        .footer-brand h3::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 60px; height: 1px; background: var(--footer-gold); opacity: 0.6; }
-        .footer-desc { font-size: 15.5px; line-height: 1.9; color: var(--footer-silver); margin-bottom: 45px; max-width: 400px; font-weight: 350; letter-spacing: 0.3px; opacity: 0.9; padding-right: 20px; }
-        .social-links { display: flex; gap: 15px; margin-top: 40px; }
-        .social-icon { width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(227, 207, 169, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); color: var(--footer-gold); text-decoration: none; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); position: relative; overflow: hidden; }
-        .social-icon:hover { border-color: var(--footer-gold); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139, 38, 53, 0.2); }
-        .footer-col h4 { font-size: 11px; font-weight: 600; margin: 0 0 40px 0; color: var(--footer-gold); letter-spacing: 2.5px; text-transform: uppercase; position: relative; padding-bottom: 12px; }
-        .footer-col h4::after { content: ''; position: absolute; bottom: 0; left: 0; width: 30px; height: 1px; background: linear-gradient(90deg, var(--footer-gold), transparent); }
-        .footer-links { list-style: none; padding: 0; margin: 0; }
-        .footer-links li { margin-bottom: 20px; position: relative; padding-left: 0; transition: padding-left 0.3s ease; }
-        .footer-links a { text-decoration: none; color: var(--footer-silver); font-size: 14.5px; font-weight: 350; transition: all 0.3s ease; position: relative; display: inline-block; }
-        .footer-links li:hover { padding-left: 25px; }
-        .footer-links li:hover::before { opacity: 1; left: 0; }
-        .footer-links li::before { content: '⟡'; position: absolute; left: -25px; top: 50%; transform: translateY(-50%); opacity: 0; color: var(--footer-gold); font-size: 12px; transition: all 0.3s ease; }
-        .footer-links a:hover { color: #fff; letter-spacing: 0.5px; }
-        .contact-info { display: flex; flex-direction: column; gap: 28px; }
-        .footer-contact-item { display: flex; align-items: center; gap: 18px; padding: 18px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(227, 207, 169, 0.05); border-radius: 12px; transition: all 0.3s ease; }
-        .footer-contact-item:hover { background: rgba(18, 40, 35, 0.6); border-color: var(--border-glow); transform: translateY(-2px); }
-        .icon-box { width: 44px; height: 44px; background: linear-gradient(135deg, rgba(227, 207, 169, 0.1), rgba(139, 38, 53, 0.1)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--footer-gold); flex-shrink: 0; border: 1px solid rgba(227, 207, 169, 0.1); }
-        .contact-details { display: flex; flex-direction: column; }
-        .contact-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--footer-gold); opacity: 0.7; margin-bottom: 5px; font-weight: 500; }
-        .contact-value { color: #fff; font-size: 15px; font-weight: 350; letter-spacing: 0.3px; }
-        .footer-bottom { padding-top: 40px; text-align: center; font-size: 13px; color: var(--footer-silver); font-weight: 350; letter-spacing: 1.2px; opacity: 0.6; position: relative; z-index: 1; }
-        .footer-bottom::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--footer-gold) 50%, transparent); opacity: 0.2; }
-
-        /* --- MOBILE NAV --- */
+        /* --- MOBILE LAYOUT --- */
         .page-mobile { min-height: 100vh; display: flex; flex-direction: column; display: none; width: 100%; }
-        .m-navbar { height: var(--navbar-height-mobile); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: var(--shadow-light); }
-        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; z-index: 2; min-width: 40px; }
-        .m-menu-lines { width: 18px; height: 14px; position: relative; }
-        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; border-radius: 999px; background: var(--text-primary); }
-        .m-menu-lines::before { top: 0; }
-        .m-menu-lines span { top: 6px; }
-        .m-menu-lines::after { bottom: 0; }
-        .m-logo { height: 50px; width: auto; object-fit: contain; position: absolute; left: 50%; transform: translateX(-50%); }
-        .m-right-icons { display: flex; align-items: center; gap: 12px; z-index: 2; min-width: 92px; justify-content: flex-end; }
-        .m-icon-btn { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; position: relative; }
-        .mobile-cart-badge { position: absolute; top: -4px; right: -4px; background: var(--brand-primary); color: white; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface-card); }
+        .m-content { flex: 1; background: var(--page-bg); padding-top: 0; padding-bottom: 20px; width: 100%; overflow-x: hidden; }
 
-        .m-overlay { position: fixed; inset: 0; background: rgba(59, 11, 23, 0.3); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.25s ease-out; z-index: 2000; }
-        .m-overlay.open { opacity: 1; pointer-events: auto; }
-        .m-drawer { position: absolute; left: 0; top: 0; width: 320px; max-width: 90vw; height: 100%; background: var(--surface-card); display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.25s ease-out; overflow-y: auto; box-shadow: 2px 0 20px rgba(59, 11, 23, 0.1); }
-        .m-overlay.open .m-drawer { transform: translateX(0); }
-        .m-drawer-header { height: 72px; min-height: 72px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--surface-card); position: relative; z-index: 10; }
-        .m-drawer-logo { height: 50px; width: auto; object-fit: contain; display: block; }
-        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.2s ease; }
-        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
-        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; border-radius: 999px; background: var(--text-primary); }
-        .m-drawer-close-icon::before { transform: rotate(45deg); }
-        .m-drawer-close-icon::after { transform: rotate(-45deg); }
-        .m-drawer-nav { padding: 20px 0; display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
-        .nav-section { padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
-        .m-nav-link { display: flex; align-items: center; height: 48px; padding: 0 24px; margin: 2px 0; color: var(--text-primary); text-decoration: none; font-size: 16px; font-weight: 500; transition: background 0.15s ease; border-radius: 0; }
-        .m-nav-link.active { color: var(--brand-primary); background: linear-gradient(135deg, #fdf2f4 0%, #fbe9eb 100%); border-right: 3px solid var(--brand-primary); }
-        .m-drawer-profile { padding: 20px 24px; border-top: 1px solid var(--border-subtle); background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface-hover) 100%); margin-top: auto; flex-shrink: 0; cursor: pointer; position: relative; }
-        .m-profile-header { display: flex; align-items: center; gap: 12px; }
-        .m-profile-img { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; border: 2px solid var(--surface-card); box-shadow: 0 2px 8px rgba(59, 11, 23, 0.1); }
-        .m-profile-info { flex: 1; }
-        .m-profile-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
-        .m-profile-email { font-size: 14px; color: var(--text-light); }
-
-        .cart-overlay { position: fixed; inset: 0; background: rgba(59, 11, 23, 0.3); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.25s ease-out; z-index: 3000; }
-        .cart-overlay.open { opacity: 1; pointer-events: auto; }
-        .cart-drawer { position: absolute; right: 0; top: 0; width: 380px; max-width: 90vw; height: 100%; background: var(--surface-card); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.25s ease-out; overflow-y: auto; box-shadow: -2px 0 20px rgba(59, 11, 23, 0.1); }
-        .cart-overlay.open .cart-drawer { transform: translateX(0); }
-        .cart-drawer-header { height: 72px; min-height: 72px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--surface-card); flex-shrink: 0; }
-        .cart-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
-        .cart-drawer-body { flex: 1; overflow-y: auto; padding: 0; min-height: 300px; }
-        .cart-drawer-footer { padding: 20px; border-top: 1px solid var(--border-subtle); background: var(--surface-card); box-shadow: 0 -2px 10px rgba(59, 11, 23, 0.05); flex-shrink: 0; }
-        .mobile-buy-btn { width: 100%; padding: 16px; background: var(--brand-gradient); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; overflow: hidden; }
-
-        .m-content { flex: 1; background: var(--page-bg); padding-top: var(--navbar-height-mobile); padding-bottom: 20px; width: 100%; overflow-x: hidden; }
-
-        @media (max-width: 1200px) {
-            .footer-content { gap: 60px; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; }
-        }
-        @media (max-width: 1024px) {
-            .footer-content { grid-template-columns: 1fr 1fr; gap: 60px; }
-            .footer-brand { grid-column: span 2; text-align: left; }
-        }
         @media (max-width: 768px) {
             .page-desktop { display: none; }
             .page-mobile { display: flex; }
+            
             .wishlist-header { flex-direction: column; align-items: flex-start; padding: 25px 20px; gap: 15px; border: none; }
             .title-block h1 { font-size: 32px; }
             .wishlist-container { padding: 0 15px; }
-            .wishlist-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .product-image-container { height: 200px; }
-            
-            /* Footer Mobile */
-            .site-footer { padding: 80px 24px 40px; }
-            .footer-content { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "brand brand" "collections services" "concierge concierge"; gap: 40px; text-align: left; }
-            .footer-brand { grid-area: brand; grid-column: 1 / -1; }
-            .footer-col:nth-child(2) { grid-area: collections; width: 100%; }
-            .footer-col:nth-child(3) { grid-area: services; width: 100%; }
-            .footer-col:nth-child(4) { grid-area: concierge; grid-column: 1 / -1; width: 100%; }
-            .contact-info { align-items: stretch; }
 
-            /* Mobile Add to Cart Button override */
-            .add-to-cart-btn {
-                padding: 0;
-                width: 36px;
-                height: 36px;
-                border-radius: 8px; /* Square with rounded corners */
-                justify-content: center;
-                border-color: var(--circle-border);
-                background: var(--circle-bg);
-                color: var(--text-primary);
+            /* --- HORIZONTAL CARD STYLES FOR MOBILE --- */
+            .wishlist-grid { 
+                grid-template-columns: 1fr; 
+                gap: 16px; 
             }
-            .add-to-cart-btn:hover {
-                background: var(--brand-primary);
-                border-color: var(--brand-primary);
-                color: white;
-            }
-            .add-to-cart-btn span { display: none; }
-            .add-to-cart-btn svg { width: 18px; height: 18px; }
             
+            .product-card {
+                display: flex;
+                flex-direction: row;
+                height: auto;
+                align-items: stretch;
+                min-height: 130px; /* Reduced from 140px for better UI */
+            }
+
+            .product-image-container {
+                width: 110px; /* Narrower width */
+                height: auto;
+                min-height: auto; /* Let flex stretch handle height */
+                border-bottom: none;
+                border-right: 1px solid var(--border-subtle);
+                flex-shrink: 0;
+            }
+
+            .product-info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 10px; /* Reduced padding */
+                min-width: 0;
+            }
+
+            .product-title {
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                font-size: 14px;
+                margin-bottom: 4px;
+            }
+
+            .product-category { margin-bottom: 4px; font-size: 10px; }
+
+            .price-container {
+                margin-bottom: 0;
+            }
+            
+            .current-price { font-size: 16px; }
+
+            .action-buttons {
+                margin-top: 8px;
+                padding-top: 8px;
+                gap: 8px;
+            }
+            
+            .btn-action {
+                height: 32px;
+                font-size: 11px;
+                padding: 0 8px;
+            }
+            
+            /* Move all button sticky bottom */
             .move-all-btn { width: 100%; text-align: center; position: sticky; bottom: 20px; z-index: 99; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); justify-content: center; }
+            
+            .delete-btn {
+                width: 26px;
+                height: 26px;
+                top: 4px;
+                left: 4px;
+                right: auto;
+                background: rgba(255,255,255,0.8);
+            }
+            .delete-btn svg { width: 14px; height: 14px; }
         }
 
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 6000; pointer-events: none; display: flex; flex-direction: column; gap: 10px; }
@@ -263,51 +215,6 @@
 <body>
 
     <div class="page-desktop">
-        <nav class="d-navbar">
-            <div class="d-navbar-container">
-                <img class="d-navbar-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" onclick="window.location.href='index.html'" />
-                <div class="d-nav-links">
-                    <a href="index.html" class="d-nav-link">Home</a>
-                    <a href="shop.html" class="d-nav-link">Shop</a>
-                    <div class="d-categories-dropdown">
-                        <a href="index.html#categories-section" class="d-nav-link">Categories</a>
-                    </div>
-                </div>
-                <div class="d-search-container">
-                    <svg class="d-search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" class="d-search-bar" placeholder="Search products...">
-                </div>
-                <div class="d-action-icons">
-                    <a href="#" class="d-icon-btn active" style="border-color:var(--brand-primary);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" stroke-width="1.5"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
-                        <span class="wishlist-badge" id="wishlist-badge-desktop">0</span>
-                    </a>
-                    <div class="d-profile-dropdown">
-                        <button class="d-icon-btn" id="d-cart-toggle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-                            <span class="cart-badge" id="cart-badge-desktop" style="display:none">0</span>
-                        </button>
-                        <div class="cart-popup" id="cart-popup">
-                            <div class="cart-popup-header">
-                                <div class="cart-popup-title">Your Shopping Cart</div>
-                                <div class="cart-popup-subtitle" id="cart-count-desktop">0 items</div>
-                            </div>
-                            <div class="cart-popup-body" id="cart-items-desktop"></div>
-                            <div class="cart-popup-footer">
-                                <div style="display:flex;justify-content:space-between;margin-bottom:15px;font-weight:600;"><span>Total</span><span id="cart-total-desktop">₹0</span></div>
-                                <button class="buy-btn" onclick="window.location.href='checkout.html'">Checkout Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-profile-dropdown">
-                        <button class="d-profile-btn">
-                            <img class="d-profile-img" src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile" />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
         <main class="d-content">
             <div class="wishlist-header">
                 <div class="title-block">
@@ -335,73 +242,10 @@
                     </a>
                 </div>
             </div>
-
-            <footer class="site-footer">
-                <div class="footer-content">
-                    <div class="footer-brand">
-                        <h3>Vastramaya</h3>
-                        <p class="footer-desc">Where heritage craftsmanship meets contemporary elegance. Each piece is a testament to India's rich textile legacy.</p>
-                        <div class="social-links">
-                            <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                            <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                        </div>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Collections</h4>
-                        <ul class="footer-links">
-                            <li><a href="shop.html?cat=new">Haute Couture</a></li>
-                            <li><a href="shop.html?cat=best">Signature Heirlooms</a></li>
-                            <li><a href="shop.html?cat=wedding">Bridal & Festive</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Services</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Personal Styling</a></li>
-                            <li><a href="#">Bespoke Tailoring</a></li>
-                            <li><a href="#">Global Concierge</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Contact Us</h4>
-                        <div class="contact-info">
-                            <div class="footer-contact-item">
-                                <div class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
-                                <div class="contact-details">
-                                    <span class="contact-label">Mobile</span>
-                                    <span class="contact-value">+91 86394 78312</span>
-                                </div>
-                            </div>
-                            <div class="footer-contact-item">
-                                <div class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
-                                <div class="contact-details">
-                                    <span class="contact-label">Email</span>
-                                    <span class="contact-value">support@vastramaya.com</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <div>&copy; 2026 Vastramaya. All rights reserved.</div>
-                </div>
-            </footer>
         </main>
     </div>
 
     <div class="page-mobile">
-        <nav class="m-navbar">
-            <button class="m-menu-btn" id="m-menu-toggle"><div class="m-menu-lines"><span></span></div></button>
-            <img class="m-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" />
-            <div class="m-right-icons">
-                <button class="m-icon-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
-                <button class="m-icon-btn" id="m-cart-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-                    <span class="mobile-cart-badge" id="cart-badge-mobile" style="display:none">0</span>
-                </button>
-            </div>
-        </nav>
-
         <main class="m-content">
             <div class="wishlist-header">
                 <div class="title-block">
@@ -415,7 +259,7 @@
                 
                 <div class="empty-state" id="emptyStateMobile">
                     <div class="empty-icon-circle">
-                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </div>
                     <h2>Your Wishlist is Empty</h2>
                     <p>Unlock the world of Indian heritage fashion. Save your favorite pieces here.</p>
@@ -430,89 +274,7 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </div>
-
-            <footer class="site-footer">
-                <div class="footer-content">
-                    <div class="footer-brand">
-                        <h3>Vastramaya</h3>
-                        <p class="footer-desc">Where heritage craftsmanship meets contemporary elegance. Each piece is a testament to India's rich textile legacy.</p>
-                        <div class="social-links">
-                            <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                            <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                        </div>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Collections</h4>
-                        <ul class="footer-links">
-                            <li><a href="shop.html?cat=new">Haute Couture</a></li>
-                            <li><a href="shop.html?cat=best">Signature Heirlooms</a></li>
-                            <li><a href="shop.html?cat=wedding">Bridal & Festive</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Services</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Personal Styling</a></li>
-                            <li><a href="#">Bespoke Tailoring</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Contact Us</h4>
-                        <div class="contact-info">
-                            <div class="footer-contact-item">
-                                <div class="icon-box"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
-                                <div class="contact-details">
-                                    <span class="contact-label">Mobile</span>
-                                    <span class="contact-value">+91 86394 78312</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <div>&copy; 2026 Vastramaya. All rights reserved.</div>
-                </div>
-            </footer>
         </main>
-
-        <div class="m-overlay" id="m-overlay">
-            <div class="m-drawer">
-                <div class="m-drawer-header">
-                    <img class="m-drawer-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Logo" />
-                    <button class="m-drawer-close" id="m-drawer-close"><div class="m-drawer-close-icon"></div></button>
-                </div>
-                <nav class="m-drawer-nav">
-                    <div class="nav-section">
-                        <a href="index.html" class="m-nav-link">Home</a>
-                        <a href="shop.html" class="m-nav-link">Shop</a>
-                        <a href="#" class="m-nav-link active" style="color:var(--brand-primary)">Wishlist</a>
-                    </div>
-                </nav>
-                <div class="m-drawer-profile">
-                    <div class="m-profile-header">
-                        <img class="m-profile-img" src="https://ui-avatars.com/api/?name=Guest&background=random" alt="Profile" />
-                        <div class="m-profile-info">
-                            <div class="m-profile-name">Guest</div>
-                            <div class="m-profile-email" style="color:var(--brand-primary);font-weight:600">Login / Sign Up</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="cart-overlay" id="cart-overlay">
-            <div class="cart-drawer">
-                <div class="cart-drawer-header">
-                    <div style="font-weight:700; font-size:18px;">Your Cart</div>
-                    <button class="m-drawer-close" id="cart-drawer-close"><div class="m-drawer-close-icon"></div></button>
-                </div>
-                <div class="cart-drawer-body" id="cart-items-mobile"></div>
-                <div class="cart-drawer-footer">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:15px;font-weight:600;"><span>Total</span><span id="cart-total-mobile">₹0</span></div>
-                    <button class="mobile-buy-btn" onclick="window.location.href='checkout.html'">Checkout Now</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div id="toast-container"></div>
@@ -543,46 +305,9 @@
         let cart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
         let currentUser = null;
 
-        // --- UI HANDLERS (Navbar, Drawers) ---
         document.addEventListener('DOMContentLoaded', () => {
-            initNavbar();
             initApp();
         });
-
-        function initNavbar() {
-            // Mobile Menu
-            const mMenuToggle = document.getElementById('m-menu-toggle');
-            const mDrawerClose = document.getElementById('m-drawer-close');
-            const mOverlay = document.getElementById('m-overlay');
-            const mDrawer = document.querySelector('.m-drawer');
-
-            function toggleDrawer() {
-                mOverlay.classList.toggle('open');
-                mDrawer.style.transform = mOverlay.classList.contains('open') ? 'translateX(0)' : 'translateX(-100%)';
-            }
-            if(mMenuToggle) mMenuToggle.onclick = toggleDrawer;
-            if(mDrawerClose) mDrawerClose.onclick = toggleDrawer;
-            if(mOverlay) mOverlay.onclick = (e) => { if(e.target === mOverlay) toggleDrawer(); };
-
-            // Desktop Cart Popup
-            const dCartToggle = document.getElementById('d-cart-toggle');
-            const cartPopup = document.getElementById('cart-popup');
-            if (dCartToggle && cartPopup) {
-                dCartToggle.onclick = (e) => { e.stopPropagation(); cartPopup.classList.toggle('show'); };
-                cartPopup.onclick = (e) => e.stopPropagation();
-                document.addEventListener('click', () => cartPopup.classList.remove('show'));
-            }
-
-            // Mobile Cart Drawer
-            const mCartToggle = document.getElementById('m-cart-toggle');
-            const cartOverlay = document.getElementById('cart-overlay');
-            const cartDrawerClose = document.getElementById('cart-drawer-close');
-            if (mCartToggle && cartOverlay) {
-                mCartToggle.onclick = () => cartOverlay.classList.add('open');
-                cartDrawerClose.onclick = () => cartOverlay.classList.remove('open');
-                cartOverlay.onclick = (e) => { if(e.target === cartOverlay) cartOverlay.classList.remove('open'); };
-            }
-        }
 
         // --- APP LOGIC ---
         async function initApp() {
@@ -635,25 +360,19 @@
             document.getElementById('itemCount').textContent = `${count} Items Saved`;
             document.getElementById('itemCountMobile').textContent = `${count} Items Saved`;
             
-            const wishBadge = document.getElementById('wishlist-badge-desktop');
-            if(wishBadge) {
-                wishBadge.textContent = count;
-                wishBadge.style.display = count > 0 ? 'flex' : 'none';
-            }
-
             if (count === 0) {
-                document.getElementById('grid').innerHTML = '';
-                document.getElementById('gridMobile').innerHTML = '';
-                document.getElementById('emptyState').classList.add('visible');
-                document.getElementById('emptyStateMobile').classList.add('visible');
-                document.getElementById('moveAllBtn').style.display = 'none';
-                document.getElementById('moveAllBtnMobile').style.display = 'none';
+                if(document.getElementById('grid')) document.getElementById('grid').innerHTML = '';
+                if(document.getElementById('gridMobile')) document.getElementById('gridMobile').innerHTML = '';
+                if(document.getElementById('emptyState')) document.getElementById('emptyState').classList.add('visible');
+                if(document.getElementById('emptyStateMobile')) document.getElementById('emptyStateMobile').classList.add('visible');
+                if(document.getElementById('moveAllBtn')) document.getElementById('moveAllBtn').style.display = 'none';
+                if(document.getElementById('moveAllBtnMobile')) document.getElementById('moveAllBtnMobile').style.display = 'none';
                 return;
             } else {
-                document.getElementById('emptyState').classList.remove('visible');
-                document.getElementById('emptyStateMobile').classList.remove('visible');
-                document.getElementById('moveAllBtn').style.display = 'flex';
-                document.getElementById('moveAllBtnMobile').style.display = 'flex';
+                if(document.getElementById('emptyState')) document.getElementById('emptyState').classList.remove('visible');
+                if(document.getElementById('emptyStateMobile')) document.getElementById('emptyStateMobile').classList.remove('visible');
+                if(document.getElementById('moveAllBtn')) document.getElementById('moveAllBtn').style.display = 'flex';
+                if(document.getElementById('moveAllBtnMobile')) document.getElementById('moveAllBtnMobile').style.display = 'flex';
             }
 
             const generateHTML = (p) => {
@@ -669,14 +388,17 @@
                     <div class="product-info">
                         <p class="product-category">${p.category || 'Collection'}</p>
                         <h3 class="product-title">${p.name}</h3>
-                        <div class="product-price-row">
-                            <div class="price-container">
-                                <span class="current-price">₹${p.price}</span>
-                                <span class="old-price">₹${p.oldPrice || (p.price * 1.2).toFixed(0)}</span>
-                            </div>
-                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); moveToCart('${p.id}')">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                                <span>Move to Cart</span>
+                        <div class="price-container">
+                            <span class="current-price">₹${p.price}</span>
+                            <span class="old-price">₹${p.oldPrice || (p.price * 1.2).toFixed(0)}</span>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn-action btn-buy" onclick="event.stopPropagation(); buyNow('${p.id}')">
+                                Buy Now
+                            </button>
+                            <button class="btn-action btn-cart" onclick="event.stopPropagation(); moveToCart('${p.id}')">
+                                Move to Cart
                             </button>
                         </div>
                     </div>
@@ -684,8 +406,8 @@
             };
 
             const html = wishProducts.map(p => generateHTML(p)).join('');
-            document.getElementById('grid').innerHTML = html;
-            document.getElementById('gridMobile').innerHTML = html;
+            if(document.getElementById('grid')) document.getElementById('grid').innerHTML = html;
+            if(document.getElementById('gridMobile')) document.getElementById('gridMobile').innerHTML = html;
         }
 
         async function removeFromWishlist(id) {
@@ -707,6 +429,21 @@
             const product = allProducts.find(p => p.id === id);
             if (!product) return;
 
+            addToCartLogic(product);
+            removeFromWishlist(id);
+            showToast("Moved to Cart");
+        }
+
+        function buyNow(id) {
+            const product = allProducts.find(p => p.id === id);
+            if (!product) return;
+            
+            addToCartLogic(product);
+            // Assuming there is a cart.html or checkout.html
+            window.location.href = 'cart.html'; 
+        }
+
+        function addToCartLogic(product) {
             const img = (product.images && product.images[0]) || '';
             const cartItem = {
                 id: product.id,
@@ -719,14 +456,12 @@
                 color: 'Default'
             };
 
-            const exists = cart.find(i => i.id === id);
+            const exists = cart.find(i => i.id === product.id);
             if(exists) exists.quantity++;
             else cart.push(cartItem);
 
             saveCart();
             renderCartUI();
-            removeFromWishlist(id);
-            showToast("Moved to Cart");
         }
 
         function moveAllToCart() {
@@ -734,28 +469,13 @@
             if(currentWishlistProducts.length === 0) return;
 
             currentWishlistProducts.forEach(product => {
-                const img = (product.images && product.images[0]) || '';
-                const cartItem = {
-                    id: product.id,
-                    uniqueId: `${product.id}-def-def`,
-                    name: product.name,
-                    price: product.price,
-                    image: img,
-                    quantity: 1,
-                    size: 'M',
-                    color: 'Default'
-                };
-                const exists = cart.find(i => i.id === product.id);
-                if(exists) exists.quantity++;
-                else cart.push(cartItem);
+                addToCartLogic(product);
             });
 
             wishlistIDs = [];
             renderWishlist();
-            saveCart();
             localStorage.setItem('vastramaya_wishlist', JSON.stringify([]));
             if(currentUser) saveWishlistToFirestore();
-            renderCartUI();
             showToast("All items moved to Cart");
         }
 
@@ -773,43 +493,11 @@
                 return acc + item.quantity;
             }, 0);
             
-            // Update Badges
-            ['cart-badge-desktop', 'cart-badge-mobile'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) {
-                    el.textContent = count;
-                    el.style.display = count > 0 ? 'flex' : 'none';
-                }
-            });
-
-            // Update Total
-            const totalStr = `₹${total.toFixed(0)}`;
-            if(document.getElementById('cart-total-desktop')) document.getElementById('cart-total-desktop').textContent = totalStr;
-            if(document.getElementById('cart-total-mobile')) document.getElementById('cart-total-mobile').textContent = totalStr;
-
-            // Populate Popups
-            const desktopBody = document.getElementById('cart-items-desktop');
-            const mobileBody = document.getElementById('cart-items-mobile');
-            let html = '';
+            const badgeD = document.getElementById('cart-badge-desktop');
+            if(badgeD) { badgeD.textContent = count; badgeD.style.display = count > 0 ? 'flex' : 'none'; }
             
-            if(cart.length === 0) {
-                html = '<div style="padding:20px; text-align:center; color:var(--text-light);">Your cart is empty</div>';
-            } else {
-                cart.forEach(item => {
-                    html += `
-                    <div class="cart-item">
-                        <img src="${item.image}" class="cart-item-img">
-                        <div class="cart-item-details">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">₹${item.price} x ${item.quantity}</div>
-                        </div>
-                    </div>`;
-                });
-            }
-
-            if(desktopBody) desktopBody.innerHTML = html;
-            if(mobileBody) mobileBody.innerHTML = html;
-            if(document.getElementById('cart-count-desktop')) document.getElementById('cart-count-desktop').textContent = `${count} items`;
+            const badgeM = document.getElementById('cart-badge-mobile');
+            if(badgeM) { badgeM.textContent = count; badgeM.style.display = count > 0 ? 'flex' : 'none'; }
         }
 
         function showToast(msg) {
