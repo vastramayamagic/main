@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Profile - Vastramaya</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --page-bg: #fefcf3;
+            --card-bg: #ffffff;
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --text-light: #a3715f;
+            --brand-primary: #8b2635;
+            --brand-secondary: #d33d49;
+            --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            --border-subtle: #e8d5c4;
+            --surface-hover: #f9f2e3;
+            --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
+            --font-main: 'DM Sans', sans-serif;
+            --green-success: #4a9c7d;
+            --red-warning: #c62828;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { min-height: 100vh; background: var(--page-bg); font-family: var(--font-main); color: var(--text-primary); padding: 20px; }
+
+        .container { max-width: 800px; margin: 0 auto; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--text-secondary); text-decoration: none; font-weight: 600;
+            font-size: 14px; margin-bottom: 25px; transition: 0.2s;
+        }
+        .back-link:hover { color: var(--brand-primary); transform: translateX(-3px); }
+
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
+        p.subtitle { color: var(--text-light); margin-bottom: 30px; font-size: 15px; }
+
+        /* --- Card Styles --- */
+        .profile-card {
+            background: var(--card-bg); border: 1px solid var(--border-subtle);
+            border-radius: 20px; padding: 30px; margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(59, 11, 23, 0.03);
+            position: relative; overflow: hidden;
+        }
+        
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .section-title { font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: var(--brand-primary); }
+
+        /* --- Section 1: Personal Details --- */
+        .details-grid { display: grid; grid-template-columns: 120px 1fr; gap: 30px; align-items: start; }
+        
+        .avatar-container {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 3px solid var(--border-subtle); padding: 4px;
+            position: relative;
+        }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: var(--surface-hover); }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-group.full { grid-column: span 2; }
+        
+        label { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        input {
+            width: 100%; padding: 12px 16px; border: 1px solid var(--border-subtle);
+            border-radius: 10px; font-family: var(--font-main); font-size: 15px;
+            color: var(--text-primary); background: #fff; transition: 0.2s;
+        }
+        input:disabled { background: #fafafa; color: var(--text-secondary); border-color: transparent; padding-left: 0; }
+        input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
+
+        .edit-btn {
+            background: transparent; border: 1px solid var(--border-subtle);
+            color: var(--brand-primary); padding: 8px 16px; border-radius: 8px;
+            font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 13px;
+        }
+        .edit-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
+        
+        .action-btns { display: none; gap: 10px; margin-top: 20px; }
+        .btn-save { background: var(--brand-gradient); color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-cancel { background: transparent; color: var(--text-secondary); border: none; padding: 10px 16px; font-weight: 600; cursor: pointer; }
+
+        /* --- Section 2: Address --- */
+        .address-container { display: flex; flex-direction: column; gap: 15px; }
+        
+        .address-item {
+            border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.2s; background: #fff;
+        }
+        .address-item:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-rich); }
+        
+        .addr-content { display: flex; flex-direction: column; gap: 5px; }
+        .addr-tag { 
+            font-size: 10px; font-weight: 700; text-transform: uppercase; 
+            background: var(--surface-hover); color: var(--brand-primary); 
+            padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 5px;
+        }
+        .addr-name { font-weight: 700; font-size: 16px; color: var(--text-primary); }
+        .addr-text { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+        
+        .addr-actions { display: flex; gap: 10px; }
+        .icon-action { 
+            width: 36px; height: 36px; border-radius: 8px; 
+            display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; transition: 0.2s; color: var(--text-light); border: 1px solid transparent;
+        }
+        .icon-action:hover { background: var(--surface-hover); color: var(--brand-primary); }
+
+        .add-addr-btn {
+            border: 2px dashed var(--border-subtle); border-radius: 12px; padding: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            color: var(--brand-primary); font-weight: 600; cursor: pointer;
+            transition: 0.2s; background: rgba(255,255,255,0.5);
+        }
+        .add-addr-btn:hover { background: #fff; border-color: var(--brand-primary); }
+
+        /* --- Modal Styles (Reused) --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px);
+            z-index: 2000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-card {
+            background: #fff; border-radius: 20px; width: 100%; max-width: 500px;
+            box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 85vh; border: 1px solid var(--border-subtle); display: flex; flex-direction: column;
+        }
+        .modal-header { padding: 25px 30px; border-bottom: 1px solid var(--border-subtle); background: var(--surface-hover); border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 30px; overflow-y: auto; }
+        .modal-footer { padding: 20px 30px; border-top: 1px solid var(--border-subtle); }
+        
+        .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .full-width { grid-column: span 2; }
+        .modal-input { width: 100%; padding: 12px; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: var(--font-main); }
+        
+        .addr-type-container { display: flex; gap: 10px; margin-top: 10px; }
+        .addr-chip-input { display: none; }
+        .addr-chip-label {
+            padding: 10px 20px; border: 1px solid var(--border-subtle); border-radius: 8px;
+            font-size: 13px; font-weight: 500; cursor: pointer; color: var(--text-secondary); 
+            background: #fff; flex: 1; text-align: center;
+        }
+        .addr-chip-input:checked + .addr-chip-label { background: var(--surface-hover); border-color: var(--brand-primary); color: var(--brand-primary); font-weight: 700; }
+        
+        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-secondary); }
+        
+        @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 768px) {
+            .details-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 20px; }
+            .form-grid { grid-template-columns: 1fr; text-align: left; }
+            .input-group.full { grid-column: span 1; }
+            .avatar-container { margin: 0 auto; }
+            .address-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .addr-actions { width: 100%; justify-content: flex-end; border-top: 1px solid var(--border-subtle); padding-top: 10px; }
+        }
+        
+        /* Toast Notification */
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
+            text-align: center; border-radius: 8px; padding: 16px; position: fixed;
+            z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%);
+            font-size: 14px;
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <h1>My Profile</h1>
+        <p class="subtitle">Manage your personal information and delivery details.</p>
+
+        <div class="profile-card">
+            <div class="section-header">
+                <div class="section-title"><i class="far fa-id-card"></i> Personal Details</div>
+                <button class="edit-btn" id="btn-edit-profile" onclick="toggleEditProfile()">Edit Details</button>
+            </div>
+            
+            <div class="details-grid">
+                <div class="avatar-container">
+                    <img id="profile-avatar" src="https://ui-avatars.com/api/?name=User&background=f9f2e3&color=8b2635" class="avatar-img" alt="Profile">
+                </div>
+                
+                <form id="profile-form" onsubmit="saveProfile(event)">
+                    <div class="form-grid">
+                        <div class="input-group full">
+                            <label>Full Name</label>
+                            <input type="text" id="input-name" value="Loading..." disabled required>
+                        </div>
+                        <div class="input-group">
+                            <label>Mobile Number</label>
+                            <input type="text" id="input-phone" value="..." disabled style="cursor: not-allowed; opacity: 0.7;">
+                        </div>
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" id="input-email" value="..." disabled>
+                        </div>
+                    </div>
+                    
+                    <div class="action-btns" id="profile-actions">
+                        <button type="button" class="btn-cancel" onclick="cancelEditProfile()">Cancel</button>
+                        <button type="submit" class="btn-save">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <div class="section-header">
+                <div class="section-title"><i class="fas fa-map-marker-alt"></i> Saved Addresses</div>
+            </div>
+            
+            <div class="address-container" id="address-list">
+                <div style="text-align:center; padding:20px; color:var(--text-light);">Loading addresses...</div>
+            </div>
+
+            <div class="add-addr-btn" onclick="openAddressModal()" style="margin-top:15px;">
+                <i class="fas fa-plus"></i> Add New Address
+            </div>
+        </div>
+    </div>
+
+    <div id="addressModal" class="modal-overlay">
+        <form onsubmit="saveAddress(event)" class="modal-card">
+            <div class="modal-header">
+                <h3 style="margin:0; font-size:20px;">Address Details</h3>
+                <button type="button" class="close-btn" onclick="closeAddressModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="addr-form-grid">
+                    <div class="full-width">
+                        <label>Full Name</label>
+                        <input type="text" id="modal-name" class="modal-input" required>
+                    </div>
+                    <div>
+                        <label>Mobile</label>
+                        <input type="tel" id="modal-phone" class="modal-input" required pattern="[0-9]{10}">
+                    </div>
+                    <div>
+                        <label>Pincode</label>
+                        <input type="text" id="modal-zip" class="modal-input" required pattern="[0-9]{6}">
+                    </div>
+                </div>
+
+                <div class="addr-form-grid">
+                    <div>
+                        <label>City</label>
+                        <input type="text" id="modal-city" class="modal-input" required>
+                    </div>
+                    <div>
+                        <label>State</label>
+                        <input type="text" id="modal-state" class="modal-input" required>
+                    </div>
+                    <div class="full-width">
+                        <label>Address (House No, Street)</label>
+                        <input type="text" id="modal-street" class="modal-input" required>
+                    </div>
+                    <div class="full-width">
+                        <label>Locality / Town</label>
+                        <input type="text" id="modal-locality" class="modal-input" required>
+                    </div>
+                    <div class="full-width">
+                        <label>Landmark (Optional)</label>
+                        <input type="text" id="modal-landmark" class="modal-input">
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <label>Address Type</label>
+                    <div class="addr-type-container">
+                        <input type="radio" name="addrType" id="type-home" value="Home" class="addr-chip-input" checked>
+                        <label for="type-home" class="addr-chip-label">Home</label>
+                        <input type="radio" name="addrType" id="type-work" value="Work" class="addr-chip-input">
+                        <label for="type-work" class="addr-chip-label">Work</label>
+                        <input type="radio" name="addrType" id="type-other" value="Other" class="addr-chip-input">
+                        <label for="type-other" class="addr-chip-label">Other</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-save" style="width:100%;">Save Address</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="toast">Saved Successfully</div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
+            authDomain: "vastramaya---magic.firebaseapp.com",
+            projectId: "vastramaya---magic",
+            storageBucket: "vastramaya---magic.firebasestorage.app",
+            messagingSenderId: "543460072082",
+            appId: "1:543460072082:web:f3d1140e8f81ad338ae44b"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUser = null;
+        let originalProfileData = {};
+
+        // --- Init ---
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                currentUser = user;
+                loadUserProfile(user);
+            } else {
+                window.location.href = 'index.html'; // Redirect if not logged in
+            }
+        });
+
+        // --- Profile Logic ---
+        async function loadUserProfile(user) {
+            // Setup default form from Auth object
+            originalProfileData = {
+                name: user.displayName || '',
+                email: user.email || '',
+                phone: user.phoneNumber || ''
+            };
+            
+            // Try fetching extra data from Firestore
+            try {
+                const doc = await db.collection('users').doc(user.uid).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    if(data.name) originalProfileData.name = data.name;
+                    if(data.email) originalProfileData.email = data.email;
+                    // phone is usually authoritative from Auth, but check DB if needed
+                    
+                    // Also load addresses
+                    renderAddressList(data.address); 
+                } else {
+                    renderAddressList(null);
+                }
+            } catch (e) { console.error(e); }
+
+            updateProfileUI();
+        }
+
+        function updateProfileUI() {
+            document.getElementById('input-name').value = originalProfileData.name;
+            document.getElementById('input-email').value = originalProfileData.email;
+            document.getElementById('input-phone').value = originalProfileData.phone;
+            
+            // Update Avatar
+            const nameParam = originalProfileData.name || 'User';
+            document.getElementById('profile-avatar').src = `https://ui-avatars.com/api/?name=${nameParam}&background=f9f2e3&color=8b2635&size=128`;
+        }
+
+        function toggleEditProfile() {
+            document.getElementById('btn-edit-profile').style.display = 'none';
+            document.getElementById('profile-actions').style.display = 'flex';
+            
+            document.getElementById('input-name').disabled = false;
+            document.getElementById('input-email').disabled = false;
+            // Phone remains disabled
+            document.getElementById('input-name').focus();
+        }
+
+        function cancelEditProfile() {
+            document.getElementById('btn-edit-profile').style.display = 'block';
+            document.getElementById('profile-actions').style.display = 'none';
+            
+            document.getElementById('input-name').disabled = true;
+            document.getElementById('input-email').disabled = true;
+            
+            updateProfileUI(); // Reset values
+        }
+
+        async function saveProfile(e) {
+            e.preventDefault();
+            const newName = document.getElementById('input-name').value;
+            const newEmail = document.getElementById('input-email').value;
+            const saveBtn = document.querySelector('.btn-save');
+
+            saveBtn.innerText = 'Saving...';
+            
+            try {
+                // Update Auth Profile
+                await currentUser.updateProfile({ displayName: newName });
+                if(newEmail !== currentUser.email && newEmail !== '') {
+                    // Note: updateEmail requires recent login, might fail if session old
+                    try { await currentUser.updateEmail(newEmail); } catch(err) { console.log("Email update requires re-login"); }
+                }
+
+                // Update Firestore
+                await db.collection('users').doc(currentUser.uid).set({
+                    name: newName,
+                    email: newEmail
+                }, { merge: true });
+
+                originalProfileData.name = newName;
+                originalProfileData.email = newEmail;
+                
+                showToast("Profile Updated!");
+                cancelEditProfile();
+            } catch (error) {
+                console.error("Error updating profile", error);
+                showToast("Error updating profile");
+            } finally {
+                saveBtn.innerText = 'Save Changes';
+            }
+        }
+
+        // --- Address Logic ---
+        function renderAddressList(addressData) {
+            const container = document.getElementById('address-list');
+            container.innerHTML = '';
+
+            if (!addressData) {
+                container.innerHTML = '<div style="text-align:center; padding:10px; color:var(--text-secondary);">No addresses saved.</div>';
+                return;
+            }
+
+            // In this simplified version, we are storing a SINGLE address object in 'address' field based on checkout.html logic.
+            // If you want array of addresses, logic changes. Assuming single for now based on previous code.
+            
+            const addr = addressData; // Object: { name, street, city... }
+            
+            const div = document.createElement('div');
+            div.className = 'address-item';
+            div.innerHTML = `
+                <div class="addr-content">
+                    <span class="addr-tag">${addr.type || 'Home'}</span>
+                    <div class="addr-name">${addr.name} <span style="font-weight:400; font-size:13px; color:var(--text-light); margin-left:5px;">${addr.phone}</span></div>
+                    <div class="addr-text">
+                        ${addr.street}, ${addr.locality}<br>
+                        ${addr.city}, ${addr.state} - <strong>${addr.zip}</strong>
+                    </div>
+                </div>
+                <div class="addr-actions">
+                    <div class="icon-action" onclick="editAddress()"><i class="fas fa-pen"></i></div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        // --- Modal Logic ---
+        const modal = document.getElementById('addressModal');
+
+        function openAddressModal() {
+            modal.style.display = 'flex';
+            // Clear form
+            document.getElementById('modal-name').value = '';
+            document.getElementById('modal-phone').value = '';
+            document.getElementById('modal-zip').value = '';
+            document.getElementById('modal-city').value = '';
+            document.getElementById('modal-state').value = '';
+            document.getElementById('modal-street').value = '';
+            document.getElementById('modal-locality').value = '';
+            document.getElementById('modal-landmark').value = '';
+        }
+
+        // Pre-fill modal for editing
+        async function editAddress() {
+            try {
+                const doc = await db.collection('users').doc(currentUser.uid).get();
+                if (doc.exists && doc.data().address) {
+                    const addr = doc.data().address;
+                    document.getElementById('modal-name').value = addr.name;
+                    document.getElementById('modal-phone').value = addr.phone;
+                    document.getElementById('modal-zip').value = addr.zip;
+                    document.getElementById('modal-city').value = addr.city;
+                    document.getElementById('modal-state').value = addr.state;
+                    document.getElementById('modal-street').value = addr.street;
+                    document.getElementById('modal-locality').value = addr.locality;
+                    document.getElementById('modal-landmark').value = addr.landmark || '';
+                    
+                    // Set radio
+                    const radios = document.getElementsByName('addrType');
+                    for(let r of radios) {
+                        if(r.value === addr.type) r.checked = true;
+                    }
+                    
+                    modal.style.display = 'flex';
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function closeAddressModal() {
+            modal.style.display = 'none';
+        }
+
+        async function saveAddress(e) {
+            e.preventDefault();
+            const addressData = {
+                name: document.getElementById('modal-name').value,
+                phone: document.getElementById('modal-phone').value,
+                zip: document.getElementById('modal-zip').value,
+                city: document.getElementById('modal-city').value,
+                state: document.getElementById('modal-state').value,
+                street: document.getElementById('modal-street').value,
+                locality: document.getElementById('modal-locality').value,
+                landmark: document.getElementById('modal-landmark').value,
+                type: document.querySelector('input[name="addrType"]:checked').value
+            };
+
+            try {
+                await db.collection('users').doc(currentUser.uid).set({
+                    address: addressData
+                }, { merge: true });
+                
+                renderAddressList(addressData);
+                closeAddressModal();
+                showToast("Address Saved!");
+            } catch (error) {
+                console.error("Error saving address", error);
+                showToast("Error saving address");
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.textContent = msg;
+            t.className = "show";
+            setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) closeAddressModal();
+        }
+    </script>
+</body>
+</html>
