@@ -58,20 +58,23 @@
 
         h3 { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px 0; text-transform: uppercase; letter-spacing: 0.08em; }
 
+        /* Color Options */
         .color-options img { width: 56px; height: 76px; object-fit: cover; border-radius: 8px; margin-right: 12px; border: 2px solid transparent; padding: 2px; transition: all 0.2s; cursor: pointer; }
-        .color-options img.active { border-color: var(--brand-primary); }
+        .color-options img.active { border-color: var(--brand-primary); box-shadow: 0 4px 12px rgba(139, 38, 53, 0.15); }
 
+        /* Size Boxes */
         .size-boxes { display: flex; flex-wrap: wrap; gap: 10px; }
         .size-boxes button { min-width: 52px; height: 44px; border: 1px solid var(--border-subtle); background: var(--surface-card); border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; font-family: "DM Sans", sans-serif; }
         .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         .size-boxes button.active { background: var(--brand-primary); border-color: var(--brand-primary); color: #fff; }
-        .size-boxes button:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; }
+        .size-boxes button:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; border-color: #ddd; color: #999; }
 
         .quantity-container { display: inline-flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 8px 16px; min-width: 140px; margin: 5px 0 30px 0; background-color: var(--surface-card); height: 46px; }
         .qty-btn { border: none; background: transparent; font-size: 22px; color: var(--text-primary); transition: color 0.2s; }
         .qty-btn:hover { color: var(--brand-primary); }
         #qtyValue { font-weight: 600; font-size: 16px; }
 
+        /* Action Buttons */
         .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
         .action-button { height: 52px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; transition: all 0.3s ease; font-family: "DM Sans", sans-serif; }
         
@@ -96,6 +99,7 @@
         .badge-item { display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; }
         .badge-item svg { width: 22px; height: 22px; margin-bottom: 10px; stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
 
+        /* Accordion */
         .accordion-wrapper { margin-top: 30px; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
         .accordion-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; background: none; border: none; font-size: 15px; font-weight: 600; cursor: pointer; color: var(--text-primary); }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; }
@@ -109,8 +113,7 @@
         .reviews-nav { display: flex; gap: 10px; }
         .review-arrow { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--surface-card); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
         .review-arrow:hover { border-color: var(--brand-primary); background: var(--surface-hover); color: var(--brand-primary); }
-        .review-arrow.disabled { opacity: 0.5; cursor: default; pointer-events: none; }
-
+        
         .reviews-container { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding-bottom: 10px; margin: 0 -5px; padding: 5px 5px 15px 5px; -webkit-overflow-scrolling: touch; }
         .reviews-container::-webkit-scrollbar { height: 4px; }
         .reviews-container::-webkit-scrollbar-track { background: var(--surface-light); }
@@ -163,7 +166,7 @@
             .left-section, .right-section { width: 100%; position: static; }
             .left-content { display: none; }
             
-            /* Mobile Carousel - Auto Scroll + Smooth Touch */
+            /* Mobile Carousel */
             .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 450px; }
             .mobile-image { 
                 height: 100%; width: 100%; display: flex; 
@@ -198,20 +201,11 @@
             .m-add { background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); }
             .m-buy { background: var(--brand-gradient); color: white; }
 
-            /* Mobile Description Clamping */
             .desc-content.mobile-clamp {
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
+                display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
             }
             .view-more-btn {
-                display: inline-block;
-                color: var(--brand-primary);
-                font-weight: 600;
-                font-size: 14px;
-                margin-top: 5px;
-                cursor: pointer;
+                display: inline-block; color: var(--brand-primary); font-weight: 600; font-size: 14px; margin-top: 5px; cursor: pointer;
             }
             
             .review-card { min-width: 85%; max-width: 85%; }
@@ -313,10 +307,10 @@
     <div class="related-section">
         <h2 class="related-title">You may also like</h2>
         <div class="related-grid" id="relatedGrid">
-             <div class="related-card skeleton" style="height: 300px;"></div>
-             <div class="related-card skeleton" style="height: 300px;"></div>
-             <div class="related-card skeleton" style="height: 300px;"></div>
-             <div class="related-card skeleton" style="height: 300px;"></div>
+            <div class="related-card skeleton" style="height:320px;"></div>
+            <div class="related-card skeleton" style="height:320px;"></div>
+            <div class="related-card skeleton" style="height:320px;"></div>
+            <div class="related-card skeleton" style="height:320px;"></div>
         </div>
     </div>
 
@@ -356,7 +350,7 @@
 
             if (!productId) {
                 alert("Product not found. Redirecting to shop.");
-                window.location.href = 'shop.html';
+                window.location.href = 'shop.html'; // Adjust as needed
                 return;
             }
 
@@ -398,7 +392,7 @@
                 if (!doc.exists) return;
                 currentProduct = { id: doc.id, ...doc.data() };
                 renderProduct();
-                // UPDATED: Use categoryId from Schema
+                // Pass categoryId correctly for related products
                 loadRelatedProducts(currentProduct.categoryId, currentProduct.id);
             } catch (error) { console.error(error); }
         }
@@ -427,8 +421,9 @@
             }
 
             renderColorOptions();
+            // Initial render of variants will handle size rendering
+            selectVariant(0); 
             renderReviews();
-            selectVariant(0); // This now triggers renderSizeOptions
             updateWishlistState();
         }
 
@@ -477,7 +472,7 @@
             if (currentProduct.colorVariants && currentProduct.colorVariants.length > 0) {
                 currentProduct.colorVariants.forEach((variant, index) => {
                     const img = document.createElement('img');
-                    // UPDATED: Use hex (swatch URL) if available, fallback to product image
+                    // Use hex URL for swatch, fallback to first variant image, fallback to placeholder
                     img.src = variant.hex || variant.images?.[0] || 'https://via.placeholder.com/60'; 
                     img.onclick = () => selectVariant(index);
                     if (index === 0) img.classList.add('active');
@@ -488,7 +483,37 @@
             }
         }
 
-        // UPDATED: Render sizes specific to the selected variant
+        function selectVariant(index) {
+            activeVariantIndex = index;
+            document.querySelectorAll('.color-options img').forEach((img, i) => img.classList.toggle('active', i === index));
+            
+            let images = [];
+            let variantSizes = [];
+
+            if (currentProduct.colorVariants && currentProduct.colorVariants[index]) {
+                const variant = currentProduct.colorVariants[index];
+                
+                // Get Images
+                images = variant.images || currentProduct.images;
+                
+                // Get Name
+                if(variant.name) document.getElementById('selectedColorName').textContent = variant.name;
+                
+                // Get Sizes from nested array
+                variantSizes = variant.sizes || [];
+            } else {
+                images = currentProduct.images || [];
+                // Fallback if no variants defined
+                variantSizes = currentProduct.sizes || []; 
+            }
+            
+            activeImageIndex = 0;
+            renderGallery(images);
+            
+            // Re-render sizes specifically for this color
+            renderSizeOptions(variantSizes);
+        }
+
         function renderSizeOptions(specificSizes) {
             const container = document.getElementById('sizeBoxes');
             container.innerHTML = '';
@@ -496,13 +521,13 @@
             const sizesToRender = specificSizes || [];
 
             if (sizesToRender.length === 0) {
-                container.innerHTML = '<span style="font-size:14px; color:#888;">Out of Stock in this color</span>';
+                container.innerHTML = '<span style="font-size:14px; color:#888;">No sizes available</span>';
                 return;
             }
 
             sizesToRender.forEach((sizeObj, index) => {
                 const btn = document.createElement('button');
-                btn.textContent = sizeObj.name; // Schema uses { name: "S", available: true }
+                btn.textContent = sizeObj.name;
                 
                 if (!sizeObj.available) {
                     btn.disabled = true;
@@ -514,38 +539,12 @@
                         document.getElementById('sizeLabel').textContent = selectedSize;
                     };
                 }
-
                 container.appendChild(btn);
             });
             
-            // Reset selected size when color changes
+            // Reset selection when color changes
             selectedSize = null;
             document.getElementById('sizeLabel').textContent = "Select Size";
-        }
-
-        // UPDATED: Select Variant Logic
-        function selectVariant(index) {
-            activeVariantIndex = index;
-            document.querySelectorAll('.color-options img').forEach((img, i) => img.classList.toggle('active', i === index));
-            
-            let images = [];
-            let variantSizes = [];
-
-            if (currentProduct.colorVariants && currentProduct.colorVariants[index]) {
-                const variant = currentProduct.colorVariants[index];
-                images = variant.images || currentProduct.images;
-                if(variant.name) document.getElementById('selectedColorName').textContent = variant.name;
-                
-                // CRITICAL: Get sizes from the variant logic (Matches Schema)
-                variantSizes = variant.sizes || []; 
-            } else {
-                images = currentProduct.images || [];
-                variantSizes = currentProduct.sizes || []; // Fallback
-            }
-
-            activeImageIndex = 0;
-            renderGallery(images);
-            renderSizeOptions(variantSizes);
         }
 
         function renderGallery(images) {
@@ -577,6 +576,7 @@
             mobileCarousel.innerHTML = images.map(src => `<img src="${src}">`).join('');
             dotsContainer.innerHTML = images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
             
+            // Auto Scroll Logic for Mobile
             startMobileAutoScroll(images.length);
         }
 
@@ -604,7 +604,6 @@
             }, 5000);
         }
 
-        // UPDATED: Load Related Products using categoryId
         async function loadRelatedProducts(categoryId, currentId) {
             try {
                 if (!categoryId) {
@@ -612,23 +611,25 @@
                     return;
                 }
 
+                // Query for same categoryId
                 const snap = await db.collection('products')
                     .where('categoryId', '==', categoryId)
-                    .limit(5).get();
+                    .limit(5).get(); // Limit 5 to allow for excluding current
                 
                 const relatedGrid = document.getElementById('relatedGrid');
                 let html = '';
                 let count = 0;
 
                 snap.docs.forEach(doc => {
-                    if (doc.id === currentId) return;
-                    if (count >= 4) return;
-                    
+                    if (doc.id === currentId) return; // Skip current product
+                    if (count >= 4) return; // Max 4 items
+
                     const p = doc.data();
+                    // Handle image structure based on Schema
                     const img = (p.images && p.images[0]) || p.image || 'https://via.placeholder.com/300';
                     
                     html += `
-                    <div class="related-card" onclick="window.location.href='product-details.html?id=${doc.id}'">
+                    <div class="related-card" onclick="window.location.href='view.html?id=${doc.id}'">
                         <div class="related-image-box"><img src="${img}" alt="${p.name}"></div>
                         <div class="related-info">
                             <div class="related-name">${p.name}</div>
@@ -638,7 +639,7 @@
                     count++;
                 });
 
-                if (html === '' || count === 0) document.querySelector('.related-section').style.display = 'none';
+                if (count === 0) document.querySelector('.related-section').style.display = 'none';
                 else relatedGrid.innerHTML = html;
 
             } catch(e) { console.log(e); }
@@ -650,7 +651,6 @@
                 showToast("Please select a size");
                 return;
             }
-            
             const variant = currentProduct.colorVariants ? currentProduct.colorVariants[activeVariantIndex] : {};
             const colorName = variant.name || 'Default';
             const uniqueId = `${currentProduct.id}-${colorName}-${selectedSize}`;
@@ -680,7 +680,7 @@
                 showToast("Please select a size");
                 return;
             }
-
+            
             const variant = currentProduct.colorVariants ? currentProduct.colorVariants[activeVariantIndex] : {};
             const colorName = variant.name || 'Default';
             
@@ -706,6 +706,7 @@
 
         function updateCartBadge() {
             const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+            // Implement badge update if you have a navbar
         }
 
         function toggleWishlist() {
@@ -716,7 +717,6 @@
             localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
             if (currentUser) db.collection('users').doc(currentUser.uid).update({ wishlist: wishlist }).catch(console.error);
             updateWishlistState();
-            updateCartBadge();
         }
 
         function updateWishlistState() {
