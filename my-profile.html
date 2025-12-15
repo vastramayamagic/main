@@ -22,7 +22,6 @@
             --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
             --border-subtle: #e8d5c4;
             --surface-hover: #f9f2e3;
-            --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
             --shadow-premium: 0 20px 40px -10px rgba(59, 11, 23, 0.15);
             --font-main: 'DM Sans', sans-serif;
             --font-serif: 'Cormorant Garamond', serif;
@@ -45,7 +44,6 @@
             color: var(--text-secondary); text-decoration: none; font-weight: 600;
             font-size: 14px; margin-bottom: 25px; transition: 0.2s;
         }
-        .back-link:hover { color: var(--brand-primary); transform: translateX(-3px); }
 
         .profile-wrapper {
             background: var(--card-bg);
@@ -68,10 +66,9 @@
 
         .avatar-row {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: flex-end;
             margin-bottom: 30px;
-            position: relative;
         }
 
         .avatar-container {
@@ -83,77 +80,70 @@
         }
         .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
         
+        .edit-profile-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 1px solid var(--border-subtle);
+            background: #fff;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 10px;
+        }
+
         /* --- Sections --- */
         .info-section { margin-bottom: 40px; }
-        
-        /* Header of a Section (e.g. Personal Details) */
         .section-label {
             font-family: var(--font-serif);
             font-size: 22px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 20px;
-            display: flex; align-items: center; justify-content: space-between; /* Pushes Edit btn to right */
+            display: flex; align-items: center; gap: 10px;
             border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
-
-        .label-text { display: flex; align-items: center; gap: 10px; }
-
-        /* The Edit Button (Clean Text Style) */
-        .header-edit-btn {
-            font-family: var(--font-main);
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--brand-primary);
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 6px;
-            transition: 0.2s;
-        }
-        .header-edit-btn:hover { background: var(--surface-hover); }
         
-        /* --- Form Styles (Fixed) --- */
+        /* Form Styling - Fixed for Width Consistency */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .input-group { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .input-group.full { grid-column: span 2; }
         
         label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
         
-        /* KEY FIX: Same border and padding for enabled and disabled */
         input {
             width: 100%; 
             padding: 14px 16px; 
-            border: 1px solid var(--border-subtle);
+            border: 1px solid var(--border-subtle); /* Constant border */
             border-radius: 12px; 
             font-family: var(--font-main); 
             font-size: 15px;
             color: var(--text-primary); 
             background: #fff; 
-            transition: all 0.2s ease;
-            box-sizing: border-box; /* Ensures padding doesn't affect width */
-            -webkit-appearance: none; /* iOS Reset */
+            transition: 0.2s;
+            box-sizing: border-box; /* Ensures padding/border don't affect width */
         }
-
-        /* KEY FIX: Disabled state looks visually distinct but occupies EXACT same space */
-        input:disabled {
-            background: #fcfcfc; /* Very subtle grey */
-            border-color: var(--border-subtle); /* Keep the border! */
+        
+        /* FIXED: Disabled input looks exactly the same size/shape */
+        input:disabled { 
+            background: #fdfdfd; 
+            border: 1px solid var(--border-subtle); /* KEEP BORDER VISIBLE */
             color: var(--text-secondary);
-            opacity: 1; /* iOS opacity fix */
-            -webkit-text-fill-color: var(--text-secondary);
+            opacity: 1; /* iOS Fix */
+            -webkit-text-fill-color: var(--text-secondary); /* iOS Fix */
             cursor: default;
         }
-
-        input:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.08); background: #fff; }
+        
+        input:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(139, 38, 53, 0.05); }
 
         .action-btns { display: none; gap: 15px; margin-top: 25px; }
-        .btn-save { background: var(--brand-gradient); color: white; border: none; padding: 14px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; flex: 1; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); }
-        .btn-cancel { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 14px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; flex: 1; }
+        .btn-save { background: var(--brand-gradient); color: white; border: none; padding: 14px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); transition: 0.2s; }
+        .btn-cancel { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 14px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; }
 
-        /* Address Card Styles */
+        /* Address Styles */
         .address-card {
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
@@ -168,19 +158,15 @@
             background: var(--surface-hover); color: var(--brand-primary); 
             padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; display: inline-block;
         }
-        .addr-details h4 { font-size: 18px; margin-bottom: 6px; color: var(--text-primary); font-weight: 700; }
-        .addr-details p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
-        
         .edit-addr-icon {
             width: 40px; height: 40px; border-radius: 10px;
             background: var(--surface-hover); color: var(--brand-primary);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.2s; font-size: 14px; flex-shrink: 0;
+            cursor: pointer;
         }
-
         .empty-addr {
             text-align: center; padding: 40px; border: 2px dashed var(--border-subtle);
-            border-radius: 16px; color: var(--text-light); cursor: pointer; transition: 0.2s;
+            border-radius: 16px; color: var(--text-light); cursor: pointer;
         }
 
         /* --- Mobile Specifics --- */
@@ -197,74 +183,97 @@
                 z-index: 0;
             }
             
-            .container { margin-top: 80px; padding: 0 16px 40px 16px; }
+            .container { margin-top: 100px; padding: 0 20px 40px 20px; }
 
-            .back-link { position: absolute; top: -50px; left: 20px; color: rgba(255,255,255,0.95); z-index: 10; font-size: 15px; }
+            .back-link {
+                position: absolute; top: -70px; left: 20px; 
+                color: rgba(255,255,255,0.9); z-index: 10;
+            }
 
             .profile-wrapper {
-                background: #fff; border: none;
-                box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-                border-radius: 24px;
+                background: #fff; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+                border-radius: 24px; overflow: visible;
             }
 
             .profile-header-bg { display: none; }
             
-            .profile-content { padding: 0 20px 30px 20px; margin-top: 0; }
+            .profile-content {
+                padding: 0 20px 30px 20px;
+                margin-top: 0;
+                display: flex; flex-direction: column; align-items: center;
+            }
 
-            .avatar-row { margin-top: -50px; margin-bottom: 25px; }
-            .avatar-container { width: 100px; height: 100px; border: 4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+            /* FIXED: Avatar and Edit Button Layout */
+            .avatar-row {
+                flex-direction: column; /* Stack them */
+                align-items: center;
+                justify-content: center;
+                margin-top: -60px; /* Pull avatar up */
+                margin-bottom: 20px;
+                width: 100%;
+            }
+
+            .avatar-container {
+                width: 110px; height: 110px;
+                border: 4px solid #fff;
+                box-shadow: 0 10px 20px rgba(139, 38, 53, 0.2);
+            }
+
+            /* FIXED: Edit Button positioned nicely under avatar */
+            .edit-profile-btn {
+                margin: 15px 0 0 0; /* Space below avatar */
+                position: static; /* No absolute positioning */
+                background: white;
+                border: 1px solid var(--border-subtle);
+                color: var(--brand-primary);
+                font-weight: 600;
+                font-size: 13px;
+                padding: 8px 24px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
 
             .section-label { 
-                font-size: 18px; 
-                background: var(--surface-hover);
-                padding: 12px 16px; 
-                border-radius: 12px;
-                border-bottom: none;
+                font-size: 20px; border-bottom: none; 
+                background: var(--surface-hover); 
+                padding: 12px 15px; border-radius: 12px;
                 margin-bottom: 20px;
             }
-            .label-text { gap: 8px; }
 
-            /* Mobile Form Grid */
-            .form-grid { grid-template-columns: 1fr; gap: 18px; }
+            .form-grid { grid-template-columns: 1fr; gap: 20px; width: 100%; }
             .input-group.full { grid-column: span 1; }
             
-            /* Address Card Mobile */
-            .address-card { flex-direction: column; gap: 15px; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
-            .edit-addr-icon { align-self: flex-end; margin-top: -45px; background: #fff; border: 1px solid var(--border-subtle); }
+            /* Ensure input stays 100% width */
+            .input-group input { width: 100%; }
+
+            .address-card { 
+                flex-direction: column; gap: 15px; 
+                background: linear-gradient(180deg, #fff 0%, #fffcfc 100%);
+            }
+            .edit-addr-icon {
+                align-self: flex-end; margin-top: -40px; 
+                background: white; border: 1px solid var(--border-subtle);
+            }
         }
 
-        /* --- Modal & Toast (Same as before) --- */
+        /* Modal Styles */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(59, 11, 23, 0.5); backdrop-filter: blur(5px);
-            z-index: 3000; justify-content: center; align-items: flex-end; /* Mobile Bottom Sheet Style default for mobile */
+            background: rgba(59, 11, 23, 0.5); backdrop-filter: blur(8px);
+            z-index: 3000; justify-content: center; align-items: center; padding: 20px;
         }
-        
         .modal-card {
-            background: #fff; width: 100%; max-width: 500px;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.2); 
-            display: flex; flex-direction: column;
-            border-radius: 24px 24px 0 0; /* Bottom sheet radius */
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            max-height: 85vh;
+            background: #fff; border-radius: 24px; width: 100%; max-width: 500px;
+            max-height: 90vh; display: flex; flex-direction: column;
         }
-
-        @media(min-width: 769px) {
-            .modal-overlay { align-items: center; padding: 20px; }
-            .modal-card { border-radius: 24px; animation: popIn 0.3s ease; }
-        }
-
         .modal-header { padding: 20px 25px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
         .modal-body { padding: 25px; overflow-y: auto; }
         .modal-footer { padding: 20px 25px; border-top: 1px solid var(--border-subtle); }
         .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-secondary); }
-        
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        @keyframes popIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
 
+        /* Toast */
         #toast {
             visibility: hidden; min-width: 280px; background-color: #1a1a1a; color: #fff;
-            text-align: center; border-radius: 50px; padding: 14px 24px; position: fixed;
+            text-align: center; border-radius: 50px; padding: 16px 24px; position: fixed;
             z-index: 4000; left: 50%; bottom: 30px; transform: translateX(-50%);
             font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; gap: 10px;
         }
@@ -288,14 +297,12 @@
                     <div class="avatar-container">
                         <img id="profile-avatar" src="https://ui-avatars.com/api/?name=User&background=f9f2e3&color=8b2635&size=128" class="avatar-img" alt="Profile">
                     </div>
+                    <button class="edit-profile-btn" id="btn-edit-profile" onclick="toggleEditProfile()">Edit Details</button>
                 </div>
 
                 <div class="info-section">
                     <div class="section-label">
-                        <div class="label-text">
-                            <i class="far fa-user-circle" style="color: var(--brand-primary);"></i> Personal Details
-                        </div>
-                        <button class="header-edit-btn" id="btn-edit-trigger" onclick="toggleEditProfile()">Edit</button>
+                        <i class="far fa-user-circle" style="color: var(--brand-primary);"></i> Personal Details
                     </div>
                     
                     <form id="profile-form" onsubmit="saveProfile(event)">
@@ -306,7 +313,7 @@
                             </div>
                             <div class="input-group">
                                 <label>Mobile Number</label>
-                                <input type="text" id="input-phone" value="..." disabled style="opacity: 0.8; background: #f0f0f0;">
+                                <input type="text" id="input-phone" value="..." disabled style="cursor: not-allowed; opacity: 0.7; background: #f5f5f5;">
                             </div>
                             <div class="input-group">
                                 <label>Email Address</label>
@@ -323,9 +330,7 @@
 
                 <div class="info-section" style="margin-bottom: 0;">
                     <div class="section-label">
-                        <div class="label-text">
-                            <i class="fas fa-map-marker-alt" style="color: var(--brand-primary);"></i> Delivery Address
-                        </div>
+                        <i class="fas fa-map-marker-alt" style="color: var(--brand-primary);"></i> Delivery Address
                     </div>
                     
                     <div id="address-list">
@@ -390,11 +395,11 @@
                     <div style="display: flex; gap: 10px;">
                         <label style="flex:1; cursor:pointer;">
                             <input type="radio" name="addrType" value="Home" checked style="display:none;" onchange="updateChips(this)">
-                            <div class="chip active" style="text-align:center; padding:12px; border:1px solid var(--brand-primary); background:var(--surface-hover); color:var(--brand-primary); border-radius:10px; font-weight:700; font-size:13px; transition:0.2s;">Home</div>
+                            <div class="chip active" style="text-align:center; padding:10px; border:1px solid var(--brand-primary); background:var(--surface-hover); color:var(--brand-primary); border-radius:8px; font-weight:600; font-size:13px;">Home</div>
                         </label>
                         <label style="flex:1; cursor:pointer;">
                             <input type="radio" name="addrType" value="Work" style="display:none;" onchange="updateChips(this)">
-                            <div class="chip" style="text-align:center; padding:12px; border:1px solid var(--border-subtle); background:#fff; color:var(--text-secondary); border-radius:10px; font-weight:500; font-size:13px; transition:0.2s;">Work</div>
+                            <div class="chip" style="text-align:center; padding:10px; border:1px solid var(--border-subtle); background:#fff; color:var(--text-secondary); border-radius:8px; font-weight:500; font-size:13px;">Work</div>
                         </label>
                     </div>
                 </div>
@@ -421,7 +426,7 @@
             messagingSenderId: "543460072082",
             appId: "1:543460072082:web:f3d1140e8f81ad338ae44b"
         };
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
@@ -469,7 +474,7 @@
         }
 
         function toggleEditProfile() {
-            document.getElementById('btn-edit-trigger').style.display = 'none';
+            document.getElementById('btn-edit-profile').style.display = 'none';
             document.getElementById('profile-actions').style.display = 'flex';
             document.getElementById('input-name').disabled = false;
             document.getElementById('input-email').disabled = false;
@@ -477,7 +482,7 @@
         }
 
         function cancelEditProfile() {
-            document.getElementById('btn-edit-trigger').style.display = 'block';
+            document.getElementById('btn-edit-profile').style.display = 'block';
             document.getElementById('profile-actions').style.display = 'none';
             document.getElementById('input-name').disabled = true;
             document.getElementById('input-email').disabled = true;
