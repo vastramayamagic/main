@@ -38,7 +38,7 @@
         /* =========================================
            MAIN PRODUCT PAGE LAYOUT
            ========================================= */
-        .container { display: flex; align-items: flex-start; padding: 0 40px; max-width: 1400px; width: 100%; margin: 0 auto 60px auto; gap: 50px; }
+        .container { display: flex; align-items: flex-start; padding: 0 40px; max-width: 1400px; width: 100%; margin: 0 auto 40px auto; gap: 50px; }
         .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
         .right-section { width: 45%; }
         
@@ -56,11 +56,11 @@
         /* Typography & Spacing */
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; }
         
-        /* FIXED: Tight Price Gap */
-        .price { display: flex; gap: 8px; align-items: baseline; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
-        .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; }
-        .price .old { text-decoration: line-through; color: var(--text-light); font-size: 16px; font-weight: 500; }
-        .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; transform: translateY(-3px); }
+        /* FIXED PRICE STYLING */
+        .price { display: flex; align-items: baseline; gap: 6px; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
+        .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; margin-right: 0; }
+        .price .old { text-decoration: line-through; color: var(--text-light); font-size: 18px; font-weight: 500; opacity: 0.8; }
+        .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; transform: translateY(-3px); display: inline-block; }
 
         h3 { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px 0; text-transform: uppercase; letter-spacing: 0.08em; }
 
@@ -90,12 +90,12 @@
         .buy-now-btn { width: 100%; padding: 16px; background: var(--brand-gradient); color: #fff; border: none; margin-top: 16px; height: 52px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); transition: transform 0.2s, box-shadow 0.2s; font-family: "DM Sans", sans-serif; }
         .buy-now-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
 
-        /* RESTORED: Trust Badges */
+        /* Trust Badges */
         .trust-badges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--border-subtle); }
         .badge-item { display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; }
         .badge-item svg { width: 22px; height: 22px; margin-bottom: 8px; stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
 
-        /* RESTORED: Shipping Accordion */
+        /* Accordion */
         .accordion-wrapper { margin-top: 25px; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
         .accordion-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 18px 0; background: none; border: none; font-size: 15px; font-weight: 600; cursor: pointer; color: var(--text-primary); }
         .accordion-header::after { content: '+'; font-size: 18px; font-weight: 400; }
@@ -103,21 +103,19 @@
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; }
         .accordion-content p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); padding-bottom: 20px; }
 
-        /* Description with View More */
         .product-description { margin-top: 30px; }
         .product-description h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
         .desc-text { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 8px; }
         .desc-clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
         .view-more-btn { color: var(--brand-primary); font-weight: 600; font-size: 14px; cursor: pointer; display: none; text-decoration: underline; }
 
-        /* Mobile specific placeholders */
         .mobile-wrapper { display: none; }
         .mobile-add-cart-container { display: none; }
 
         /* =========================================
-           NEW: PREMIUM REVIEWS SECTION
+           REVIEWS SECTION (Premium)
            ========================================= */
-        .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); }
+        .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block !important; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
         .reviews-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
@@ -133,7 +131,7 @@
         .rev-text { font-size: 14px; line-height: 1.6; color: var(--text-secondary); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* =========================================
-           RELATED PRODUCTS UI (Premium)
+           RELATED PRODUCTS UI
            ========================================= */
         .category-products-section { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
@@ -171,7 +169,6 @@
         }
         .wishlist-btn-top-right:hover { transform: scale(1.1); background: #fff; }
         .wishlist-btn-top-right svg { width: 18px; height: 18px; stroke: var(--brand-primary); fill: none; transition: all 0.2s ease; }
-        /* Active Heart Fill */
         .wishlist-btn-top-right.active svg { fill: var(--brand-primary); stroke: var(--brand-primary); }
 
         .quick-view-btn {
@@ -197,7 +194,7 @@
         .add-to-cart-icon svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 1.5; }
 
         /* =========================================
-           MODAL STYLES (Popup)
+           MODAL & POPUP
            ========================================= */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -258,7 +255,6 @@
 
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
-        /* Toast & Skeleton */
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 6000; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 1rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 1rem; border-left: 4px solid #8b2635; min-width: 300px; font-family: 'DM Sans', sans-serif; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -276,7 +272,6 @@
             .category-products-section, .reviews-section-premium { padding: 30px 20px; }
             .section-nav { display: none !important; }
             
-            /* Tablet Modal */
             .modal-content-box { height: 85vh; width: 80vw; max-width: 700px; display: flex; flex-direction: column; }
             .modal-container { display: block; padding: 0; width: 100%; overflow-y: auto; }
             .gallery-wrapper { display: none; }
@@ -288,17 +283,15 @@
         }
 
         /* =========================================
-           RESPONSIVE (MOBILE) - FIXED PADDING
+           RESPONSIVE (MOBILE) - FINAL FIXES
            ========================================= */
         @media (max-width: 600px) {
-            body { padding-top: 0; background: var(--surface-light); }
+            body { padding-top: 0; background: var(--surface-light); padding-bottom: 80px; /* IMPORTANT: Bottom Padding Fix */ }
             
-            /* REMOVE UNWANTED PADDING GAP */
             .container { flex-direction: column; padding: 0; gap: 0; margin-bottom: 0; width: 100%; max-width: 100%; }
             .left-section, .right-section { width: 100%; position: static; }
             .left-content { display: none; }
             
-            /* Main Product Mobile Carousel */
             .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 450px; }
             .mobile-image { height: 100%; width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
             .mobile-image::-webkit-scrollbar { display: none; }
@@ -307,11 +300,15 @@
             .dot { width: 6px; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 10px; transition: all 0.3s; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.2); }
             .dot.active { width: 20px; background: white; border-color: white; }
 
-            .right-section { padding: 30px 20px 40px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
+            .right-section { padding: 30px 20px 0 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
             .title-header h1 { font-size: 22px; margin-bottom: 5px; }
-            .price .current { font-size: 24px; }
             
-            /* Hide Desktop Elements */
+            /* FIXED MOBILE PRICE */
+            .price { margin-top: 8px; padding-bottom: 15px; }
+            .price .current { font-size: 24px; }
+            .price .old { font-size: 16px; margin-left: 5px; }
+            .save { transform: translateY(-4px); }
+            
             .desktop-actions, .buy-now-btn, .section-nav { display: none !important; }
 
             .mobile-add-cart-container { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px 16px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); gap: 12px; z-index: 100; border-top: 1px solid var(--border-subtle); }
@@ -319,10 +316,10 @@
             .m-add { background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); }
             .m-buy { background: var(--brand-gradient); color: white; }
 
-            /* New Sections Mobile Padding */
-            .category-products-section, .reviews-section-premium { padding: 30px 15px; margin-bottom: 0; border-top: 10px solid var(--surface-light); }
+            /* REVIEW & RELATED - Mobile Layout */
+            .category-products-section, .reviews-section-premium { padding: 30px 15px; margin-bottom: 0; border-top: 1px solid var(--border-subtle); background: var(--page-bg); display: block !important; }
             .section-header { margin-bottom: 20px; }
-            .section-header h2 { font-size: 22px; }
+            .section-header h2, .reviews-header h2 { font-size: 22px; }
             
             .products-grid { padding: 0 0 10px; }
             .product-card { width: 160px; border-radius: 12px; }
@@ -334,7 +331,6 @@
             .add-to-cart-icon { width: 30px; height: 30px; }
             .add-to-cart-icon svg { width: 16px; height: 16px; }
 
-            /* Mobile Modal */
             .modal-overlay { padding: 0; align-items: flex-end; }
             .modal-content-box { height: 85vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; }
             .modal-overlay.active .modal-content-box { transform: translateY(0); }
