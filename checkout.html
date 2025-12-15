@@ -30,7 +30,6 @@
             --surface-card: #fffefb;
             --surface-hover: #f9f2e3;
             --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
-            --shadow-modal: 0 25px 50px -12px rgba(63, 11, 23, 0.25);
             --font-main: 'DM Sans', sans-serif;
         }
 
@@ -64,6 +63,7 @@
         p.sub-head { color: var(--text-secondary); margin-bottom: 30px; font-size: 15px; }
         h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; opacity: 0.9; font-weight: 700; color: var(--text-light); }
 
+        /* Address & Form Styles */
         .address-card {
             background: var(--card-bg); border: 1px solid var(--border-subtle);
             border-radius: 16px; padding: 24px; margin-bottom: 30px;
@@ -96,6 +96,7 @@
         }
         .change-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
 
+        /* Payment Options */
         .payment-option {
             padding: 24px; border-radius: 16px; margin-bottom: 15px;
             display: flex; align-items: center; gap: 18px; position: relative;
@@ -132,6 +133,7 @@
         }
         @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); } }
 
+        /* Order Box */
         .order-box {
             background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
             border: 1px solid #fff; padding: 30px; border-radius: 16px;
@@ -213,12 +215,12 @@
 
         .mobile-bottom-bar { display: none; }
 
+        /* Modals */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px);
             z-index: 2000; justify-content: center; align-items: center; padding: 20px;
         }
-        
         .modal-card {
             background: #fff; border-radius: 20px; width: 100%; max-width: 500px;
             box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -618,7 +620,6 @@
                 // Load from "Buy Now" storage
                 const directItem = JSON.parse(localStorage.getItem('vastramaya_direct_buy'));
                 if (directItem) {
-                    // Ensure it is an array
                     masterCart = Array.isArray(directItem) ? directItem : [directItem];
                 } else {
                     masterCart = [];
@@ -891,7 +892,7 @@
                 // 1. Save Order to Database
                 await db.collection('orders').doc(orderId).set(orderDetails);
 
-                // 2. Clear Products
+                // 2. Clear Products (Based on mode)
                 if (isBuyNowMode) {
                     // BUY NOW MODE: Only clear the direct buy temporary key.
                     // DO NOT TOUCH 'vastramaya_cart' or user DB cart.
@@ -915,12 +916,36 @@
                     }
                 }
 
+                // 3. REMOVE FROM WISHLIST (New Feature)
+                // We check if any bought items were in the wishlist and remove them.
+                updateWishlistOnSuccess(checkoutItems);
+
                 document.getElementById('success-order-id').innerText = `Order ID: #${orderId}`;
                 document.getElementById('success-screen').style.display = 'flex';
 
             } catch (error) {
                 console.error("Error saving order", error);
                 alert("Order success, but error saving to DB. Please contact support.");
+            }
+        }
+
+        function updateWishlistOnSuccess(boughtItems) {
+            // Load current wishlist
+            let wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+            if(wishlist.length === 0) return;
+
+            // Extract just the product IDs (e.g. "prod_123") from the bought items
+            const boughtProductIds = boughtItems.map(i => i.id); 
+            
+            // Filter wishlist to keep only items that were NOT bought
+            const newWishlist = wishlist.filter(id => !boughtProductIds.includes(id));
+
+            // If changes occurred, save back
+            if(wishlist.length !== newWishlist.length) {
+                localStorage.setItem('vastramaya_wishlist', JSON.stringify(newWishlist));
+                if (currentUser) {
+                    db.collection('users').doc(currentUser.uid).update({ wishlist: newWishlist }).catch(e => console.log(e));
+                }
             }
         }
 
