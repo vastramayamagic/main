@@ -39,9 +39,6 @@
         .title-block h1 { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
         .title-block p { font-size: 16px; color: var(--text-light); letter-spacing: 0.5px; }
         
-        .move-all-btn { background: var(--brand-gradient); color: #fff; border: none; padding: 14px 30px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; border-radius: 10px; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); display: flex; align-items: center; gap: 8px; }
-        .move-all-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3); }
-
         /* Product Grid */
         .wishlist-container { max-width: 1400px; margin: 0 auto; padding: 40px; min-height: 60vh; }
         .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
@@ -68,7 +65,7 @@
         .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
 
-        /* ACTION BUTTONS */
+        /* ACTION BUTTONS (Wishlist Card) */
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -130,7 +127,9 @@
             background: var(--page-bg); 
             width: 100%; 
             max-width: 1200px; 
-            height: 90vh; 
+            /* FIXED: Changed fixed height to auto with max-height to remove empty space */
+            height: auto; 
+            max-height: 90vh;
             border-radius: 20px; 
             position: relative; 
             box-shadow: var(--shadow-modal); 
@@ -143,7 +142,7 @@
         }
         .modal-overlay.active .modal-content-box { transform: scale(1); opacity: 1; }
         
-        /* Updated Close Button - Matching Reference Mobile Menu */
+        /* Updated Close Button - Square Style */
         .btn-close-modal { 
             position: absolute; 
             top: 20px; 
@@ -160,14 +159,15 @@
             cursor: pointer; 
             transition: all 0.2s ease; 
         }
-        .btn-close-modal:hover { background: var(--surface-hover); }
+        .btn-close-modal:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
         
         .close-icon-lines { width: 14px; height: 14px; position: relative; }
         .close-icon-lines::before, .close-icon-lines::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; border-radius: 999px; background: var(--text-primary); }
         .close-icon-lines::before { transform: rotate(45deg); }
         .close-icon-lines::after { transform: rotate(-45deg); }
 
-        .modal-scroll-area { overflow-y: auto; height: 100%; width: 100%; }
+        .modal-scroll-area { overflow-y: auto; width: 100%; }
+        
         /* Grid layout for Desktop */
         .modal-container { 
             display: grid; 
@@ -178,7 +178,7 @@
             margin: 0 auto; 
         }
         
-        .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 600px; }
+        .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 500px; /* Reduced height to fit auto better */ }
         .thumbnails { display: flex; flex-direction: column; gap: 10px; width: 70px; flex-shrink: 0; overflow-y: auto; }
         .thumbnails::-webkit-scrollbar { width: 0; }
         .thumb { width: 70px; height: 94px; border-radius: 6px; overflow: hidden; cursor: pointer; border: 1px solid transparent; transition: all 0.3s; opacity: 0.6; flex-shrink: 0; }
@@ -210,8 +210,11 @@
         
         .actions-desktop { display: flex; gap: 16px; margin-bottom: 30px; }
         .btn-main, .btn-secondary { height: 52px; border-radius: 10px; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; cursor: pointer; }
+        
+        /* Swapped styles for Buy Now (Main) and Add to Cart (Secondary) */
         .btn-secondary { flex: 1; background: white; border: 1px solid var(--border-subtle); color: var(--text-primary); }
         .btn-secondary:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+        
         .btn-main { flex: 1.5; background: var(--brand-gradient); color: white; border: none; box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
         
@@ -234,7 +237,6 @@
                 right: 16px; 
                 background: rgba(255,255,255,0.9); 
                 backdrop-filter: blur(4px); 
-                /* Matches style, keeping positioning */
             }
             
             .modal-container { display: block; padding: 0; padding-bottom: 90px; }
@@ -245,7 +247,7 @@
                 display: flex; 
                 position: relative; 
                 width: 100%; 
-                height: 55vh; /* Increased height */
+                height: 55vh; /* Increased height for immersive look */
                 background: #f5f5f5; 
                 overflow-x: auto; 
                 scroll-snap-type: x mandatory; 
@@ -328,22 +330,6 @@
             
             .btn-action { height: 42px; font-size: 14px; padding: 0; line-height: normal; }
             
-            .move-all-btn-container {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                padding: 15px 15px 25px 15px;
-                background: rgba(254, 252, 243, 0.9);
-                backdrop-filter: blur(8px);
-                border-top: 1px solid var(--border-subtle);
-                z-index: 999;
-                display: none;
-                justify-content: center;
-            }
-
-            .move-all-btn { width: 100%; text-align: center; justify-content: center; margin: 0; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); }
-            
             .delete-btn {
                 position: absolute;
                 top: 8px;
@@ -373,10 +359,6 @@
                     <h1>My Wishlist</h1>
                     <p id="itemCount">Loading items...</p>
                 </div>
-                <button class="move-all-btn" id="moveAllBtn" onclick="moveAllToCart()" style="display:none">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    Move All to Cart
-                </button>
             </div>
 
             <div class="wishlist-container">
@@ -421,13 +403,6 @@
                     </a>
                 </div>
             </div>
-            
-            <div class="move-all-btn-container" id="moveAllContainerMobile">
-                <button class="move-all-btn" onclick="moveAllToCart()">
-                    <span>Move All to Cart</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-            </div>
         </main>
     </div>
 
@@ -455,8 +430,8 @@
                         <div class="option-label">Size</div>
                         <div class="size-selector" id="sizeSelector"></div>
                         <div class="actions-desktop">
-                            <button class="btn-secondary btn-buy-now">Buy Now</button>
-                            <button class="btn-main btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-main btn-buy-now">Buy Now</button>
+                            <button class="btn-secondary btn-add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -559,14 +534,10 @@
                 if(document.getElementById('gridMobile')) document.getElementById('gridMobile').innerHTML = '';
                 if(document.getElementById('emptyState')) document.getElementById('emptyState').classList.add('visible');
                 if(document.getElementById('emptyStateMobile')) document.getElementById('emptyStateMobile').classList.add('visible');
-                if(document.getElementById('moveAllBtn')) document.getElementById('moveAllBtn').style.display = 'none';
-                if(document.getElementById('moveAllContainerMobile')) document.getElementById('moveAllContainerMobile').style.display = 'none';
                 return;
             } else {
                 if(document.getElementById('emptyState')) document.getElementById('emptyState').classList.remove('visible');
                 if(document.getElementById('emptyStateMobile')) document.getElementById('emptyStateMobile').classList.remove('visible');
-                if(document.getElementById('moveAllBtn')) document.getElementById('moveAllBtn').style.display = 'flex';
-                if(document.getElementById('moveAllContainerMobile')) document.getElementById('moveAllContainerMobile').style.display = 'flex';
             }
 
             const generateHTML = (p) => {
@@ -646,7 +617,6 @@
             colorContainer.innerHTML = '';
             sizeSelector.innerHTML = '';
 
-            // Handle Colors
             if (product.colorVariants && product.colorVariants.length > 0) {
                 product.colorVariants.forEach((variant, index) => {
                     const swatch = document.createElement('div');
@@ -676,7 +646,6 @@
                 });
             }
 
-            // Configure Buttons
             const buyBtns = document.querySelectorAll('.btn-buy-now');
             buyBtns.forEach(btn => {
                 btn.style.display = mode === 'cart' ? 'none' : 'block';
@@ -825,41 +794,6 @@
                 removeFromWishlist(productId);
                 showToast("Moved to Cart");
             }
-        }
-
-        function moveAllToCart() {
-            const currentWishlistProducts = allProducts.filter(p => wishlistIDs.includes(p.id));
-            if(currentWishlistProducts.length === 0) return;
-
-            currentWishlistProducts.forEach(product => {
-                const img = (product.images && product.images[0]) || '';
-                const uniqueId = `${product.id}-Default-M`;
-                
-                const existingItem = cart.find(item => item.uniqueId === uniqueId);
-                
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({
-                        id: product.id,
-                        uniqueId: uniqueId,
-                        name: product.name,
-                        price: product.price,
-                        image: img,
-                        quantity: 1,
-                        size: 'M',
-                        color: 'Default'
-                    });
-                }
-            });
-
-            wishlistIDs = [];
-            renderWishlist();
-            localStorage.setItem('vastramaya_wishlist', JSON.stringify([]));
-            if(currentUser) saveWishlistToFirestore();
-            saveCart();
-            renderCartUI();
-            showToast("All items moved to Cart");
         }
 
         function saveCart() {
