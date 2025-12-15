@@ -301,18 +301,20 @@
             .dot.active { width: 20px; background: white; border-color: white; }
 
             .right-section { padding: 30px 20px 0 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
+            
+            /* FIX: Added top padding for mobile product title */
+            .title-header { padding-top: 15px; }
             .title-header h1 { font-size: 22px; margin-bottom: 5px; }
             
             /* FIXED MOBILE PRICE */
             .price { 
                 margin-top: 8px; 
                 padding-bottom: 15px; 
-                flex-wrap: wrap; /* Fix: Allow wrapping if needed */
+                flex-wrap: wrap; 
                 align-items: center;
             }
             .price .current { font-size: 24px; }
             
-            /* Fix: Ensure Old Price & Discount are visible */
             .price .old { 
                 font-size: 16px; 
                 margin-left: 8px; 
@@ -338,11 +340,11 @@
             .section-header { margin-bottom: 20px; }
             .section-header h2, .reviews-header h2 { font-size: 22px; }
             
-            /* FIX: Mobile Products Grid Padding */
+            /* FIX: Removed right padding from products grid on mobile */
             .products-grid { 
                 padding: 0 0 10px; 
-                padding-right: 0; /* Fix unwanted right space */
-                gap: 12px; /* Reduce gap for mobile */
+                padding-right: 0 !important;
+                gap: 12px; 
             }
             
             .product-card { width: 160px; border-radius: 12px; }
@@ -821,6 +823,13 @@
         async function loadRelatedProducts(field, value, currentId) {
             if (!value) { document.querySelector('.category-products-section').style.display = 'none'; return; }
             
+            // FIX: Update View More Link with Category Name
+            const viewMoreBtn = document.querySelector('.view-more-link');
+            if (viewMoreBtn && (currentProduct.categoryName || currentProduct.category)) {
+                const cat = currentProduct.categoryName || currentProduct.category;
+                viewMoreBtn.href = `shop.html?category=${encodeURIComponent(cat)}`;
+            }
+
             const relatedGrid = document.getElementById('relatedGrid');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -880,6 +889,12 @@
                         </div>
                     </div>`;
                 }).join('');
+
+                // FIX: Hide arrows if content fits
+                const nav = document.querySelector('.category-products-section .section-nav');
+                if (nav && relatedGrid.scrollWidth <= relatedGrid.clientWidth) {
+                    nav.style.display = 'none';
+                }
 
                 relatedGrid.addEventListener('click', (e) => {
                     const card = e.target.closest('.product-card');
