@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vastramaya | Premium E-Commerce</title>
+    <title>Vastramaya | Premium Product Modal</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,10 +52,7 @@
         .nav-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 2; transition: stroke 0.3s ease; }
         .nav-btn:hover svg { stroke: white; }
 
-        .products-grid { 
-            display: flex; gap: 25px; padding: 10px 5px 30px; 
-            overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; 
-        }
+        .products-grid { display: flex; gap: 25px; padding: 10px 5px 30px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; }
         .products-grid::-webkit-scrollbar { display: none; }
 
         /* --- 3. PRODUCT CARD --- */
@@ -109,7 +106,7 @@
         .add-to-cart svg { width: 18px; height: 18px; stroke: var(--text-primary); transition: stroke 0.3s ease; }
         .add-to-cart:hover svg { stroke: white; }
 
-        /* --- 4. PREMIUM MODAL STYLES --- */
+        /* --- 4. MODAL COMMON STYLES --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         
@@ -120,7 +117,6 @@
         }
         .modal-overlay.active .modal-content-box { transform: scale(1); opacity: 1; }
         
-        /* Close Button */
         .premium-close-btn { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: rgba(255, 255, 255, 0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 60; transition: background 0.2s ease, transform 0.1s ease; }
         .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
         .premium-close-btn:active { transform: scale(0.95); }
@@ -131,8 +127,9 @@
         .premium-close-btn:hover .close-icon-lines::before, .premium-close-btn:hover .close-icon-lines::after { background: var(--brand-primary); }
 
         .modal-scroll-area { overflow-y: auto; height: 100%; width: 100%; }
-        .modal-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: start; padding: 40px 50px; margin: 0 auto; min-height: 100%; }
         
+        /* DESKTOP LAYOUT (Default) */
+        .modal-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: start; padding: 40px 50px; margin: 0 auto; min-height: 100%; }
         .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 500px; }
         .thumbnails { display: flex; flex-direction: column; gap: 12px; width: 80px; flex-shrink: 0; overflow-y: auto; padding-right: 4px; }
         .thumbnails::-webkit-scrollbar { width: 0px; }
@@ -142,6 +139,7 @@
         .main-stage { flex: 1; height: 100%; border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid var(--border-subtle); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
         .main-stage img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
 
+        /* PRODUCT INFO COMMON */
         .product-details { padding-top: 10px; display: flex; flex-direction: column; height: 100%; }
         .modal-product-title { font-size: 38px; line-height: 1.1; font-weight: 500; margin: 0 0 8px 0; color: var(--text-primary); font-family: "Cormorant Garamond", serif; }
         .modal-product-category { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); margin-bottom: 24px; font-weight: 600; }
@@ -177,56 +175,62 @@
 
         /* --- 5. RESPONSIVE LAYOUTS --- */
 
-        /* TABLET LANDSCAPE (Horizontal) */
-        @media (min-width: 901px) and (max-width: 1024px) {
-            .category-products-section { padding: 30px 20px; }
-            .products-grid { display: flex; overflow-x: auto; gap: 20px; } /* Keep Scroll */
-            .section-nav { display: flex !important; }
-            .modal-content-box { height: 90vh; width: 95vw; }
-            .modal-container { padding: 30px; gap: 30px; }
-        }
-
-        /* TABLET PORTRAIT (Vertical) & LARGE PHONES (601px - 900px) */
-        @media (min-width: 601px) and (max-width: 900px) {
+        /* TABLET SPECIFIC LAYOUT (601px - 1024px) */
+        /* Design: Centered Modal, Image Slideshow Top (Like Mobile but wider), Details Scroll Below */
+        @media (min-width: 601px) and (max-width: 1024px) {
             .category-products-section { padding: 30px 20px; }
             
-            /* Grid 3 Cols */
-            .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; overflow-x: visible; padding-right: 0; }
+            .products-grid {
+                display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+                overflow-x: visible; padding-right: 0;
+            }
             .product-card { width: 100%; }
             .product-image-container { height: 240px; }
             .section-nav { display: none !important; }
 
-            /* MODAL - STACKED LAYOUT (Fixes "not good" look) */
-            .modal-content-box { height: 90vh; width: 90vw; }
-            .modal-container { 
-                display: flex; flex-direction: column; /* Stack vertically */
-                padding: 30px; gap: 20px; 
+            /* New Tablet Popup Design */
+            .modal-content-box { height: 85vh; width: 80vw; max-width: 700px; display: flex; flex-direction: column; }
+            
+            /* Reset Grid to Block for scrolling layout */
+            .modal-container { display: block; padding: 0; width: 100%; overflow-y: auto; }
+            
+            /* Hide Desktop Gallery (Sidebar style) */
+            .gallery-wrapper { display: none; }
+            
+            /* Show Mobile Gallery (Slider style) but larger */
+            .mobile-gallery { 
+                display: flex; position: relative; width: 100%; height: 400px; /* Taller for tablet */
+                background: #f8f8f8; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
             }
-            .gallery-wrapper { 
-                position: relative; top: 0; width: 100%; height: 400px; 
-            }
-            .main-stage { width: 100%; }
-            .product-details { padding-top: 0; }
+            .mobile-gallery::-webkit-scrollbar { display: none; }
+            .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
+
+            /* Details Padding */
+            .product-details { padding: 30px 40px 40px 40px; min-height: auto; }
+            
+            /* Ensure Buttons are Visible Inline (Not bottom sheet) */
+            .actions-desktop { display: grid; margin-top: 30px; }
+            .mobile-actions-bar { display: none; }
         }
 
-        /* MOBILE (Max 600px) */
+        /* MOBILE (< 600px) */
         @media (max-width: 600px) {
             .category-products-section { padding: 20px 10px; }
             .section-header { padding: 0 10px; margin-bottom: 20px; }
             .section-header h2 { font-size: 24px; }
             .section-nav, .quick-view-btn { display: none !important; }
 
-            /* Grid 2 Cols */
             .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 0 10px; overflow-x: visible; scroll-snap-type: none; }
             .product-card { width: 100%; border-radius: 12px; }
             .product-image-container { height: 200px; }
+            
             .product-info { padding: 12px; min-height: 100px; }
             .product-title { font-size: 14px; height: 36px; }
             .current-price { font-size: 16px; }
             .old-price { font-size: 12px; }
             .add-to-cart { width: 32px; height: 32px; }
 
-            /* Modal Styles */
+            /* Modal: Bottom Sheet */
             .modal-overlay { padding: 0; align-items: flex-end; }
             .modal-content-box { height: 88vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; }
             .modal-overlay.active .modal-content-box { transform: translateY(0); }
@@ -234,12 +238,8 @@
             .premium-close-btn { top: 16px; right: 16px; width: 36px; height: 36px; background: rgba(255,255,255,0.95); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-color: transparent; }
             
             .modal-container { display: block; padding: 0; padding-bottom: 100px; }
-            .gallery-wrapper { display: none; } /* Hide Desktop Gallery */
+            .gallery-wrapper { display: none; }
             
-            /* HIDE DESKTOP ACTIONS forcefully */
-            .actions-desktop { display: none !important; } 
-
-            /* Mobile Gallery */
             .mobile-gallery { display: flex; position: relative; width: 100%; height: 55vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
             .mobile-gallery::-webkit-scrollbar { display: none; }
             .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
@@ -250,6 +250,10 @@
             .modal-price-current { font-size: 28px; }
             .price-block { margin-bottom: 24px; border: none; padding-bottom: 0; }
             
+            /* Hide Desktop Buttons */
+            .actions-desktop { display: none !important; }
+            
+            /* Sticky Mobile Buttons */
             .mobile-actions-bar { display: flex; position: absolute; bottom: 0; left: 0; right: 0; background: white; padding: 12px 20px; gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 100; border-top: 1px solid var(--border-subtle); }
             .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; }
             .btn-mobile-buy { background: white; color: var(--text-primary); border: 1px solid var(--border-subtle); }
@@ -291,7 +295,7 @@
             
             <div class="modal-scroll-area">
                 <div class="modal-container">
-                    <!-- Desktop Gallery -->
+                    <!-- Desktop Gallery (Hidden on Tablet/Mobile) -->
                     <div class="gallery-wrapper">
                         <div class="thumbnails" id="thumbContainer"></div>
                         <div class="main-stage">
@@ -299,7 +303,7 @@
                         </div>
                     </div>
                     
-                    <!-- Mobile Gallery -->
+                    <!-- Slider Gallery (Visible on Tablet/Mobile) -->
                     <div class="mobile-gallery" id="mobileGallery">
                          <!-- Images injected by JS -->
                     </div>
@@ -335,7 +339,7 @@
                             </div>
                         </div>
 
-                        <!-- DESKTOP ACTIONS -->
+                        <!-- DESKTOP / TABLET ACTIONS (Hidden on Mobile) -->
                         <div class="actions-desktop">
                             <button class="btn-secondary" id="btnBuyNowDesktop">Buy Now</button>
                             <button class="btn-main" id="btnAddToCartDesktop">Add to Cart</button>
@@ -343,7 +347,7 @@
                     </div>
                 </div>
                 
-                <!-- MOBILE ACTIONS -->
+                <!-- MOBILE ACTIONS (Sticky Bottom - Hidden on Desktop/Tablet) -->
                 <div class="mobile-actions-bar">
                     <button class="btn-mobile-buy" id="btnBuyNowMobile">Buy Now</button>
                     <button class="btn-mobile-cart" id="btnAddToCartMobile">Add to Cart</button>
@@ -371,7 +375,6 @@
             renderGrid();
             initModalLogic();
             
-            // Desktop Scroll Logic
             const grid = document.getElementById('demo-grid');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -437,40 +440,25 @@
                 document.getElementById('modalPrice').textContent = '₹' + product.price;
                 document.getElementById('modalOldPrice').textContent = '₹' + product.oldPrice;
 
-                // --- IMAGE LOGIC (Slideshow) ---
+                // Images
                 const mainImg = document.getElementById('mainImage');
                 const thumbContainer = document.getElementById('thumbContainer');
                 const mobileGallery = document.getElementById('mobileGallery');
 
-                // Initial Image
                 mainImg.src = activeImages[0];
-                
-                // Thumbnails
                 thumbContainer.innerHTML = activeImages.map((img, i) => `
                     <div class="thumb ${i===0?'active':''}" data-index="${i}" onclick="manualChangeSlide(${i})">
                         <img src="${img}" class="no-copy" oncontextmenu="return false;">
                     </div>
                 `).join('');
-
-                // Mobile Images
                 mobileGallery.innerHTML = activeImages.map(img => `
                     <img src="${img}" class="no-copy" oncontextmenu="return false;">
                 `).join('');
 
-                // Start Slideshow
                 startSlideshow();
-
-                // Desktop Pause on Hover
-                const mainStage = document.querySelector('.main-stage');
-                mainStage.addEventListener('mouseenter', stopSlideshow);
-                mainStage.addEventListener('mouseleave', startSlideshow);
-
-                // Mobile Pause on Touch
                 mobileGallery.addEventListener('touchstart', stopSlideshow);
                 mobileGallery.addEventListener('touchend', startSlideshow);
 
-
-                // --- OPTIONS LOGIC ---
                 document.getElementById('colorContainer').innerHTML = product.colors.map((c, i) => `
                     <div class="swatch ${i===0?'active':''}" onclick="toggleSwatch(this)">
                         <img src="${c.image}" class="no-copy" oncontextmenu="return false;">
@@ -480,121 +468,98 @@
                     <button class="size-btn ${i===0?'active':''}" onclick="toggleSize(this)">${s}</button>
                 `).join('');
 
-                // --- BUTTON LOGIC ---
+                // Button Logic
                 const buyBtnDesk = document.getElementById('btnBuyNowDesktop');
                 const buyBtnMob = document.getElementById('btnBuyNowMobile');
                 const cartBtnDesk = document.getElementById('btnAddToCartDesktop');
                 const cartBtnMob = document.getElementById('btnAddToCartMobile');
 
+                // Determine context: Desktop/Tablet vs Mobile
+                const isMobile = window.innerWidth <= 600;
+
                 if (mode === 'cart') {
+                    // Cart Mode: Hide Buy Now, Expand Add to Cart
                     buyBtnDesk.style.display = 'none';
                     buyBtnMob.style.display = 'none';
-                    document.querySelector('.actions-desktop').style.display = 'flex'; 
-                    cartBtnDesk.style.width = '100%'; 
-                    cartBtnMob.style.flex = '1';
+                    
+                    if(isMobile) {
+                        // Mobile: Sticky bar
+                        cartBtnMob.style.flex = '1';
+                    } else {
+                         // Desktop/Tablet: Grid layout -> switch to block/flex to fill
+                        document.querySelector('.actions-desktop').style.display = 'flex'; 
+                        cartBtnDesk.style.width = '100%';
+                    }
                 } else {
-                    document.querySelector('.actions-desktop').style.display = 'grid'; 
+                    // Normal Mode
                     buyBtnDesk.style.display = 'flex';
                     buyBtnMob.style.display = 'flex';
+                    if(!isMobile) {
+                         document.querySelector('.actions-desktop').style.display = 'grid'; 
+                    }
+                    cartBtnDesk.style.width = '100%'; 
+                    cartBtnMob.style.flex = '1.5';
                 }
 
                 modal.classList.add('active');
                 document.body.classList.add('modal-open');
             };
 
-            // --- SLIDESHOW FUNCTIONS ---
+            // Slideshow
             window.startSlideshow = () => {
                 if (slideInterval) clearInterval(slideInterval);
                 if (activeImages.length <= 1) return;
-                
                 slideInterval = setInterval(() => {
                     currentSlideIndex = (currentSlideIndex + 1) % activeImages.length;
                     updateSlideUI(currentSlideIndex);
                 }, 3000);
             };
-
-            window.stopSlideshow = () => {
-                if (slideInterval) clearInterval(slideInterval);
-            };
-
+            window.stopSlideshow = () => { if (slideInterval) clearInterval(slideInterval); };
             window.manualChangeSlide = (index) => {
                 currentSlideIndex = index;
                 updateSlideUI(index);
                 stopSlideshow();
                 startSlideshow(); 
             };
-
             function updateSlideUI(index) {
-                // Update Desktop Main Image
                 const mainImg = document.getElementById('mainImage');
                 mainImg.style.opacity = 0.5;
-                setTimeout(() => {
-                    mainImg.src = activeImages[index];
-                    mainImg.style.opacity = 1;
-                }, 150);
-
-                // Update Thumbnails
-                document.querySelectorAll('.thumb').forEach((t, i) => {
-                    if (i === index) t.classList.add('active');
-                    else t.classList.remove('active');
-                });
-
-                // Update Mobile Scroll
+                setTimeout(() => { mainImg.src = activeImages[index]; mainImg.style.opacity = 1; }, 150);
+                document.querySelectorAll('.thumb').forEach((t, i) => { i === index ? t.classList.add('active') : t.classList.remove('active'); });
                 const mobileGallery = document.getElementById('mobileGallery');
                 if (mobileGallery && mobileGallery.children[index]) {
-                    mobileGallery.scrollTo({
-                        left: mobileGallery.children[index].offsetLeft,
-                        behavior: 'smooth'
-                    });
+                    mobileGallery.scrollTo({ left: mobileGallery.children[index].offsetLeft, behavior: 'smooth' });
                 }
             }
 
-            // --- UI HELPERS ---
-            window.toggleSwatch = (el) => {
-                document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
-                el.classList.add('active');
-            };
-            window.toggleSize = (el) => {
-                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-                el.classList.add('active');
-            };
-            window.updateQty = (change) => {
-                currentQty = Math.max(1, currentQty + change);
-                document.getElementById('qtyValue').textContent = currentQty;
-            };
+            // Helpers
+            window.toggleSwatch = (el) => { document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active')); el.classList.add('active'); };
+            window.toggleSize = (el) => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); };
+            window.updateQty = (change) => { currentQty = Math.max(1, currentQty + change); document.getElementById('qtyValue').textContent = currentQty; };
 
-            const closeModalFn = () => {
-                modal.classList.remove('active');
-                document.body.classList.remove('modal-open');
-                stopSlideshow();
-            };
+            const closeModalFn = () => { modal.classList.remove('active'); document.body.classList.remove('modal-open'); stopSlideshow(); };
             closeBtn.addEventListener('click', closeModalFn);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFn(); });
 
-            // --- CLICK HANDLING (REDIRECT vs MODAL) ---
+            // Event Delegation for REDIRECT vs MODAL
             document.getElementById('demo-grid').addEventListener('click', (e) => {
                 const card = e.target.closest('.product-card');
                 if (!card) return;
                 
-                // If Wishlist -> Stop (Handled by specific listener)
-                if (e.target.closest('.wishlist-btn-top-right')) return;
-
-                // If Quick View -> Open Modal
+                // 1. Clicked Quick View
                 if (e.target.closest('.quick-view-btn')) {
                     e.stopPropagation();
                     openModal(card.dataset.id, 'quickview');
-                    return;
                 } 
-                
-                // If Add to Cart -> Open Modal (Cart Mode)
-                if (e.target.closest('.add-to-cart')) {
+                // 2. Clicked Add to Cart (Icon)
+                else if (e.target.closest('.add-to-cart')) {
                     e.stopPropagation();
                     openModal(card.dataset.id, 'cart');
-                    return;
-                } 
-                
-                // Any other click on card -> Redirect to Product Page
-                window.location.href = 'product.html?id=' + card.dataset.id;
+                }
+                // 3. Clicked anywhere else (Image/Text) -> REDIRECT
+                else {
+                    window.location.href = `product.html?id=${card.dataset.id}`;
+                }
             });
         }
     </script>
