@@ -44,46 +44,26 @@
             color: var(--text-secondary); text-decoration: none; font-weight: 600;
             font-size: 14px; margin-bottom: 25px; transition: 0.2s;
         }
-        .back-link:hover { color: var(--brand-primary); transform: translateX(-3px); }
 
-        /* --- Profile Card Wrapper --- */
+        /* --- Desktop Card Structure --- */
         .profile-wrapper {
             background: var(--card-bg);
             border-radius: 24px;
             box-shadow: 0 20px 40px -10px rgba(59, 11, 23, 0.15);
             border: 1px solid rgba(139, 38, 53, 0.08);
-            overflow: hidden; /* Ensures header bg stays inside corners */
-            position: relative;
+            overflow: hidden; /* Clips content on desktop for rounded corners */
         }
 
-        /* The Maroon Header Background */
-        .profile-header-bg { 
-            height: 130px; 
-            background: var(--brand-gradient); 
-            width: 100%;
-        }
-
-        .profile-content { 
-            padding: 0 40px 40px 40px; 
-            margin-top: -65px; /* Pulls content up to overlap header */
-            position: relative;
-        }
+        .profile-header-bg { height: 120px; background: var(--brand-gradient); position: relative; }
+        .profile-content { padding: 0 40px 40px 40px; margin-top: -60px; }
 
         /* Avatar */
-        .avatar-row { 
-            display: flex; 
-            justify-content: center; 
-            margin-bottom: 30px; 
-            position: relative; 
-        }
-        
+        .avatar-row { display: flex; justify-content: center; margin-bottom: 30px; position: relative; z-index: 5; }
         .avatar-container {
-            width: 130px; height: 130px; border-radius: 50%;
-            border: 5px solid #fff; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 4px solid #fff; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             background: #fff;
-            position: relative;
-            z-index: 10;
         }
         .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
@@ -100,9 +80,9 @@
             border-bottom: 1px solid var(--border-subtle);
             padding-bottom: 10px;
         }
-        
         .section-title-wrap { display: flex; align-items: center; gap: 10px; }
 
+        /* Edit Button */
         .edit-profile-btn {
             background: transparent;
             border: 1px solid var(--border-subtle);
@@ -135,12 +115,12 @@
             color: var(--text-primary); 
             background: #fff; 
             transition: 0.2s;
-            box-sizing: border-box;
+            box-sizing: border-box; 
         }
         
         input:disabled { 
             background: #fafafa; 
-            border-color: #eee;
+            border-color: #eee; 
             color: var(--text-secondary);
             cursor: default;
         }
@@ -172,77 +152,70 @@
             border-radius: 16px; color: var(--text-light); cursor: pointer;
         }
 
-        /* --- MOBILE SPECIFIC FIXES --- */
+        /* --- MOBILE SPECIFIC STYLES --- */
         @media (max-width: 768px) {
-            body { 
-                padding: 0; 
-                background: #f7f7f7; /* Light grey bg for mobile page */
+            body { padding: 0; background: #fff; }
+            
+            /* The Maroon Arc */
+            .mobile-hero {
+                background: var(--brand-gradient);
+                height: 200px; /* Slightly taller to accommodate the overlap */
+                width: 100%; 
+                position: absolute; top: 0; left: 0;
+                border-radius: 0 0 30px 30px; 
+                z-index: 0;
             }
             
-            .container { 
-                margin-top: 0; 
-                padding: 0; /* Full width card on mobile */
-            }
+            .container { margin-top: 100px; padding: 0 20px 40px 20px; }
 
-            .back-link { 
-                position: absolute; top: 20px; left: 20px; 
-                color: rgba(255,255,255,0.9); z-index: 20; 
-                background: rgba(0,0,0,0.2); backdrop-filter: blur(4px);
-                padding: 8px 12px; border-radius: 20px;
-                font-size: 12px; margin: 0;
-            }
+            .back-link { position: absolute; top: -70px; left: 20px; color: rgba(255,255,255,0.9); z-index: 10; }
 
             .profile-wrapper {
                 background: #fff; 
                 border: none; 
-                box-shadow: none;
-                border-radius: 0; /* Full width flat on mobile */
-                padding-bottom: 40px;
-                min-height: 100vh;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                border-radius: 24px; 
+                padding-bottom: 20px;
+                /* FIX: Allow avatar to overflow the top of the card */
+                overflow: visible !important; 
             }
 
-            /* Visible Header on Mobile */
-            .profile-header-bg { 
-                display: block; /* Ensure it is visible */
-                height: 160px; /* Slightly taller for mobile aesthetics */
+            .profile-header-bg { display: none; }
+            
+            .profile-content { padding: 0 20px; margin-top: 0; }
+
+            .avatar-row { 
+                /* Pull avatar UP out of the white card to sit on the maroon/white border */
+                margin-top: -60px; 
+                margin-bottom: 30px; 
             }
             
-            .profile-content { 
-                padding: 0 25px; 
-                margin-top: -60px; /* Overlap avatar */
-            }
-
-            .avatar-row { margin-bottom: 30px; }
             .avatar-container { 
-                width: 110px; height: 110px; 
-                border: 4px solid #fff;
+                width: 120px; 
+                height: 120px;
+                box-shadow: 0 10px 20px rgba(139, 38, 53, 0.25);
             }
 
             .section-label { 
                 font-size: 18px; 
-                background: #fff;
-                padding: 0;
-                border-bottom: 1px solid var(--border-subtle);
-                padding-bottom: 15px;
+                background: var(--surface-hover); 
+                padding: 12px 16px; 
+                border-radius: 12px;
+                border-bottom: none;
                 margin-bottom: 20px;
-                margin-top: 10px;
             }
 
-            /* Form Stack */
-            .form-grid { grid-template-columns: 1fr; gap: 20px; }
+            .form-grid { grid-template-columns: 1fr; gap: 15px; }
             .input-group.full { grid-column: span 1; }
 
-            /* Edit Button Mobile */
             .edit-profile-btn {
                 font-size: 11px;
                 padding: 6px 12px;
-                background: var(--surface-hover);
-                border: none;
-                color: var(--brand-primary);
+                background: #fff;
             }
         }
 
-        /* Modal & Toast (Standard) */
+        /* Modal & Toast */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(59, 11, 23, 0.5); backdrop-filter: blur(8px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
         .modal-card { background: #fff; border-radius: 24px; width: 100%; max-width: 500px; box-shadow: var(--shadow-rich); animation: slideUp 0.3s ease; max-height: 90vh; display: flex; flex-direction: column; }
         .modal-header { padding: 20px 25px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
@@ -259,10 +232,12 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="profile-wrapper">
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="mobile-hero"></div>
 
+    <div class="container">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <div class="profile-wrapper">
             <div class="profile-header-bg"></div>
 
             <div class="profile-content">
@@ -560,6 +535,7 @@
                     document.getElementById('modal-locality').value = addr.locality;
                     document.getElementById('modal-landmark').value = addr.landmark || '';
                     
+                    // Set correct radio chip
                     const type = addr.type || 'Home';
                     const radio = document.querySelector(`input[name="addrType"][value="${type}"]`);
                     if(radio) {
