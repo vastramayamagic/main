@@ -20,7 +20,6 @@
             --brand-primary: #8b2635;
             --brand-secondary: #d33d49;
             --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
-            --gold-accent: #e6d2a9;
             --border-subtle: #e8d5c4;
             --surface-hover: #f9f2e3;
             --shadow-rich: 0 12px 30px -5px rgba(59, 11, 23, 0.1);
@@ -39,7 +38,6 @@
             padding: 40px 20px;
         }
 
-        /* --- Desktop Layout (Base) --- */
         .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; }
 
         .back-link {
@@ -49,15 +47,6 @@
         }
         .back-link:hover { color: var(--brand-primary); transform: translateX(-3px); }
 
-        h1 { 
-            font-family: var(--font-serif); 
-            font-size: 36px; 
-            font-weight: 600; 
-            margin-bottom: 5px; 
-            color: var(--text-primary); 
-        }
-        p.subtitle { color: var(--text-light); margin-bottom: 40px; font-size: 16px; }
-
         .profile-wrapper {
             background: var(--card-bg);
             border-radius: 24px;
@@ -66,7 +55,6 @@
             overflow: hidden;
         }
 
-        /* --- Profile Header Section --- */
         .profile-header-bg {
             height: 120px;
             background: var(--brand-gradient);
@@ -80,9 +68,10 @@
 
         .avatar-row {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: flex-end;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .avatar-container {
@@ -94,56 +83,75 @@
         }
         .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
         
-        .edit-profile-btn {
-            padding: 10px 24px;
-            border-radius: 30px;
-            border: 1px solid var(--border-subtle);
-            background: #fff;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 10px;
-        }
-        .edit-profile-btn:hover {
-            border-color: var(--brand-primary);
-            color: var(--brand-primary);
-            transform: translateY(-2px);
-        }
-
         /* --- Sections --- */
         .info-section { margin-bottom: 40px; }
+        
+        /* Header of a Section (e.g. Personal Details) */
         .section-label {
             font-family: var(--font-serif);
             font-size: 22px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 20px;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; justify-content: space-between; /* Pushes Edit btn to right */
             border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
+
+        .label-text { display: flex; align-items: center; gap: 10px; }
+
+        /* The Edit Button (Clean Text Style) */
+        .header-edit-btn {
+            font-family: var(--font-main);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+        .header-edit-btn:hover { background: var(--surface-hover); }
         
-        /* Personal Details Form */
+        /* --- Form Styles (Fixed) --- */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .input-group.full { grid-column: span 2; }
         
         label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
         
+        /* KEY FIX: Same border and padding for enabled and disabled */
         input {
-            width: 100%; padding: 14px 16px; border: 1px solid var(--border-subtle);
-            border-radius: 12px; font-family: var(--font-main); font-size: 15px;
-            color: var(--text-primary); background: #fff; transition: 0.2s;
+            width: 100%; 
+            padding: 14px 16px; 
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px; 
+            font-family: var(--font-main); 
+            font-size: 15px;
+            color: var(--text-primary); 
+            background: #fff; 
+            transition: all 0.2s ease;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            -webkit-appearance: none; /* iOS Reset */
         }
-        input:disabled { background: #fafafa; border-color: transparent; color: var(--text-secondary); }
-        input:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(139, 38, 53, 0.05); }
+
+        /* KEY FIX: Disabled state looks visually distinct but occupies EXACT same space */
+        input:disabled {
+            background: #fcfcfc; /* Very subtle grey */
+            border-color: var(--border-subtle); /* Keep the border! */
+            color: var(--text-secondary);
+            opacity: 1; /* iOS opacity fix */
+            -webkit-text-fill-color: var(--text-secondary);
+            cursor: default;
+        }
+
+        input:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.08); background: #fff; }
 
         .action-btns { display: none; gap: 15px; margin-top: 25px; }
-        .btn-save { background: var(--brand-gradient); color: white; border: none; padding: 14px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); transition: 0.2s; }
-        .btn-cancel { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 14px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .btn-save { background: var(--brand-gradient); color: white; border: none; padding: 14px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; flex: 1; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); }
+        .btn-cancel { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); padding: 14px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; flex: 1; }
 
         /* Address Card Styles */
         .address-card {
@@ -155,8 +163,6 @@
             transition: 0.2s;
             display: flex; justify-content: space-between; align-items: flex-start;
         }
-        .address-card:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-rich); }
-        
         .addr-type { 
             font-size: 10px; font-weight: 700; text-transform: uppercase; 
             background: var(--surface-hover); color: var(--brand-primary); 
@@ -169,24 +175,21 @@
             width: 40px; height: 40px; border-radius: 10px;
             background: var(--surface-hover); color: var(--brand-primary);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.2s; font-size: 14px;
+            cursor: pointer; transition: 0.2s; font-size: 14px; flex-shrink: 0;
         }
-        .edit-addr-icon:hover { background: var(--brand-primary); color: white; }
 
         .empty-addr {
             text-align: center; padding: 40px; border: 2px dashed var(--border-subtle);
             border-radius: 16px; color: var(--text-light); cursor: pointer; transition: 0.2s;
         }
-        .empty-addr:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
 
-        /* --- Mobile Premium Overhaul --- */
+        /* --- Mobile Specifics --- */
         @media (max-width: 768px) {
             body { padding: 0; background: #fff; }
             
-            /* Mobile Hero Header */
             .mobile-hero {
                 background: var(--brand-gradient);
-                height: 220px;
+                height: 200px;
                 width: 100%;
                 position: absolute;
                 top: 0; left: 0;
@@ -194,114 +197,74 @@
                 z-index: 0;
             }
             
-            .container {
-                margin-top: 100px;
-                padding: 0 20px 40px 20px;
-            }
+            .container { margin-top: 80px; padding: 0 16px 40px 16px; }
 
-            .back-link {
-                position: absolute; top: -70px; left: 20px; 
-                color: rgba(255,255,255,0.9); z-index: 10;
-            }
-            .back-link:hover { color: #fff; transform: none; }
+            .back-link { position: absolute; top: -50px; left: 20px; color: rgba(255,255,255,0.95); z-index: 10; font-size: 15px; }
 
-            /* Mobile Card Design */
             .profile-wrapper {
-                background: #fff;
-                border: none;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                background: #fff; border: none;
+                box-shadow: 0 15px 40px rgba(0,0,0,0.08);
                 border-radius: 24px;
-                overflow: visible; /* Allow avatar to float out */
             }
 
-            .profile-header-bg { display: none; } /* Hide default header bg */
+            .profile-header-bg { display: none; }
             
-            .profile-content {
-                padding: 0 25px 30px 25px;
-                margin-top: 0;
-                display: flex; flex-direction: column; align-items: center;
-            }
+            .profile-content { padding: 0 20px 30px 20px; margin-top: 0; }
 
-            .avatar-row {
-                width: 100%;
-                justify-content: center;
-                margin-top: -60px; /* Pull avatar up */
-                margin-bottom: 20px;
-                position: relative;
-            }
-
-            .avatar-container {
-                width: 110px; height: 110px;
-                border: 4px solid #fff;
-                box-shadow: 0 10px 20px rgba(139, 38, 53, 0.2);
-            }
-
-            /* Typography Adjustments */
-            h1 { font-size: 28px; text-align: center; margin-bottom: 5px; }
-            p.subtitle { text-align: center; font-size: 14px; margin-bottom: 30px; }
+            .avatar-row { margin-top: -50px; margin-bottom: 25px; }
+            .avatar-container { width: 100px; height: 100px; border: 4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 
             .section-label { 
-                font-size: 20px; border-bottom: none; 
-                background: var(--surface-hover); 
-                padding: 10px 15px; border-radius: 10px;
-                margin-bottom: 25px;
+                font-size: 18px; 
+                background: var(--surface-hover);
+                padding: 12px 16px; 
+                border-radius: 12px;
+                border-bottom: none;
+                margin-bottom: 20px;
             }
+            .label-text { gap: 8px; }
 
-            /* Form Mobile */
-            .form-grid { grid-template-columns: 1fr; gap: 20px; }
+            /* Mobile Form Grid */
+            .form-grid { grid-template-columns: 1fr; gap: 18px; }
             .input-group.full { grid-column: span 1; }
             
-            .edit-profile-btn {
-                position: absolute; top: 0; right: 0;
-                background: transparent; border: none; padding: 0;
-                box-shadow: none; font-size: 13px; color: var(--brand-primary);
-                margin-top: 10px; /* Offset below avatar row if needed, or place inside */
-            }
-            /* Reposition edit button for mobile */
-            .avatar-row { flex-direction: column; align-items: center; }
-            #btn-edit-profile {
-                margin: 15px 0 0 0;
-                border: 1px solid var(--border-subtle);
-                padding: 8px 20px;
-                width: auto;
-            }
-
-            /* Address Mobile */
-            .address-card { 
-                flex-direction: column; gap: 15px; 
-                border: 1px solid rgba(139, 38, 53, 0.1);
-                background: linear-gradient(180deg, #fff 0%, #fffcfc 100%);
-            }
-            .edit-addr-icon {
-                align-self: flex-end;
-                margin-top: -40px; /* Pull up next to text */
-                background: white; border: 1px solid var(--border-subtle);
-            }
+            /* Address Card Mobile */
+            .address-card { flex-direction: column; gap: 15px; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
+            .edit-addr-icon { align-self: flex-end; margin-top: -45px; background: #fff; border: 1px solid var(--border-subtle); }
         }
 
-        /* --- Modal (Reused) --- */
+        /* --- Modal & Toast (Same as before) --- */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(59, 11, 23, 0.5); backdrop-filter: blur(8px);
-            z-index: 3000; justify-content: center; align-items: center; padding: 20px;
+            background: rgba(59, 11, 23, 0.5); backdrop-filter: blur(5px);
+            z-index: 3000; justify-content: center; align-items: flex-end; /* Mobile Bottom Sheet Style default for mobile */
         }
+        
         .modal-card {
-            background: #fff; border-radius: 24px; width: 100%; max-width: 500px;
-            box-shadow: var(--shadow-rich); animation: slideUp 0.3s ease;
-            max-height: 90vh; display: flex; flex-direction: column;
+            background: #fff; width: 100%; max-width: 500px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.2); 
+            display: flex; flex-direction: column;
+            border-radius: 24px 24px 0 0; /* Bottom sheet radius */
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
         }
+
+        @media(min-width: 769px) {
+            .modal-overlay { align-items: center; padding: 20px; }
+            .modal-card { border-radius: 24px; animation: popIn 0.3s ease; }
+        }
+
         .modal-header { padding: 20px 25px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
         .modal-body { padding: 25px; overflow-y: auto; }
         .modal-footer { padding: 20px 25px; border-top: 1px solid var(--border-subtle); }
-        
         .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-secondary); }
         
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes popIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
 
-        /* Toast */
         #toast {
             visibility: hidden; min-width: 280px; background-color: #1a1a1a; color: #fff;
-            text-align: center; border-radius: 50px; padding: 16px 24px; position: fixed;
+            text-align: center; border-radius: 50px; padding: 14px 24px; position: fixed;
             z-index: 4000; left: 50%; bottom: 30px; transform: translateX(-50%);
             font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; gap: 10px;
         }
@@ -325,17 +288,14 @@
                     <div class="avatar-container">
                         <img id="profile-avatar" src="https://ui-avatars.com/api/?name=User&background=f9f2e3&color=8b2635&size=128" class="avatar-img" alt="Profile">
                     </div>
-                    <button class="edit-profile-btn" id="btn-edit-profile" onclick="toggleEditProfile()">Edit Details</button>
-                </div>
-
-                <div style="text-align: center; display: none;" id="mobile-header-text">
-                    <h1>My Profile</h1>
-                    <p class="subtitle">Manage your personal information</p>
                 </div>
 
                 <div class="info-section">
                     <div class="section-label">
-                        <i class="far fa-user-circle" style="color: var(--brand-primary);"></i> Personal Details
+                        <div class="label-text">
+                            <i class="far fa-user-circle" style="color: var(--brand-primary);"></i> Personal Details
+                        </div>
+                        <button class="header-edit-btn" id="btn-edit-trigger" onclick="toggleEditProfile()">Edit</button>
                     </div>
                     
                     <form id="profile-form" onsubmit="saveProfile(event)">
@@ -346,7 +306,7 @@
                             </div>
                             <div class="input-group">
                                 <label>Mobile Number</label>
-                                <input type="text" id="input-phone" value="..." disabled style="cursor: not-allowed; opacity: 0.7; background: #f5f5f5;">
+                                <input type="text" id="input-phone" value="..." disabled style="opacity: 0.8; background: #f0f0f0;">
                             </div>
                             <div class="input-group">
                                 <label>Email Address</label>
@@ -363,13 +323,15 @@
 
                 <div class="info-section" style="margin-bottom: 0;">
                     <div class="section-label">
-                        <i class="fas fa-map-marker-alt" style="color: var(--brand-primary);"></i> Delivery Address
+                        <div class="label-text">
+                            <i class="fas fa-map-marker-alt" style="color: var(--brand-primary);"></i> Delivery Address
+                        </div>
                     </div>
                     
                     <div id="address-list">
                         <div class="empty-addr" onclick="openAddressModal()">
                             <i class="fas fa-plus-circle" style="font-size: 24px; margin-bottom: 10px; color: var(--border-subtle);"></i>
-                            <div>Add Delivery Address</div>
+                            <div style="font-weight:600; color: var(--text-secondary);">Add Delivery Address</div>
                         </div>
                     </div>
                 </div>
@@ -428,11 +390,11 @@
                     <div style="display: flex; gap: 10px;">
                         <label style="flex:1; cursor:pointer;">
                             <input type="radio" name="addrType" value="Home" checked style="display:none;" onchange="updateChips(this)">
-                            <div class="chip active" style="text-align:center; padding:10px; border:1px solid var(--brand-primary); background:var(--surface-hover); color:var(--brand-primary); border-radius:8px; font-weight:600; font-size:13px;">Home</div>
+                            <div class="chip active" style="text-align:center; padding:12px; border:1px solid var(--brand-primary); background:var(--surface-hover); color:var(--brand-primary); border-radius:10px; font-weight:700; font-size:13px; transition:0.2s;">Home</div>
                         </label>
                         <label style="flex:1; cursor:pointer;">
                             <input type="radio" name="addrType" value="Work" style="display:none;" onchange="updateChips(this)">
-                            <div class="chip" style="text-align:center; padding:10px; border:1px solid var(--border-subtle); background:#fff; color:var(--text-secondary); border-radius:8px; font-weight:500; font-size:13px;">Work</div>
+                            <div class="chip" style="text-align:center; padding:12px; border:1px solid var(--border-subtle); background:#fff; color:var(--text-secondary); border-radius:10px; font-weight:500; font-size:13px; transition:0.2s;">Work</div>
                         </label>
                     </div>
                 </div>
@@ -459,14 +421,13 @@
             messagingSenderId: "543460072082",
             appId: "1:543460072082:web:f3d1140e8f81ad338ae44b"
         };
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
         let currentUser = null;
         let originalProfileData = {};
 
-        // --- Init ---
         auth.onAuthStateChanged(user => {
             if (user) {
                 currentUser = user;
@@ -476,7 +437,6 @@
             }
         });
 
-        // --- Profile Logic ---
         async function loadUserProfile(user) {
             originalProfileData = {
                 name: user.displayName || '',
@@ -509,7 +469,7 @@
         }
 
         function toggleEditProfile() {
-            document.getElementById('btn-edit-profile').style.display = 'none';
+            document.getElementById('btn-edit-trigger').style.display = 'none';
             document.getElementById('profile-actions').style.display = 'flex';
             document.getElementById('input-name').disabled = false;
             document.getElementById('input-email').disabled = false;
@@ -517,7 +477,7 @@
         }
 
         function cancelEditProfile() {
-            document.getElementById('btn-edit-profile').style.display = 'block';
+            document.getElementById('btn-edit-trigger').style.display = 'block';
             document.getElementById('profile-actions').style.display = 'none';
             document.getElementById('input-name').disabled = true;
             document.getElementById('input-email').disabled = true;
@@ -556,13 +516,11 @@
             }
         }
 
-        // --- Address Logic ---
         function renderAddressList(addressData) {
             const container = document.getElementById('address-list');
             container.innerHTML = '';
 
             if (!addressData) {
-                // Empty state trigger
                 container.innerHTML = `
                     <div class="empty-addr" onclick="openAddressModal()">
                         <i class="fas fa-plus-circle" style="font-size: 24px; margin-bottom: 10px; color: var(--border-subtle);"></i>
@@ -590,7 +548,6 @@
             container.appendChild(div);
         }
 
-        // --- Modal Logic ---
         const modal = document.getElementById('addressModal');
 
         function openAddressModal() {
