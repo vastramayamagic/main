@@ -233,6 +233,9 @@
             box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3); 
         }
         
+        /* Outline variant override for secondary if needed, but request said "same design" */
+        /* Currently making them identical based on "make it same" */
+        
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
         @media (max-width: 1024px) {
@@ -333,13 +336,15 @@
             }
 
             .product-title {
-                white-space: nowrap;
+                white-space: normal;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 font-size: 15px;
                 margin-bottom: 4px;
                 padding-right: 25px;
-                display: block;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
             }
 
             .product-category { margin-bottom: 4px; font-size: 10px; }
@@ -354,22 +359,6 @@
             }
             
             .btn-action { height: 42px; font-size: 14px; padding: 0; line-height: normal; }
-            
-            .move-all-btn-container {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                padding: 15px 15px 25px 15px;
-                background: rgba(254, 252, 243, 0.9);
-                backdrop-filter: blur(8px);
-                border-top: 1px solid var(--border-subtle);
-                z-index: 999;
-                display: none;
-                justify-content: center;
-            }
-
-            .move-all-btn { width: 100%; text-align: center; justify-content: center; margin: 0; box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2); }
             
             .delete-btn {
                 position: absolute;
@@ -693,7 +682,7 @@
             buyBtns.forEach(btn => {
                 btn.style.display = mode === 'cart' ? 'none' : 'block';
                 btn.onclick = () => {
-                    addToCartFromModal(product.id, 'buy');
+                    buyNowFromModal(product.id);
                 };
             });
             
@@ -701,7 +690,7 @@
             addBtns.forEach(btn => {
                 btn.style.display = mode === 'buy' ? 'none' : 'block';
                 btn.textContent = "Move to Cart"; 
-                btn.onclick = () => addToCartFromModal(product.id, 'cart');
+                btn.onclick = () => addToCartFromModal(product.id);
             });
 
             document.getElementById('productModal').classList.add('active');
@@ -782,9 +771,10 @@
             if (galleryInterval) clearInterval(galleryInterval);
         }
 
-        function addToCartFromModal(productId, mode) {
+        // Helper to get selected product details
+        function getSelectedProductDetails(productId) {
             const product = allProducts.find(p => p.id === productId);
-            if (!product) return;
+            if (!product) return null;
 
             let selectedSize = null;
             let selectedColor = null;
@@ -809,34 +799,45 @@
 
             const uniqueId = `${product.id}-${selectedColor||'def'}-${selectedSize||'def'}`;
 
-            const existingItem = cart.find(item => item.uniqueId === uniqueId);
-            
+            return {
+                id: product.id,
+                uniqueId: uniqueId,
+                name: product.name,
+                price: product.price,
+                image: selectedImage,
+                quantity: 1,
+                size: selectedSize || 'M',
+                color: selectedColor || 'Default'
+            };
+        }
+
+        function buyNowFromModal(productId) {
+            const item = getSelectedProductDetails(productId);
+            if (!item) return;
+
+            localStorage.setItem('vastramaya_direct_buy', JSON.stringify([item]));
+            window.location.href = 'checkout.html?source=direct';
+        }
+
+        function addToCartFromModal(productId) {
+            const item = getSelectedProductDetails(productId);
+            if (!item) return;
+
+            const existingItem = cart.find(ci => ci.uniqueId === item.uniqueId);
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                cart.push({
-                    id: product.id,
-                    uniqueId: uniqueId,
-                    name: product.name,
-                    price: product.price,
-                    image: selectedImage,
-                    quantity: 1,
-                    size: selectedSize || 'M',
-                    color: selectedColor || 'Default'
-                });
+                cart.push(item);
             }
 
             saveCart();
             renderCartUI();
             
+            // Remove from wishlist as requested
+            removeFromWishlist(productId);
+            
+            showToast("Moved to Cart");
             closeModal();
-
-            if (mode === 'buy') {
-                window.location.href = 'cart.html';
-            } else {
-                removeFromWishlist(productId);
-                showToast("Moved to Cart");
-            }
         }
 
         function saveCart() {
