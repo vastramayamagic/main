@@ -56,16 +56,12 @@
         /* Typography & Spacing */
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; }
         
-        /* Star Rating Summary in Header */
-        .header-rating { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 14px; color: var(--text-secondary); cursor: pointer; }
-        .header-stars { color: #f59e0b; letter-spacing: 1px; }
-        .header-count { text-decoration: underline; color: var(--text-light); font-size: 13px; }
-
-        /* FIXED PRICE STYLING */
-        .price { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
-        .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; }
-        .price .old { text-decoration: line-through; color: var(--text-light); font-size: 18px; font-weight: 500; opacity: 0.8; }
-        .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; height: 24px; }
+        /* FIXED PRICE STYLING: No Gap on Flex Container */
+        .price { display: flex; align-items: baseline; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
+        .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; margin-right: 0; padding-right: 0; }
+        /* Margins added to children instead of flex gap to prevent empty space */
+        .price .old { text-decoration: line-through; color: var(--text-light); font-size: 18px; font-weight: 500; opacity: 0.8; margin-left: 8px; }
+        .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; transform: translateY(-3px); display: inline-block; margin-left: 8px; }
 
         h3 { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px 0; text-transform: uppercase; letter-spacing: 0.08em; }
 
@@ -120,7 +116,7 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
-        .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block !important; }
+        .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
         .reviews-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
@@ -291,7 +287,7 @@
            RESPONSIVE (MOBILE) - FIXED LAYOUT
            ========================================= */
         @media (max-width: 600px) {
-            body { padding-top: 0; background: var(--surface-light); padding-bottom: 80px; }
+            body { padding-top: 0; background: var(--surface-light); padding-bottom: 100px; /* FIXED: Bottom Padding */ }
             
             .container { flex-direction: column; padding: 0; gap: 0; margin-bottom: 0; width: 100%; max-width: 100%; }
             .left-section, .right-section { width: 100%; position: static; }
@@ -305,56 +301,29 @@
             .dot { width: 6px; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 10px; transition: all 0.3s; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.2); }
             .dot.active { width: 20px; background: white; border-color: white; }
 
-            .right-section { padding: 30px 20px 0 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
+            .right-section { padding: 30px 20px 0 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 10; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
             .title-header h1 { font-size: 22px; margin-bottom: 5px; }
             
-            /* FIX: Mobile Price & Visibility */
-            .price { 
-                margin-top: 12px; 
-                padding-bottom: 15px;
-                flex-wrap: wrap; 
-                row-gap: 5px;
-            }
-            .price .current { font-size: 24px; }
-            .price .old { 
-                font-size: 16px; 
-                margin-left: 8px;
-                display: inline-block;
-            }
-            .save { 
-                transform: translateY(-1px);
-                margin-left: 5px;
-                font-size: 11px;
-            }
+            /* FIXED MOBILE PRICE VISIBILITY */
+            .price { margin-top: 8px; padding-bottom: 15px; }
+            .price .current { font-size: 24px; margin-right: 0; }
+            .price .old { font-size: 16px; margin-left: 8px; display: inline-block; }
+            .save { transform: translateY(-4px); display: inline-block; margin-left: 8px; }
             
             .desktop-actions, .buy-now-btn, .section-nav { display: none !important; }
 
+            /* STICKY BOTTOM BAR */
             .mobile-add-cart-container { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px 16px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); gap: 12px; z-index: 100; border-top: 1px solid var(--border-subtle); }
             .mobile-btn { flex: 1; height: 48px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; font-family: "DM Sans", sans-serif; cursor: pointer; }
             .m-add { background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); }
             .m-buy { background: var(--brand-gradient); color: white; }
 
-            /* REVIEW & RELATED - Mobile Layout */
-            .category-products-section, .reviews-section-premium { margin-bottom: 0; border-top: 1px solid var(--border-subtle); background: var(--page-bg); display: block !important; }
-            
-            /* REVIEW SECTION SPECIFIC */
-            .reviews-section-premium { padding: 30px 20px; }
-
-            /* RELATED PRODUCTS - EDGE TO EDGE FIX */
-            .category-products-section { 
-                padding: 30px 0; /* Remove side padding from container */
-            }
-            .section-header { 
-                padding: 0 20px; /* Add padding only to header text */
-                margin-bottom: 20px; 
-            }
+            /* REVIEW & RELATED - Mobile Layout - Z-Index Fix */
+            .category-products-section, .reviews-section-premium { padding: 30px 15px; margin-bottom: 0; border-top: 1px solid var(--border-subtle); background: var(--page-bg); display: block !important; position: relative; z-index: 5; }
+            .section-header { margin-bottom: 20px; }
             .section-header h2, .reviews-header h2 { font-size: 22px; }
             
-            .products-grid { 
-                padding: 0 0 20px 20px; /* Left padding for start align, Right 0 for flush */
-                gap: 15px; 
-            }
-            
+            .products-grid { padding: 0 0 10px; }
             .product-card { width: 160px; border-radius: 12px; }
             .product-image-container { height: 200px; }
             .product-info { padding: 10px; min-height: 90px; }
@@ -364,6 +333,7 @@
             .add-to-cart-icon { width: 30px; height: 30px; }
             .add-to-cart-icon svg { width: 16px; height: 16px; }
 
+            /* Mobile Modal */
             .modal-overlay { padding: 0; align-items: flex-end; }
             .modal-content-box { height: 85vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; }
             .modal-overlay.active .modal-content-box { transform: translateY(0); }
@@ -407,14 +377,10 @@
         <div class="right-section">
             <div class="title-header">
                 <h1 id="productTitle" class="skeleton" style="min-height: 40px; width: 100%;"></h1>
-                <div class="header-rating loading-hide" id="headerRating">
-                    <span class="header-stars" id="headerStars">★★★★☆</span>
-                    <span class="header-count" id="headerCount">(24 Reviews)</span>
-                </div>
             </div>
 
             <div class="price">
-                <span id="priceCurrent" class="current skeleton"></span>
+                <span id="priceCurrent" class="current skeleton" style="min-width:100px"></span>
                 <span id="priceOld" class="old"></span>
                 <span id="saveBadge" class="save loading-hide">SAVE 20%</span>
             </div>
@@ -647,14 +613,6 @@
             const revContainer = document.getElementById('reviewsContainer');
             document.getElementById('revNext').onclick = () => revContainer.scrollBy({ left: 320, behavior: 'smooth' });
             document.getElementById('revPrev').onclick = () => revContainer.scrollBy({ left: -320, behavior: 'smooth' });
-            
-            // Header Rating Scroll
-            document.getElementById('headerRating').onclick = () => {
-                const section = document.getElementById('reviewsSection');
-                if(section.style.display !== 'none') {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                }
-            };
         });
 
         // ================= MAIN PRODUCT LOGIC =================
@@ -686,6 +644,9 @@
                 document.getElementById('priceOld').textContent = `₹${currentProduct.oldPrice}`;
                 const save = Math.round(((currentProduct.oldPrice - currentProduct.price) / currentProduct.oldPrice) * 100);
                 document.getElementById('saveBadge').textContent = `SAVE ${save}%`;
+                // Ensure visibility on mobile by removing inline style if previously set
+                document.getElementById('priceOld').style.display = 'inline';
+                document.getElementById('saveBadge').style.display = 'inline-block';
             } else {
                 document.getElementById('priceOld').style.display = 'none';
                 document.getElementById('saveBadge').style.display = 'none';
@@ -705,20 +666,6 @@
                 };
             } else {
                 descEl.classList.remove('desc-clamp');
-            }
-            
-            // Header Ratings
-            if(currentProduct.reviews && currentProduct.reviews.length > 0) {
-                const count = currentProduct.reviews.length;
-                const total = currentProduct.reviews.reduce((acc, r) => acc + r.rating, 0);
-                const avg = Math.round(total / count);
-                let stars = '';
-                for(let i=1; i<=5; i++) { stars += i <= avg ? '★' : '☆'; }
-                document.getElementById('headerStars').textContent = stars;
-                document.getElementById('headerCount').textContent = `(${count} Reviews)`;
-            } else {
-                document.getElementById('headerStars').textContent = '☆☆☆☆☆';
-                document.getElementById('headerCount').textContent = '(No Reviews)';
             }
 
             renderColorOptions();
