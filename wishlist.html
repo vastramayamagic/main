@@ -65,7 +65,7 @@
         .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 14px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
 
-        /* ACTION BUTTONS (Wishlist Card) */
+        /* ACTION BUTTONS */
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -127,8 +127,8 @@
             background: var(--page-bg); 
             width: 100%; 
             max-width: 1200px; 
-            /* FIXED: Changed fixed height to auto with max-height to remove empty space */
-            height: auto; 
+            /* Fix: Changed fixed height to auto with max-height to remove empty space */
+            height: auto;
             max-height: 90vh;
             border-radius: 20px; 
             position: relative; 
@@ -142,7 +142,7 @@
         }
         .modal-overlay.active .modal-content-box { transform: scale(1); opacity: 1; }
         
-        /* Updated Close Button - Square Style */
+        /* Updated Close Button */
         .btn-close-modal { 
             position: absolute; 
             top: 20px; 
@@ -159,14 +159,14 @@
             cursor: pointer; 
             transition: all 0.2s ease; 
         }
-        .btn-close-modal:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
+        .btn-close-modal:hover { background: var(--surface-hover); }
         
         .close-icon-lines { width: 14px; height: 14px; position: relative; }
         .close-icon-lines::before, .close-icon-lines::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; border-radius: 999px; background: var(--text-primary); }
         .close-icon-lines::before { transform: rotate(45deg); }
         .close-icon-lines::after { transform: rotate(-45deg); }
 
-        .modal-scroll-area { overflow-y: auto; width: 100%; }
+        .modal-scroll-area { overflow-y: auto; flex: 1; width: 100%; }
         
         /* Grid layout for Desktop */
         .modal-container { 
@@ -178,7 +178,7 @@
             margin: 0 auto; 
         }
         
-        .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 500px; /* Reduced height to fit auto better */ }
+        .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 600px; }
         .thumbnails { display: flex; flex-direction: column; gap: 10px; width: 70px; flex-shrink: 0; overflow-y: auto; }
         .thumbnails::-webkit-scrollbar { width: 0; }
         .thumb { width: 70px; height: 94px; border-radius: 6px; overflow: hidden; cursor: pointer; border: 1px solid transparent; transition: all 0.3s; opacity: 0.6; flex-shrink: 0; }
@@ -209,14 +209,44 @@
         .size-btn.active { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
         
         .actions-desktop { display: flex; gap: 16px; margin-bottom: 30px; }
-        .btn-main, .btn-secondary { height: 52px; border-radius: 10px; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; cursor: pointer; }
         
-        /* Swapped styles for Buy Now (Main) and Add to Cart (Secondary) */
-        .btn-secondary { flex: 1; background: white; border: 1px solid var(--border-subtle); color: var(--text-primary); }
-        .btn-secondary:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
+        /* Updated Buttons for Popup */
+        .btn-main, .btn-secondary { 
+            height: 52px; 
+            border-radius: 10px; 
+            font-size: 15px; 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            transition: all 0.3s; 
+            cursor: pointer; 
+        }
         
-        .btn-main { flex: 1.5; background: var(--brand-gradient); color: white; border: none; box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); }
+        /* Add to Cart - Red Gradient */
+        .btn-main { 
+            flex: 1.5; 
+            background: var(--brand-gradient); 
+            color: white; 
+            border: none; 
+            box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); 
+        }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
+
+        /* Buy Now - Solid Brown (Premium) */
+        .btn-secondary { 
+            flex: 1; 
+            background: var(--text-primary); /* Dark Brown */
+            border: none; 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(63, 11, 23, 0.1);
+        }
+        .btn-secondary:hover { 
+            background: #2a0810; 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(63, 11, 23, 0.2);
+        }
         
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
@@ -247,7 +277,7 @@
                 display: flex; 
                 position: relative; 
                 width: 100%; 
-                height: 55vh; /* Increased height for immersive look */
+                height: 55vh; /* Increased height */
                 background: #f5f5f5; 
                 overflow-x: auto; 
                 scroll-snap-type: x mandatory; 
@@ -268,7 +298,7 @@
 
         /* --- MOBILE LAYOUT (Page) --- */
         .page-mobile { min-height: 100vh; display: flex; flex-direction: column; display: none; width: 100%; }
-        .m-content { flex: 1; background: var(--page-bg); padding-top: 0; padding-bottom: 100px; width: 100%; overflow-x: hidden; }
+        .m-content { flex: 1; background: var(--page-bg); padding-top: 0; padding-bottom: 20px; width: 100%; overflow-x: hidden; }
 
         @media (max-width: 768px) {
             .page-desktop { display: none; }
@@ -430,8 +460,8 @@
                         <div class="option-label">Size</div>
                         <div class="size-selector" id="sizeSelector"></div>
                         <div class="actions-desktop">
-                            <button class="btn-main btn-buy-now">Buy Now</button>
-                            <button class="btn-secondary btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-secondary btn-buy-now">Buy Now</button>
+                            <button class="btn-main btn-add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -617,6 +647,7 @@
             colorContainer.innerHTML = '';
             sizeSelector.innerHTML = '';
 
+            // Handle Colors
             if (product.colorVariants && product.colorVariants.length > 0) {
                 product.colorVariants.forEach((variant, index) => {
                     const swatch = document.createElement('div');
@@ -646,6 +677,7 @@
                 });
             }
 
+            // Configure Buttons
             const buyBtns = document.querySelectorAll('.btn-buy-now');
             buyBtns.forEach(btn => {
                 btn.style.display = mode === 'cart' ? 'none' : 'block';
