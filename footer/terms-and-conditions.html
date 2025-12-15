@@ -1,1 +1,445 @@
-1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions | Vastramayamagic.in</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --bg-color: #FDFBF7;       
+            --card-bg: #FFFFFF;        
+            --primary-color: #7A1E26;  /* Deep Maroon */
+            --accent-gold: #C5A059;    /* Gold accent for bullets */
+            --text-dark: #2C2C2C;      
+            --text-body: #555555;
+            --highlight-bg: #FFF0F0;   /* Light red for warnings */
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-body);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 4px; }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* --- BRANDING HEADER --- */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out forwards;
+            padding: 0 10px;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-block;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+            max-width: 100%;
+        }
+
+        .logo-text:hover { border-bottom-color: var(--accent-gold); }
+
+        /* --- CARD DESIGN --- */
+        .policy-card {
+            background: var(--card-bg);
+            padding: 80px 70px;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(122, 30, 38, 0.05); 
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        /* --- TYPOGRAPHY & SECTIONS --- */
+        .page-intro {
+            margin-bottom: 60px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+
+        .page-intro h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        /* --- DATE BADGE STYLING --- */
+        .date-badge {
+            display: inline-block;
+            background-color: #F5F5F5;
+            color: #666;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 35px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        /* Intro paragraph text alignment fix */
+        .page-intro p:not(.date-badge) {
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 1.1rem; 
+        }
+
+        .section {
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        p { margin-bottom: 15px; font-weight: 300; font-size: 1.05rem;}
+
+        /* --- LIST STYLING --- */
+        ul { list-style: none; margin-bottom: 20px; padding-left: 10px; }
+        ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--accent-gold);
+            font-size: 20px;
+            position: absolute;
+            left: 0;
+            top: -4px;
+        }
+
+        /* --- HIGHLIGHT BOX --- */
+        .highlight-box {
+            background-color: var(--highlight-bg);
+            border-left: 4px solid #D64545;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+        }
+        .highlight-box strong { color: #D64545; font-family: 'Playfair Display', serif; }
+
+        /* --- LINKS --- */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: 0.3s;
+            border-bottom: 1px dotted var(--primary-color);
+        }
+        a:hover { border-bottom-style: solid; }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.85rem;
+            color: #999;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 1s forwards;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            
+            /* LOGO FIX FOR MOBILE */
+            .logo-text {
+                font-size: 1.4rem; 
+                line-height: 1.2;
+                word-wrap: break-word; 
+            }
+
+            .container { padding: 30px 15px; }
+            .policy-card { padding: 40px 25px; }
+            
+            .page-intro h1 { 
+                font-size: 1.8rem;
+                line-height: 1.3;
+                padding: 0 5px;
+            }
+            
+            .page-intro p:not(.date-badge) { 
+                font-size: 0.95rem; 
+                line-height: 1.6;
+                text-align: left;
+            }
+
+            p, ul li { font-size: 0.95rem; }
+            .section h2 { font-size: 1.3rem; }
+        }
+        
+        @media (max-width: 380px) {
+             .logo-text { font-size: 1.2rem; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Branding -->
+        <div class="brand-header">
+            <a href="index.html" class="logo-text">Vastramayamagic.in</a>
+        </div>
+
+        <!-- Content Card -->
+        <div class="policy-card">
+            
+            <div class="page-intro section">
+                <h1>Terms and Conditions</h1>
+                
+                <!-- Date Badge -->
+                <span class="date-badge">Last Updated: 14 December 2025</span>
+
+                <p>Welcome to Vastramayamagic.in (“we”, “our”, “us”).</p>
+                <p>These Terms and Conditions govern your use of our website and the purchase of products from our platform. By accessing or using Vastramayamagic.in, you agree to be bound by these Terms.</p>
+                
+                <div class="highlight-box">
+                    <strong>If you do not agree with any part of these Terms, please do not use our website.</strong>
+                </div>
+            </div>
+
+            <!-- 1. About Us -->
+            <div class="section">
+                <h2>1. About Us</h2>
+                <p>Vastramayamagic.in is an Indian e-commerce platform offering traditional and vintage Indian clothing. We sell and ship products within India only.</p>
+            </div>
+
+            <!-- 2. Eligibility -->
+            <div class="section">
+                <h2>2. Eligibility to Use the Website</h2>
+                <p>By using this website, you confirm that:</p>
+                <ul>
+                    <li>You are at least 18 years of age, or</li>
+                    <li>You are using the website under the supervision of a parent or legal guardian</li>
+                    <li>You agree to provide accurate and complete information when placing an order or contacting us.</li>
+                </ul>
+            </div>
+
+            <!-- 3. Products and Availability -->
+            <div class="section">
+                <h2>3. Products and Availability</h2>
+                <ul>
+                    <li>All products displayed on the website are subject to availability.</li>
+                    <li>We reserve the right to limit quantities, discontinue products, or modify product details without prior notice.</li>
+                    <li>Product images are for representation purposes only. Slight variations in color, texture, or design may occur due to lighting, screen resolution, or handcrafted nature of products.</li>
+                </ul>
+            </div>
+
+            <!-- 4. Pricing and Payment -->
+            <div class="section">
+                <h2>4. Pricing and Payment</h2>
+                <ul>
+                    <li>All prices listed on the website are in Indian Rupees (INR) and inclusive of applicable taxes unless stated otherwise.</li>
+                    <li>We reserve the right to change prices at any time without prior notice.</li>
+                    <li>Payments are processed securely through Razorpay.</li>
+                    <li>We do not store or have access to your payment details such as card numbers or UPI PINs.</li>
+                    <li>An order will be considered confirmed only after successful payment.</li>
+                </ul>
+            </div>
+
+            <!-- 5. Order Confirmation and Cancellation -->
+            <div class="section">
+                <h2>5. Order Confirmation and Cancellation</h2>
+                <p>Once an order is placed, you will receive an order confirmation via email or SMS.</p>
+                <p>We reserve the right to cancel or refuse any order due to reasons including but not limited to:</p>
+                <ul>
+                    <li>Product unavailability</li>
+                    <li>Pricing or listing errors</li>
+                    <li>Suspected fraudulent activity</li>
+                </ul>
+                <p>If payment has been made and the order is cancelled, a refund will be processed as per our Refund Policy.</p>
+            </div>
+
+            <!-- 6. Shipping -->
+            <div class="section">
+                <h2>6. Shipping</h2>
+                <ul>
+                    <li>We deliver products within India only.</li>
+                    <li>Estimated delivery timelines are indicative and may vary due to logistics, location, or unforeseen circumstances.</li>
+                    <li>We are not responsible for delays caused by courier partners, natural events, or government restrictions.</li>
+                </ul>
+            </div>
+
+            <!-- 7. Returns, Refunds, and Replacements -->
+            <div class="section">
+                <h2>7. Returns, Refunds, and Replacements</h2>
+                <p>All returns, refunds, and replacements are governed by our Refund & Return Policy, which forms an integral part of these Terms.</p>
+                <p>Please review the policy before making a purchase.</p>
+            </div>
+
+            <!-- 8. Intellectual Property -->
+            <div class="section">
+                <h2>8. Intellectual Property</h2>
+                <p>All content on this website, including logos, designs, images, text, graphics, and website layout, is the intellectual property of Vastramayamagic.in.</p>
+                <ul>
+                    <li>You may not copy, reproduce, distribute, or use any content without prior written permission.</li>
+                    <li>Unauthorized use may result in legal action.</li>
+                </ul>
+            </div>
+
+            <!-- 9. User Conduct -->
+            <div class="section">
+                <h2>9. User Conduct</h2>
+                <p>You agree not to:</p>
+                <ul>
+                    <li>Use the website for unlawful purposes</li>
+                    <li>Attempt to gain unauthorized access to the website or servers</li>
+                    <li>Upload or transmit malicious code, viruses, or harmful content</li>
+                    <li>Provide false or misleading information</li>
+                </ul>
+                <p>We reserve the right to restrict or terminate access if these Terms are violated.</p>
+            </div>
+
+            <!-- 10. Limitation of Liability -->
+            <div class="section">
+                <h2>10. Limitation of Liability</h2>
+                <p>To the maximum extent permitted by Indian law:</p>
+                <ul>
+                    <li>Vastramayamagic.in shall not be liable for any indirect, incidental, or consequential damages arising from the use of the website or products purchased.</li>
+                    <li>Our total liability, if any, shall not exceed the amount paid by you for the product.</li>
+                </ul>
+            </div>
+
+            <!-- 11. Indemnification -->
+            <div class="section">
+                <h2>11. Indemnification</h2>
+                <p>You agree to indemnify and hold harmless Vastramayamagic.in from any claims, losses, damages, or expenses arising out of:</p>
+                <ul>
+                    <li>Your misuse of the website</li>
+                    <li>Violation of these Terms</li>
+                    <li>Breach of applicable laws</li>
+                </ul>
+            </div>
+
+            <!-- 12. Third-Party Services -->
+            <div class="section">
+                <h2>12. Third-Party Services</h2>
+                <p>Our website may contain links or integrations with third-party services, including payment gateways and delivery partners. We are not responsible for the content, policies, or practices of third-party websites.</p>
+            </div>
+
+            <!-- 13. Termination -->
+            <div class="section">
+                <h2>13. Termination</h2>
+                <p>We reserve the right to suspend or terminate access to our website at any time without prior notice if these Terms are violated.</p>
+            </div>
+
+            <!-- 14. Governing Law and Jurisdiction -->
+            <div class="section">
+                <h2>14. Governing Law and Jurisdiction</h2>
+                <p>These Terms shall be governed by and interpreted in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in India.</p>
+            </div>
+
+            <!-- 15. Changes to Terms -->
+            <div class="section">
+                <h2>15. Changes to Terms</h2>
+                <p>We may update these Terms and Conditions from time to time. Any changes will be effective immediately upon posting on the website.</p>
+                <p>We encourage you to review this page periodically.</p>
+            </div>
+
+            <!-- 16. Contact Information -->
+            <div class="section">
+                <h2>16. Contact Information</h2>
+                <p>For any questions or concerns regarding these Terms, please contact us:</p>
+                <p>
+                    <strong>Website:</strong> <a href="https://vastramayamagic.in">https://vastramayamagic.in</a><br>
+                    <strong>Email:</strong> <a href="mailto:vastramayamagic@gmail.com">vastramayamagic@gmail.com</a><br>
+                    <strong>Phone:</strong> +91 86394 78312
+                </p>
+            </div>
+
+        </div>
+
+        <footer>
+            &copy; 2025 Vastramayamagic.in. All Rights Reserved.
+        </footer>
+    </div>
+
+    <!-- Script for Scroll Animation -->
+    <script>
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
