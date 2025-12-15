@@ -44,58 +44,65 @@
             color: var(--text-secondary); text-decoration: none; font-weight: 600;
             font-size: 14px; margin-bottom: 25px; transition: 0.2s;
         }
+        .back-link:hover { color: var(--brand-primary); transform: translateX(-3px); }
 
-        /* --- Profile Wrapper --- */
+        /* --- Profile Card Wrapper --- */
         .profile-wrapper {
             background: var(--card-bg);
             border-radius: 24px;
             box-shadow: 0 20px 40px -10px rgba(59, 11, 23, 0.15);
             border: 1px solid rgba(139, 38, 53, 0.08);
+            overflow: hidden; /* Ensures header bg stays inside corners */
             position: relative;
-            /* FIXED: Ensure visible overflow on all screens by default to prevent clipping, 
-               or handle specific desktop overflow if needed. For this design, visible is safer. */
-            overflow: visible; 
         }
 
+        /* The Maroon Header Background */
         .profile-header-bg { 
-            height: 120px; 
+            height: 130px; 
             background: var(--brand-gradient); 
-            border-radius: 24px 24px 0 0; /* Clip top corners */
-            position: relative; 
-            overflow: hidden; /* Keep gradient contained */
+            width: 100%;
         }
-        
-        .profile-content { padding: 0 40px 40px 40px; margin-top: -60px; position: relative; z-index: 5; }
+
+        .profile-content { 
+            padding: 0 40px 40px 40px; 
+            margin-top: -65px; /* Pulls content up to overlap header */
+            position: relative;
+        }
 
         /* Avatar */
-        .avatar-row { display: flex; justify-content: center; margin-bottom: 30px; position: relative; z-index: 10; }
+        .avatar-row { 
+            display: flex; 
+            justify-content: center; 
+            margin-bottom: 30px; 
+            position: relative; 
+        }
+        
         .avatar-container {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 4px solid #fff; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 5px solid #fff; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             background: #fff;
             position: relative;
+            z-index: 10;
         }
         .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
         /* Sections */
         .info-section { margin-bottom: 30px; }
         
-        /* Section Header with Edit Button */
         .section-label {
             font-family: var(--font-serif);
             font-size: 22px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 20px;
-            display: flex; align-items: center; justify-content: space-between; 
+            display: flex; align-items: center; justify-content: space-between;
             border-bottom: 1px solid var(--border-subtle);
             padding-bottom: 10px;
         }
         
         .section-title-wrap { display: flex; align-items: center; gap: 10px; }
 
-        /* Edit Button - Desktop style */
         .edit-profile-btn {
             background: transparent;
             border: 1px solid var(--border-subtle);
@@ -117,7 +124,6 @@
         
         label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
         
-        /* INPUT STABILITY FIX */
         input {
             width: 100%; 
             height: 48px; 
@@ -129,14 +135,16 @@
             color: var(--text-primary); 
             background: #fff; 
             transition: 0.2s;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
+        
         input:disabled { 
             background: #fafafa; 
-            border-color: #e8d5c4; /* Keep border visible to prevent jumping */
+            border-color: #eee;
             color: var(--text-secondary);
             cursor: default;
         }
+        
         input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 4px rgba(139, 38, 53, 0.05); }
 
         .action-btns { display: none; gap: 15px; margin-top: 25px; }
@@ -164,60 +172,73 @@
             border-radius: 16px; color: var(--text-light); cursor: pointer;
         }
 
-        /* --- MOBILE PREMIUM FIXES --- */
+        /* --- MOBILE SPECIFIC FIXES --- */
         @media (max-width: 768px) {
-            body { padding: 0; background: #fff; }
-            
-            /* Mobile Hero Background (Underlay) */
-            .mobile-hero {
-                background: var(--brand-gradient);
-                height: 180px; 
-                width: 100%; 
-                position: absolute; 
-                top: 0; left: 0;
-                border-radius: 0 0 30px 30px; 
-                z-index: 0; /* Behind everything */
+            body { 
+                padding: 0; 
+                background: #f7f7f7; /* Light grey bg for mobile page */
             }
             
-            .container { margin-top: 80px; padding: 0 20px 40px 20px; }
+            .container { 
+                margin-top: 0; 
+                padding: 0; /* Full width card on mobile */
+            }
 
-            .back-link { position: absolute; top: -50px; left: 20px; color: rgba(255,255,255,0.9); z-index: 10; }
+            .back-link { 
+                position: absolute; top: 20px; left: 20px; 
+                color: rgba(255,255,255,0.9); z-index: 20; 
+                background: rgba(0,0,0,0.2); backdrop-filter: blur(4px);
+                padding: 8px 12px; border-radius: 20px;
+                font-size: 12px; margin: 0;
+            }
 
             .profile-wrapper {
                 background: #fff; 
                 border: none; 
-                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-                border-radius: 24px; 
-                padding-bottom: 20px;
-                overflow: visible !important; /* FIX: Ensures avatar doesn't get clipped */
+                box-shadow: none;
+                border-radius: 0; /* Full width flat on mobile */
+                padding-bottom: 40px;
+                min-height: 100vh;
             }
 
-            .profile-header-bg { display: none; } /* Use mobile hero instead */
+            /* Visible Header on Mobile */
+            .profile-header-bg { 
+                display: block; /* Ensure it is visible */
+                height: 160px; /* Slightly taller for mobile aesthetics */
+            }
             
-            .profile-content { padding: 0 20px; margin-top: 0; }
+            .profile-content { 
+                padding: 0 25px; 
+                margin-top: -60px; /* Overlap avatar */
+            }
 
-            .avatar-row { margin-top: -50px; margin-bottom: 20px; }
-            .avatar-container { width: 100px; height: 100px; }
+            .avatar-row { margin-bottom: 30px; }
+            .avatar-container { 
+                width: 110px; height: 110px; 
+                border: 4px solid #fff;
+            }
 
-            /* Mobile Section Headers */
             .section-label { 
                 font-size: 18px; 
-                background: var(--surface-hover); 
-                padding: 12px 16px; 
-                border-radius: 12px;
-                border-bottom: none;
+                background: #fff;
+                padding: 0;
+                border-bottom: 1px solid var(--border-subtle);
+                padding-bottom: 15px;
                 margin-bottom: 20px;
+                margin-top: 10px;
             }
 
-            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            /* Form Stack */
+            .form-grid { grid-template-columns: 1fr; gap: 20px; }
             .input-group.full { grid-column: span 1; }
 
-            /* Edit Button in Mobile Header */
+            /* Edit Button Mobile */
             .edit-profile-btn {
                 font-size: 11px;
                 padding: 6px 12px;
-                background: #fff; 
-                border: 1px solid var(--border-subtle);
+                background: var(--surface-hover);
+                border: none;
+                color: var(--brand-primary);
             }
         }
 
@@ -238,12 +259,10 @@
 </head>
 <body>
 
-    <div class="mobile-hero"></div>
-
     <div class="container">
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
-        
         <div class="profile-wrapper">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
+
             <div class="profile-header-bg"></div>
 
             <div class="profile-content">
