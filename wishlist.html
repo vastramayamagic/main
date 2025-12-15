@@ -127,9 +127,8 @@
             background: var(--page-bg); 
             width: 100%; 
             max-width: 1200px; 
-            /* Fix: Changed fixed height to auto with max-height to remove empty space */
-            height: auto;
-            max-height: 90vh;
+            height: auto; /* Changed from 90vh to auto to fit content */
+            max-height: 90vh; /* Ensure it doesn't exceed screen */
             border-radius: 20px; 
             position: relative; 
             box-shadow: var(--shadow-modal); 
@@ -166,8 +165,7 @@
         .close-icon-lines::before { transform: rotate(45deg); }
         .close-icon-lines::after { transform: rotate(-45deg); }
 
-        .modal-scroll-area { overflow-y: auto; flex: 1; width: 100%; }
-        
+        .modal-scroll-area { overflow-y: auto; width: 100%; }
         /* Grid layout for Desktop */
         .modal-container { 
             display: grid; 
@@ -178,7 +176,7 @@
             margin: 0 auto; 
         }
         
-        .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 600px; }
+        .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 500px; /* Reduced height slightly for better fit */ }
         .thumbnails { display: flex; flex-direction: column; gap: 10px; width: 70px; flex-shrink: 0; overflow-y: auto; }
         .thumbnails::-webkit-scrollbar { width: 0; }
         .thumb { width: 70px; height: 94px; border-radius: 6px; overflow: hidden; cursor: pointer; border: 1px solid transparent; transition: all 0.3s; opacity: 0.6; flex-shrink: 0; }
@@ -208,9 +206,9 @@
         .size-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
         .size-btn.active { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
         
-        .actions-desktop { display: flex; gap: 16px; margin-bottom: 30px; }
+        .actions-desktop { display: flex; gap: 16px; margin-bottom: 10px; /* Reduced bottom margin */ }
         
-        /* Updated Buttons for Popup */
+        /* Unified Button Colors */
         .btn-main, .btn-secondary { 
             height: 52px; 
             border-radius: 10px; 
@@ -223,8 +221,17 @@
             transition: all 0.3s; 
             cursor: pointer; 
         }
-        
-        /* Add to Cart - Red Gradient */
+        /* Add to Cart - Outlined Brown */
+        .btn-secondary { 
+            flex: 1; 
+            background: white; 
+            border: 1px solid var(--brand-primary); 
+            color: var(--brand-primary); 
+        }
+        .btn-secondary:hover { 
+            background: var(--surface-hover); 
+        }
+        /* Buy Now - Solid Brown */
         .btn-main { 
             flex: 1.5; 
             background: var(--brand-gradient); 
@@ -232,20 +239,9 @@
             border: none; 
             box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); 
         }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
-
-        /* Buy Now - Solid Brown (Premium) */
-        .btn-secondary { 
-            flex: 1; 
-            background: var(--text-primary); /* Dark Brown */
-            border: none; 
-            color: white; 
-            box-shadow: 0 4px 15px rgba(63, 11, 23, 0.1);
-        }
-        .btn-secondary:hover { 
-            background: #2a0810; 
+        .btn-main:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(63, 11, 23, 0.2);
+            box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); 
         }
         
         .mobile-gallery, .mobile-actions-bar { display: none; }
@@ -261,7 +257,6 @@
             .modal-content-box { height: 90vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; }
             .modal-overlay.active .modal-content-box { transform: translateY(0); }
             
-            /* Mobile Close Button Positioning */
             .btn-close-modal { 
                 top: 16px; 
                 right: 16px; 
@@ -277,7 +272,7 @@
                 display: flex; 
                 position: relative; 
                 width: 100%; 
-                height: 55vh; /* Increased height */
+                height: 55vh; 
                 background: #f5f5f5; 
                 overflow-x: auto; 
                 scroll-snap-type: x mandatory; 
@@ -292,13 +287,33 @@
             .price-block { margin-bottom: 20px; border: none; padding-bottom: 0; }
             
             .mobile-actions-bar { display: flex; position: absolute; bottom: 0; left: 0; right: 0; background: white; padding: 12px 20px; gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 100; }
-            .btn-mobile-cart { flex: 1; height: 48px; background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); border-radius: 8px; font-weight: 600; cursor: pointer; }
-            .btn-mobile-buy { flex: 1.2; height: 48px; background: var(--brand-gradient); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+            
+            /* Unified Mobile Button Colors */
+            .btn-mobile-cart { 
+                flex: 1; 
+                height: 48px; 
+                background: white; 
+                color: var(--brand-primary); 
+                border: 1px solid var(--brand-primary); 
+                border-radius: 8px; 
+                font-weight: 600; 
+                cursor: pointer; 
+            }
+            .btn-mobile-buy { 
+                flex: 1.2; 
+                height: 48px; 
+                background: var(--brand-gradient); 
+                color: white; 
+                border: none; 
+                border-radius: 8px; 
+                font-weight: 600; 
+                cursor: pointer; 
+            }
         }
 
         /* --- MOBILE LAYOUT (Page) --- */
         .page-mobile { min-height: 100vh; display: flex; flex-direction: column; display: none; width: 100%; }
-        .m-content { flex: 1; background: var(--page-bg); padding-top: 0; padding-bottom: 20px; width: 100%; overflow-x: hidden; }
+        .m-content { flex: 1; background: var(--page-bg); padding-top: 0; padding-bottom: 100px; width: 100%; overflow-x: hidden; }
 
         @media (max-width: 768px) {
             .page-desktop { display: none; }
@@ -460,8 +475,8 @@
                         <div class="option-label">Size</div>
                         <div class="size-selector" id="sizeSelector"></div>
                         <div class="actions-desktop">
-                            <button class="btn-secondary btn-buy-now">Buy Now</button>
-                            <button class="btn-main btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-secondary btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-main btn-buy-now">Buy Now</button>
                         </div>
                     </div>
                 </div>
