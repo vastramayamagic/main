@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vastramaya | Premium Product Modal</title>
+    <title>My Wishlist | Vastramaya</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,15 +14,15 @@
         /* --- 1. CORE VARIABLES --- */
         :root {
             --page-bg: #fefcf3;
-            --text-primary: #1a0f0f; 
-            --text-secondary: #5c4033;
-            --text-light: #9c8c74;
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --text-light: #a3715f;
             --brand-primary: #8b2635;
-            --brand-gradient: linear-gradient(135deg, #8b2635 0%, #a03040 100%);
-            --border-subtle: #e6dccf;
-            --surface-white: #ffffff;
-            --surface-hover: #f9f4ef;
+            --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            
+            --border-subtle: #e8d5c4;
             --product-card-bg: #fffefb;
+            --surface-hover: #f9f2e3;
             --shadow-float: 0 20px 50px -10px rgba(60, 20, 20, 0.15);
         }
 
@@ -30,96 +30,186 @@
         body { background: var(--page-bg); font-family: "DM Sans", sans-serif; color: var(--text-primary); padding: 40px 0; }
         body.modal-open { overflow: hidden; }
 
-        /* No Copy Utility */
-        .no-copy {
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-            -webkit-user-drag: none; -webkit-touch-callout: none; pointer-events: auto;
-        }
+        .no-copy { -webkit-user-select: none; user-select: none; pointer-events: auto; }
 
         /* --- 2. LAYOUT & GRID --- */
-        .category-products-section { padding: 30px 40px; background: var(--page-bg); max-width: 1600px; margin: 0 auto; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .section-header h2 { font-size: 32px; font-weight: 700; color: var(--text-primary); position: relative; margin: 0; }
-        .section-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 50px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
+        .wishlist-section { padding: 30px 40px; background: var(--page-bg); max-width: 1200px; margin: 0 auto; }
         
-        .section-header-right { display: flex; align-items: center; gap: 20px; }
-        .view-more-link { font-size: 14px; font-weight: 600; color: var(--brand-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.2s; }
-        .view-more-link:hover { border-bottom-color: var(--brand-primary); }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 15px; }
+        .section-header h2 { font-size: 32px; font-weight: 700; color: var(--text-primary); }
+        .item-count { font-size: 16px; color: var(--text-light); font-weight: 500; margin-left: 10px; }
 
-        .section-nav { display: flex; gap: 12px; }
-        .nav-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--product-card-bg); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .nav-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); }
-        .nav-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 2; transition: stroke 0.3s ease; }
-        .nav-btn:hover svg { stroke: white; }
-
-        .products-grid { display: flex; gap: 25px; padding: 10px 5px 30px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; }
-        .products-grid::-webkit-scrollbar { display: none; }
-
-        /* --- 3. PRODUCT CARD --- */
-        .product-card {
-            flex: 0 0 auto; width: 300px; background: var(--product-card-bg); border-radius: 16px; overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: all 0.3s ease; scroll-snap-align: start;
-            border: 1px solid var(--border-subtle); position: relative; cursor: pointer;
+        /* DESKTOP GRID: 5 Items in a row */
+        .products-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 20px; 
+            padding-bottom: 30px; 
         }
-        .product-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--brand-primary); transform: translateY(-4px); }
 
-        .product-image-container { position: relative; width: 100%; height: 320px; overflow: hidden; border-bottom: 1px solid var(--border-subtle); }
+        /* --- 3. PRODUCT CARD (Wishlist Style) --- */
+        .product-card {
+            background: var(--product-card-bg); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(59, 11, 23, 0.05); transition: all 0.3s ease;
+            border: 1px solid var(--border-subtle); position: relative; display: flex; flex-direction: column;
+            cursor: pointer; /* Indicates clickable for quick view */
+        }
+        .product-card:hover { box-shadow: 0 8px 30px rgba(59, 11, 23, 0.12); border-color: var(--brand-primary); transform: translateY(-5px); }
+
+        .product-image-container { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; border-bottom: 1px solid var(--border-subtle); }
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s ease, transform 0.8s ease; }
         .hover-image { opacity: 0; transform: scale(1.05); }
         .product-card:hover .default-image { opacity: 0; transform: scale(1.05); }
         .product-card:hover .hover-image { opacity: 1; transform: scale(1); }
 
-        .wishlist-btn-top-right {
-            position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: rgba(255,255,255,0.9);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-subtle);
-            cursor: pointer; z-index: 10; transition: all 0.2s ease;
+        /* REDESIGNED REMOVE BUTTON (SQUARE) */
+        .card-close-btn {
+            position: absolute; top: 10px; right: 10px; 
+            width: 32px; height: 32px; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-subtle); 
+            background: rgba(255, 255, 255, 0.9); 
+            display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; z-index: 10; 
+            transition: background 0.2s ease, transform 0.1s ease;
         }
-        .wishlist-btn-top-right:hover { transform: scale(1.1); background: #fff; }
-        .wishlist-btn-top-right svg { width: 18px; height: 18px; stroke: var(--brand-primary); fill: none; transition: all 0.2s ease; }
-        .wishlist-btn-top-right.active svg { fill: var(--brand-primary); }
+        .card-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
+        .card-close-btn:active { transform: scale(0.95); }
+        
+        .card-close-icon { width: 10px; height: 10px; position: relative; }
+        .card-close-icon::before, .card-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 12px; height: 1.5px; background: var(--text-primary); transition: background 0.2s; }
+        .card-close-icon::before { transform: rotate(45deg); }
+        .card-close-icon::after { transform: rotate(-45deg); }
+        .card-close-btn:hover .card-close-icon::before, .card-close-btn:hover .card-close-icon::after { background: var(--brand-primary); }
 
-        .quick-view-btn {
-            position: absolute; bottom: 0; left: 0; right: 0; background: rgba(139, 38, 53, 0.95); color: white;
-            padding: 12px 20px; border: none; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 600;
-            cursor: pointer; transform: translateY(100%); transition: transform 0.3s ease;
-            display: flex; align-items: center; justify-content: center; gap: 8px; z-index: 2;
-        }
-        .product-card:hover .quick-view-btn { transform: translateY(0); }
 
-        .product-info { padding: 16px 18px; min-height: 110px; display: flex; flex-direction: column; justify-content: space-between; }
-        .product-text-group { margin-bottom: 8px; }
+        .product-info { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+        
         .product-title {
-            font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; line-height: 1.25;
-            height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; line-height: 1.3;
+            height: 38px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
         }
-        .product-category { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 500; margin: 0; }
-        .product-price { display: flex; align-items: center; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--border-subtle); }
-        .price-container { display: flex; align-items: baseline; gap: 8px; }
-        .current-price { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
+        .product-category { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        
+        .product-price { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+        .current-price { font-size: 16px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 13px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
 
-        .add-to-cart {
-            width: 36px; height: 36px; border-radius: 8px; background: var(--surface-white); border: 1px solid var(--border-subtle);
-            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;
+        /* BUTTONS LAYOUT */
+        .wishlist-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: auto;
         }
-        .add-to-cart:hover { background: var(--brand-primary); border-color: var(--brand-primary); }
-        .add-to-cart svg { width: 18px; height: 18px; stroke: var(--text-primary); transition: stroke 0.3s ease; }
-        .add-to-cart:hover svg { stroke: white; }
 
-        /* --- 4. MODAL COMMON STYLES --- */
+        .btn-action {
+            font-family: "DM Sans", sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: transparent;
+            width: 100%;
+            position: relative;
+            z-index: 5; /* Ensure clickable above card link */
+        }
+
+        .btn-move-cart {
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+        .btn-move-cart:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            background: var(--surface-hover);
+        }
+
+        .btn-buy-now {
+            background: var(--brand-gradient);
+            color: white;
+            border: none;
+        }
+        .btn-buy-now:hover {
+            opacity: 0.95;
+            box-shadow: 0 4px 10px rgba(139, 38, 53, 0.2);
+        }
+
+        /* --- 4. RESPONSIVE LAYOUTS --- */
+
+        /* TABLET (3 columns) */
+        @media (max-width: 1024px) {
+            .products-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+            .wishlist-section { padding: 30px 20px; }
+        }
+
+        /* MOBILE REDESIGN - Horizontal Card Style */
+        @media (max-width: 600px) {
+            .wishlist-section { padding: 20px 15px; }
+            .section-header h2 { font-size: 24px; }
+            
+            .products-grid { 
+                grid-template-columns: 1fr; 
+                gap: 16px; 
+            }
+
+            /* Horizontal Card Layout */
+            .product-card {
+                flex-direction: row;
+                height: auto;
+                min-height: 140px;
+                align-items: stretch;
+            }
+            .product-card:hover { transform: none; }
+
+            .product-image-container {
+                width: 120px;
+                aspect-ratio: auto;
+                height: auto;
+                flex-shrink: 0;
+                border-bottom: none;
+                border-right: 1px solid var(--border-subtle);
+            }
+
+            .product-info {
+                padding: 12px;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .product-title { font-size: 14px; height: auto; -webkit-line-clamp: 2; margin-bottom: 2px; }
+            .product-category { margin-bottom: 4px; }
+            .product-price { margin-bottom: 10px; }
+            
+            .wishlist-actions {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .btn-action { padding: 10px 0; font-size: 12px; }
+
+            /* Position Close button on Mobile */
+            .card-close-btn { 
+                top: 4px; left: 4px; right: auto; /* Move to left on mobile image or keep right? Let's put top left of image */
+                width: 26px; height: 26px;
+                border-radius: 6px;
+                background: rgba(255,255,255,0.9);
+            }
+        }
+
+        /* --- 5. MODAL STYLES (Copied & Optimized from Original) --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         
-        .modal-content-box { 
-            background: var(--page-bg); width: 100%; max-width: 1050px; height: 85vh; border-radius: 20px; 
-            position: relative; box-shadow: var(--shadow-float); transform: scale(0.95); opacity: 0; 
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; display: flex; flex-direction: column; 
-        }
+        .modal-content-box { background: var(--page-bg); width: 100%; max-width: 1050px; height: 85vh; border-radius: 20px; position: relative; box-shadow: var(--shadow-float); transform: scale(0.95); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; display: flex; flex-direction: column; }
         .modal-overlay.active .modal-content-box { transform: scale(1); opacity: 1; }
         
+        /* Modal Close Button (Square) */
         .premium-close-btn { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: rgba(255, 255, 255, 0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 60; transition: background 0.2s ease, transform 0.1s ease; }
         .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
         .premium-close-btn:active { transform: scale(0.95); }
+        
         .close-icon-lines { width: 14px; height: 14px; position: relative; }
         .close-icon-lines::before, .close-icon-lines::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 1.5px; background: var(--text-primary); transition: background 0.2s; }
         .close-icon-lines::before { transform: rotate(45deg); }
@@ -127,9 +217,9 @@
         .premium-close-btn:hover .close-icon-lines::before, .premium-close-btn:hover .close-icon-lines::after { background: var(--brand-primary); }
 
         .modal-scroll-area { overflow-y: auto; height: 100%; width: 100%; }
-        
-        /* DESKTOP LAYOUT (Default) */
         .modal-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: start; padding: 40px 50px; margin: 0 auto; min-height: 100%; }
+        
+        /* Gallery */
         .gallery-wrapper { position: sticky; top: 0; display: flex; gap: 16px; height: 500px; }
         .thumbnails { display: flex; flex-direction: column; gap: 12px; width: 80px; flex-shrink: 0; overflow-y: auto; padding-right: 4px; }
         .thumbnails::-webkit-scrollbar { width: 0px; }
@@ -139,7 +229,6 @@
         .main-stage { flex: 1; height: 100%; border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid var(--border-subtle); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
         .main-stage img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
 
-        /* PRODUCT INFO COMMON */
         .product-details { padding-top: 10px; display: flex; flex-direction: column; height: 100%; }
         .modal-product-title { font-size: 38px; line-height: 1.1; font-weight: 500; margin: 0 0 8px 0; color: var(--text-primary); font-family: "Cormorant Garamond", serif; }
         .modal-product-category { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); margin-bottom: 24px; font-weight: 600; }
@@ -173,73 +262,25 @@
 
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
-        /* --- 5. RESPONSIVE LAYOUTS --- */
-
-        /* TABLET SPECIFIC LAYOUT (601px - 1024px) */
-        /* Design: Centered Modal, Image Slideshow Top (Like Mobile but wider), Details Scroll Below */
+        /* Modal Responsive */
         @media (min-width: 601px) and (max-width: 1024px) {
-            .category-products-section { padding: 30px 20px; }
-            
-            .products-grid {
-                display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-                overflow-x: visible; padding-right: 0;
-            }
-            .product-card { width: 100%; }
-            .product-image-container { height: 240px; }
-            .section-nav { display: none !important; }
-
-            /* New Tablet Popup Design */
             .modal-content-box { height: 85vh; width: 80vw; max-width: 700px; display: flex; flex-direction: column; }
-            
-            /* Reset Grid to Block for scrolling layout */
             .modal-container { display: block; padding: 0; width: 100%; overflow-y: auto; }
-            
-            /* Hide Desktop Gallery (Sidebar style) */
             .gallery-wrapper { display: none; }
-            
-            /* Show Mobile Gallery (Slider style) but larger */
-            .mobile-gallery { 
-                display: flex; position: relative; width: 100%; height: 400px; /* Taller for tablet */
-                background: #f8f8f8; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
-            }
+            .mobile-gallery { display: flex; position: relative; width: 100%; height: 400px; background: #f8f8f8; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
             .mobile-gallery::-webkit-scrollbar { display: none; }
             .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
-
-            /* Details Padding */
             .product-details { padding: 30px 40px 40px 40px; min-height: auto; }
-            
-            /* Ensure Buttons are Visible Inline (Not bottom sheet) */
             .actions-desktop { display: grid; margin-top: 30px; }
-            .mobile-actions-bar { display: none; }
         }
 
-        /* MOBILE (< 600px) */
         @media (max-width: 600px) {
-            .category-products-section { padding: 20px 10px; }
-            .section-header { padding: 0 10px; margin-bottom: 20px; }
-            .section-header h2 { font-size: 24px; }
-            .section-nav, .quick-view-btn { display: none !important; }
-
-            .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 0 10px; overflow-x: visible; scroll-snap-type: none; }
-            .product-card { width: 100%; border-radius: 12px; }
-            .product-image-container { height: 200px; }
-            
-            .product-info { padding: 12px; min-height: 100px; }
-            .product-title { font-size: 14px; height: 36px; }
-            .current-price { font-size: 16px; }
-            .old-price { font-size: 12px; }
-            .add-to-cart { width: 32px; height: 32px; }
-
-            /* Modal: Bottom Sheet */
             .modal-overlay { padding: 0; align-items: flex-end; }
             .modal-content-box { height: 88vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; }
             .modal-overlay.active .modal-content-box { transform: translateY(0); }
             
-            .premium-close-btn { top: 16px; right: 16px; width: 36px; height: 36px; background: rgba(255,255,255,0.95); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-color: transparent; }
-            
             .modal-container { display: block; padding: 0; padding-bottom: 100px; }
             .gallery-wrapper { display: none; }
-            
             .mobile-gallery { display: flex; position: relative; width: 100%; height: 55vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
             .mobile-gallery::-webkit-scrollbar { display: none; }
             .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
@@ -250,52 +291,42 @@
             .modal-price-current { font-size: 28px; }
             .price-block { margin-bottom: 24px; border: none; padding-bottom: 0; }
             
-            /* Hide Desktop Buttons */
             .actions-desktop { display: none !important; }
             
-            /* Sticky Mobile Buttons */
             .mobile-actions-bar { display: flex; position: absolute; bottom: 0; left: 0; right: 0; background: white; padding: 12px 20px; gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 100; border-top: 1px solid var(--border-subtle); }
             .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; }
             .btn-mobile-buy { background: white; color: var(--text-primary); border: 1px solid var(--border-subtle); }
             .btn-mobile-cart { background: var(--brand-gradient); color: white; flex: 1.5; box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); }
         }
+
     </style>
 </head>
 <body>
 
-    <section class="category-products-section">
+    <section class="wishlist-section">
         <div class="section-header">
-            <h2>Haute Couture</h2>
-            <div class="section-header-right">
-                <a href="#" class="view-more-link">View More</a>
-                <div class="section-nav">
-                    <button class="nav-btn prev-btn" id="prev-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                    </button>
-                    <button class="nav-btn next-btn" id="next-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                    </button>
-                </div>
+            <div>
+                <h2>My Wishlist <span class="item-count">(6 items)</span></h2>
             </div>
         </div>
 
-        <div class="products-container">
-            <div class="products-grid" id="demo-grid">
-                <!-- Products injected by JS -->
-            </div>
+        <!-- PRODUCTS GRID -->
+        <div class="products-grid" id="wishlist-grid">
+            <!-- Products injected by JS -->
         </div>
     </section>
 
     <!-- PREMIUM PRODUCT MODAL -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-content-box">
+            <!-- Modal Close Button -->
             <button class="premium-close-btn" id="closeModal">
                 <div class="close-icon-lines"></div>
             </button>
             
             <div class="modal-scroll-area">
                 <div class="modal-container">
-                    <!-- Desktop Gallery (Hidden on Tablet/Mobile) -->
+                    <!-- Desktop Gallery -->
                     <div class="gallery-wrapper">
                         <div class="thumbnails" id="thumbContainer"></div>
                         <div class="main-stage">
@@ -303,7 +334,7 @@
                         </div>
                     </div>
                     
-                    <!-- Slider Gallery (Visible on Tablet/Mobile) -->
+                    <!-- Mobile Gallery -->
                     <div class="mobile-gallery" id="mobileGallery">
                          <!-- Images injected by JS -->
                     </div>
@@ -339,7 +370,7 @@
                             </div>
                         </div>
 
-                        <!-- DESKTOP / TABLET ACTIONS (Hidden on Mobile) -->
+                        <!-- DESKTOP / TABLET ACTIONS -->
                         <div class="actions-desktop">
                             <button class="btn-secondary" id="btnBuyNowDesktop">Buy Now</button>
                             <button class="btn-main" id="btnAddToCartDesktop">Add to Cart</button>
@@ -347,7 +378,7 @@
                     </div>
                 </div>
                 
-                <!-- MOBILE ACTIONS (Sticky Bottom - Hidden on Desktop/Tablet) -->
+                <!-- MOBILE ACTIONS (Sticky Bottom) -->
                 <div class="mobile-actions-bar">
                     <button class="btn-mobile-buy" id="btnBuyNowMobile">Buy Now</button>
                     <button class="btn-mobile-cart" id="btnAddToCartMobile">Add to Cart</button>
@@ -356,9 +387,15 @@
         </div>
     </div>
 
+    <!-- Notification Modal (For non-view actions) -->
+    <div style="position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#3f0b17; color:white; padding:12px 24px; border-radius:8px; z-index:6000; opacity:0; transition:opacity 0.3s; pointer-events:none;" id="simpleToast">
+        Action Successful
+    </div>
+
     <script>
+        // Restored richer data for Quick View functionality
         const productsData = [
-            { id: '1', name: 'Royal Silk Evening Gown', category: 'Haute Couture', price: '15,000', oldPrice: '18,000', images: ['https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=800', 'https://images.unsplash.com/photo-1595777457593-9c59c5520c45?q=80&w=800', 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=800'], colors: [{ name: 'Red', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=100' }] },
+            { id: '1', name: 'Royal Silk Evening Gown', category: 'Haute Couture', price: '15,000', oldPrice: '18,000', images: ['https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=800', 'https://images.unsplash.com/photo-1595777457593-9c59c5520c45?q=80&w=800'], colors: [{ name: 'Red', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=100' }] },
             { id: '2', name: 'Velvet Embroidered Lehenga', category: 'Haute Couture', price: '22,500', oldPrice: '25,000', images: ['https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=800', 'https://images.unsplash.com/photo-1550614000-4b9519e02929?q=80&w=800'], colors: [{ name: 'Blue', image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=100' }] },
             { id: '3', name: 'Traditional Banarasi Saree', category: 'Haute Couture', price: '18,500', oldPrice: '21,000', images: ['https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=800', 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=800'], colors: [{ name: 'Gold', image: 'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=100' }] },
             { id: '4', name: 'Ivory Designer Sherwani', category: 'Haute Couture', price: '32,000', oldPrice: '38,000', images: ['https://images.unsplash.com/photo-1583391733958-e001f0346191?q=80&w=800', 'https://images.unsplash.com/photo-1596783437088-6184c2509319?q=80&w=800'], colors: [{ name: 'Ivory', image: 'https://images.unsplash.com/photo-1583391733958-e001f0346191?q=80&w=100' }] },
@@ -372,75 +409,101 @@
         let activeImages = [];
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderGrid();
+            renderWishlist();
             initModalLogic();
-            
-            const grid = document.getElementById('demo-grid');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            
-            if(prevBtn && nextBtn && grid) {
-                prevBtn.addEventListener('click', () => grid.scrollBy({ left: -320, behavior: 'smooth' }));
-                nextBtn.addEventListener('click', () => grid.scrollBy({ left: 320, behavior: 'smooth' }));
-            }
         });
 
-        function renderGrid() {
-            const grid = document.getElementById('demo-grid');
+        function renderWishlist() {
+            const grid = document.getElementById('wishlist-grid');
+            
             grid.innerHTML = productsData.map(p => `
-                <div class="product-card" data-id="${p.id}">
+                <div class="product-card" data-id="${p.id}" onclick="handleCardClick(event, '${p.id}')">
                     <div class="product-image-container">
-                        <img src="${p.images[0]}" class="product-image default-image no-copy" alt="${p.name}" oncontextmenu="return false;">
-                        <img src="${p.images[1] || p.images[0]}" class="product-image hover-image no-copy" alt="${p.name} Hover" oncontextmenu="return false;">
-                        <button class="wishlist-btn-top-right">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <img src="${p.images[0]}" class="product-image default-image no-copy" alt="${p.name}">
+                        <img src="${p.images[1] || p.images[0]}" class="product-image hover-image no-copy" alt="${p.name}">
+                        
+                        <!-- Square Remove Button -->
+                        <button class="card-close-btn" data-action="remove" title="Remove">
+                            <div class="card-close-icon"></div>
                         </button>
-                        <button class="quick-view-btn">Quick View</button>
                     </div>
                     <div class="product-info">
-                        <div class="product-text-group">
+                        <div>
                             <h3 class="product-title">${p.name}</h3>
                             <p class="product-category">${p.category}</p>
-                        </div>
-                        <div class="product-price">
-                            <div class="price-container">
+                            
+                            <div class="product-price">
                                 <span class="current-price">₹${p.price}</span>
                                 <span class="old-price">₹${p.oldPrice}</span>
                             </div>
-                            <button class="add-to-cart">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            </button>
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="wishlist-actions">
+                            <button class="btn-action btn-move-cart" data-action="cart">Move to Cart</button>
+                            <button class="btn-action btn-buy-now" data-action="buy">Buy Now</button>
                         </div>
                     </div>
                 </div>
             `).join('');
-            
-            document.querySelectorAll('.wishlist-btn-top-right').forEach(btn => {
-                btn.addEventListener('click', (e) => { e.stopPropagation(); btn.classList.toggle('active'); });
-            });
         }
 
+        // Logic to differentiate clicking the card (Open Modal) vs clicking buttons
+        function handleCardClick(event, id) {
+            // Check if clicked element is a button or remove icon
+            if (event.target.closest('[data-action="remove"]')) {
+                removeFromWishlist(id, event.target.closest('[data-action="remove"]'));
+                return;
+            }
+            if (event.target.closest('[data-action="cart"]')) {
+                showToast('Moved to Cart');
+                return;
+            }
+            if (event.target.closest('[data-action="buy"]')) {
+                showToast('Proceeding to Checkout');
+                return;
+            }
+
+            // If not a specific button, Open Quick View Modal
+            openProductModal(id);
+        }
+
+        function removeFromWishlist(id, btnElement) {
+            const card = btnElement.closest('.product-card');
+            card.style.transform = 'scale(0.9)';
+            card.style.opacity = '0';
+            setTimeout(() => {
+                card.remove();
+                // Update item count UI logic here if needed
+            }, 300);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('simpleToast');
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+        }
+
+        /* --- MODAL LOGIC (From Original) --- */
         function initModalLogic() {
             const modal = document.getElementById('productModal');
             const closeBtn = document.getElementById('closeModal');
             
-            const openModal = (id, mode) => {
+            window.openProductModal = (id) => {
                 const product = productsData.find(p => p.id === id);
                 if (!product) return;
                 
-                // Reset State
                 currentQty = 1;
                 currentSlideIndex = 0;
                 activeImages = product.images;
                 document.getElementById('qtyValue').textContent = currentQty;
 
-                // Populate Texts
                 document.getElementById('productTitle').textContent = product.name;
                 document.getElementById('productCategory').textContent = product.category;
                 document.getElementById('modalPrice').textContent = '₹' + product.price;
                 document.getElementById('modalOldPrice').textContent = '₹' + product.oldPrice;
 
-                // Images
                 const mainImg = document.getElementById('mainImage');
                 const thumbContainer = document.getElementById('thumbContainer');
                 const mobileGallery = document.getElementById('mobileGallery');
@@ -451,6 +514,7 @@
                         <img src="${img}" class="no-copy" oncontextmenu="return false;">
                     </div>
                 `).join('');
+                
                 mobileGallery.innerHTML = activeImages.map(img => `
                     <img src="${img}" class="no-copy" oncontextmenu="return false;">
                 `).join('');
@@ -468,44 +532,10 @@
                     <button class="size-btn ${i===0?'active':''}" onclick="toggleSize(this)">${s}</button>
                 `).join('');
 
-                // Button Logic
-                const buyBtnDesk = document.getElementById('btnBuyNowDesktop');
-                const buyBtnMob = document.getElementById('btnBuyNowMobile');
-                const cartBtnDesk = document.getElementById('btnAddToCartDesktop');
-                const cartBtnMob = document.getElementById('btnAddToCartMobile');
-
-                // Determine context: Desktop/Tablet vs Mobile
-                const isMobile = window.innerWidth <= 600;
-
-                if (mode === 'cart') {
-                    // Cart Mode: Hide Buy Now, Expand Add to Cart
-                    buyBtnDesk.style.display = 'none';
-                    buyBtnMob.style.display = 'none';
-                    
-                    if(isMobile) {
-                        // Mobile: Sticky bar
-                        cartBtnMob.style.flex = '1';
-                    } else {
-                         // Desktop/Tablet: Grid layout -> switch to block/flex to fill
-                        document.querySelector('.actions-desktop').style.display = 'flex'; 
-                        cartBtnDesk.style.width = '100%';
-                    }
-                } else {
-                    // Normal Mode
-                    buyBtnDesk.style.display = 'flex';
-                    buyBtnMob.style.display = 'flex';
-                    if(!isMobile) {
-                         document.querySelector('.actions-desktop').style.display = 'grid'; 
-                    }
-                    cartBtnDesk.style.width = '100%'; 
-                    cartBtnMob.style.flex = '1.5';
-                }
-
                 modal.classList.add('active');
                 document.body.classList.add('modal-open');
             };
 
-            // Slideshow
             window.startSlideshow = () => {
                 if (slideInterval) clearInterval(slideInterval);
                 if (activeImages.length <= 1) return;
@@ -532,7 +562,6 @@
                 }
             }
 
-            // Helpers
             window.toggleSwatch = (el) => { document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active')); el.classList.add('active'); };
             window.toggleSize = (el) => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); };
             window.updateQty = (change) => { currentQty = Math.max(1, currentQty + change); document.getElementById('qtyValue').textContent = currentQty; };
@@ -540,27 +569,6 @@
             const closeModalFn = () => { modal.classList.remove('active'); document.body.classList.remove('modal-open'); stopSlideshow(); };
             closeBtn.addEventListener('click', closeModalFn);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFn(); });
-
-            // Event Delegation for REDIRECT vs MODAL
-            document.getElementById('demo-grid').addEventListener('click', (e) => {
-                const card = e.target.closest('.product-card');
-                if (!card) return;
-                
-                // 1. Clicked Quick View
-                if (e.target.closest('.quick-view-btn')) {
-                    e.stopPropagation();
-                    openModal(card.dataset.id, 'quickview');
-                } 
-                // 2. Clicked Add to Cart (Icon)
-                else if (e.target.closest('.add-to-cart')) {
-                    e.stopPropagation();
-                    openModal(card.dataset.id, 'cart');
-                }
-                // 3. Clicked anywhere else (Image/Text) -> REDIRECT
-                else {
-                    window.location.href = `product.html?id=${card.dataset.id}`;
-                }
-            });
         }
     </script>
 </body>
