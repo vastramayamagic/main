@@ -4,49 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- ============================================ -->
-    <!-- PRIMARY SEO DATA -->
-    <!-- ============================================ -->
     <title>About Vastramaya | Premium Ethnic Ladies Clothing & Handloom Sarees</title>
     <meta name="description" content="Discover the story of Vastramaya. We bridge timeless Indian heritage with modern elegance. Shop premium ladies' ethnic wear, silk sarees, and designer kurtis online at vastramayamagic.in.">
     <meta name="keywords" content="Vastramaya, Vastramayamagic, ladies clothing, ethnic wear, indian handloom, silk sarees, designer kurtis, women fashion india, festive wear">
     <meta name="author" content="Vastramaya">
     
-    <!-- Canonical URL (Crucial for SEO to treat this as the main source) -->
     <link rel="canonical" href="https://vastramayamagic.in/about.html" />
     
-    <!-- Robots Control -->
     <meta name="robots" content="index, follow, max-image-preview:large">
 
-    <!-- ============================================ -->
-    <!-- SOCIAL MEDIA & OPEN GRAPH (WhatsApp/FB/Insta) -->
-    <!-- ============================================ -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vastramayamagic.in/about.html">
     <meta property="og:title" content="The Story of Vastramaya | Magic in Every Thread">
     <meta property="og:description" content="Where every thread weaves a tale of heritage. Explore our premium collection of ethnic wear for the modern Indian woman.">
-    <!-- REPLACE WITH YOUR ACTUAL LOGO/BANNER URL -->
     <meta property="og:image" content="https://vastramayamagic.in/images/vastramaya-banner.jpg">
     <meta property="og:site_name" content="Vastramaya">
     <meta property="og:locale" content="en_IN">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="About Vastramaya | Premium Ethnic Wear">
     <meta name="twitter:description" content="Bridging timeless Indian artistry with modern lifestyle.">
     <meta name="twitter:image" content="https://vastramayamagic.in/images/vastramaya-banner.jpg">
 
-    <!-- ============================================ -->
-    <!-- FAVICON (Replace href with your actual file paths) -->
-    <!-- ============================================ -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta name="theme-color" content="#8b2635">
 
-    <!-- ============================================ -->
-    <!-- STRUCTURED DATA (SCHEMA.ORG) - ADVANCED SEO -->
-    <!-- ============================================ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -73,12 +57,10 @@
     }
     </script>
     
-    <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
@@ -119,28 +101,6 @@
             line-height: 1.1;
         }
 
-        /* --- NAVIGATION (Minimal Back Button) --- */
-        .nav-back {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--brand-primary);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .nav-back:hover { transform: scale(1.1); background: #fff; }
-
         /* --- UTILITIES --- */
         .wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .text-gold { color: var(--gold-accent); }
@@ -162,23 +122,15 @@
         }
 
         .anim-img-wrapper {
-            overflow: hidden;
             transform: scale(0.95);
             opacity: 0;
             transition: transform 1.5s var(--ease-out-expo), opacity 1s ease;
-        }
-        .anim-img-wrapper img {
-            transform: scale(1.2);
-            transition: transform 1.5s var(--ease-out-expo);
-            will-change: transform;
         }
         .anim-img-wrapper.visible {
             transform: scale(1);
             opacity: 1;
         }
-        .anim-img-wrapper.visible img {
-            transform: scale(1);
-        }
+       
 
         .delay-100 { transition-delay: 0.1s; }
         .delay-200 { transition-delay: 0.2s; }
@@ -273,22 +225,59 @@
             align-items: center;
         }
 
-        .story-img-frame {
+        /* --- ROTATING LOGO STYLES --- */
+        .rotating-logo-container {
             position: relative;
-            border-radius: 200px 200px 0 0;
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Ensures perfect circle */
+            max-width: 550px; /* Cap size on large screens */
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
             overflow: hidden;
-            height: 600px;
-            box-shadow: var(--shadow-deep);
+            box-shadow: var(--shadow-deep); /* Applying existing deep shadow */
+            background-color: var(--page-bg); /* Ensures blend mode works correctly */
             z-index: 1;
         }
 
-        .story-img-frame img {
-            width: 100%; height: 120%;
-            object-fit: cover;
-            object-position: center;
+        .ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 85%; /* Relative size within the circle */
+            height: 85%;
+            transform: translate(-50%,-50%) rotate(0deg);
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: multiply;
+        }
+
+        .logo-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 70%; /* Relative size within the circle */
+            height: auto;
+            transform: translate(-50%,-50%);
+            pointer-events: none;
+            z-index: 2;
+            mix-blend-mode: multiply;
+        }
+
+        @keyframes spin {
+            from { transform: translate(-50%,-50%) rotate(0deg) }
+            to { transform: translate(-50%,-50%) rotate(360deg) }
+        }
+
+        .spin {
+            animation: spin 80s linear infinite; /* Slow rotation */
         }
         
-        .story-content h2 { font-size: 3.5rem; margin-bottom: 30px; color: var(--text-primary); }
+        /* UPDATED: Decreased font size for H2 */
+        .story-content h2 { font-size: 2.8rem; margin-bottom: 30px; color: var(--text-primary); }
         .story-content p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 25px; font-weight: 300; }
         
         .drop-cap::first-letter {
@@ -340,6 +329,10 @@
             border-radius: 4px;
             overflow: hidden;
             box-shadow: var(--shadow-deep);
+            /* UPDATED: Moved more up and left for Desktop */
+            position: relative;
+            top: -50px;
+            left: -50px;
         }
 
         .founder-image img {
@@ -399,15 +392,22 @@
         @media (max-width: 768px) {
             .hero-title { font-size: 3.8rem; line-height: 1; margin-bottom: 15px; }
             .hero-desc { font-size: 1.25rem; padding: 0 10px; }
-            .story-content h2 { font-size: 2.8rem; margin-bottom: 20px; }
+            /* UPDATED: Decreased mobile font size */
+            .story-content h2 { font-size: 2rem; margin-bottom: 20px; }
             .hero { min-height: 85vh; padding-top: 20px; align-items: center; }
             .hero-decoration { width: 120%; left: -10%; border-radius: 50%; opacity: 0.2; }
             .story-grid { grid-template-columns: 1fr; gap: 40px; }
-            .story-img-frame { height: 500px; width: 100%; border-radius: 150px 150px 0 0; }
-            .story-content { padding: 0 10px; text-align: center; }
+            .rotating-logo-container { max-width: 380px; } 
+            
+            /* UPDATED: Changed text align to left for mobile */
+            .story-content { padding: 0 10px; text-align: left; }
             .drop-cap::first-letter { float: none; font-size: inherit; line-height: inherit; } 
             .founder-layout { flex-direction: column; align-items: flex-start; }
-            .founder-image { width: 100%; height: 550px; margin-bottom: -80px; position: relative; z-index: 0; padding: 0 15px; }
+            .founder-image { 
+                width: 100%; height: 550px; margin-bottom: -80px; position: relative; z-index: 0; padding: 0 15px; 
+                /* UPDATED: Move up slightly on mobile, reset Left */
+                top: -30px; left: 0;
+            }
             .founder-card { width: 90%; margin: 0 auto; background: #fff; padding: 40px 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: none; border-top: 3px solid var(--brand-primary); z-index: 2; text-align: left; }
             .values-list { flex-direction: column; gap: 40px; border: none; padding: 40px 20px; }
             .value-item { text-align: left; padding: 0; display: flex; gap: 20px; align-items: flex-start; border-bottom: 1px solid rgba(139, 38, 53, 0.08); padding-bottom: 30px; }
@@ -419,17 +419,10 @@
 </head>
 <body itemscope itemtype="https://schema.org/AboutPage">
 
-    <!-- Floating Back Button -->
-    <a href="index.html" class="nav-back" aria-label="Back to Home">
-        <i class="fa-solid fa-arrow-left"></i>
-    </a>
-
-    <!-- 1. Hero Section -->
     <header class="hero">
         <div class="hero-decoration parallax" data-speed="0.2"></div>
         <div class="hero-content">
             <span class="hero-subtitle anim-text">THE STORY OF</span>
-            <!-- H1 for Primary Keyword SEO -->
             <h1 class="hero-title anim-text delay-100">Vastramaya</h1>
             <p class="hero-desc anim-text delay-200">
                 "Where every thread weaves a tale of heritage, and every drape whispers elegance."
@@ -440,17 +433,15 @@
         </div>
     </header>
 
-    <!-- 2. Brand Narrative -->
     <section class="wrapper brand-story">
         <div class="story-grid">
             <div class="anim-img-wrapper">
-                <div class="story-img-frame">
-                    <!-- Added Alt Text for SEO -->
-                    <img class="parallax" data-speed="0.05" src="https://images.unsplash.com/photo-1583391733958-e026b143714e?q=80&w=2546&auto=format&fit=crop" alt="Indian Textile Art and Handloom Saree Close-up" title="Handloom Craftsmanship at Vastramaya">
+                <div class="rotating-logo-container">
+                     <img class="ring spin" src="https://i.pinimg.com/736x/56/76/00/5676002c3c8fe26e29fa032c1ccd7f5b.jpg" alt="Vastramaya Ornamental Mandala Ring Pattern">
+                     <img class="logo-inner" src="https://i.pinimg.com/736x/b3/24/ad/b324add3c348db7c690a35d6994e450c.jpg" alt="Vastramaya Elephant Brand Logo">
                 </div>
             </div>
             <div class="story-content">
-                <!-- H2 for Secondary Keywords -->
                 <h2 class="anim-text">Magic in Every Thread</h2>
                 <div class="anim-text delay-100">
                     <p class="drop-cap text-secondary">
@@ -468,14 +459,12 @@
         </div>
     </section>
 
-    <!-- 3. Founder Highlight -->
     <section class="founder-section">
         <div class="watermark-v parallax" data-speed="-0.1">V</div>
         <div class="founder-container">
             <div class="founder-layout">
                 <div class="founder-image anim-img-wrapper">
-                    <!-- Added Alt Text -->
-                    <img class="parallax" data-speed="0.05" src="https://images.unsplash.com/photo-1605369655610-84c47b539c38?q=80&w=1887&auto=format&fit=crop" alt="Vastramaya Founder Sumanka Naka wearing ethnic dress" title="Sumanka Naka - Founder of Vastramaya">
+                    <img class="parallax" data-speed="0.05" src="https://www.vastramayamagic.in/sumanka.png" alt="Vastramaya Founder Sumanka Naka wearing ethnic dress" title="Sumanka Naka - Founder of Vastramaya">
                 </div>
                 <div class="founder-card anim-text delay-200">
                     <span class="hero-subtitle text-maroon" style="font-size: 11px;">FOUNDER'S NOTE</span>
@@ -492,7 +481,6 @@
         </div>
     </section>
 
-    <!-- 4. Core Values -->
     <section class="values-section">
         <div class="wrapper">
             <div class="values-list">
