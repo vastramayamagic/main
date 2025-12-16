@@ -117,6 +117,7 @@
         @media (hover: hover) {
             .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         }
+        /* Active State */
         .size-boxes button.active, 
         .size-boxes button.active:hover, 
         .size-boxes button.active:focus { 
@@ -168,14 +169,16 @@
         .mobile-add-cart-container { display: none; }
 
         /* =========================================
-           REVIEWS SECTION
+           REVIEWS SECTION (Premium)
            ========================================= */
         .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
         .reviews-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
+        
         .reviews-scroll-container { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; padding: 10px 5px; }
         .reviews-scroll-container::-webkit-scrollbar { display: none; }
+        
         .review-card-premium { min-width: 320px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-light); }
         .rev-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .rev-name { font-weight: 700; font-size: 15px; color: var(--text-primary); }
@@ -184,7 +187,7 @@
         .rev-text { font-size: 14px; line-height: 1.6; color: var(--text-secondary); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* =========================================
-           RELATED PRODUCTS UI
+           RELATED PRODUCTS UI (EXACT MATCH TO SHOP PAGE)
            ========================================= */
         .category-products-section { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); position: relative; z-index: 1; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
@@ -199,11 +202,21 @@
         .nav-btn svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 2; }
         .nav-btn:hover svg { stroke: white; }
 
-        .products-grid { display: flex; gap: 25px; padding: 10px 5px 30px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; }
-        .products-grid::-webkit-scrollbar { display: none; }
+        /* GRID: EXACTLY LIKE SHOP PAGE */
+        .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; width: 100%; overflow: visible; padding: 0; }
 
         /* Card Styles */
-        .card { background: var(--surface-card); border-radius: var(--radius); transition: all 0.3s ease; position: relative; display: flex; flex-direction: column; border: 1px solid var(--border-subtle); cursor: pointer; overflow: hidden; flex: 0 0 auto; width: 280px; }
+        .card { 
+            background: var(--surface-card); 
+            border-radius: var(--radius); 
+            transition: all 0.3s ease; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            border: 1px solid var(--border-subtle); 
+            cursor: pointer; 
+            overflow: hidden; 
+        }
         .card:hover { transform: translateY(-5px); border-color: var(--brand-primary); box-shadow: var(--shadow-float); z-index: 2; }
 
         .thumb { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f4f4f4; border-bottom: 1px solid var(--border-subtle); }
@@ -217,7 +230,16 @@
         .wishlist-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
         .wishlist-btn.active svg { fill: currentColor; }
 
-        .quick-view-btn { position: absolute; bottom: 15px; left: 50%; transform: translate(-50%, 20px); background: var(--brand-dark); color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 600; opacity: 0; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 80%; text-align: center; }
+        /* Quick View Button */
+        .quick-view-btn { 
+            position: absolute; bottom: 15px; left: 50%; transform: translate(-50%, 20px); 
+            background: var(--brand-dark); 
+            color: #fff; 
+            padding: 10px 20px; border-radius: 30px; 
+            font-size: 13px; font-weight: 600; 
+            opacity: 0; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 80%; text-align: center; 
+        }
         .card:hover .quick-view-btn { opacity: 1; transform: translate(-50%, 0); }
         .quick-view-btn:hover { background: #5a1020; transform: translate(-50%, 0) scale(1.02); }
 
@@ -227,11 +249,14 @@
 
         .bottom-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
         .price-block-card { display: flex; align-items: baseline; gap: 8px; }
+        .current-price { font-size: 16px; font-weight: 700; color: var(--brand-primary); }
+        .old-price { font-size: 13px; color: var(--text-light); text-decoration: line-through; opacity: 0.7; }
+        
         .add-cart-icon-btn { width: 34px; height: 34px; border-radius: 8px; background: var(--surface-hover); color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.1); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .add-cart-icon-btn:hover { background: var(--brand-primary); color: #fff; }
 
         /* =========================================
-           MODAL & POPUP
+           MODAL & POPUP (DEFAULT DESKTOP CENTER)
            ========================================= */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -344,7 +369,7 @@
             .left-content { display: none; }
             
             /* INCREASED HEIGHTS */
-            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 550px; }
+            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 600px; }
             .mobile-image { height: 100%; width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
             .mobile-image::-webkit-scrollbar { display: none; }
             .mobile-image img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
@@ -366,10 +391,9 @@
             .price .old { font-size: 16px; margin-left: 8px; color: var(--text-light); display: inline-block; opacity: 0.9; }
             .save { transform: translateY(-2px); display: inline-block; margin-left: 5px; }
             
-            /* HIDE DESKTOP ACTIONS BUT KEEP ID ELEMENTS FOR JS LOGIC */
-            .desktop-actions, #desktopBuyNow, .section-nav { display: none !important; }
+            .desktop-actions, .buy-now-btn, .section-nav { display: none !important; }
 
-            /* Mobile Static Action Buttons (FIXED VISIBILITY) */
+            /* Mobile Static Action Buttons (UPDATED: BUY NOW ADDED) */
             .mobile-static-actions { display: flex !important; gap: 12px; margin-bottom: 25px; margin-top: 15px; width: 100%; }
             
             /* Styling buttons inside static actions specifically */
@@ -379,8 +403,9 @@
                 display: flex !important; 
             }
             #mobileStaticBuy { 
-                flex: 1; margin-top: 0 !important; 
+                flex: 1.5; margin-top: 0 !important; 
                 display: flex !important; align-items: center; justify-content: center;
+                box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2);
             }
 
             /* Mobile Sticky Footer */
@@ -759,15 +784,20 @@
             if(loader) loader.classList.add('hidden');
 
             document.getElementById('productTitle').textContent = currentProduct.name;
-            document.getElementById('priceCurrent').textContent = `₹${currentProduct.price}`;
+            const price = parseFloat(currentProduct.price);
+            document.getElementById('priceCurrent').textContent = `₹${price}`;
             
-            const waMsg = encodeURIComponent(`Hi, I am interested in ${currentProduct.name} - ₹${currentProduct.price}\nLink: ${window.location.href}`);
+            const waMsg = encodeURIComponent(`Hi, I am interested in ${currentProduct.name} - ₹${price}\nLink: ${window.location.href}`);
             document.getElementById('waLink').href = `https://wa.me/917799181716?text=${waMsg}`;
             
-            if (currentProduct.oldPrice && currentProduct.oldPrice > currentProduct.price) {
-                document.getElementById('priceOld').textContent = `₹${currentProduct.oldPrice}`;
-                const save = Math.round(((currentProduct.oldPrice - currentProduct.price) / currentProduct.oldPrice) * 100);
+            const oldPrice = parseFloat(currentProduct.oldPrice);
+            if (!isNaN(oldPrice) && oldPrice > price) {
+                document.getElementById('priceOld').textContent = `₹${oldPrice}`;
+                const save = Math.round(((oldPrice - price) / oldPrice) * 100);
                 document.getElementById('saveBadge').textContent = `SAVE ${save}%`;
+                
+                document.getElementById('priceOld').style.display = 'inline';
+                document.getElementById('saveBadge').style.display = 'inline-block';
             } else {
                 document.getElementById('priceOld').style.display = 'none';
                 document.getElementById('saveBadge').style.display = 'none';
