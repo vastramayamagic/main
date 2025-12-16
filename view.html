@@ -45,8 +45,8 @@
         }
         .loader-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .spinner {
-            width: 45px; height: 45px;
-            border: 3px solid rgba(139, 38, 53, 0.15);
+            width: 50px; height: 50px;
+            border: 4px solid rgba(139, 38, 53, 0.15);
             border-top-color: var(--brand-primary);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -72,17 +72,17 @@
         .main-image img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
 
         /* Typography & Spacing */
-        .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; width: 100%; }
+        .title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; }
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; flex: 1; }
         
         .wa-btn { 
             display: flex; align-items: center; justify-content: center; 
-            width: 36px; height: 36px; border-radius: 50%; 
+            width: 40px; height: 40px; border-radius: 50%; 
             background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.3);
             flex-shrink: 0; transition: transform 0.2s; cursor: pointer;
         }
         .wa-btn:active { transform: scale(0.95); background: rgba(37, 211, 102, 0.2); }
-        .wa-btn svg { width: 20px; height: 20px; fill: var(--wa-green); }
+        .wa-btn svg { width: 22px; height: 22px; fill: var(--wa-green); }
 
         /* FIXED PRICE STYLING */
         .price { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
@@ -91,6 +91,7 @@
         .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; transform: translateY(-3px); display: inline-block; }
 
         h3 { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px 0; text-transform: uppercase; letter-spacing: 0.08em; }
+        .option-value { font-weight: 400; color: var(--text-primary); text-transform: none; }
 
         /* Options */
         .color-options img { width: 56px; height: 76px; object-fit: cover; border-radius: 8px; margin-right: 12px; border: 2px solid transparent; padding: 2px; transition: all 0.2s; cursor: pointer; }
@@ -135,7 +136,7 @@
         .product-description h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
         .desc-text { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 8px; }
         .desc-clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
-        .view-more-btn { color: var(--brand-primary); font-weight: 600; font-size: 14px; cursor: pointer; display: none; text-decoration: underline; }
+        .view-more-btn { color: var(--brand-primary); font-weight: 600; font-size: 14px; cursor: pointer; display: none; text-decoration: underline; padding-top: 5px; display: inline-block; }
 
         .mobile-wrapper { display: none; }
         .mobile-add-cart-container { display: none; }
@@ -207,6 +208,7 @@
         }
         .product-card:hover .quick-view-btn { transform: translateY(0); }
 
+        /* FIX: Reduced Padding */
         .product-info { padding: 10px 12px; }
 
         .product-text-group { margin-bottom: 6px; }
@@ -254,7 +256,7 @@
 
         .product-details { padding-top: 10px; display: flex; flex-direction: column; height: 100%; }
         
-        /* FIX: Changed font to DM Sans */
+        /* FIX: DM Sans Font in Popup */
         .modal-product-title { font-size: 38px; line-height: 1.1; font-weight: 700; margin: 0 0 8px 0; color: var(--text-primary); font-family: "DM Sans", sans-serif; letter-spacing: -0.5px; }
         .modal-product-category { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 24px; font-weight: 600; }
         .price-block { display: flex; align-items: baseline; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle); }
@@ -375,7 +377,7 @@
                 display: grid !important; /* Force Grid */
                 grid-template-columns: 1fr 1fr; /* 2 Columns */
                 padding: 0 8px !important; /* Small outer padding to maximize width */
-                gap: 8px; /* Tighter gap for wider cards */
+                gap: 12px; /* Tighter gap for wider cards */
                 overflow-x: visible; /* Remove scroll */
             }
             
@@ -457,10 +459,10 @@
                 <span id="saveBadge" class="save loading-hide">SAVE 20%</span>
             </div>
             
-            <h3 id="colorHeader" class="loading-hide">Color: <span style="font-weight:400; color:var(--text-primary)" id="selectedColorName"></span></h3>
+            <h3 id="colorHeader" class="loading-hide">Color: <span class="option-value" id="selectedColorName"></span></h3>
             <div class="color-options" id="colorOptions"></div>
             
-            <h3 id="sizeHeader" class="loading-hide">Size: <span id="sizeLabel" style="font-weight:400; color:var(--text-primary);">Select Size</span></h3>
+            <h3 id="sizeHeader" class="loading-hide">Size: <span class="option-value" id="sizeLabel">Select Size</span></h3>
             <div class="size-boxes" id="sizeBoxes"></div>
             
             <h3 class="loading-hide">Quantity:</h3>
@@ -750,7 +752,6 @@
             const container = document.getElementById('reviewsContainer');
             const section = document.getElementById('reviewsSection');
             
-            // FIX: Completely hide section if no reviews
             if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
                 section.style.display = 'none';
                 return;
@@ -777,11 +778,11 @@
                 container.appendChild(card);
             });
             
-            // Smart Navigation Arrow Logic (Re-check on resize)
+            // Smart Navigation Arrow Logic
             const checkArrows = () => {
                 const nav = section.querySelector('.section-nav');
                 if(nav) {
-                    const isOverflowing = container.scrollWidth > container.clientWidth + 1; // +1 buffer
+                    const isOverflowing = container.scrollWidth > container.clientWidth + 1;
                     nav.style.display = isOverflowing ? 'flex' : 'none';
                 }
             };
@@ -809,15 +810,22 @@
             document.querySelectorAll('.color-options img').forEach((img, i) => img.classList.toggle('active', i === index));
             let images = [];
             let variantSizes = [];
+            
+            // FIX: Robust Color Name Update
+            let colorName = '';
+            
             if (currentProduct.colorVariants && currentProduct.colorVariants[index]) {
                 const variant = currentProduct.colorVariants[index];
                 images = variant.images || currentProduct.images;
-                if(variant.name) document.getElementById('selectedColorName').textContent = variant.name;
+                colorName = variant.name || variant.color || '';
                 variantSizes = variant.sizes || [];
             } else {
                 images = currentProduct.images || [];
                 variantSizes = currentProduct.sizes || [];
             }
+            
+            if(colorName) document.getElementById('selectedColorName').textContent = colorName;
+            
             activeImageIndex = 0;
             renderGallery(images);
             renderSizeOptions(variantSizes);
@@ -826,8 +834,14 @@
         function renderSizeOptions(specificSizes) {
             const container = document.getElementById('sizeBoxes');
             container.innerHTML = '';
+            
+            // FIX: Reset Size Label
+            selectedSize = null; 
+            document.getElementById('sizeLabel').textContent = "Select Size";
+            
             const sizesToRender = specificSizes || [];
             if (sizesToRender.length === 0) { container.innerHTML = '<span style="font-size:14px; color:#888;">No sizes available</span>'; return; }
+            
             sizesToRender.forEach((sizeObj, index) => {
                 const btn = document.createElement('button');
                 const sizeName = sizeObj.name || sizeObj;
@@ -844,7 +858,6 @@
                 }
                 container.appendChild(btn);
             });
-            selectedSize = null; document.getElementById('sizeLabel').textContent = "Select Size";
         }
 
         function renderGallery(images) {
@@ -876,7 +889,6 @@
                 mobileCarousel.innerHTML = images.map(src => `<img src="${src}">`).join('');
                 if(dotsContainer) dotsContainer.innerHTML = images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
                 
-                // Start Mobile Auto-Scroll logic
                 startMobileMainCarousel();
                 
                 let idx = 0;
@@ -891,19 +903,17 @@
         function startMobileMainCarousel() {
             const carousel = document.getElementById('mobileCarousel');
             if(!carousel) return;
-            // Prevent multiple intervals
             if(mobileCarouselInterval) clearInterval(mobileCarouselInterval);
 
             mobileCarouselInterval = setInterval(() => {
                 const width = carousel.offsetWidth;
                 const maxScroll = carousel.scrollWidth - width;
-                // If at end, scroll to start, else scroll next
-                if(carousel.scrollLeft >= maxScroll - 10) { // tolerance
+                if(carousel.scrollLeft >= maxScroll - 10) { 
                     carousel.scrollTo({left: 0, behavior: 'smooth'});
                 } else {
                     carousel.scrollBy({left: width, behavior: 'smooth'});
                 }
-            }, 3000); // 3 seconds
+            }, 3000); 
         }
 
         // ================= RELATED PRODUCTS LOGIC (PREMIUM UI) =================
@@ -934,7 +944,6 @@
                     relatedProductsData.push({ id: doc.id, ...doc.data() });
                 });
 
-                // FIX: Hide Section if Empty
                 if (relatedProductsData.length === 0) {
                     document.querySelector('.category-products-section').style.display = 'none';
                     return;
