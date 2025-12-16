@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* === 1. CORE VARIABLES (MATCHING SHOP PAGE) === */
+        /* === 1. CORE VARIABLES === */
         :root {
             --page-bg: #fefcf3;
             --text-primary: #3f0b17;
@@ -39,7 +39,7 @@
         .no-copy { -webkit-user-select: none; user-select: none; pointer-events: auto; }
         .loading-hide { display: none !important; }
 
-        /* === LOADER STYLES === */
+        /* === LOADER === */
         .loader-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: var(--page-bg); z-index: 9999;
@@ -64,7 +64,7 @@
         }
 
         /* =========================================
-           MAIN PRODUCT DETAILS LAYOUT
+           MAIN PRODUCT PAGE LAYOUT
            ========================================= */
         .container { display: flex; align-items: flex-start; padding: 0 40px; max-width: 1400px; width: 100%; margin: 0 auto 40px auto; gap: 50px; }
         .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
@@ -117,7 +117,7 @@
         @media (hover: hover) {
             .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         }
-        /* Force Active State */
+        /* Active State */
         .size-boxes button.active, 
         .size-boxes button.active:hover, 
         .size-boxes button.active:focus { 
@@ -132,9 +132,9 @@
         .qty-btn:hover { color: var(--brand-primary); }
         #qtyValue { font-weight: 600; font-size: 16px; }
 
-        /* Buttons */
+        /* Buttons (Desktop & Static Mobile) */
         .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
-        .mobile-static-actions { display: none; gap: 12px; margin-bottom: 25px; margin-top: 15px; }
+        .mobile-static-actions { display: none; } /* Hidden by default (desktop) */
 
         .action-button { height: 52px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; transition: all 0.3s ease; font-family: "DM Sans", sans-serif; }
         .add-cart-btn { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
@@ -369,7 +369,7 @@
             .left-content { display: none; }
             
             /* INCREASED HEIGHTS */
-            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 550px; }
+            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 600px; }
             .mobile-image { height: 100%; width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
             .mobile-image::-webkit-scrollbar { display: none; }
             .mobile-image img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
@@ -438,7 +438,7 @@
             .modal-container { display: block; padding: 0; padding-bottom: 100px; flex: 1; overflow-y: auto; }
             .gallery-wrapper { display: none; }
             /* INCREASED POPUP HEIGHT */
-            .mobile-gallery { display: flex; position: relative; width: 100%; height: 60vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+            .mobile-gallery { display: flex; position: relative; width: 100%; height: 65vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
             .mobile-gallery::-webkit-scrollbar { display: none; }
             .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
             .product-details { padding: 24px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; min-height: 400px; }
