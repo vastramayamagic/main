@@ -143,6 +143,7 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
+        /* FIX: display block to allow toggling, Arrows hidden by default */
         .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
@@ -151,6 +152,9 @@
         .reviews-scroll-container { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; padding: 10px 5px; }
         .reviews-scroll-container::-webkit-scrollbar { display: none; }
         
+        /* FIX: Hide arrows by default */
+        .section-nav { display: none; gap: 12px; }
+
         .review-card-premium { min-width: 320px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-light); }
         .rev-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .rev-name { font-weight: 700; font-size: 15px; color: var(--text-primary); }
@@ -168,7 +172,6 @@
         .section-header-right { display: flex; align-items: center; gap: 20px; }
         .view-more-link { font-size: 14px; font-weight: 600; color: var(--brand-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.2s; }
         
-        .section-nav { display: flex; gap: 12px; }
         .nav-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-card); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
         .nav-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); }
         .nav-btn svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 2; }
@@ -207,6 +210,7 @@
         }
         .product-card:hover .quick-view-btn { transform: translateY(0); }
 
+        /* FIX: Reduced Padding Desktop */
         .product-info { padding: 10px 12px; }
 
         .product-text-group { margin-bottom: 6px; }
@@ -759,7 +763,8 @@
             const checkArrows = () => {
                 const nav = section.querySelector('.section-nav');
                 if(nav) {
-                    const isOverflowing = container.scrollWidth > container.clientWidth + 1; // +1 buffer
+                    // Check if content overflows with a small buffer
+                    const isOverflowing = container.scrollWidth > container.clientWidth + 5; 
                     nav.style.display = isOverflowing ? 'flex' : 'none';
                 }
             };
