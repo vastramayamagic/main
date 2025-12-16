@@ -131,6 +131,9 @@
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
         .reviews-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
         
+        /* FIX: Ensure default nav state doesn't flash */
+        .reviews-section-premium .section-nav { display: none; }
+
         .reviews-scroll-container { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; padding: 10px 5px; }
         .reviews-scroll-container::-webkit-scrollbar { display: none; }
         
@@ -662,6 +665,9 @@
             const revContainer = document.getElementById('reviewsContainer');
             document.getElementById('revNext').onclick = () => revContainer.scrollBy({ left: 320, behavior: 'smooth' });
             document.getElementById('revPrev').onclick = () => revContainer.scrollBy({ left: -320, behavior: 'smooth' });
+            
+            // Re-check review scroll on resize
+            window.addEventListener('resize', checkReviewScroll);
         });
 
         // ================= MAIN PRODUCT LOGIC =================
@@ -728,6 +734,7 @@
             const container = document.getElementById('reviewsContainer');
             const section = document.getElementById('reviewsSection');
             
+            // FIX: Completely hide if no reviews
             if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
                 section.style.display = 'none';
                 return;
@@ -754,14 +761,19 @@
                 container.appendChild(card);
             });
             
-            // Smart Navigation Arrow Logic
-            setTimeout(() => {
-                const nav = document.querySelector('.reviews-section-premium .section-nav');
-                if (nav) {
-                    const isOverflowing = container.scrollWidth > container.clientWidth;
-                    nav.style.display = isOverflowing ? 'flex' : 'none';
-                }
-            }, 100);
+            // Check for scroll arrows after rendering
+            requestAnimationFrame(checkReviewScroll);
+        }
+
+        // Helper function to check if arrows are needed
+        function checkReviewScroll() {
+            const container = document.getElementById('reviewsContainer');
+            const nav = document.querySelector('.reviews-section-premium .section-nav');
+            if (container && nav) {
+                // If content is wider than container, show arrows
+                const isOverflowing = container.scrollWidth > container.clientWidth;
+                nav.style.display = isOverflowing ? 'flex' : 'none';
+            }
         }
 
         function renderColorOptions() {
@@ -951,6 +963,7 @@
                     </div>`;
                 }).join('');
 
+                // Check arrow visibility for Related Products
                 const nav = document.querySelector('.category-products-section .section-nav');
                 if (nav && relatedGrid.scrollWidth <= relatedGrid.clientWidth) {
                     nav.style.display = 'none';
