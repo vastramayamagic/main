@@ -32,7 +32,7 @@
         body { font-family: 'DM Sans', sans-serif; background: var(--page-bg); color: var(--text-primary); overflow-x: hidden; padding-top: 20px; }
         body.modal-open { overflow: hidden; }
         button, img, a { outline: none; -webkit-tap-highlight-color: transparent; text-decoration: none; color: inherit; border: none; }
-        button { user-select: none; cursor: pointer; }
+        button { user-select: none; cursor: pointer; touch-action: manipulation; }
         .no-copy { -webkit-user-select: none; user-select: none; pointer-events: auto; }
         .loading-hide { display: none !important; }
 
@@ -53,6 +53,13 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* === WHATSAPP PULSE ANIMATION === */
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
         /* =========================================
            MAIN PRODUCT PAGE LAYOUT
            ========================================= */
@@ -72,17 +79,19 @@
         .main-image img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
 
         /* Typography & Spacing */
-        .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; width: 100%; }
+        .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; width: 100%; }
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; flex: 1; }
         
+        /* WHATSAPP ICON - GLOBAL STYLES (Pulse & Desktop Size) */
         .wa-btn { 
             display: flex; align-items: center; justify-content: center; 
-            width: 36px; height: 36px; border-radius: 50%; 
+            width: 50px; height: 50px; border-radius: 50%; 
             background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.3);
-            flex-shrink: 0; transition: transform 0.2s; cursor: pointer;
+            flex-shrink: 0; cursor: pointer;
+            animation: pulse-green 2s infinite; /* Pulse Effect applied globally */
         }
         .wa-btn:active { transform: scale(0.95); background: rgba(37, 211, 102, 0.2); }
-        .wa-btn svg { width: 20px; height: 20px; fill: var(--wa-green); }
+        .wa-btn svg { width: 28px; height: 28px; fill: var(--wa-green); }
 
         /* FIXED PRICE STYLING */
         .price { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
@@ -97,9 +106,26 @@
         .color-options img.active { border-color: var(--brand-primary); box-shadow: 0 4px 12px rgba(139, 38, 53, 0.15); }
 
         .size-boxes { display: flex; flex-wrap: wrap; gap: 10px; }
-        .size-boxes button { min-width: 52px; height: 44px; border: 1px solid var(--border-subtle); background: var(--surface-card); border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; font-family: "DM Sans", sans-serif; }
-        .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
-        .size-boxes button.active { background: var(--brand-primary); border-color: var(--brand-primary); color: #fff; }
+        .size-boxes button { 
+            min-width: 52px; height: 44px; border: 1px solid var(--border-subtle); 
+            background: var(--surface-card); border-radius: 10px; 
+            font-size: 14px; font-weight: 500; color: var(--text-primary); 
+            transition: all 0.2s; font-family: "DM Sans", sans-serif; 
+        }
+        
+        @media (hover: hover) {
+            .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
+        }
+
+        /* FIX: FORCE ACTIVE STATE TO OVERRIDE EVERYTHING FOR MOBILE TEXT COLOR */
+        .size-boxes button.active, 
+        .size-boxes button.active:hover, 
+        .size-boxes button.active:focus { 
+            background: var(--brand-primary) !important; 
+            border-color: var(--brand-primary) !important; 
+            color: #fff !important; 
+        }
+        
         .size-boxes button:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; }
 
         .quantity-container { display: inline-flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 8px 16px; min-width: 140px; margin: 5px 0 30px 0; background-color: var(--surface-card); height: 46px; }
@@ -253,8 +279,6 @@
         .main-stage img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
 
         .product-details { padding-top: 10px; display: flex; flex-direction: column; height: 100%; }
-        
-        /* FIX: Changed font to DM Sans */
         .modal-product-title { font-size: 38px; line-height: 1.1; font-weight: 700; margin: 0 0 8px 0; color: var(--text-primary); font-family: "DM Sans", sans-serif; letter-spacing: -0.5px; }
         .modal-product-category { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 24px; font-weight: 600; }
         .price-block { display: flex; align-items: baseline; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle); }
@@ -268,11 +292,28 @@
         .swatch img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
         .swatch:hover { transform: translateY(-2px); border-color: var(--text-light); }
         .swatch.active { border-color: var(--brand-primary); box-shadow: 0 0 0 1px var(--brand-primary); }
-        .size-selector { display: flex; flex-wrap: wrap; gap: 10px; }
-        .size-btn { min-width: 52px; height: 46px; padding: 0 16px; background: white; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; cursor: pointer; }
-        .size-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
-        .size-btn.active { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
-        .size-btn:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; border:1px solid #ddd; color: #999; }
+        
+        /* MODAL BUTTONS */
+        .size-selector .size-btn { 
+            min-width: 52px; height: 46px; padding: 0 16px; 
+            background: white; border: 1px solid var(--border-subtle); 
+            border-radius: 8px; font-family: "DM Sans", sans-serif; 
+            font-size: 14px; font-weight: 500; color: var(--text-primary); 
+            transition: all 0.2s; cursor: pointer; 
+        }
+        
+        /* Mobile Active State Fix */
+        .size-selector .size-btn.active, 
+        .size-selector .size-btn.active:hover,
+        .size-selector .size-btn.active:focus { 
+            background: var(--brand-primary) !important; 
+            border-color: var(--brand-primary) !important; 
+            color: white !important; 
+        }
+        @media (hover: hover) {
+            .size-selector .size-btn:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
+        }
+        .size-selector .size-btn:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; border:1px solid #ddd; color: #999; }
 
         .qty-wrapper { display: inline-flex; align-items: center; justify-content: space-between; background: white; border: 1px solid var(--border-subtle); border-radius: 8px; height: 46px; width: 140px; }
         .qty-btn { width: 40px; height: 100%; background: transparent; border: none; cursor: pointer; font-size: 18px; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
@@ -336,6 +377,10 @@
             .title-header { padding-top: 15px; }
             .title-header h1 { font-size: 22px; margin-bottom: 5px; }
             
+            /* Mobile WA Size - Compact */
+            .wa-btn { width: 36px; height: 36px; }
+            .wa-btn svg { width: 20px; height: 20px; }
+
             /* FIXED MOBILE PRICE */
             .price { 
                 margin-top: 8px; 
@@ -394,28 +439,22 @@
             .add-to-cart-icon { width: 38px; height: 38px; }
             .add-to-cart-icon svg { width: 20px; height: 20px; }
 
-            .modal-overlay { padding: 0; align-items: flex-end; }
-            .modal-content-box { height: 85vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; }
-            .modal-overlay.active .modal-content-box { transform: translateY(0); }
-            
-            .premium-close-btn { top: 16px; right: 16px; width: 36px; height: 36px; background: var(--surface-hover); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid var(--brand-primary); }
-            .premium-close-btn .close-icon-lines::before, .premium-close-btn .close-icon-lines::after { background: var(--brand-primary); }
-            
-            .modal-container { display: block; padding: 0; padding-bottom: 100px; }
-            .gallery-wrapper { display: none; }
-            .mobile-gallery { display: flex; position: relative; width: 100%; height: 50vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
-            .mobile-gallery::-webkit-scrollbar { display: none; }
-            .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
-            .product-details { padding: 24px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; min-height: 400px; }
-            
-            .actions-desktop { display: none !important; }
-            .mobile-actions-bar { display: flex; position: absolute; bottom: 0; left: 0; right: 0; background: white; padding: 12px 20px; gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 100; border-top: 1px solid var(--border-subtle); }
-            .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; }
-            .btn-mobile-buy { background: white; color: var(--text-primary); border: 1px solid var(--border-subtle); }
-            .btn-mobile-cart { background: var(--brand-gradient); color: white; flex: 1.5; box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); }
-
             /* FIX: Bottom Padding for View More */
             #descContainer { padding-bottom: 30px; }
+            
+            /* Mobile Popup Bottom Sheet Fix */
+            .modal-content-box {
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                height: 85vh;
+                transform: translateY(100%);
+                transition: transform 0.3s ease-out;
+            }
+            .modal-overlay.active .modal-content-box {
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -807,17 +846,26 @@
         function selectVariant(index) {
             activeVariantIndex = index;
             document.querySelectorAll('.color-options img').forEach((img, i) => img.classList.toggle('active', i === index));
+            
             let images = [];
             let variantSizes = [];
+            
             if (currentProduct.colorVariants && currentProduct.colorVariants[index]) {
                 const variant = currentProduct.colorVariants[index];
                 images = variant.images || currentProduct.images;
-                if(variant.name) document.getElementById('selectedColorName').textContent = variant.name;
+                
+                // INSTANT UPDATE: Set text content directly
+                const colorNameEl = document.getElementById('selectedColorName');
+                if(variant.name) {
+                    colorNameEl.textContent = variant.name;
+                }
+                
                 variantSizes = variant.sizes || [];
             } else {
                 images = currentProduct.images || [];
                 variantSizes = currentProduct.sizes || [];
             }
+            
             activeImageIndex = 0;
             renderGallery(images);
             renderSizeOptions(variantSizes);
@@ -826,8 +874,19 @@
         function renderSizeOptions(specificSizes) {
             const container = document.getElementById('sizeBoxes');
             container.innerHTML = '';
+            
+            // Reset Size Label instantly
+            selectedSize = null; 
+            document.getElementById('sizeLabel').textContent = "Select Size";
+
             const sizesToRender = specificSizes || [];
-            if (sizesToRender.length === 0) { container.innerHTML = '<span style="font-size:14px; color:#888;">No sizes available</span>'; return; }
+            
+            // FIX: If no sizes, just show info text but allow buying
+            if (sizesToRender.length === 0) { 
+                container.innerHTML = '<span style="font-size:14px; color:#888;">One Size</span>'; 
+                return; 
+            }
+            
             sizesToRender.forEach((sizeObj, index) => {
                 const btn = document.createElement('button');
                 const sizeName = sizeObj.name || sizeObj;
@@ -844,7 +903,6 @@
                 }
                 container.appendChild(btn);
             });
-            selectedSize = null; document.getElementById('sizeLabel').textContent = "Select Size";
         }
 
         function renderGallery(images) {
@@ -1163,25 +1221,41 @@
         // ================= CART & BUY LOGIC =================
         function addToCart() { processCartAdd(currentProduct, selectedSize, quantity, activeVariantIndex); }
         function addModalToCart() { 
-            if(!modalSelectedSize) { showToast("Please select a size"); return; }
-            processCartAdd(modalCurrentProduct, modalSelectedSize, modalQty, modalSelectedColorIndex); 
+            // FIX: Check if sizes exist specifically for the modal product
+            const sizes = (modalCurrentProduct.colorVariants && modalCurrentProduct.colorVariants[modalSelectedColorIndex]) 
+                          ? (modalCurrentProduct.colorVariants[modalSelectedColorIndex].sizes || []) 
+                          : (modalCurrentProduct.sizes || []);
+            
+            if(sizes.length > 0 && !modalSelectedSize) { showToast("Please select a size"); return; }
+            
+            processCartAdd(modalCurrentProduct, modalSelectedSize || "One Size", modalQty, modalSelectedColorIndex); 
             document.getElementById('productModal').classList.remove('active');
             document.body.classList.remove('modal-open');
         }
 
         function processCartAdd(product, size, qty, variantIdx) {
             if (!product) return;
-            if (!size) { showToast("Please select a size"); return; }
             
+            // Logic to determine if size is mandatory
             const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
+            const productSizes = variant.sizes || product.sizes || [];
+            
+            if (productSizes.length > 0 && (!size || size === "Select Size")) { 
+                showToast("Please select a size"); 
+                return; 
+            }
+            
+            // Default "One Size" if none existed
+            const finalSize = (productSizes.length === 0) ? "One Size" : size;
+            
             const colorName = variant.name || 'Default';
-            const uniqueId = `${product.id}-${colorName}-${size}`;
+            const uniqueId = `${product.id}-${colorName}-${finalSize}`;
             const img = variant.images?.[0] || product.images?.[0];
 
             const existingItem = cart.find(item => item.uniqueId === uniqueId);
             if (existingItem) existingItem.quantity += qty;
             else {
-                cart.push({ id: product.id, uniqueId, name: product.name, price: product.price, image: img, quantity: qty, size: size, color: colorName });
+                cart.push({ id: product.id, uniqueId, name: product.name, price: product.price, image: img, quantity: qty, size: finalSize, color: colorName });
             }
             saveCart();
             updateCartBadge();
@@ -1190,21 +1264,33 @@
 
         function buyNowFromModal() { processBuyNow(currentProduct, selectedSize, quantity, activeVariantIndex); }
         function buyModalNow() {
-            if(!modalSelectedSize) { showToast("Please select a size"); return; }
-            processBuyNow(modalCurrentProduct, modalSelectedSize, modalQty, modalSelectedColorIndex);
+            const sizes = (modalCurrentProduct.colorVariants && modalCurrentProduct.colorVariants[modalSelectedColorIndex]) 
+                          ? (modalCurrentProduct.colorVariants[modalSelectedColorIndex].sizes || []) 
+                          : (modalCurrentProduct.sizes || []);
+
+            if(sizes.length > 0 && !modalSelectedSize) { showToast("Please select a size"); return; }
+            
+            processBuyNow(modalCurrentProduct, modalSelectedSize || "One Size", modalQty, modalSelectedColorIndex);
         }
 
         function processBuyNow(product, size, qty, variantIdx) {
             if (!product) return;
-            if (!size) { showToast("Please select a size"); return; }
-
+            
             const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
+            const productSizes = variant.sizes || product.sizes || [];
+
+            if (productSizes.length > 0 && (!size || size === "Select Size")) { 
+                showToast("Please select a size"); 
+                return; 
+            }
+
+            const finalSize = (productSizes.length === 0) ? "One Size" : size;
             const colorName = variant.name || 'Default';
             const img = variant.images?.[0] || product.images?.[0];
 
             const directItem = {
-                id: product.id, uniqueId: `${product.id}-${colorName}-${size}-direct`,
-                name: product.name, price: product.price, image: img, quantity: qty, size: size, color: colorName
+                id: product.id, uniqueId: `${product.id}-${colorName}-${finalSize}-direct`,
+                name: product.name, price: product.price, image: img, quantity: qty, size: finalSize, color: colorName
             };
             localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
             window.location.href = "checkout.html?buy_now=true";
