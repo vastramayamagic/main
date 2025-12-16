@@ -753,6 +753,18 @@
                 `;
                 container.appendChild(card);
             });
+
+            // FIX: Hide navigation arrows if content fits
+            const nav = document.querySelector('#reviewsSection .section-nav');
+            if (nav) {
+                setTimeout(() => {
+                    if (container.scrollWidth <= container.clientWidth) {
+                        nav.style.display = 'none';
+                    } else {
+                        nav.style.display = 'flex';
+                    }
+                }, 100);
+            }
         }
 
         function renderColorOptions() {
@@ -900,8 +912,10 @@
                 });
 
                 if (relatedProductsData.length === 0) {
-                    relatedGrid.innerHTML = '<p style="padding:20px;">No related products found.</p>';
+                    document.querySelector('.category-products-section').style.display = 'none';
                     return;
+                } else {
+                    document.querySelector('.category-products-section').style.display = 'block';
                 }
 
                 relatedGrid.innerHTML = relatedProductsData.map(p => {
