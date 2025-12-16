@@ -85,7 +85,6 @@
         .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; width: 100%; }
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; flex: 1; }
         
-        /* DESKTOP WA ICON */
         .wa-btn { 
             display: flex; align-items: center; justify-content: center; 
             width: 50px; height: 50px; border-radius: 50%; 
@@ -117,7 +116,6 @@
         @media (hover: hover) {
             .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         }
-        /* Active State */
         .size-boxes button.active, 
         .size-boxes button.active:hover, 
         .size-boxes button.active:focus { 
@@ -134,7 +132,7 @@
 
         /* Buttons */
         .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
-        .mobile-static-actions { display: none; } /* Hidden on desktop */
+        .mobile-static-actions { display: none; }
 
         .action-button { height: 52px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; transition: all 0.3s ease; font-family: "DM Sans", sans-serif; }
         .add-cart-btn { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
@@ -169,7 +167,7 @@
         .mobile-add-cart-container { display: none; }
 
         /* =========================================
-           REVIEWS SECTION (Premium)
+           REVIEWS SECTION
            ========================================= */
         .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
@@ -187,7 +185,7 @@
         .rev-text { font-size: 14px; line-height: 1.6; color: var(--text-secondary); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* =========================================
-           RELATED PRODUCTS UI (EXACT MATCH TO SHOP PAGE)
+           RELATED PRODUCTS UI
            ========================================= */
         .category-products-section { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); position: relative; z-index: 1; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
@@ -202,21 +200,11 @@
         .nav-btn svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 2; }
         .nav-btn:hover svg { stroke: white; }
 
-        /* GRID: EXACTLY LIKE SHOP PAGE */
-        .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; width: 100%; overflow: visible; padding: 0; }
+        .products-grid { display: flex; gap: 25px; padding: 10px 5px 30px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; }
+        .products-grid::-webkit-scrollbar { display: none; }
 
         /* Card Styles */
-        .card { 
-            background: var(--surface-card); 
-            border-radius: var(--radius); 
-            transition: all 0.3s ease; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            border: 1px solid var(--border-subtle); 
-            cursor: pointer; 
-            overflow: hidden; 
-        }
+        .card { background: var(--surface-card); border-radius: var(--radius); transition: all 0.3s ease; position: relative; display: flex; flex-direction: column; border: 1px solid var(--border-subtle); cursor: pointer; overflow: hidden; flex: 0 0 auto; width: 280px; }
         .card:hover { transform: translateY(-5px); border-color: var(--brand-primary); box-shadow: var(--shadow-float); z-index: 2; }
 
         .thumb { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f4f4f4; border-bottom: 1px solid var(--border-subtle); }
@@ -230,16 +218,7 @@
         .wishlist-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
         .wishlist-btn.active svg { fill: currentColor; }
 
-        /* Quick View Button */
-        .quick-view-btn { 
-            position: absolute; bottom: 15px; left: 50%; transform: translate(-50%, 20px); 
-            background: var(--brand-dark); 
-            color: #fff; 
-            padding: 10px 20px; border-radius: 30px; 
-            font-size: 13px; font-weight: 600; 
-            opacity: 0; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 80%; text-align: center; 
-        }
+        .quick-view-btn { position: absolute; bottom: 15px; left: 50%; transform: translate(-50%, 20px); background: var(--brand-dark); color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 600; opacity: 0; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 80%; text-align: center; }
         .card:hover .quick-view-btn { opacity: 1; transform: translate(-50%, 0); }
         .quick-view-btn:hover { background: #5a1020; transform: translate(-50%, 0) scale(1.02); }
 
@@ -249,14 +228,11 @@
 
         .bottom-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
         .price-block-card { display: flex; align-items: baseline; gap: 8px; }
-        .current-price { font-size: 16px; font-weight: 700; color: var(--brand-primary); }
-        .old-price { font-size: 13px; color: var(--text-light); text-decoration: line-through; opacity: 0.7; }
-        
         .add-cart-icon-btn { width: 34px; height: 34px; border-radius: 8px; background: var(--surface-hover); color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.1); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .add-cart-icon-btn:hover { background: var(--brand-primary); color: #fff; }
 
         /* =========================================
-           MODAL & POPUP (DEFAULT DESKTOP CENTER)
+           MODAL & POPUP
            ========================================= */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -369,7 +345,7 @@
             .left-content { display: none; }
             
             /* INCREASED HEIGHTS */
-            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 600px; }
+            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 70vh; }
             .mobile-image { height: 100%; width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
             .mobile-image::-webkit-scrollbar { display: none; }
             .mobile-image img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
@@ -403,7 +379,8 @@
                 display: flex !important; 
             }
             #mobileStaticBuy { 
-                flex: 1.5; margin-top: 0 !important; 
+                flex: 1; /* EQUAL WIDTH */
+                margin-top: 0 !important; 
                 display: flex !important; align-items: center; justify-content: center;
                 box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2);
             }
@@ -448,7 +425,7 @@
             .modal-container { display: block; padding: 0; padding-bottom: 100px; flex: 1; overflow-y: auto; }
             .gallery-wrapper { display: none; }
             /* INCREASED POPUP HEIGHT */
-            .mobile-gallery { display: flex; position: relative; width: 100%; height: 65vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+            .mobile-gallery { display: flex; position: relative; width: 100%; height: 70vh; background: #f0f0f0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
             .mobile-gallery::-webkit-scrollbar { display: none; }
             .mobile-gallery img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
             .product-details { padding: 24px 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; min-height: 400px; }
@@ -784,14 +761,22 @@
             if(loader) loader.classList.add('hidden');
 
             document.getElementById('productTitle').textContent = currentProduct.name;
-            const price = parseFloat(currentProduct.price);
+            
+            // ROBUST PRICE PARSING
+            const parseVal = (val) => {
+                if (!val) return 0;
+                return parseFloat(String(val).replace(/[^0-9.]/g, ''));
+            };
+
+            const price = parseVal(currentProduct.price);
             document.getElementById('priceCurrent').textContent = `₹${price}`;
             
             const waMsg = encodeURIComponent(`Hi, I am interested in ${currentProduct.name} - ₹${price}\nLink: ${window.location.href}`);
             document.getElementById('waLink').href = `https://wa.me/917799181716?text=${waMsg}`;
             
-            const oldPrice = parseFloat(currentProduct.oldPrice);
-            if (!isNaN(oldPrice) && oldPrice > price) {
+            const oldPrice = parseVal(currentProduct.oldPrice);
+            
+            if (oldPrice > price) {
                 document.getElementById('priceOld').textContent = `₹${oldPrice}`;
                 const save = Math.round(((oldPrice - price) / oldPrice) * 100);
                 document.getElementById('saveBadge').textContent = `SAVE ${save}%`;
