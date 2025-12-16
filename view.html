@@ -97,9 +97,27 @@
         .color-options img.active { border-color: var(--brand-primary); box-shadow: 0 4px 12px rgba(139, 38, 53, 0.15); }
 
         .size-boxes { display: flex; flex-wrap: wrap; gap: 10px; }
-        .size-boxes button { min-width: 52px; height: 44px; border: 1px solid var(--border-subtle); background: var(--surface-card); border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; font-family: "DM Sans", sans-serif; }
-        .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
-        .size-boxes button.active { background: var(--brand-primary); border-color: var(--brand-primary); color: #fff; }
+        .size-boxes button { 
+            min-width: 52px; height: 44px; border: 1px solid var(--border-subtle); 
+            background: var(--surface-card); border-radius: 10px; 
+            font-size: 14px; font-weight: 500; color: var(--text-primary); 
+            transition: all 0.2s; font-family: "DM Sans", sans-serif; 
+        }
+        
+        /* HOVER: Only on devices that support hovering */
+        @media (hover: hover) {
+            .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
+        }
+
+        /* FIX: FORCE ACTIVE STATE TO OVERRIDE EVERYTHING */
+        .size-boxes button.active, 
+        .size-boxes button.active:hover, 
+        .size-boxes button.active:focus { 
+            background: var(--brand-primary) !important; 
+            border-color: var(--brand-primary) !important; 
+            color: #fff !important; /* Critical Fix */
+        }
+        
         .size-boxes button:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; }
 
         .quantity-container { display: inline-flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 8px 16px; min-width: 140px; margin: 5px 0 30px 0; background-color: var(--surface-card); height: 46px; }
@@ -143,7 +161,6 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
-        /* FIX: display block to allow toggling, Arrows hidden by default */
         .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
@@ -152,9 +169,6 @@
         .reviews-scroll-container { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; padding: 10px 5px; }
         .reviews-scroll-container::-webkit-scrollbar { display: none; }
         
-        /* FIX: Hide arrows by default */
-        .section-nav { display: none; gap: 12px; }
-
         .review-card-premium { min-width: 320px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-light); }
         .rev-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .rev-name { font-weight: 700; font-size: 15px; color: var(--text-primary); }
@@ -172,6 +186,7 @@
         .section-header-right { display: flex; align-items: center; gap: 20px; }
         .view-more-link { font-size: 14px; font-weight: 600; color: var(--brand-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.2s; }
         
+        .section-nav { display: flex; gap: 12px; }
         .nav-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-card); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
         .nav-btn:hover { background: var(--brand-primary); border-color: var(--brand-primary); transform: translateY(-2px); }
         .nav-btn svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 2; }
@@ -210,7 +225,6 @@
         }
         .product-card:hover .quick-view-btn { transform: translateY(0); }
 
-        /* FIX: Reduced Padding Desktop */
         .product-info { padding: 10px 12px; }
 
         .product-text-group { margin-bottom: 6px; }
@@ -270,11 +284,27 @@
         .swatch img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
         .swatch:hover { transform: translateY(-2px); border-color: var(--text-light); }
         .swatch.active { border-color: var(--brand-primary); box-shadow: 0 0 0 1px var(--brand-primary); }
-        .size-selector { display: flex; flex-wrap: wrap; gap: 10px; }
-        .size-btn { min-width: 52px; height: 46px; padding: 0 16px; background: white; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; cursor: pointer; }
-        .size-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
-        .size-btn.active { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
-        .size-btn:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; border:1px solid #ddd; color: #999; }
+        
+        /* MODAL BUTTONS */
+        .size-selector .size-btn { 
+            min-width: 52px; height: 46px; padding: 0 16px; 
+            background: white; border: 1px solid var(--border-subtle); 
+            border-radius: 8px; font-family: "DM Sans", sans-serif; 
+            font-size: 14px; font-weight: 500; color: var(--text-primary); 
+            transition: all 0.2s; cursor: pointer; 
+        }
+        /* Mobile Hover/Active Fix for Modal */
+        .size-selector .size-btn.active, 
+        .size-selector .size-btn.active:hover,
+        .size-selector .size-btn.active:focus { 
+            background: var(--brand-primary) !important; 
+            border-color: var(--brand-primary) !important; 
+            color: white !important; 
+        }
+        @media (hover: hover) {
+            .size-selector .size-btn:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
+        }
+        .size-selector .size-btn:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; border:1px solid #ddd; color: #999; }
 
         .qty-wrapper { display: inline-flex; align-items: center; justify-content: space-between; background: white; border: 1px solid var(--border-subtle); border-radius: 8px; height: 46px; width: 140px; }
         .qty-btn { width: 40px; height: 100%; background: transparent; border: none; cursor: pointer; font-size: 18px; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
@@ -763,8 +793,7 @@
             const checkArrows = () => {
                 const nav = section.querySelector('.section-nav');
                 if(nav) {
-                    // Check if content overflows with a small buffer
-                    const isOverflowing = container.scrollWidth > container.clientWidth + 5; 
+                    const isOverflowing = container.scrollWidth > container.clientWidth + 1; // +1 buffer
                     nav.style.display = isOverflowing ? 'flex' : 'none';
                 }
             };
