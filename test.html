@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* === CORE VARIABLES (From Reference) === */
+/* === CORE VARIABLES === */
 :root {
     --page-bg: #fefcf3;
     --text-primary: #3f0b17;
@@ -39,95 +39,123 @@ body {
 body.modal-open { overflow: hidden; }
 
 /* --- LAYOUT --- */
-.page { display: flex; gap: 40px; max-width: 1440px; margin: 0 auto; padding: 40px 30px; width: 100%; }
+.page { display: flex; gap: 40px; max-width: 1440px; margin: 0 auto; padding: 30px 40px; width: 100%; }
 
 /* --- SIDEBAR FILTERS --- */
 .filters {
-    width: 260px; position: sticky; top: 20px; align-self: flex-start; 
-    height: calc(100vh - 40px); overflow-y: auto; padding-right: 10px;
+    width: 250px; position: sticky; top: 20px; align-self: flex-start; 
+    height: calc(100vh - 40px); overflow-y: auto; padding-right: 15px;
     flex-shrink: 0; scrollbar-width: none;
 }
 .filters::-webkit-scrollbar { display: none; }
 
 .filters h3 { 
-    margin: 0 0 24px; font-size: 24px; color: var(--text-primary); 
-    font-weight: 700; display: flex; justify-content: space-between; align-items: baseline;
+    margin: 0 0 24px; font-size: 22px; color: var(--text-primary); 
+    font-weight: 700; display: flex; justify-content: space-between; align-items: center;
 }
-.clear-btn { font-size: 13px; color: var(--text-secondary); text-decoration: underline; cursor: pointer; font-weight: 500; background: none; padding: 0; }
 
-.section { border-top: 1px solid var(--border-subtle); padding-top: 18px; margin-top: 18px; }
+/* Updated Clear All Button */
+.clear-btn { 
+    font-size: 11px; color: var(--brand-primary); text-transform: uppercase; 
+    font-weight: 700; background: rgba(139, 38, 53, 0.08); padding: 4px 8px; 
+    border-radius: 4px; transition: 0.2s; letter-spacing: 0.5px;
+}
+.clear-btn:hover { background: var(--brand-primary); color: #fff; }
+
+.section { border-top: 1px solid var(--border-subtle); padding-top: 16px; margin-top: 16px; }
 .section-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 4px 0; }
 .section-title { font-weight: 700; color: var(--text-primary); font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase; }
-.chev { transition: transform .2s ease; color: var(--text-secondary); font-size: 14px; }
-.section.open .chev { transform: rotate(180deg); }
+
+/* Arrow Icon */
+.m-link-arrow { 
+    width: 18px; height: 18px; stroke: var(--text-secondary); stroke-width: 2; 
+    transition: transform 0.3s ease; 
+}
+.section.open .m-link-arrow { transform: rotate(90deg); }
+
 .section-body { overflow: hidden; max-height: 0; transition: max-height .3s ease, opacity .2s ease; opacity: 0; }
 .section.open .section-body { opacity: 1; max-height: 1000px; padding-top: 12px; }
 
-/* Filter Checkboxes */
-.checkbox-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; cursor: pointer; transition: 0.2s; }
+/* Checkboxes */
+.checkbox-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; cursor: pointer; transition: 0.2s; }
 .checkbox-row:hover .checkbox-label { color: var(--brand-primary); }
 .checkbox-row input { position: absolute; opacity: 0; }
-.checkbox-box { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--border-subtle); background: #fff; display: flex; align-items: center; justify-content: center; transition: all .2s; }
-.checkbox-box svg { width: 12px; height: 12px; opacity: 0; stroke: #fff; stroke-width: 3; transition: all .2s; }
+.checkbox-box { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--border-subtle); background: #fff; display: flex; align-items: center; justify-content: center; transition: all .2s; flex-shrink: 0; }
+.checkbox-box svg { width: 10px; height: 10px; opacity: 0; stroke: #fff; stroke-width: 3; transition: all .2s; }
 .checkbox-row input:checked + .checkbox-box { background: var(--brand-primary); border-color: var(--brand-primary); }
 .checkbox-row input:checked + .checkbox-box svg { opacity: 1; }
-.checkbox-label { color: var(--text-secondary); font-size: 15px; }
+.checkbox-label { color: var(--text-secondary); font-size: 14px; }
 
-/* Sidebar Swatches */
-.color-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-.color-item { cursor: pointer; position: relative; }
-.sidebar-swatch { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); transition: all 0.2s; }
-.color-item:hover .sidebar-swatch { transform: scale(1.1); }
+/* 2-Column Color Grid */
+.color-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.color-item { cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.sidebar-swatch { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); transition: all 0.2s; flex-shrink: 0; }
+.color-name { font-size: 13px; color: var(--text-secondary); transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.color-item:hover .color-name { color: var(--brand-primary); }
 .color-item.selected .sidebar-swatch { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--brand-primary); border-color: transparent; }
+.color-item.selected .color-name { font-weight: 700; color: var(--brand-primary); }
 
-/* Sidebar Slider */
-.range-wrap { position: relative; height: 40px; margin: 15px 10px 0; user-select: none; }
+/* Slider */
+.range-wrap { position: relative; height: 30px; margin: 15px 8px 0; user-select: none; }
 .range-track { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 3px; background: var(--border-subtle); }
 .range-highlight { position: absolute; top: 50%; transform: translateY(-50%); height: 3px; background: var(--brand-primary); z-index: 2; }
-.range-dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid var(--brand-primary); cursor: grab; z-index: 5; transition: transform 0.1s; }
-.price-inputs { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
-.price-box { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid var(--border-subtle); background: #fff; display: flex; font-size: 14px; color: var(--text-primary); }
+.range-dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid var(--brand-primary); cursor: grab; z-index: 5; transition: transform 0.1s; }
+.price-inputs { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+.price-box { flex: 1; padding: 6px; border-radius: 6px; border: 1px solid var(--border-subtle); background: #fff; display: flex; font-size: 13px; color: var(--text-primary); }
 .price-box input { border: none; outline: none; width: 100%; font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--text-primary); }
 
 /* --- MAIN CONTENT --- */
 .products { flex: 1; width: 100%; }
-.products-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-.home-link { text-decoration: none; color: var(--text-secondary); font-size: 14px; font-weight: 500; transition: 0.2s; }
-.home-link:hover { color: var(--brand-primary); }
+.products-toolbar { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 24px; }
+
+/* Filter Actions (Hidden on Desktop) */
+.mobile-filter-actions { display: none; } 
 
 .sort { position: relative; }
-.sort-button { background: #fff; border: 1px solid var(--border-subtle); padding: 10px 20px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+.sort-button { background: #fff; border: 1px solid var(--border-subtle); padding: 8px 16px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
 .sort-button:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
-.sort-menu { position: absolute; right: 0; top: calc(100% + 8px); width: 220px; background: #fff; border-radius: 8px; box-shadow: var(--shadow-float); padding: 8px; z-index: 50; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; border: 1px solid var(--border-subtle); }
+.sort-menu { position: absolute; right: 0; top: calc(100% + 8px); width: 200px; background: #fff; border-radius: 8px; box-shadow: var(--shadow-float); padding: 6px; z-index: 50; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; border: 1px solid var(--border-subtle); }
 .sort.open .sort-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-.sort-item { padding: 10px 16px; font-size: 14px; color: var(--text-secondary); cursor: pointer; border-radius: 6px; }
+.sort-item { padding: 8px 12px; font-size: 13px; color: var(--text-secondary); cursor: pointer; border-radius: 6px; }
 .sort-item:hover { background: var(--surface-hover); color: var(--brand-primary); }
 .sort-item.active { background: var(--brand-primary); color: #fff; }
 
-/* --- GRID (NEW PRODUCT CARD DESIGN) --- */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 100%; }
+/* --- GRID --- */
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, 280px); 
+    gap: 25px; 
+    width: 100%; 
+    justify-content: start;
+}
 
 .product-card {
+    width: 280px;
     background: var(--surface-card); border-radius: 12px; overflow: hidden;
-    box-shadow: var(--shadow-light); transition: all 0.3s; 
+    box-shadow: 0 2px 10px rgba(59, 11, 23, 0.05); transition: all 0.3s; 
     border: 1px solid var(--border-subtle); position: relative; cursor: pointer;
     display: flex; flex-direction: column;
 }
-.product-card:hover { box-shadow: 0 8px 30px rgba(59, 11, 23, 0.12); border-color: var(--brand-primary); transform: translateY(-5px); z-index: 10; }
+.product-card:hover { box-shadow: 0 8px 30px rgba(59, 11, 23, 0.12); border-color: var(--brand-primary); transform: translateY(-3px); z-index: 10; }
 
-.product-image-container { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; border-bottom: 1px solid var(--border-subtle); }
+.product-image-container { 
+    position: relative; width: 100%; 
+    height: 340px;
+    overflow: hidden; border-bottom: 1px solid var(--border-subtle); 
+}
 .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s ease, transform 0.8s ease; }
 .hover-image { opacity: 0; transform: scale(1.05); }
 .product-card:hover .default-image { opacity: 0; transform: scale(1.05); }
 .product-card:hover .hover-image { opacity: 1; transform: scale(1); }
 
+/* Wishlist: Always Visible */
 .wishlist-btn-top-right {
-    position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: rgba(255,255,255,0.9);
+    position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; background: rgba(255,255,255,0.95);
     border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-subtle);
-    cursor: pointer; z-index: 10; transition: all 0.2s ease; opacity: 0; transform: translateX(10px);
+    cursor: pointer; z-index: 10; transition: all 0.2s ease;
+    opacity: 1; 
 }
-.product-card:hover .wishlist-btn-top-right { opacity: 1; transform: translateX(0); }
-.wishlist-btn-top-right:hover { transform: scale(1.1) translateX(0); background: #fff; }
+.wishlist-btn-top-right:hover { transform: scale(1.1); background: #fff; border-color: var(--brand-primary); }
 .wishlist-btn-top-right svg { width: 18px; height: 18px; stroke: var(--brand-primary); fill: none; transition: all 0.2s ease; }
 .wishlist-btn-top-right.active svg { fill: var(--brand-primary); stroke: var(--brand-primary); }
 
@@ -138,7 +166,7 @@ body.modal-open { overflow: hidden; }
 }
 .product-card:hover .quick-view-btn { transform: translateY(0); }
 
-.product-info { padding: 12px 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.product-info { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
 .product-text-group { margin-bottom: 6px; }
 .product-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .product-category { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
@@ -148,17 +176,36 @@ body.modal-open { overflow: hidden; }
 .current-price { font-size: 16px; font-weight: 700; color: var(--brand-primary); }
 .old-price { font-size: 12px; font-weight: 500; color: var(--text-light); text-decoration: line-through; }
 
-.add-to-cart-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 5; }
+.add-to-cart-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--surface-light); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 5; }
 .add-to-cart-icon:hover { background: var(--brand-primary); border-color: var(--brand-primary); }
 .add-to-cart-icon:hover svg { stroke: white; }
-.add-to-cart-icon svg { width: 16px; height: 16px; stroke: var(--text-primary); stroke-width: 1.5; }
+.add-to-cart-icon svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 1.5; }
 
-/* Empty State */
+/* Empty State & Loader */
 .empty-state { width: 100%; text-align: center; padding: 80px 20px; grid-column: 1 / -1; }
 .loader { border: 3px solid #f3f3f3; border-top: 3px solid var(--brand-primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 100px auto; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* ================= MODAL & POPUP (From Reference) ================= */
+/* ================= TOAST UI ================= */
+#toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 6000; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
+.toast { 
+    padding: 12px 20px; 
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px);
+    border-radius: 10px; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+    display: flex; align-items: center; gap: 12px; 
+    border-left: 4px solid var(--brand-primary); 
+    min-width: 280px; 
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+    pointer-events: auto;
+    animation: toastSlide 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.toast svg { width: 20px; height: 20px; stroke: var(--brand-primary); fill: none; }
+@keyframes toastSlide { from { opacity: 0; transform: translateY(20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* ================= MODAL ================= */
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.active { opacity: 1; visibility: visible; }
 
@@ -219,7 +266,7 @@ body.modal-open { overflow: hidden; }
 .mobile-gallery, .mobile-actions-bar, .mobile-filter-btn { display: none; }
 
 /* Responsive */
-@media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1200px) { .grid { grid-template-columns: repeat(auto-fill, 280px); justify-content: center; } }
 
 @media (max-width: 768px) {
     .page { flex-direction: column; padding: 20px 15px; gap: 20px; }
@@ -232,16 +279,16 @@ body.modal-open { overflow: hidden; }
     .mobile-filter-actions { display: block; padding: 15px 20px; border-top: 1px solid var(--border-subtle); background: #fff; }
     .view-results { width: 100%; padding: 14px; background: var(--brand-primary); color: #fff; border: none; border-radius: 8px; font-weight: 700; }
     
-    .products-toolbar { flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
-    .toolbar-left { width: 100%; order: 1; }
-    .mobile-filter-btn { order: 2; display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 30px; border: 1px solid var(--border-subtle); background: #fff; font-weight: 600; font-size: 13px; color: var(--text-primary); }
-    .sort { order: 3; }
+    .products-toolbar { flex-wrap: wrap; gap: 12px; margin-bottom: 20px; justify-content: space-between; }
+    .mobile-filter-btn { order: 1; display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 30px; border: 1px solid var(--border-subtle); background: #fff; font-weight: 600; font-size: 13px; color: var(--text-primary); }
+    .sort { order: 2; }
 
-    /* Grid Mobile */
-    .grid { gap: 12px; grid-template-columns: repeat(2, 1fr); }
-    .product-card { width: auto; }
-    .product-image-container { height: 200px; }
-    .wishlist-btn-top-right { opacity: 1; transform: none; width: 28px; height: 28px; top: 8px; right: 8px; }
+    /* Grid Mobile - Override Fixed Width for responsiveness */
+    .grid { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); justify-content: stretch; }
+    .product-card { width: auto; } /* Fluid width on mobile */
+    .product-image-container { height: 220px; }
+    
+    .wishlist-btn-top-right { width: 28px; height: 28px; top: 8px; right: 8px; }
     .quick-view-btn { display: none; }
     .product-info { padding: 8px; }
     .product-title { font-size: 13px; }
@@ -269,7 +316,6 @@ body.modal-open { overflow: hidden; }
     .btn-mobile-cart { background: var(--brand-gradient); color: white; flex: 1.5; box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); }
 }
 
-#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 6000; display: flex; flex-direction: column; gap: 10px; }
 .overlay-dim { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 900; opacity: 0; pointer-events: none; transition: 0.3s; }
 .overlay-dim.visible { display: block; opacity: 1; pointer-events: auto; }
 </style>
@@ -284,7 +330,10 @@ body.modal-open { overflow: hidden; }
         <div id="closeFilterX" style="font-size:28px; cursor:pointer; line-height:1; display:none;" onclick="closeMobile()">&times;</div>
         
         <div class="section" id="section-price">
-          <div class="section-header"><span class="section-title">Price Range</span><span class="chev">▾</span></div>
+          <div class="section-header">
+              <span class="section-title">Price Range</span>
+              <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </div>
           <div class="section-body">
             <div class="price-inputs">
               <div class="price-box">₹ <input id="minInput" type="number" min="0" value="0"></div>
@@ -303,19 +352,31 @@ body.modal-open { overflow: hidden; }
 
       <div class="filters-scroll">
         <div class="section" id="section-color">
-          <div class="section-header"><span class="section-title">Color</span><span class="chev">▾</span></div>
+          <div class="section-header">
+              <span class="section-title">Color</span>
+              <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </div>
           <div class="section-body"><div class="color-list" id="colorList"></div></div>
         </div>
         <div class="section" id="section-type">
-          <div class="section-header"><span class="section-title">Category</span><span class="chev">▾</span></div>
+          <div class="section-header">
+              <span class="section-title">Category</span>
+              <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </div>
           <div class="section-body"><div id="typeList"></div></div>
         </div>
         <div class="section" id="section-fabric">
-          <div class="section-header"><span class="section-title">Fabric</span><span class="chev">▾</span></div>
+          <div class="section-header">
+              <span class="section-title">Fabric</span>
+              <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </div>
           <div class="section-body"><div id="fabricList"></div></div>
         </div>
         <div class="section" id="section-size">
-          <div class="section-header"><span class="section-title">Size</span><span class="chev">▾</span></div>
+          <div class="section-header">
+              <span class="section-title">Size</span>
+              <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+          </div>
           <div class="section-body"><div id="sizeList"></div></div>
         </div>
       </div>
@@ -328,10 +389,6 @@ body.modal-open { overflow: hidden; }
 
   <main class="products">
     <div class="products-toolbar">
-      <div class="toolbar-left">
-          <a href="index.html" class="home-link">← Back to Home</a>
-      </div>
-      
       <button class="mobile-filter-btn" id="mobileFilterBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
         Filter & Sort
@@ -488,7 +545,7 @@ async function init() {
     initAccordions(); 
     initSort(); 
     checkUrlParams();
-    initModalEvents(); // Setup modal click listeners
+    initModalEvents(); 
 
     // Listeners
     els.mobBtn.addEventListener('click', openMobile);
@@ -632,7 +689,7 @@ function render() {
             openModal(p.id, 'quickview');
         } else if (e.target.closest('.add-to-cart')) {
             e.stopPropagation();
-            openModal(p.id, 'cart'); // Open modal for sizing
+            openModal(p.id, 'cart'); 
         } else if (e.target.closest('.wishlist-btn-top-right')) {
             e.stopPropagation();
             const btn = e.target.closest('.wishlist-btn-top-right');
@@ -659,7 +716,6 @@ function initModalEvents() {
 }
 
 async function openModal(id, mode) {
-    // 1. Fetch Full Product Details from Master Collection
     try {
         const doc = await db.collection('products').doc(id).get();
         if (!doc.exists) return;
@@ -670,7 +726,6 @@ async function openModal(id, mode) {
         modalSelectedColorIndex = 0;
         currentSlideIndex = 0;
 
-        // Populate DOM
         document.getElementById('modalProductTitle').textContent = modalCurrentProduct.name;
         document.getElementById('modalProductCategory').textContent = modalCurrentProduct.categoryName || modalCurrentProduct.category || 'Category';
         document.getElementById('modalPrice').textContent = '₹' + modalCurrentProduct.price;
@@ -679,7 +734,6 @@ async function openModal(id, mode) {
 
         setupModalVariants();
 
-        // Button Visibility Logic
         const buyBtnDesk = document.getElementById('btnBuyNowDesktop');
         const buyBtnMob = document.getElementById('btnBuyNowMobile');
         const cartBtnDesk = document.getElementById('btnAddToCartDesktop');
@@ -855,7 +909,7 @@ function buildColors() {
   els.colorList.innerHTML = '';
   AVAILABLE_COLORS.forEach(c => {
     const el = document.createElement('div'); el.className = 'color-item';
-    el.innerHTML = `<div class="sidebar-swatch" style="background:${c.hex}"></div>`;
+    el.innerHTML = `<div class="sidebar-swatch" style="background:${c.hex}"></div><span class="color-name">${c.name}</span>`;
     el.onclick = () => {
       if(state.colors.has(c.name)) { state.colors.delete(c.name); el.classList.remove('selected'); }
       else { state.colors.add(c.name); el.classList.add('selected'); }
