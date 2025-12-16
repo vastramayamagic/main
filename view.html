@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* === 1. CORE VARIABLES & RESET === */
@@ -35,6 +35,23 @@
         button { user-select: none; cursor: pointer; }
         .no-copy { -webkit-user-select: none; user-select: none; pointer-events: auto; }
         .loading-hide { display: none !important; }
+
+        /* === LOADER STYLES === */
+        .loader-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--page-bg); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.4s ease, visibility 0.4s;
+        }
+        .loader-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .spinner {
+            width: 45px; height: 45px;
+            border: 3px solid rgba(139, 38, 53, 0.15);
+            border-top-color: var(--brand-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* =========================================
            MAIN PRODUCT PAGE LAYOUT
@@ -126,7 +143,6 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
-        /* FIX: Removed !important to allow JS toggling */
         .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
@@ -191,7 +207,6 @@
         }
         .product-card:hover .quick-view-btn { transform: translateY(0); }
 
-        /* FIX: Reduced Padding Desktop */
         .product-info { padding: 10px 12px; }
 
         .product-text-group { margin-bottom: 6px; }
@@ -238,11 +253,13 @@
         .main-stage img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
 
         .product-details { padding-top: 10px; display: flex; flex-direction: column; height: 100%; }
-        .modal-product-title { font-size: 38px; line-height: 1.1; font-weight: 500; margin: 0 0 8px 0; color: var(--text-primary); font-family: "Cormorant Garamond", serif; }
-        .modal-product-category { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); margin-bottom: 24px; font-weight: 600; }
+        
+        /* FIX: Changed font to DM Sans */
+        .modal-product-title { font-size: 38px; line-height: 1.1; font-weight: 700; margin: 0 0 8px 0; color: var(--text-primary); font-family: "DM Sans", sans-serif; letter-spacing: -0.5px; }
+        .modal-product-category { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 24px; font-weight: 600; }
         .price-block { display: flex; align-items: baseline; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle); }
-        .modal-price-current { font-size: 32px; font-weight: 600; color: var(--brand-primary); font-family: "Cormorant Garamond", serif; }
-        .modal-price-old { font-size: 20px; color: var(--text-light); text-decoration: line-through; opacity: 0.7; font-family: "Cormorant Garamond", serif; }
+        .modal-price-current { font-size: 32px; font-weight: 700; color: var(--brand-primary); font-family: "DM Sans", sans-serif; }
+        .modal-price-old { font-size: 20px; color: var(--text-light); text-decoration: line-through; opacity: 0.7; font-family: "DM Sans", sans-serif; }
         
         .option-section { margin-bottom: 28px; }
         .option-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); margin-bottom: 12px; display: flex; justify-content: space-between; }
@@ -273,8 +290,6 @@
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 6000; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 1rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 1rem; border-left: 4px solid #8b2635; min-width: 300px; font-family: 'DM Sans', sans-serif; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .skeleton { background: #eee; background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%); background-size: 200% 100%; animation: 1.5s shine linear infinite; border-radius: 4px; }
-        @keyframes shine { to { background-position-x: -200%; } }
 
         /* =========================================
            RESPONSIVE (TABLET)
@@ -398,23 +413,30 @@
             .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; }
             .btn-mobile-buy { background: white; color: var(--text-primary); border: 1px solid var(--border-subtle); }
             .btn-mobile-cart { background: var(--brand-gradient); color: white; flex: 1.5; box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); }
+
+            /* FIX: Bottom Padding for View More */
+            #descContainer { padding-bottom: 30px; }
         }
     </style>
 </head>
 <body>
 
+    <div id="globalLoader" class="loader-overlay">
+        <div class="spinner"></div>
+    </div>
+
     <div class="container">
         <div class="left-section">
             <div class="mobile-wrapper">
                 <div class="mobile-image" id="mobileCarousel">
-                    <img id="mobileMain" class="skeleton" src="" alt="Product Image">
+                    <img id="mobileMain" src="" alt="Product Image">
                 </div>
                 <div class="dots" id="dots"></div>
             </div>
             <div class="left-content">
                 <div class="thumbnail-list" id="thumbs"></div>
                 <div class="main-image">
-                    <img id="mainImage" class="skeleton" src="" alt="Main Product Image">
+                    <img id="mainImage" src="" alt="Main Product Image">
                 </div>
             </div>
         </div>
@@ -422,7 +444,7 @@
         <div class="right-section">
             <div class="title-header">
                 <div class="title-row">
-                    <h1 id="productTitle" class="skeleton" style="min-height: 40px; width: 100%;"></h1>
+                    <h1 id="productTitle"></h1>
                     <a id="waLink" href="#" target="_blank" class="wa-btn loading-hide">
                         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                     </a>
@@ -430,7 +452,7 @@
             </div>
 
             <div class="price">
-                <span id="priceCurrent" class="current skeleton"></span>
+                <span id="priceCurrent" class="current"></span>
                 <span id="priceOld" class="old"></span>
                 <span id="saveBadge" class="save loading-hide">SAVE 20%</span>
             </div>
@@ -471,7 +493,7 @@
             <div class="product-description">
                 <h4>Product Description</h4>
                 <div id="descContainer">
-                    <p id="productDesc" class="skeleton desc-clamp" style="min-height: 60px;"></p>
+                    <p id="productDesc" class="desc-clamp" style="min-height: 60px;"></p>
                     <span id="viewMoreBtn" class="view-more-btn">View more</span>
                 </div>
             </div>
@@ -514,9 +536,7 @@
             </div>
         </div>
 
-        <div class="products-grid" id="relatedGrid">
-            <div style="padding:20px; color:#888;">Loading recommendations...</div>
-        </div>
+        <div class="products-grid" id="relatedGrid"></div>
     </section>
 
     <div class="modal-overlay" id="productModal">
@@ -684,8 +704,9 @@
         }
 
         function renderProduct() {
-            document.querySelectorAll('.skeleton').forEach(el => el.classList.remove('skeleton'));
             document.querySelectorAll('.loading-hide').forEach(el => el.classList.remove('loading-hide'));
+            const loader = document.getElementById('globalLoader');
+            if(loader) loader.classList.add('hidden');
 
             document.getElementById('productTitle').textContent = currentProduct.name;
             document.getElementById('priceCurrent').textContent = `₹${currentProduct.price}`;
@@ -729,6 +750,7 @@
             const container = document.getElementById('reviewsContainer');
             const section = document.getElementById('reviewsSection');
             
+            // FIX: Completely hide section if no reviews
             if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
                 section.style.display = 'none';
                 return;
