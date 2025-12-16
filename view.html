@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* === 1. CORE VARIABLES (MATCHING SHOP PAGE) === */
+        /* === 1. CORE VARIABLES === */
         :root {
             --page-bg: #fefcf3;
             --text-primary: #3f0b17;
@@ -39,7 +39,7 @@
         .no-copy { -webkit-user-select: none; user-select: none; pointer-events: auto; }
         .loading-hide { display: none !important; }
 
-        /* === LOADER STYLES === */
+        /* === LOADER === */
         .loader-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: var(--page-bg); z-index: 9999;
@@ -64,7 +64,7 @@
         }
 
         /* =========================================
-           MAIN PRODUCT DETAILS LAYOUT
+           MAIN PRODUCT PAGE LAYOUT
            ========================================= */
         .container { display: flex; align-items: flex-start; padding: 0 40px; max-width: 1400px; width: 100%; margin: 0 auto 40px auto; gap: 50px; }
         .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
@@ -85,7 +85,7 @@
         .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; width: 100%; }
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; flex: 1; }
         
-        /* DESKTOP WA ICON */
+        /* WA ICON */
         .wa-btn { 
             display: flex; align-items: center; justify-content: center; 
             width: 50px; height: 50px; border-radius: 50%; 
@@ -117,7 +117,7 @@
         @media (hover: hover) {
             .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         }
-        /* Force Active State */
+        /* Active State Override */
         .size-boxes button.active, 
         .size-boxes button.active:hover, 
         .size-boxes button.active:focus { 
@@ -132,14 +132,17 @@
         .qty-btn:hover { color: var(--brand-primary); }
         #qtyValue { font-weight: 600; font-size: 16px; }
 
-        /* Buttons */
-        .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
+        /* Buttons (Desktop & Static Mobile) */
+        .desktop-actions, .mobile-static-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
+        .mobile-static-actions { display: none; /* Hidden on desktop */ flex-direction: row; gap: 12px; margin-bottom: 25px; }
+        
         .action-button { height: 52px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; transition: all 0.3s ease; font-family: "DM Sans", sans-serif; }
         .add-cart-btn { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-primary); }
         .add-cart-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
         .wishlist-btn-desktop { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); }
         .wishlist-btn-desktop:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
         .wishlist-btn-desktop.active { background: var(--brand-secondary); color: white; border-color: var(--brand-secondary); }
+        
         .buy-now-btn { width: 100%; padding: 16px; background: var(--brand-gradient); color: #fff; border: none; margin-top: 16px; height: 52px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 20px rgba(139, 38, 53, 0.2); transition: transform 0.2s, box-shadow 0.2s; font-family: "DM Sans", sans-serif; }
         .buy-now-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(139, 38, 53, 0.3); }
 
@@ -249,14 +252,7 @@
         .current-price { font-size: 16px; font-weight: 700; color: var(--brand-primary); }
         .old-price { font-size: 13px; color: var(--text-light); text-decoration: line-through; opacity: 0.7; }
         
-        /* Updated Cart Icon Class to match Shop */
-        .add-cart-icon-btn { 
-            width: 34px; height: 34px; border-radius: 8px; 
-            background: var(--surface-hover); color: var(--brand-primary); 
-            border: 1px solid rgba(139, 38, 53, 0.1); 
-            display: flex; align-items: center; justify-content: center; 
-            transition: all 0.2s; 
-        }
+        .add-cart-icon-btn { width: 34px; height: 34px; border-radius: 8px; background: var(--surface-hover); color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.1); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .add-cart-icon-btn:hover { background: var(--brand-primary); color: #fff; }
 
         /* =========================================
@@ -302,6 +298,9 @@
         .swatch img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
         .swatch:hover { transform: translateY(-2px); border-color: var(--text-light); }
         .swatch.active { border-color: var(--brand-primary); box-shadow: 0 0 0 1px var(--brand-primary); }
+        
+        /* FIX: Gap for Size Buttons in Popup */
+        .size-selector { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 5px; }
         
         .size-selector .size-btn { 
             min-width: 52px; height: 46px; padding: 0 16px; 
@@ -395,7 +394,20 @@
             
             .desktop-actions, .buy-now-btn, .section-nav { display: none !important; }
 
-            .mobile-add-cart-container { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px 16px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); gap: 12px; z-index: 100; border-top: 1px solid var(--border-subtle); }
+            /* Mobile Static Action Buttons */
+            .mobile-static-actions { display: flex; }
+            .mobile-static-actions .add-cart-btn { flex: 1; border-color: var(--brand-primary); color: var(--brand-primary); background: #fff5f6; }
+            .mobile-static-actions .buy-now-btn { margin-top: 0; flex: 1.5; }
+
+            /* Mobile Sticky Footer */
+            .mobile-add-cart-container { 
+                display: flex; position: fixed; bottom: 0; left: 0; right: 0; 
+                background: white; padding: 12px 16px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); 
+                gap: 12px; z-index: 100; border-top: 1px solid var(--border-subtle); 
+                transform: translateY(100%); transition: transform 0.3s ease;
+            }
+            .mobile-add-cart-container.visible { transform: translateY(0); }
+            
             .mobile-btn { flex: 1; height: 48px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; font-family: "DM Sans", sans-serif; cursor: pointer; }
             .m-add { background: #fff5f6; color: var(--brand-primary); border: 1px solid rgba(139, 38, 53, 0.2); }
             .m-buy { background: var(--brand-gradient); color: white; }
@@ -494,8 +506,12 @@
                 <button class="action-button add-cart-btn" id="desktopAddCart">Add to Cart</button>
                 <button class="action-button wishlist-btn-desktop" id="wishlistBtnDesktop">Add to Wishlist</button>
             </div>
-            
             <button class="buy-now-btn loading-hide" id="desktopBuyNow">BUY NOW</button>
+            
+            <div class="mobile-static-actions loading-hide" id="staticActions">
+                <button class="action-button add-cart-btn" id="mobileStaticCart">Add to Cart</button>
+                <button class="buy-now-btn" id="mobileStaticBuy">Buy Now</button>
+            </div>
 
             <div class="trust-badges loading-hide">
                 <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13-10-7z"></path><path d="M2 9h20"></path><path d="M12 2v20"></path></svg><span>Premium<br>Quality</span></div>
@@ -522,7 +538,7 @@
         </div>
     </div>
 
-    <div class="mobile-add-cart-container loading-hide">
+    <div class="mobile-add-cart-container loading-hide" id="stickyFooter">
         <button class="mobile-btn m-add" id="mobileAddCartBtn">Add to Cart</button>
         <button class="mobile-btn m-buy" id="mobileBuyNow">Buy Now</button>
     </div>
@@ -682,10 +698,15 @@
             initModalLogic();
 
             document.getElementById('desktopAddCart').onclick = addToCart;
+            // Mobile Listeners
             document.getElementById('mobileAddCartBtn').onclick = addToCart;
+            document.getElementById('mobileStaticCart').onclick = addToCart;
+            document.getElementById('mobileBuyNow').onclick = buyNowFromModal;
+            document.getElementById('mobileStaticBuy').onclick = buyNowFromModal;
+
             document.getElementById('wishlistBtnDesktop').onclick = toggleWishlist;
             document.getElementById('desktopBuyNow').onclick = buyNowFromModal;
-            document.getElementById('mobileBuyNow').onclick = buyNowFromModal;
+            
             document.getElementById('incQty').onclick = () => { quantity++; document.getElementById('qtyValue').textContent = quantity; };
             document.getElementById('decQty').onclick = () => { if(quantity>1){ quantity--; document.getElementById('qtyValue').textContent = quantity;} };
             
@@ -701,7 +722,36 @@
             const revContainer = document.getElementById('reviewsContainer');
             document.getElementById('revNext').onclick = () => revContainer.scrollBy({ left: 320, behavior: 'smooth' });
             document.getElementById('revPrev').onclick = () => revContainer.scrollBy({ left: -320, behavior: 'smooth' });
+
+            // Initialize Mobile Scroll Logic
+            initMobileStickyFooter();
         });
+
+        // === MOBILE STICKY FOOTER LOGIC ===
+        function initMobileStickyFooter() {
+            const staticActions = document.getElementById('staticActions');
+            const stickyFooter = document.getElementById('stickyFooter');
+
+            if (!staticActions || !stickyFooter) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Logic: If static buttons are NOT visible AND we are scrolled down past them (top < 0)
+                    // Then SHOW sticky footer. Otherwise hide it.
+                    const isVisible = entry.isIntersecting;
+                    const isAbove = entry.boundingClientRect.top < 0;
+
+                    if (!isVisible && isAbove) {
+                        stickyFooter.classList.add('visible');
+                    } else {
+                        stickyFooter.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0 });
+
+            observer.observe(staticActions);
+        }
+
 
         async function fetchProductDetails(id) {
             try {
@@ -1036,8 +1086,8 @@
 
             document.getElementById('btnAddToCartDesktop').onclick = addModalToCart;
             document.getElementById('btnAddToCartMobile').onclick = addModalToCart;
-            document.getElementById('btnBuyNowDesktop').onclick = buyNowFromModal;
-            document.getElementById('btnBuyNowMobile').onclick = buyNowFromModal;
+            document.getElementById('btnBuyNowDesktop').onclick = buyModalNow;
+            document.getElementById('btnBuyNowMobile').onclick = buyModalNow;
         }
 
         function openModal(id, mode) {
@@ -1087,7 +1137,11 @@
                     const img = document.createElement('img');
                     img.src = variant.hex || variant.images?.[0] || 'https://via.placeholder.com/60';
                     const div = document.createElement('div');
-                    div.className = `swatch ${index===0?'active':''}`;
+                    div.className = `thumb-modal ${index===0?'active':''}`;
+                    div.style.width = '48px'; 
+                    div.style.height = '60px';
+                    div.style.borderRadius = '6px';
+                    div.style.padding = '2px';
                     div.onclick = () => selectModalVariant(index);
                     div.appendChild(img);
                     colorContainer.appendChild(div);
@@ -1099,7 +1153,7 @@
 
         function selectModalVariant(index) {
             modalSelectedColorIndex = index;
-            document.querySelectorAll('#modalColorContainer .swatch').forEach((s, i) => s.classList.toggle('active', i === index));
+            document.querySelectorAll('#modalColorContainer .thumb-modal').forEach((s, i) => s.classList.toggle('active', i === index));
             
             let sizes = [];
             if(modalCurrentProduct.colorVariants && modalCurrentProduct.colorVariants[index]) {
