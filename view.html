@@ -56,16 +56,11 @@
         /* Typography & Spacing */
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; }
         
-        /* Star Rating Summary in Header */
-        .header-rating { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 14px; color: var(--text-secondary); cursor: pointer; }
-        .header-stars { color: #f59e0b; letter-spacing: 1px; }
-        .header-count { text-decoration: underline; color: var(--text-light); font-size: 13px; }
-
         /* FIXED PRICE STYLING */
-        .price { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
-        .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; }
+        .price { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
+        .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; margin-right: 0; }
         .price .old { text-decoration: line-through; color: var(--text-light); font-size: 18px; font-weight: 500; opacity: 0.8; }
-        .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; height: 24px; }
+        .save { background: #fdf2f2; color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; transform: translateY(-3px); display: inline-block; }
 
         h3 { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px 0; text-transform: uppercase; letter-spacing: 0.08em; }
 
@@ -288,10 +283,10 @@
         }
 
         /* =========================================
-           RESPONSIVE (MOBILE) - FIXED LAYOUT
+           RESPONSIVE (MOBILE) - FINAL FIXES
            ========================================= */
         @media (max-width: 600px) {
-            body { padding-top: 0; background: var(--surface-light); padding-bottom: 80px; }
+            body { padding-top: 0; background: var(--surface-light); padding-bottom: 80px; /* IMPORTANT: Bottom Padding Fix */ }
             
             .container { flex-direction: column; padding: 0; gap: 0; margin-bottom: 0; width: 100%; max-width: 100%; }
             .left-section, .right-section { width: 100%; position: static; }
@@ -308,23 +303,27 @@
             .right-section { padding: 30px 20px 0 20px; background: var(--page-bg); border-radius: 24px 24px 0 0; margin-top: -24px; position: relative; z-index: 2; box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
             .title-header h1 { font-size: 22px; margin-bottom: 5px; }
             
-            /* FIX: Mobile Price & Visibility */
+            /* FIXED MOBILE PRICE */
             .price { 
-                margin-top: 12px; 
-                padding-bottom: 15px;
-                flex-wrap: wrap; 
-                row-gap: 5px;
+                margin-top: 8px; 
+                padding-bottom: 15px; 
+                flex-wrap: wrap; /* Fix: Allow wrapping if needed */
+                align-items: center;
             }
             .price .current { font-size: 24px; }
+            
+            /* Fix: Ensure Old Price & Discount are visible */
             .price .old { 
                 font-size: 16px; 
-                margin-left: 8px;
+                margin-left: 8px; 
+                color: var(--text-light);
                 display: inline-block;
+                opacity: 0.9;
             }
             .save { 
-                transform: translateY(-1px);
+                transform: translateY(-2px); 
+                display: inline-block;
                 margin-left: 5px;
-                font-size: 11px;
             }
             
             .desktop-actions, .buy-now-btn, .section-nav { display: none !important; }
@@ -335,24 +334,15 @@
             .m-buy { background: var(--brand-gradient); color: white; }
 
             /* REVIEW & RELATED - Mobile Layout */
-            .category-products-section, .reviews-section-premium { margin-bottom: 0; border-top: 1px solid var(--border-subtle); background: var(--page-bg); display: block !important; }
-            
-            /* REVIEW SECTION SPECIFIC */
-            .reviews-section-premium { padding: 30px 20px; }
-
-            /* RELATED PRODUCTS - EDGE TO EDGE FIX */
-            .category-products-section { 
-                padding: 30px 0; /* Remove side padding from container */
-            }
-            .section-header { 
-                padding: 0 20px; /* Add padding only to header text */
-                margin-bottom: 20px; 
-            }
+            .category-products-section, .reviews-section-premium { padding: 30px 15px; margin-bottom: 0; border-top: 1px solid var(--border-subtle); background: var(--page-bg); display: block !important; }
+            .section-header { margin-bottom: 20px; }
             .section-header h2, .reviews-header h2 { font-size: 22px; }
             
+            /* FIX: Mobile Products Grid Padding */
             .products-grid { 
-                padding: 0 0 20px 20px; /* Left padding for start align, Right 0 for flush */
-                gap: 15px; 
+                padding: 0 0 10px; 
+                padding-right: 0; /* Fix unwanted right space */
+                gap: 12px; /* Reduce gap for mobile */
             }
             
             .product-card { width: 160px; border-radius: 12px; }
@@ -407,10 +397,6 @@
         <div class="right-section">
             <div class="title-header">
                 <h1 id="productTitle" class="skeleton" style="min-height: 40px; width: 100%;"></h1>
-                <div class="header-rating loading-hide" id="headerRating">
-                    <span class="header-stars" id="headerStars">★★★★☆</span>
-                    <span class="header-count" id="headerCount">(24 Reviews)</span>
-                </div>
             </div>
 
             <div class="price">
@@ -647,14 +633,6 @@
             const revContainer = document.getElementById('reviewsContainer');
             document.getElementById('revNext').onclick = () => revContainer.scrollBy({ left: 320, behavior: 'smooth' });
             document.getElementById('revPrev').onclick = () => revContainer.scrollBy({ left: -320, behavior: 'smooth' });
-            
-            // Header Rating Scroll
-            document.getElementById('headerRating').onclick = () => {
-                const section = document.getElementById('reviewsSection');
-                if(section.style.display !== 'none') {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                }
-            };
         });
 
         // ================= MAIN PRODUCT LOGIC =================
@@ -705,20 +683,6 @@
                 };
             } else {
                 descEl.classList.remove('desc-clamp');
-            }
-            
-            // Header Ratings
-            if(currentProduct.reviews && currentProduct.reviews.length > 0) {
-                const count = currentProduct.reviews.length;
-                const total = currentProduct.reviews.reduce((acc, r) => acc + r.rating, 0);
-                const avg = Math.round(total / count);
-                let stars = '';
-                for(let i=1; i<=5; i++) { stars += i <= avg ? '★' : '☆'; }
-                document.getElementById('headerStars').textContent = stars;
-                document.getElementById('headerCount').textContent = `(${count} Reviews)`;
-            } else {
-                document.getElementById('headerStars').textContent = '☆☆☆☆☆';
-                document.getElementById('headerCount').textContent = '(No Reviews)';
             }
 
             renderColorOptions();
