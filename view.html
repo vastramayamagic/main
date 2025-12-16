@@ -75,14 +75,15 @@
         .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; width: 100%; }
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; flex: 1; }
         
+        /* DESKTOP WA ICON SIZE INCREASED */
         .wa-btn { 
             display: flex; align-items: center; justify-content: center; 
-            width: 36px; height: 36px; border-radius: 50%; 
+            width: 48px; height: 48px; border-radius: 50%; /* Increased for Desktop */
             background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.3);
             flex-shrink: 0; transition: transform 0.2s; cursor: pointer;
         }
         .wa-btn:active { transform: scale(0.95); background: rgba(37, 211, 102, 0.2); }
-        .wa-btn svg { width: 20px; height: 20px; fill: var(--wa-green); }
+        .wa-btn svg { width: 24px; height: 24px; fill: var(--wa-green); }
 
         /* FIXED PRICE STYLING */
         .price { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
@@ -104,7 +105,6 @@
             transition: all 0.2s; font-family: "DM Sans", sans-serif; 
         }
         
-        /* HOVER: Only on devices that support hovering */
         @media (hover: hover) {
             .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         }
@@ -115,7 +115,7 @@
         .size-boxes button.active:focus { 
             background: var(--brand-primary) !important; 
             border-color: var(--brand-primary) !important; 
-            color: #fff !important; /* Critical Fix */
+            color: #fff !important; 
         }
         
         .size-boxes button:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; background: #eee; }
@@ -368,6 +368,10 @@
             .title-header { padding-top: 15px; }
             .title-header h1 { font-size: 22px; margin-bottom: 5px; }
             
+            /* WA Icon Resize Mobile */
+            .wa-btn { width: 36px; height: 36px; }
+            .wa-btn svg { width: 20px; height: 20px; }
+
             /* FIXED MOBILE PRICE */
             .price { 
                 margin-top: 8px; 
@@ -428,6 +432,20 @@
 
             /* FIX: Bottom Padding for View More */
             #descContainer { padding-bottom: 30px; }
+            
+            /* Mobile Popup Bottom Sheet Fix */
+            .modal-content-box {
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                height: 85vh;
+                transform: translateY(100%);
+                transition: transform 0.3s ease-out;
+            }
+            .modal-overlay.active .modal-content-box {
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -853,7 +871,15 @@
             document.getElementById('sizeLabel').textContent = "Select Size";
 
             const sizesToRender = specificSizes || [];
-            if (sizesToRender.length === 0) { container.innerHTML = '<span style="font-size:14px; color:#888;">No sizes available</span>'; return; }
+            
+            // FIX: If no sizes are available in data, treat as "No Size Selection Needed" internally
+            // But visually we can just hide or show empty text.
+            // The add-to-cart logic handles the actual "if sizes exist" check.
+            if (sizesToRender.length === 0) { 
+                container.innerHTML = '<span style="font-size:14px; color:#888;">One Size</span>'; 
+                return; 
+            }
+            
             sizesToRender.forEach((sizeObj, index) => {
                 const btn = document.createElement('button');
                 const sizeName = sizeObj.name || sizeObj;
@@ -1188,25 +1214,41 @@
         // ================= CART & BUY LOGIC =================
         function addToCart() { processCartAdd(currentProduct, selectedSize, quantity, activeVariantIndex); }
         function addModalToCart() { 
-            if(!modalSelectedSize) { showToast("Please select a size"); return; }
-            processCartAdd(modalCurrentProduct, modalSelectedSize, modalQty, modalSelectedColorIndex); 
+            // FIX: Check if sizes exist specifically for the modal product
+            const sizes = (modalCurrentProduct.colorVariants && modalCurrentProduct.colorVariants[modalSelectedColorIndex]) 
+                          ? (modalCurrentProduct.colorVariants[modalSelectedColorIndex].sizes || []) 
+                          : (modalCurrentProduct.sizes || []);
+            
+            if(sizes.length > 0 && !modalSelectedSize) { showToast("Please select a size"); return; }
+            
+            processCartAdd(modalCurrentProduct, modalSelectedSize || "One Size", modalQty, modalSelectedColorIndex); 
             document.getElementById('productModal').classList.remove('active');
             document.body.classList.remove('modal-open');
         }
 
         function processCartAdd(product, size, qty, variantIdx) {
             if (!product) return;
-            if (!size) { showToast("Please select a size"); return; }
             
+            // Logic to determine if size is mandatory
             const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
+            const productSizes = variant.sizes || product.sizes || [];
+            
+            if (productSizes.length > 0 && (!size || size === "Select Size")) { 
+                showToast("Please select a size"); 
+                return; 
+            }
+            
+            // Default "One Size" if none existed
+            const finalSize = (productSizes.length === 0) ? "One Size" : size;
+            
             const colorName = variant.name || 'Default';
-            const uniqueId = `${product.id}-${colorName}-${size}`;
+            const uniqueId = `${product.id}-${colorName}-${finalSize}`;
             const img = variant.images?.[0] || product.images?.[0];
 
             const existingItem = cart.find(item => item.uniqueId === uniqueId);
             if (existingItem) existingItem.quantity += qty;
             else {
-                cart.push({ id: product.id, uniqueId, name: product.name, price: product.price, image: img, quantity: qty, size: size, color: colorName });
+                cart.push({ id: product.id, uniqueId, name: product.name, price: product.price, image: img, quantity: qty, size: finalSize, color: colorName });
             }
             saveCart();
             updateCartBadge();
@@ -1215,21 +1257,33 @@
 
         function buyNowFromModal() { processBuyNow(currentProduct, selectedSize, quantity, activeVariantIndex); }
         function buyModalNow() {
-            if(!modalSelectedSize) { showToast("Please select a size"); return; }
-            processBuyNow(modalCurrentProduct, modalSelectedSize, modalQty, modalSelectedColorIndex);
+            const sizes = (modalCurrentProduct.colorVariants && modalCurrentProduct.colorVariants[modalSelectedColorIndex]) 
+                          ? (modalCurrentProduct.colorVariants[modalSelectedColorIndex].sizes || []) 
+                          : (modalCurrentProduct.sizes || []);
+
+            if(sizes.length > 0 && !modalSelectedSize) { showToast("Please select a size"); return; }
+            
+            processBuyNow(modalCurrentProduct, modalSelectedSize || "One Size", modalQty, modalSelectedColorIndex);
         }
 
         function processBuyNow(product, size, qty, variantIdx) {
             if (!product) return;
-            if (!size) { showToast("Please select a size"); return; }
-
+            
             const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
+            const productSizes = variant.sizes || product.sizes || [];
+
+            if (productSizes.length > 0 && (!size || size === "Select Size")) { 
+                showToast("Please select a size"); 
+                return; 
+            }
+
+            const finalSize = (productSizes.length === 0) ? "One Size" : size;
             const colorName = variant.name || 'Default';
             const img = variant.images?.[0] || product.images?.[0];
 
             const directItem = {
-                id: product.id, uniqueId: `${product.id}-${colorName}-${size}-direct`,
-                name: product.name, price: product.price, image: img, quantity: qty, size: size, color: colorName
+                id: product.id, uniqueId: `${product.id}-${colorName}-${finalSize}-direct`,
+                name: product.name, price: product.price, image: img, quantity: qty, size: finalSize, color: colorName
             };
             localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
             window.location.href = "checkout.html?buy_now=true";
