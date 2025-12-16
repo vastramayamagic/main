@@ -126,7 +126,8 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
-        .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block !important; }
+        /* FIX: Removed !important to allow JS toggling */
+        .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
         .reviews-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
@@ -350,7 +351,7 @@
             .m-buy { background: var(--brand-gradient); color: white; }
 
             /* REVIEW & RELATED - Mobile Layout */
-            .category-products-section, .reviews-section-premium { padding: 30px 15px; margin-bottom: 0; border-top: 1px solid var(--border-subtle); background: var(--page-bg); display: block !important; }
+            .category-products-section, .reviews-section-premium { padding: 30px 15px; margin-bottom: 0; border-top: 1px solid var(--border-subtle); background: var(--page-bg); display: block; }
             .section-header { margin-bottom: 20px; }
             .section-header h2, .reviews-header h2 { font-size: 22px; }
             
@@ -728,7 +729,6 @@
             const container = document.getElementById('reviewsContainer');
             const section = document.getElementById('reviewsSection');
             
-            // 1. Hide entire section if no reviews
             if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
                 section.style.display = 'none';
                 return;
@@ -755,17 +755,17 @@
                 container.appendChild(card);
             });
             
-            // 2. Hide arrows if content fits
-            setTimeout(() => {
+            // Smart Navigation Arrow Logic (Re-check on resize)
+            const checkArrows = () => {
                 const nav = section.querySelector('.section-nav');
-                if (nav) {
-                    if (container.scrollWidth <= container.clientWidth) {
-                        nav.style.display = 'none';
-                    } else {
-                        nav.style.display = 'flex';
-                    }
+                if(nav) {
+                    const isOverflowing = container.scrollWidth > container.clientWidth + 1; // +1 buffer
+                    nav.style.display = isOverflowing ? 'flex' : 'none';
                 }
-            }, 100);
+            };
+            
+            setTimeout(checkArrows, 100);
+            window.addEventListener('resize', checkArrows);
         }
 
         function renderColorOptions() {
