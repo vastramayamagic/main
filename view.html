@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* === 1. CORE VARIABLES (MATCHING SHOP PAGE) === */
+        /* === 1. THEME VARIABLES (IDENTICAL TO SHOP.HTML) === */
         :root {
             --page-bg: #fefcf3;
             --text-primary: #3f0b17;
@@ -65,7 +65,7 @@
         }
 
         /* =========================================
-           MAIN PRODUCT PAGE LAYOUT
+           MAIN LAYOUT
            ========================================= */
         .container { display: flex; align-items: flex-start; padding: 0 40px; max-width: 1400px; width: 100%; margin: 0 auto 40px auto; gap: 50px; }
         .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
@@ -82,11 +82,11 @@
         .main-image { position: relative; flex: 1; height: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--surface-card); border-radius: 20px; border: 1px solid var(--border-subtle); }
         .main-image img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
 
-        /* Typography & Spacing */
+        /* Typography */
         .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; width: 100%; }
         .title-header h1 { line-height: 1.25; font-size: 32px; font-weight: 700; margin: 0; color: var(--text-primary); letter-spacing: -0.5px; flex: 1; }
         
-        /* DESKTOP WA ICON */
+        /* WA Icon */
         .wa-btn { 
             display: flex; align-items: center; justify-content: center; 
             width: 50px; height: 50px; border-radius: 50%; 
@@ -96,7 +96,7 @@
         }
         .wa-btn svg { width: 28px; height: 28px; fill: var(--wa-green); }
 
-        /* FIXED PRICE STYLING */
+        /* Price */
         .price { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); line-height: 1; }
         .price .current { color: var(--brand-primary); font-size: 28px; font-weight: 700; margin-right: 0; }
         .price .old { text-decoration: line-through; color: var(--text-light); font-size: 18px; font-weight: 500; opacity: 0.8; }
@@ -118,7 +118,6 @@
         @media (hover: hover) {
             .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         }
-        /* Active State */
         .size-boxes button.active, 
         .size-boxes button.active:hover, 
         .size-boxes button.active:focus { 
@@ -133,7 +132,7 @@
         .qty-btn:hover { color: var(--brand-primary); }
         #qtyValue { font-weight: 600; font-size: 16px; }
 
-        /* Buttons */
+        /* Actions */
         .desktop-actions { display: flex; gap: 16px; margin-top: 10px; width: 100%; }
         .mobile-static-actions { display: none; }
 
@@ -170,16 +169,14 @@
         .mobile-add-cart-container { display: none; }
 
         /* =========================================
-           REVIEWS SECTION (Premium)
+           REVIEWS SECTION
            ========================================= */
         .reviews-section-premium { padding: 40px; background: var(--page-bg); max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); display: block; }
         .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reviews-header h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); position: relative; }
         .reviews-header h2::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
-        
         .reviews-scroll-container { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; padding: 10px 5px; }
         .reviews-scroll-container::-webkit-scrollbar { display: none; }
-        
         .review-card-premium { min-width: 320px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-light); }
         .rev-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .rev-name { font-weight: 700; font-size: 15px; color: var(--text-primary); }
@@ -206,7 +203,7 @@
         /* GRID: EXACTLY LIKE SHOP PAGE */
         .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; width: 100%; overflow: visible; padding: 0; }
 
-        /* Card Styles (Shop.html Replica) */
+        /* Card Styles - EXACT COPY */
         .card { 
             background: var(--surface-card); 
             border-radius: var(--radius); 
@@ -257,7 +254,7 @@
         .add-cart-icon-btn:hover { background: var(--brand-primary); color: #fff; }
 
         /* =========================================
-           MODAL & POPUP (MATCHING SHOP PAGE)
+           MODAL & POPUP (MATCHING SHOP PAGE STYLE)
            ========================================= */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -839,6 +836,7 @@
             const container = document.getElementById('reviewsContainer');
             const section = document.getElementById('reviewsSection');
             
+            // FIX: Completely hide section if no reviews
             if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
                 section.style.display = 'none';
                 return;
