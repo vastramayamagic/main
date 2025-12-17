@@ -48,13 +48,10 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Roboto, sans-serif; overflow-x: hidden; color: var(--text-primary); width: 100%; }
-        
         body.modal-open { overflow: hidden; } 
 
         .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
         .auth-hidden { display: none !important; }
-        
-        /* Utility to hide empty sections */
         .hidden-section { display: none !important; }
 
         /* --- CAROUSEL / HERO STYLES --- */
@@ -138,7 +135,6 @@
         .wishlist-btn-abs svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
         .wishlist-btn-abs.active svg { fill: currentColor; }
 
-        /* Desktop Wishlist */
         .wishlist-btn-row { 
             width: 34px; height: 34px; border-radius: 8px; 
             background: var(--surface-hover); color: var(--text-secondary); 
@@ -153,8 +149,7 @@
 
         .quick-view-btn { 
             position: absolute; bottom: 15px; left: 50%; transform: translate(-50%, 20px); 
-            background: var(--brand-dark); 
-            color: #fff; 
+            background: var(--brand-dark); color: #fff; 
             padding: 10px 20px; border-radius: 30px; 
             font-size: 13px; font-weight: 600; 
             opacity: 0; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
@@ -179,15 +174,10 @@
         .categories-section .section-title { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 30px; color: var(--text-primary); position: relative; }
         .categories-section .section-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
         
-        .categories-grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 25px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
-        
+        /* Container Position Relative for Arrows */
+        .categories-container { position: relative; }
+
+        .categories-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; max-width: 1200px; margin: 0 auto; }
         .category-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); flex: 0 0 auto; margin: 5px; }
         .category-circle { width: 140px; height: 140px; border-radius: 50%; background: var(--circle-bg); border: 2px solid var(--circle-border); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-premium); }
         .category-circle img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
@@ -223,7 +213,6 @@
         .main-stage { flex: 1; height: 100%; border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid var(--border-subtle); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
         .main-stage img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
 
-        /* Loader inside Modal */
         .modal-loader { position: absolute; inset: 0; background: rgba(255,255,255,0.9); z-index: 50; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 15px; }
         .modal-loader.active { display: flex; }
         .spinner { width: 40px; height: 40px; border: 3px solid rgba(139, 38, 53, 0.1); border-top: 3px solid var(--brand-primary); border-radius: 50%; animation: spin 1s linear infinite; }
@@ -269,7 +258,6 @@
         .m-content-inner { padding: 0; max-width: 100%; }
 
         @media (max-width: 1024px) {
-            /* On tablet/smaller desktop, adjust alignment */
             .categories-grid { justify-content: center; gap: 20px; }
             .category-circle { width: 120px; height: 120px; }
         }
@@ -279,43 +267,39 @@
             .page-mobile  { display: flex; }
             
             .hero-section { margin-top: 0; height: 75vh; min-height: 550px; max-height: 750px; }
-            /* Fixed: Ensure nav arrows are hidden or positioned correctly if needed */
             .carousel-nav { padding: 0 15px; pointer-events: auto; }
             .nav-arrow { width: 40px; height: 40px; opacity: 1; transform: translateX(0) !important; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(139, 38, 53, 0.2); }
-            /* Hide potentially duplicated nav elements */
             .carousel-nav .nav-arrow.desktop-only { display: none; } 
             
             .carousel-slide.active .slide-image { transform: scale(1.05); }
             
-            .best-sellers-section, .category-products-section { padding: 20px 10px; }
+            /* INCREASED GAP IN MOBILE */
+            .best-sellers-section { padding: 20px 10px; margin-top: 40px; }
+            
+            .category-products-section { padding: 20px 10px; scroll-margin-top: 80px; }
+            
             .categories-section { padding: 5px 10px; }
             .section-header { padding: 0 10px; margin-bottom: 20px; }
             .section-header h2 { font-size: 24px; }
             
             .products-grid { gap: 15px; padding: 10px 5px 30px; }
             
-            /* UPDATED: Smaller Card Size for Mobile */
             .card { width: 160px; }
             .thumb { height: 200px; }
             
+            .category-products-section .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px 0 10px; overflow-x: visible; }
+            .category-products-section .card { width: 100%; flex: none; border-radius: 12px; }
+            .category-products-section .thumb { height: 220px; }
+            .category-products-section .section-nav { display: none; }
+            
             .quick-view-btn { display: none !important; }
             
-            .wishlist-btn-abs { 
-                display: flex !important; 
-                opacity: 1 !important; 
-                visibility: visible !important;
-                transform: none !important; 
-                background: rgba(255,255,255,0.9);
-            }
-            .wishlist-btn-abs.active {
-                background: var(--brand-secondary); 
-                color: #fff; 
-                border-color: var(--brand-secondary);
-            }
+            .wishlist-btn-abs { display: flex !important; opacity: 1 !important; visibility: visible !important; transform: none !important; background: rgba(255,255,255,0.9); }
+            .wishlist-btn-abs.active { background: var(--brand-secondary); color: #fff; border-color: var(--brand-secondary); }
             .wishlist-btn-row { display: none !important; }
 
-            /* Categories Scroll Mobile: Revert to flex-start for scrollable list */
-            .categories-grid { display: flex; flex-wrap: nowrap; gap: 20px; overflow-x: auto; padding: 20px 10px 40px; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; justify-content: flex-start; max-width: 100%; margin: 0; }
+            /* REDUCED GAP IN MOBILE CATEGORIES (12px) */
+            .categories-grid { display: flex; flex-wrap: nowrap; gap: 12px; overflow-x: auto; padding: 20px 10px 40px; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; justify-content: flex-start; max-width: 100%; margin: 0; }
             .categories-grid::-webkit-scrollbar { display: none; }
             .category-item { flex: 0 0 auto; width: 110px; margin: 0; }
             .category-circle { width: 100px; height: 100px; }
@@ -328,11 +312,6 @@
             .scroll-arrow svg { width: 20px; height: 20px; stroke: var(--text-primary); }
             .scroll-arrow.hidden { opacity: 0; pointer-events: none; }
 
-            .category-products-section .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 0 10px; overflow-x: visible; }
-            .category-products-section .card { width: 100%; flex: none; border-radius: 12px; }
-            .category-products-section .thumb { height: 220px; }
-            .category-products-section .section-nav { display: none; }
-            
             .modal-overlay { align-items: flex-end; padding: 0; }
             .modal-content-box { height: 85vh; width: 100%; max-width: 100%; border-radius: 24px 24px 0 0; transform: translateY(100%); margin: 0; display: flex; flex-direction: column; }
             .modal-overlay.active .modal-content-box { transform: translateY(0); }
@@ -352,9 +331,8 @@
             
             .actions-desktop { display: none !important; }
             
-            /* UPDATED: Equal size buttons in mobile popup */
             .mobile-actions-bar { display: flex; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); padding: 12px 20px; gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 100; border-top: 1px solid var(--border-subtle); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
-            .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex: 1; } /* flex: 1 makes them equal */
+            .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex: 1; }
             .btn-mobile-buy { background: white; color: var(--text-primary); border: 1px solid var(--border-subtle); }
             .btn-mobile-cart { background: var(--brand-gradient); color: white; box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); }
         }
@@ -935,7 +913,7 @@
                     if (products.length === 0) continue;
 
                     const sectionHtml = `
-                    <section class="category-products-section">
+                    <section class="category-products-section" id="category-${cat.id}">
                         <div class="section-header">
                             <h2>${cat.name}</h2>
                             <div class="section-header-right">
@@ -1228,8 +1206,9 @@
                      if(mobileSection) mobileSection.style.display = 'block';
                 }
 
+                // Updated link to scroll to section
                 const renderCat = (c) => `
-                    <a href="#" class="category-item">
+                    <a href="shop.html?category=${encodeURIComponent(c.name)}" class="category-item">
                         <div class="category-circle"><img src="${c.imageUrl || 'https://via.placeholder.com/150'}" alt="${c.name}"></div>
                         <div class="category-name">${c.name}</div>
                     </a>`;
@@ -1310,9 +1289,28 @@
 
         function initCategoriesScroll() {
             const grid = document.getElementById('categories-grid-mobile');
-            if(!grid) return;
-            document.getElementById('scroll-left-mobile').onclick = () => grid.scrollBy({ left: -150, behavior: 'smooth' });
-            document.getElementById('scroll-right-mobile').onclick = () => grid.scrollBy({ left: 150, behavior: 'smooth' });
+            const leftBtn = document.getElementById('scroll-left-mobile');
+            const rightBtn = document.getElementById('scroll-right-mobile');
+            
+            if(!grid || !leftBtn || !rightBtn) return;
+
+            // Initial state
+            leftBtn.classList.add('hidden'); // Start hidden
+
+            // Scroll Event
+            grid.addEventListener('scroll', () => {
+                // Show left if scrolled > 10px
+                if (grid.scrollLeft > 10) leftBtn.classList.remove('hidden');
+                else leftBtn.classList.add('hidden');
+
+                // Show right if not at end
+                if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 10) rightBtn.classList.add('hidden');
+                else rightBtn.classList.remove('hidden');
+            });
+
+            // Button actions
+            leftBtn.onclick = () => grid.scrollBy({ left: -150, behavior: 'smooth' });
+            rightBtn.onclick = () => grid.scrollBy({ left: 150, behavior: 'smooth' });
         }
 
         function saveCart(syncDB) {
