@@ -9,11 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Layout Logic */
-            --header-height-desktop: 0px; 
-            --navbar-height-mobile: 0px;
-
-            /* Core Colors */
             --page-bg: #fefcf3;
             --text-primary: #3f0b17;
             --text-secondary: #6b422a;
@@ -23,7 +18,6 @@
             --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
             --brand-dark: #3f0b17;
             
-            /* UI Elements */
             --glass-bg: rgba(255, 255, 255, 0.8);
             --glass-border: rgba(139, 38, 53, 0.1);
             --border-subtle: #e8d5c4;
@@ -34,12 +28,10 @@
             --circle-bg: #fff;
             --circle-border: #e8d5c4;
             
-            /* Shadows */
             --shadow-premium: 0 10px 25px -5px rgba(59, 11, 23, 0.1), 0 5px 10px -5px rgba(59, 11, 23, 0.04);
             --shadow-float: 0 20px 50px -10px rgba(60, 20, 20, 0.15);
             --shadow-modal: 0 25px 50px -12px rgba(63, 11, 23, 0.25);
             
-            /* Misc */
             --progress-color: #8b2635;
             --progress-bg: rgba(59, 11, 23, 0.15);
             --radius: 12px;
@@ -63,6 +55,36 @@
         .slide-image { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; transition: transform 12s ease-out; }
         .carousel-slide.active .slide-image { transform: scale(1.08); }
         .glass-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(254, 252, 243, 0.1) 0%, rgba(254, 252, 243, 0.05) 50%, rgba(254, 252, 243, 0.1) 100%); z-index: 1; }
+
+        /* NEW: Hero Button Styles */
+        .hero-cta-btn {
+            position: absolute;
+            z-index: 20;
+            padding: 12px 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--brand-primary);
+            color: var(--brand-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            
+            /* Desktop Position: Bottom Right */
+            bottom: 60px;
+            right: 60px;
+        }
+        .hero-cta-btn:hover {
+            background: var(--brand-primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(139, 38, 53, 0.25);
+        }
 
         .progress-indicators { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 10; padding: 12px 20px; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 100px; box-shadow: var(--shadow-premium); }
         .progress-indicator { width: 50px; height: 3px; background: var(--progress-bg); border-radius: 2px; position: relative; overflow: hidden; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -174,7 +196,6 @@
         .categories-section .section-title { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 30px; color: var(--text-primary); position: relative; }
         .categories-section .section-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--brand-primary); border-radius: 2px; }
         
-        /* Container Position Relative for Arrows */
         .categories-container { position: relative; }
 
         .categories-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; max-width: 1200px; margin: 0 auto; }
@@ -273,6 +294,18 @@
             
             .carousel-slide.active .slide-image { transform: scale(1.05); }
             
+            /* HERO BUTTON MOBILE POSITION */
+            .hero-cta-btn {
+                bottom: 70px;
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 14px;
+                padding: 10px 24px;
+                width: max-content;
+            }
+            .hero-cta-btn:hover { transform: translateX(-50%) translateY(-2px); }
+
             /* INCREASED GAP IN MOBILE */
             .best-sellers-section { padding: 20px 10px; margin-top: 40px; }
             
@@ -1206,7 +1239,7 @@
                      if(mobileSection) mobileSection.style.display = 'block';
                 }
 
-                // Updated link to scroll to section
+                // Updated link to redirect to shop.html
                 const renderCat = (c) => `
                     <a href="shop.html?category=${encodeURIComponent(c.name)}" class="category-item">
                         <div class="category-circle"><img src="${c.imageUrl || 'https://via.placeholder.com/150'}" alt="${c.name}"></div>
@@ -1229,10 +1262,19 @@
                 const indicators = document.getElementById('progress-indicators');
                 const indicatorsMob = document.getElementById('progress-indicators-mobile');
 
+                // Helper to create button if data exists
+                const createBtn = (slide) => {
+                    if (slide.buttonText && slide.buttonLink) {
+                        return `<a href="${slide.buttonLink}" class="hero-cta-btn">${slide.buttonText}</a>`;
+                    }
+                    return '';
+                };
+
                 const generateSlideHTML = (slide, idx, isMobile) => `
                     <div class="carousel-slide ${idx === 0 ? 'active' : ''}">
                         <img src="${isMobile ? (slide.mobileImage || slide.image) : (slide.desktopImage || slide.image)}" class="slide-image">
                         <div class="glass-overlay"></div>
+                        ${createBtn(slide)}
                     </div>`;
 
                 track.innerHTML = slides.map((s, i) => generateSlideHTML(s, i, false)).join('');
