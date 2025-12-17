@@ -279,8 +279,12 @@
             .page-mobile  { display: flex; }
             
             .hero-section { margin-top: 0; height: 75vh; min-height: 550px; max-height: 750px; }
+            /* Fixed: Ensure nav arrows are hidden or positioned correctly if needed */
             .carousel-nav { padding: 0 15px; pointer-events: auto; }
             .nav-arrow { width: 40px; height: 40px; opacity: 1; transform: translateX(0) !important; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(139, 38, 53, 0.2); }
+            /* Hide potentially duplicated nav elements */
+            .carousel-nav .nav-arrow.desktop-only { display: none; } 
+            
             .carousel-slide.active .slide-image { transform: scale(1.05); }
             
             .best-sellers-section, .category-products-section { padding: 20px 10px; }
@@ -289,8 +293,11 @@
             .section-header h2 { font-size: 24px; }
             
             .products-grid { gap: 15px; padding: 10px 5px 30px; }
-            .card { width: 280px; }
-            .thumb { height: 350px; }
+            
+            /* UPDATED: Smaller Card Size for Mobile */
+            .card { width: 160px; }
+            .thumb { height: 200px; }
+            
             .quick-view-btn { display: none !important; }
             
             .wishlist-btn-abs { 
@@ -344,10 +351,12 @@
             .modal-price-current { font-size: 24px; }
             
             .actions-desktop { display: none !important; }
+            
+            /* UPDATED: Equal size buttons in mobile popup */
             .mobile-actions-bar { display: flex; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); padding: 12px 20px; gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 100; border-top: 1px solid var(--border-subtle); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
-            .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; }
+            .btn-mobile-buy, .btn-mobile-cart { height: 50px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex: 1; } /* flex: 1 makes them equal */
             .btn-mobile-buy { background: white; color: var(--text-primary); border: 1px solid var(--border-subtle); }
-            .btn-mobile-cart { background: var(--brand-gradient); color: white; flex: 1.5; box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); }
+            .btn-mobile-cart { background: var(--brand-gradient); color: white; box-shadow: 0 4px 12px rgba(139, 38, 53, 0.2); }
         }
 
         /* Cart/Auth Modals CSS */
