@@ -29,6 +29,7 @@
             --radius: 12px;
             --font-main: 'DM Sans', sans-serif;
             --wa-green: #25D366;
+            --error-red: #d33d49;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -39,7 +40,7 @@
         .no-copy { -webkit-user-select: none; user-select: none; pointer-events: auto; }
         .loading-hide { display: none !important; }
 
-        /* === LOADER STYLES === */
+        /* === LOADER === */
         .loader-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: var(--page-bg); z-index: 9999;
@@ -64,7 +65,7 @@
         }
 
         /* =========================================
-           MAIN PRODUCT DETAILS LAYOUT
+           MAIN PRODUCT PAGE LAYOUT
            ========================================= */
         .container { display: flex; align-items: flex-start; padding: 0 40px; max-width: 1400px; width: 100%; margin: 0 auto 40px auto; gap: 50px; }
         .left-section { width: 55%; position: sticky; top: 20px; height: auto; z-index: 10; }
@@ -117,7 +118,7 @@
         @media (hover: hover) {
             .size-boxes button:hover:not(:disabled) { border-color: var(--brand-primary); color: var(--brand-primary); }
         }
-        /* Force Active State */
+        /* Active State */
         .size-boxes button.active, 
         .size-boxes button.active:hover, 
         .size-boxes button.active:focus { 
@@ -205,7 +206,7 @@
         /* GRID: EXACTLY LIKE SHOP PAGE */
         .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; width: 100%; overflow: visible; padding: 0; }
 
-        /* Card Styles */
+        /* Card Styles (Shop.html Replica) */
         .card { 
             background: var(--surface-card); 
             border-radius: var(--radius); 
@@ -256,7 +257,7 @@
         .add-cart-icon-btn:hover { background: var(--brand-primary); color: #fff; }
 
         /* =========================================
-           MODAL & POPUP (DEFAULT DESKTOP CENTER)
+           MODAL & POPUP (MATCHING SHOP PAGE)
            ========================================= */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(20, 10, 10, 0.65); backdrop-filter: blur(8px); z-index: 5000; opacity: 0; visibility: hidden; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -332,9 +333,10 @@
 
         .mobile-gallery, .mobile-actions-bar { display: none; }
 
+        /* TOAST - GREEN & RED */
         #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 6000; display: flex; flex-direction: column; gap: 10px; }
         .toast { padding: 1rem 1.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 1rem; border-left: 4px solid var(--wa-green); min-width: 300px; font-family: 'DM Sans', sans-serif; }
-        .toast.error { border-left-color: var(--brand-primary); }
+        .toast.error { border-left-color: var(--error-red); } 
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
@@ -370,7 +372,7 @@
             .left-content { display: none; }
             
             /* INCREASED HEIGHTS */
-            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 600px; }
+            .mobile-wrapper { display: block; position: relative; background: var(--surface-light); width: 100%; height: 580px; }
             .mobile-image { height: 100%; width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
             .mobile-image::-webkit-scrollbar { display: none; }
             .mobile-image img { min-width: 100%; height: 100%; object-fit: cover; object-position: top; scroll-snap-align: center; }
@@ -671,6 +673,7 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
+        // Global Variables
         let currentProduct = null;
         let activeVariantIndex = 0;
         let selectedSize = null;
@@ -709,8 +712,8 @@
             fetchProductDetails(productId);
             initModalLogic();
 
+            // Setup Listeners
             document.getElementById('desktopAddCart').onclick = addToCart;
-            // Mobile Listeners
             document.getElementById('mobileAddCartBtn').onclick = addToCart;
             document.getElementById('mobileStaticCart').onclick = addToCart;
             document.getElementById('mobileBuyNow').onclick = buyNowFromModal;
@@ -761,7 +764,6 @@
 
             observer.observe(staticActions);
         }
-
 
         async function fetchProductDetails(id) {
             try {
@@ -837,7 +839,6 @@
             const container = document.getElementById('reviewsContainer');
             const section = document.getElementById('reviewsSection');
             
-            // FIX: Completely hide section if no reviews
             if (!currentProduct.reviews || currentProduct.reviews.length === 0) {
                 section.style.display = 'none';
                 return;
@@ -864,11 +865,10 @@
                 container.appendChild(card);
             });
             
-            // Smart Navigation Arrow Logic (Re-check on resize)
             const checkArrows = () => {
                 const nav = section.querySelector('.section-nav');
                 if(nav) {
-                    const isOverflowing = container.scrollWidth > container.clientWidth + 1; // +1 buffer
+                    const isOverflowing = container.scrollWidth > container.clientWidth + 1;
                     nav.style.display = isOverflowing ? 'flex' : 'none';
                 }
             };
@@ -902,7 +902,6 @@
                 const variant = currentProduct.colorVariants[index];
                 images = variant.images || currentProduct.images;
                 
-                // INSTANT UPDATE: Set text content directly
                 const colorNameEl = document.getElementById('selectedColorName');
                 if(variant.name) {
                     colorNameEl.textContent = variant.name;
@@ -923,13 +922,11 @@
             const container = document.getElementById('sizeBoxes');
             container.innerHTML = '';
             
-            // Reset Size Label instantly
             selectedSize = null; 
             document.getElementById('sizeLabel').textContent = "Select Size";
 
             const sizesToRender = specificSizes || [];
             
-            // FIX: If no sizes, just show info text but allow buying
             if (sizesToRender.length === 0) { 
                 container.innerHTML = '<span style="font-size:14px; color:#888;">One Size</span>'; 
                 return; 
@@ -982,7 +979,6 @@
                 mobileCarousel.innerHTML = images.map(src => `<img src="${src}">`).join('');
                 if(dotsContainer) dotsContainer.innerHTML = images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
                 
-                // Start Mobile Auto-Scroll logic
                 startMobileMainCarousel();
                 
                 let idx = 0;
@@ -997,22 +993,19 @@
         function startMobileMainCarousel() {
             const carousel = document.getElementById('mobileCarousel');
             if(!carousel) return;
-            // Prevent multiple intervals
             if(mobileCarouselInterval) clearInterval(mobileCarouselInterval);
 
             mobileCarouselInterval = setInterval(() => {
                 const width = carousel.offsetWidth;
                 const maxScroll = carousel.scrollWidth - width;
-                // If at end, scroll to start, else scroll next
-                if(carousel.scrollLeft >= maxScroll - 10) { // tolerance
+                if(carousel.scrollLeft >= maxScroll - 10) {
                     carousel.scrollTo({left: 0, behavior: 'smooth'});
                 } else {
                     carousel.scrollBy({left: width, behavior: 'smooth'});
                 }
-            }, 3000); // 3 seconds
+            }, 3000);
         }
 
-        // ================= RELATED PRODUCTS LOGIC (PREMIUM UI) =================
         async function loadRelatedProducts(field, value, currentId) {
             if (!value) { document.querySelector('.category-products-section').style.display = 'none'; return; }
             
@@ -1040,7 +1033,6 @@
                     relatedProductsData.push({ id: doc.id, ...doc.data() });
                 });
 
-                // FIX: Hide Section if Empty
                 if (relatedProductsData.length === 0) {
                     document.querySelector('.category-products-section').style.display = 'none';
                     return;
@@ -1066,17 +1058,15 @@
                             <button class="quick-view-btn">Quick View</button>
                         </div>
                         <div class="info">
-                            <div class="product-text-group">
-                                <h3 class="product-title">${p.name}</h3>
-                                <p class="product-category">${catName}</p>
-                            </div>
-                            <div class="product-price">
-                                <div class="price-container">
+                            <div class="category-tag">${catName}</div>
+                            <div class="title">${p.name}</div>
+                            <div class="bottom-row">
+                                <div class="price-block-card">
                                     <span class="current-price">₹${p.price}</span>
                                     ${oldPriceDisplay}
                                 </div>
-                                <div class="add-to-cart-icon add-to-cart">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                <div class="add-cart-icon-btn add-to-cart">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                                 </div>
                             </div>
                         </div>
@@ -1111,7 +1101,6 @@
             } catch(e) { console.error(e); }
         }
 
-        // ================= MODAL LOGIC =================
         function initModalLogic() {
             const modal = document.getElementById('productModal');
             const closeBtn = document.getElementById('closeModal');
@@ -1122,8 +1111,8 @@
 
             document.getElementById('btnAddToCartDesktop').onclick = addModalToCart;
             document.getElementById('btnAddToCartMobile').onclick = addModalToCart;
-            document.getElementById('btnBuyNowDesktop').onclick = buyModalNow;
-            document.getElementById('btnBuyNowMobile').onclick = buyModalNow;
+            document.getElementById('btnBuyNowDesktop').onclick = buyNowFromModal;
+            document.getElementById('btnBuyNowMobile').onclick = buyNowFromModal;
         }
 
         function openModal(id, mode) {
@@ -1173,7 +1162,11 @@
                     const img = document.createElement('img');
                     img.src = variant.hex || variant.images?.[0] || 'https://via.placeholder.com/60';
                     const div = document.createElement('div');
-                    div.className = `swatch ${index===0?'active':''}`;
+                    div.className = `thumb-modal ${index===0?'active':''}`;
+                    div.style.width = '48px'; 
+                    div.style.height = '60px';
+                    div.style.borderRadius = '6px';
+                    div.style.padding = '2px';
                     div.onclick = () => selectModalVariant(index);
                     div.appendChild(img);
                     colorContainer.appendChild(div);
@@ -1185,7 +1178,7 @@
 
         function selectModalVariant(index) {
             modalSelectedColorIndex = index;
-            document.querySelectorAll('#modalColorContainer .swatch').forEach((s, i) => s.classList.toggle('active', i === index));
+            document.querySelectorAll('#modalColorContainer .thumb-modal').forEach((s, i) => s.classList.toggle('active', i === index));
             
             let sizes = [];
             if(modalCurrentProduct.colorVariants && modalCurrentProduct.colorVariants[index]) {
@@ -1203,7 +1196,7 @@
             if(modalActiveImages.length > 0) {
                 mainImg.src = modalActiveImages[0];
                 thumbContainer.innerHTML = modalActiveImages.map((img, i) => `
-                    <div class="thumb ${i===0?'active':''}" onclick="window.manualChangeSlide(${i})">
+                    <div class="thumb-modal ${i===0?'active':''}" onclick="window.manualChangeSlide(${i})">
                         <img src="${img}" class="no-copy">
                     </div>`).join('');
                 mobileGallery.innerHTML = modalActiveImages.map(img => `<img src="${img}" class="no-copy">`).join('');
@@ -1259,17 +1252,15 @@
             const mainImg = document.getElementById('modalMainImage');
             mainImg.style.opacity = 0.5;
             setTimeout(() => { mainImg.src = modalActiveImages[index]; mainImg.style.opacity = 1; }, 150);
-            document.querySelectorAll('.thumb').forEach((t, i) => i === index ? t.classList.add('active') : t.classList.remove('active'));
+            document.querySelectorAll('.thumb-modal').forEach((t, i) => i === index ? t.classList.add('active') : t.classList.remove('active'));
             const mobileGallery = document.getElementById('mobileGallery');
             if (mobileGallery && mobileGallery.children[index]) {
                 mobileGallery.scrollTo({ left: mobileGallery.children[index].offsetLeft, behavior: 'smooth' });
             }
         }
 
-        // ================= CART & BUY LOGIC =================
         function addToCart() { processCartAdd(currentProduct, selectedSize, quantity, activeVariantIndex); }
         function addModalToCart() { 
-            // FIX: Check if sizes exist specifically for the modal product
             const sizes = (modalCurrentProduct.colorVariants && modalCurrentProduct.colorVariants[modalSelectedColorIndex]) 
                           ? (modalCurrentProduct.colorVariants[modalSelectedColorIndex].sizes || []) 
                           : (modalCurrentProduct.sizes || []);
@@ -1284,7 +1275,6 @@
         function processCartAdd(product, size, qty, variantIdx) {
             if (!product) return;
             
-            // Logic to determine if size is mandatory
             const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
             const productSizes = variant.sizes || product.sizes || [];
             
@@ -1293,9 +1283,7 @@
                 return; 
             }
             
-            // Default "One Size" if none existed
             const finalSize = (productSizes.length === 0) ? "One Size" : size;
-            
             const colorName = variant.name || 'Default';
             const uniqueId = `${product.id}-${colorName}-${finalSize}`;
             const img = variant.images?.[0] || product.images?.[0];
@@ -1344,7 +1332,6 @@
             window.location.href = "checkout.html?buy_now=true";
         }
 
-        // ================= HELPERS =================
         function saveCart() {
             localStorage.setItem('vastramaya_cart', JSON.stringify(cart));
             if (currentUser) db.collection('users').doc(currentUser.uid).update({ cart: cart }).catch(console.error);
