@@ -3,10 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vastramaya | Premium E-commerce</title>
+    
+    <!-- SEO OPTIMIZED TITLE AND META TAGS -->
+    <title>Vastramaya® – Official Ladies Clothing Brand | Magic in Every Thread</title>
+    <meta name="description" content="Vastramaya® is an Indian ladies clothing brand. The official website of Vastramaya is vastramayamagic.in. Discover magic in every thread.">
+    <link rel="canonical" href="https://vastramayamagic.in/vastramaya">
+    <meta name="robots" content="index, follow">
+    
+    <!-- OPEN GRAPH -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Vastramaya® – Official Ladies Clothing Brand">
+    <meta property="og:description" content="Vastramaya is an Indian ladies clothing brand. Official website: vastramayamagic.in">
+    <meta property="og:url" content="https://vastramayamagic.in/vastramaya">
+    <meta property="og:site_name" content="Vastramaya">
+    
+    <!-- TWITTER -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Vastramaya® Official Brand">
+    <meta name="twitter:description" content="Vastramaya is a ladies clothing brand based in India.">
+    
+    <!-- ========= STRUCTURED DATA ========= -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Brand",
+        "name": "Vastramaya",
+        "url": "https://vastramayamagic.in/",
+        "slogan": "Magic in Every Thread",
+        "description": "Vastramaya is an Indian ladies clothing brand offering elegant and affordable women's fashion.",
+        "sameAs": [
+            "https://www.instagram.com/vastramaya_magic"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is Vastramaya?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Vastramaya is an Indian ladies clothing brand. The official website of Vastramaya is https://vastramayamagic.in."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is Vastramaya an official clothing brand?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Vastramaya is an official ladies clothing brand based in India, operating through its official website vastramayamagic.in."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does Vastramaya mean?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Vastramaya represents the idea of bringing magic into clothing, expressed through the brand tagline 'Magic in Every Thread'."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the official website of Vastramaya?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The official website of Vastramaya is https://vastramayamagic.in."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --page-bg: #fefcf3;
@@ -50,6 +126,11 @@
             --footer-gold-glow: rgba(230, 210, 169, 0.3);
             --footer-silver: #b8c9c3;
             --border-glow: rgba(227, 207, 169, 0.15);
+            
+            /* Skeleton Loading */
+            --skeleton-base: #f0f0f0;
+            --skeleton-highlight: #f8f8f8;
+            --skeleton-shimmer: rgba(255, 255, 255, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -59,6 +140,149 @@
         .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
         .auth-hidden { display: none !important; }
         .hidden-section { display: none !important; }
+
+        /* ====== SKELETON LOADING STYLES ====== */
+        .skeleton-loader {
+            position: relative;
+            overflow: hidden;
+            background: var(--skeleton-base);
+        }
+        
+        .skeleton-shimmer {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--skeleton-shimmer),
+                transparent
+            );
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+        
+        /* Hero Section Skeleton */
+        .hero-skeleton {
+            width: 100%;
+            height: 85vh;
+            min-height: 700px;
+            max-height: 900px;
+            margin-top: 0;
+            border-radius: 0;
+            position: relative;
+        }
+        
+        .hero-skeleton .skeleton-shimmer {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0.4),
+                rgba(255, 255, 255, 0)
+            );
+        }
+        
+        /* Product Card Skeleton */
+        .product-card-skeleton {
+            flex: 0 0 auto;
+            width: 300px;
+            background: var(--surface-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+        }
+        
+        .product-image-skeleton {
+            width: 100%;
+            height: 380px;
+            background: var(--skeleton-base);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .product-info-skeleton {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .skeleton-line {
+            height: 12px;
+            background: var(--skeleton-base);
+            border-radius: 4px;
+        }
+        
+        .skeleton-line.short { width: 60%; }
+        .skeleton-line.medium { width: 80%; }
+        .skeleton-line.long { width: 100%; }
+        
+        .skeleton-title {
+            height: 20px;
+            background: var(--skeleton-base);
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        
+        .skeleton-price {
+            height: 24px;
+            width: 100px;
+            background: var(--skeleton-base);
+            border-radius: 4px;
+        }
+        
+        .skeleton-button {
+            height: 34px;
+            width: 34px;
+            background: var(--skeleton-base);
+            border-radius: 8px;
+        }
+        
+        /* Category Circle Skeleton */
+        .category-circle-skeleton {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--skeleton-base);
+            border: 2px solid var(--border-subtle);
+            margin-bottom: 15px;
+        }
+        
+        .category-name-skeleton {
+            height: 20px;
+            width: 80px;
+            background: var(--skeleton-base);
+            border-radius: 4px;
+        }
+        
+        /* Mobile Skeleton Variations */
+        @media (max-width: 768px) {
+            .product-card-skeleton {
+                width: 160px;
+            }
+            
+            .product-image-skeleton {
+                height: 200px;
+            }
+            
+            .category-circle-skeleton {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .hero-skeleton {
+                height: 75vh;
+                min-height: 550px;
+                max-height: 750px;
+            }
+        }
+        
+        /* ====== END SKELETON STYLES ====== */
 
         /* --- NAVBAR STYLES --- */
         /* DESKTOP NAVBAR */
@@ -1428,7 +1652,13 @@
         </nav>
 
         <main class="d-content">
-            <section class="hero-section" id="hero-carousel">
+            <!-- HERO SECTION SKELETON -->
+            <div class="hero-skeleton skeleton-loader" id="hero-skeleton-desktop">
+                <div class="skeleton-shimmer"></div>
+            </div>
+            
+            <!-- ACTUAL HERO SECTION (HIDDEN INITIALLY) -->
+            <section class="hero-section" id="hero-carousel" style="display: none;">
                 <div class="carousel-container" id="carousel-container">
                     <div class="carousel-track" id="carousel-track"></div>
                     <div class="carousel-nav">
@@ -1451,14 +1681,185 @@
                     </div>
                 </div>
                 <div class="products-container">
-                    <div class="products-grid" id="best-sellers-grid"></div>
+                    <!-- BEST SELLERS SKELETON (6 PRODUCTS) -->
+                    <div class="products-grid" id="best-sellers-skeleton">
+                        <!-- Product 1 -->
+                        <div class="product-card-skeleton skeleton-loader">
+                            <div class="product-image-skeleton"></div>
+                            <div class="product-info-skeleton">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-title"></div>
+                                <div class="bottom-row">
+                                    <div class="skeleton-price"></div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div class="skeleton-button"></div>
+                                        <div class="skeleton-button"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skeleton-shimmer"></div>
+                        </div>
+                        <!-- Product 2 -->
+                        <div class="product-card-skeleton skeleton-loader">
+                            <div class="product-image-skeleton"></div>
+                            <div class="product-info-skeleton">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-title"></div>
+                                <div class="bottom-row">
+                                    <div class="skeleton-price"></div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div class="skeleton-button"></div>
+                                        <div class="skeleton-button"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skeleton-shimmer"></div>
+                        </div>
+                        <!-- Product 3 -->
+                        <div class="product-card-skeleton skeleton-loader">
+                            <div class="product-image-skeleton"></div>
+                            <div class="product-info-skeleton">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-title"></div>
+                                <div class="bottom-row">
+                                    <div class="skeleton-price"></div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div class="skeleton-button"></div>
+                                        <div class="skeleton-button"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skeleton-shimmer"></div>
+                        </div>
+                        <!-- Product 4 -->
+                        <div class="product-card-skeleton skeleton-loader">
+                            <div class="product-image-skeleton"></div>
+                            <div class="product-info-skeleton">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-title"></div>
+                                <div class="bottom-row">
+                                    <div class="skeleton-price"></div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div class="skeleton-button"></div>
+                                        <div class="skeleton-button"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skeleton-shimmer"></div>
+                        </div>
+                        <!-- Product 5 -->
+                        <div class="product-card-skeleton skeleton-loader">
+                            <div class="product-image-skeleton"></div>
+                            <div class="product-info-skeleton">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-title"></div>
+                                <div class="bottom-row">
+                                    <div class="skeleton-price"></div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div class="skeleton-button"></div>
+                                        <div class="skeleton-button"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skeleton-shimmer"></div>
+                        </div>
+                        <!-- Product 6 -->
+                        <div class="product-card-skeleton skeleton-loader">
+                            <div class="product-image-skeleton"></div>
+                            <div class="product-info-skeleton">
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-title"></div>
+                                <div class="bottom-row">
+                                    <div class="skeleton-price"></div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div class="skeleton-button"></div>
+                                        <div class="skeleton-button"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skeleton-shimmer"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- ACTUAL BEST SELLERS CONTENT (HIDDEN INITIALLY) -->
+                    <div class="products-grid" id="best-sellers-grid" style="display: none;"></div>
                 </div>
             </section>
 
             <section class="categories-section">
                 <h2 class="section-title">Shop by Category</h2>
                 <div class="categories-container">
-                    <div class="categories-grid" id="categories-grid"></div>
+                    <!-- CATEGORIES SKELETON -->
+                    <div class="categories-grid" id="categories-skeleton">
+                        <!-- 8 Category Skeletons -->
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-circle-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="category-name-skeleton skeleton-loader">
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ACTUAL CATEGORIES CONTENT (HIDDEN INITIALLY) -->
+                    <div class="categories-grid" id="categories-grid" style="display: none;"></div>
                 </div>
             </section>
             
@@ -1663,7 +2064,13 @@
 
         <main class="m-content">
             <div class="m-content-inner">
-                <section class="hero-section" id="hero-carousel-mobile">
+                <!-- MOBILE HERO SKELETON -->
+                <div class="hero-skeleton skeleton-loader" id="hero-skeleton-mobile">
+                    <div class="skeleton-shimmer"></div>
+                </div>
+                
+                <!-- ACTUAL MOBILE HERO SECTION (HIDDEN INITIALLY) -->
+                <section class="hero-section" id="hero-carousel-mobile" style="display: none;">
                     <div class="carousel-container" id="carousel-container-mobile">
                         <div class="carousel-track" id="carousel-track-mobile"></div>
                         <div class="carousel-nav">
@@ -1682,14 +2089,174 @@
                         </div>
                     </div>
                     <div class="products-container">
-                        <div class="products-grid" id="best-sellers-grid-mobile"></div>
+                        <!-- MOBILE BEST SELLERS SKELETON -->
+                        <div class="products-grid" id="best-sellers-skeleton-mobile">
+                            <!-- 6 Mobile Product Skeletons -->
+                            <div class="product-card-skeleton skeleton-loader">
+                                <div class="product-image-skeleton"></div>
+                                <div class="product-info-skeleton">
+                                    <div class="skeleton-line short"></div>
+                                    <div class="skeleton-title"></div>
+                                    <div class="bottom-row">
+                                        <div class="skeleton-price"></div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <div class="skeleton-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="product-card-skeleton skeleton-loader">
+                                <div class="product-image-skeleton"></div>
+                                <div class="product-info-skeleton">
+                                    <div class="skeleton-line short"></div>
+                                    <div class="skeleton-title"></div>
+                                    <div class="bottom-row">
+                                        <div class="skeleton-price"></div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <div class="skeleton-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="product-card-skeleton skeleton-loader">
+                                <div class="product-image-skeleton"></div>
+                                <div class="product-info-skeleton">
+                                    <div class="skeleton-line short"></div>
+                                    <div class="skeleton-title"></div>
+                                    <div class="bottom-row">
+                                        <div class="skeleton-price"></div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <div class="skeleton-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="product-card-skeleton skeleton-loader">
+                                <div class="product-image-skeleton"></div>
+                                <div class="product-info-skeleton">
+                                    <div class="skeleton-line short"></div>
+                                    <div class="skeleton-title"></div>
+                                    <div class="bottom-row">
+                                        <div class="skeleton-price"></div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <div class="skeleton-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="product-card-skeleton skeleton-loader">
+                                <div class="product-image-skeleton"></div>
+                                <div class="product-info-skeleton">
+                                    <div class="skeleton-line short"></div>
+                                    <div class="skeleton-title"></div>
+                                    <div class="bottom-row">
+                                        <div class="skeleton-price"></div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <div class="skeleton-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                            <div class="product-card-skeleton skeleton-loader">
+                                <div class="product-image-skeleton"></div>
+                                <div class="product-info-skeleton">
+                                    <div class="skeleton-line short"></div>
+                                    <div class="skeleton-title"></div>
+                                    <div class="bottom-row">
+                                        <div class="skeleton-price"></div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <div class="skeleton-button"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-shimmer"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- ACTUAL MOBILE BEST SELLERS CONTENT (HIDDEN INITIALLY) -->
+                        <div class="products-grid" id="best-sellers-grid-mobile" style="display: none;"></div>
                     </div>
                 </section>
 
                 <section class="categories-section">
                     <h2 class="section-title">Shop by Category</h2>
                     <div class="categories-container">
-                        <div class="categories-grid" id="categories-grid-mobile"></div>
+                        <!-- MOBILE CATEGORIES SKELETON -->
+                        <div class="categories-grid" id="categories-skeleton-mobile">
+                            <!-- 8 Mobile Category Skeletons -->
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-circle-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                                <div class="category-name-skeleton skeleton-loader">
+                                    <div class="skeleton-shimmer"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ACTUAL MOBILE CATEGORIES CONTENT (HIDDEN INITIALLY) -->
+                        <div class="categories-grid" id="categories-grid-mobile" style="display: none;"></div>
                         <button class="scroll-arrow left hidden" id="scroll-left-mobile"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
                         <button class="scroll-arrow right" id="scroll-right-mobile"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
                     </div>
@@ -2421,15 +2988,69 @@
             initSearch();
             initAuthModal();
             
-            // Main page initialization
-            loadHero();
-            loadCategories().then(() => {
-                loadBestSellers();
-                loadCategorySections(); 
-            });
+            // Main page initialization with skeleton loading
+            loadContentWithSkeletons();
             loadPopup();
             initCategoriesScroll();
         });
+
+        // ====== SKELETON LOADING FUNCTIONS ======
+        function hideSkeletons() {
+            // Desktop Skeletons
+            const heroSkeletonDesktop = document.getElementById('hero-skeleton-desktop');
+            const bestSellersSkeleton = document.getElementById('best-sellers-skeleton');
+            const categoriesSkeleton = document.getElementById('categories-skeleton');
+            
+            // Mobile Skeletons
+            const heroSkeletonMobile = document.getElementById('hero-skeleton-mobile');
+            const bestSellersSkeletonMobile = document.getElementById('best-sellers-skeleton-mobile');
+            const categoriesSkeletonMobile = document.getElementById('categories-skeleton-mobile');
+            
+            // Hide all skeletons
+            if (heroSkeletonDesktop) heroSkeletonDesktop.style.display = 'none';
+            if (bestSellersSkeleton) bestSellersSkeleton.style.display = 'none';
+            if (categoriesSkeleton) categoriesSkeleton.style.display = 'none';
+            if (heroSkeletonMobile) heroSkeletonMobile.style.display = 'none';
+            if (bestSellersSkeletonMobile) bestSellersSkeletonMobile.style.display = 'none';
+            if (categoriesSkeletonMobile) categoriesSkeletonMobile.style.display = 'none';
+            
+            // Show actual content
+            const heroCarousel = document.getElementById('hero-carousel');
+            const bestSellersGrid = document.getElementById('best-sellers-grid');
+            const categoriesGrid = document.getElementById('categories-grid');
+            const heroCarouselMobile = document.getElementById('hero-carousel-mobile');
+            const bestSellersGridMobile = document.getElementById('best-sellers-grid-mobile');
+            const categoriesGridMobile = document.getElementById('categories-grid-mobile');
+            
+            if (heroCarousel) heroCarousel.style.display = 'block';
+            if (bestSellersGrid) bestSellersGrid.style.display = 'flex';
+            if (categoriesGrid) categoriesGrid.style.display = 'flex';
+            if (heroCarouselMobile) heroCarouselMobile.style.display = 'block';
+            if (bestSellersGridMobile) bestSellersGridMobile.style.display = 'flex';
+            if (categoriesGridMobile) categoriesGridMobile.style.display = 'flex';
+        }
+
+        async function loadContentWithSkeletons() {
+            try {
+                // Load all content in parallel
+                await Promise.all([
+                    loadHero(),
+                    loadCategories(),
+                    loadBestSellers()
+                ]);
+                
+                // Hide skeletons and show content
+                hideSkeletons();
+                
+                // Load additional content after main content is shown
+                loadCategorySections();
+                
+            } catch (error) {
+                console.error("Error loading content:", error);
+                // Still hide skeletons even if there's an error
+                hideSkeletons();
+            }
+        }
 
         // EXISTING MAIN PAGE FUNCTIONS
         async function loadBestSellers() {
