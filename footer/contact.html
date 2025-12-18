@@ -1,1 +1,361 @@
-1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contact Us | Vastramaya</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === CORE VARIABLES === */
+        :root {
+            --page-bg: #fefcf3;
+            --surface-card: #fffefb;
+            --brand-primary: #8b2635; /* Vastramaya Maroon */
+            --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --text-light: #a3715f;
+            --gold-accent: #c5a065;
+            --border-subtle: #e8d5c4;
+            --shadow-deep: 0 20px 50px -12px rgba(63, 11, 23, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--page-bg);
+            color: var(--text-primary);
+            font-family: "DM Sans", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1100px;
+            padding: 60px 20px;
+        }
+
+        /* --- Header --- */
+        .header-section { text-align: center; margin-bottom: 50px; }
+        .hero-subtitle { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-light); font-weight: 700; display: block; margin-bottom: 10px; }
+        .header-section h1 { font-family: "Cormorant Garamond", serif; color: var(--brand-primary); font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
+        .header-section p { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--text-secondary); font-size: 1.2rem; }
+        .gold-divider { width: 60px; height: 1px; background: var(--gold-accent); margin: 20px auto; opacity: 0.6; }
+
+        /* --- Card Layout --- */
+        .contact-card {
+            display: flex;
+            background: var(--surface-card);
+            border-radius: 20px;
+            box-shadow: var(--shadow-deep);
+            /* FIX 1: Ensure overflow is visible so dropdown can hang out */
+            overflow: visible; 
+            border: 1px solid var(--border-subtle);
+            min-height: 600px;
+            position: relative;
+        }
+
+        /* --- Left Side --- */
+        .info-panel {
+            flex: 0.85;
+            background: var(--brand-primary);
+            color: #fff;
+            padding: 60px;
+            position: relative;
+            overflow: hidden; /* Keep hidden for the watermark */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 20px 0 0 20px;
+        }
+
+        .watermark-v { position: absolute; bottom: -50px; right: -20px; font-size: 15rem; font-family: "Cormorant Garamond", serif; color: #fff; opacity: 0.05; pointer-events: none; }
+        .info-panel h2 { font-family: "Cormorant Garamond", serif; font-size: 2.2rem; margin-bottom: 20px; color: var(--gold-accent); }
+        .info-panel p { font-size: 15px; margin-bottom: 40px; opacity: 0.9; font-weight: 300; color: #fefcf3; }
+
+        .detail-item { display: flex; align-items: center; gap: 20px; margin-bottom: 35px; }
+        .icon-box { width: 48px; height: 48px; background: rgba(255, 255, 255, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(197, 160, 101, 0.3); color: var(--gold-accent); }
+        .detail-text h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-accent); margin-bottom: 4px; }
+        .detail-text span { font-size: 15px; font-weight: 400; }
+
+        /* --- Right Side (Form) --- */
+        .form-panel {
+            flex: 1.15;
+            padding: 60px;
+            background-color: #fff;
+            border-radius: 0 20px 20px 0;
+            /* FIX 2: Ensure overflow visible here too */
+            overflow: visible; 
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group { margin-bottom: 30px; position: relative; }
+        .form-label { font-size: 11px; font-weight: 700; color: var(--text-light); margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 1px solid var(--border-subtle);
+            background: transparent;
+            font-family: "DM Sans", sans-serif;
+            font-size: 15px;
+            color: var(--text-primary);
+            transition: all 0.3s;
+            border-radius: 0;
+        }
+        .form-control:focus { outline: none; border-bottom-color: var(--brand-primary); }
+
+        /* === CUSTOM DROPDOWN STYLING START === */
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            cursor: pointer;
+            z-index: 10; /* Base z-index */
+        }
+
+        /* FIX 3: Higher Z-Index when open to sit on top of everything */
+        .custom-select-wrapper.open {
+            z-index: 999;
+        }
+
+        .custom-select-trigger {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: all 0.3s;
+            background: #fff;
+        }
+
+        /* SVG CHEVRON STYLING */
+        .chevron {
+            width: 18px;
+            height: 18px;
+            stroke: var(--brand-primary);
+            transition: transform 0.3s ease;
+            transform: rotate(90deg); /* Points Down initially */
+        }
+
+        /* Rotate SVG when Open */
+        .custom-select-wrapper.open .chevron {
+            transform: rotate(-90deg); /* Points Up */
+        }
+
+        .custom-select-wrapper.open .custom-select-trigger {
+            border-bottom-color: var(--brand-primary);
+        }
+
+        .custom-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 15px 40px rgba(63, 11, 23, 0.2); /* Stronger shadow */
+            border: 1px solid var(--border-subtle);
+            border-top: none;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            
+            /* FIX 4: Max Height and Scroll */
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .custom-options::-webkit-scrollbar { width: 4px; }
+        .custom-options::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
+
+        .custom-select-wrapper.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .custom-option {
+            padding: 14px 20px;
+            font-size: 15px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            background: #fff; /* Ensure solid background */
+        }
+
+        .custom-option:last-child { border-bottom: none; }
+        
+        .custom-option:hover {
+            background-color: var(--brand-primary);
+            color: #fff;
+            padding-left: 25px;
+        }
+
+        .custom-option.selected {
+            background-color: #fcf4f5;
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+        /* === CUSTOM DROPDOWN STYLING END === */
+
+        .btn-submit {
+            width: 100%; padding: 18px; background: var(--brand-gradient);
+            color: white; border: none; border-radius: 12px;
+            font-size: 14px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; transition: all 0.3s ease; margin-top: 25px;
+            letter-spacing: 2px; text-transform: uppercase;
+            box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3);
+            position: relative; z-index: 1;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); }
+        .btn-submit svg { width: 18px; height: 18px; fill: white; }
+
+        @media (max-width: 900px) {
+            .contact-card { flex-direction: column; overflow: visible; }
+            .info-panel { border-radius: 20px 20px 0 0; padding: 40px 30px; }
+            .form-panel { border-radius: 0 0 20px 20px; padding: 40px 30px; overflow: visible;}
+            .header-section h1 { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header-section">
+            <span class="hero-subtitle">Concierge</span>
+            <h1>Get In Touch</h1>
+            <div class="gold-divider"></div>
+            <p>"Where every query is handled with elegance and care."</p>
+        </div>
+
+        <div class="contact-card">
+            <!-- Left Side -->
+            <div class="info-panel">
+                <div class="watermark-v">V</div>
+                <h2>Customer Support</h2>
+                <p>Experience personalized styling advice or track your handloom treasures. Our artisans and support team are here for you.</p>
+
+                <div class="contact-details">
+                    <div class="detail-item">
+                        <div class="icon-box"><svg style="width:20px; height:20px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
+                        <div class="detail-text"><h4>Write to us</h4><span>vastramayamagic@gmail.com</span></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="icon-box"><svg style="width:20px; height:20px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
+                        <div class="detail-text"><h4>Personal Assistance</h4><span>+91 86394 78312</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="form-panel">
+                <form id="whatsappForm" onsubmit="sendToWhatsapp(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Order Reference</label>
+                        <input type="text" id="orderId" class="form-control" placeholder="E.g. #VAS-1024">
+                    </div>
+
+                    <!-- CUSTOM DROPDOWN -->
+                    <div class="form-group">
+                        <label class="form-label">Inquiry Topic</label>
+                        <input type="hidden" id="issueType" required>
+
+                        <div class="custom-select-wrapper" id="customSelectWrapper">
+                            <div class="custom-select-trigger">
+                                <span id="customSelectValue">Select a subject</span>
+                                <!-- REPLACED SVG HERE -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron"><path d="m9 18 6-6-6-6"></path></svg>
+                            </div>
+                            <div class="custom-options">
+                                <div class="custom-option" data-value="Order Tracking">Order Tracking</div>
+                                <div class="custom-option" data-value="Returns & Exchanges">Returns & Exchanges</div>
+                                <div class="custom-option" data-value="Product Sizing/Fabric">Product Sizing & Fabric</div>
+                                <div class="custom-option" data-value="Wholesale/Bulk">Wholesale Inquiries</div>
+                                <div class="custom-option" data-value="Other">Other</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">How can we help?</label>
+                        <textarea id="message" class="form-control" rows="1" placeholder="Share your thoughts..." style="resize: none; overflow:hidden;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M16.53 14.33C16.29 14.21 15.12 13.63 14.9 13.55C14.68 13.47 14.53 13.43 14.38 13.65C14.23 13.87 13.8 14.38 13.67 14.53C13.54 14.68 13.41 14.7 13.17 14.58C12.93 14.46 12.15 14.2 11.23 13.38C10.5 12.73 10 11.93 9.76 11.52C9.52 11.11 9.73 10.89 9.85 10.77C9.96 10.66 10.09 10.48 10.21 10.34C10.33 10.2 10.37 10.1 10.45 9.94C10.53 9.78 10.49 9.64 10.43 9.52C10.37 9.4 9.92 8.3 9.73 7.85C9.55 7.41 9.36 7.47 9.22 7.47H8.83C8.68 7.47 8.44 7.53 8.23 7.76C8.02 7.99 7.42 8.55 7.42 9.69C7.42 10.83 8.25 11.93 8.37 12.09C8.49 12.25 10.03 14.63 12.4 15.65C12.96 15.89 13.4 16.03 13.74 16.14C14.29 16.32 14.79 16.3 15.19 16.24C15.64 16.17 16.57 15.67 16.76 15.13C16.95 14.59 16.95 14.13 16.89 14.03C16.83 13.93 16.68 13.89 16.44 13.77"/></svg>
+                        Send Magic Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wrapper = document.getElementById('customSelectWrapper');
+            const hiddenInput = document.getElementById('issueType');
+            const displayValue = document.getElementById('customSelectValue');
+            const options = wrapper.querySelectorAll('.custom-option');
+
+            wrapper.addEventListener('click', function(e) {
+                this.classList.toggle('open');
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    displayValue.textContent = this.textContent;
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    hiddenInput.value = this.getAttribute('data-value');
+                    wrapper.classList.remove('open');
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!wrapper.contains(e.target)) {
+                    wrapper.classList.remove('open');
+                }
+            });
+        });
+
+        function sendToWhatsapp(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const orderId = document.getElementById('orderId').value || 'New Inquiry';
+            const issueType = document.getElementById('issueType').value;
+            const message = document.getElementById('message').value;
+
+            if(!issueType) { alert("Please select an inquiry topic."); return; }
+
+            const phoneNumber = "918639478312"; 
+            const text = `✨ *Vastramaya Website Inquiry* ✨%0a%0a*From:* ${name}%0a*Ref:* ${orderId}%0a*Topic:* ${issueType}%0a*Message:* ${message}`;
+            const url = `https://wa.me/${phoneNumber}?text=${text}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
