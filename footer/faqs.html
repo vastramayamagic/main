@@ -2,137 +2,148 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ | Vastramayamagic.in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FAQ | Vastramaya</title>
     
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CSS VARIABLES --- */
+        /* --- CSS VARIABLES (MATCHING BRAND) --- */
         :root {
-            --bg-color: #FDFBF7;       
-            --card-bg: #FFFFFF;        
-            --primary-color: #7A1E26;  /* Deep Maroon */
-            --primary-light: #9A2E38;
-            --accent-gold: #C5A059;    /* Gold accent */
-            --text-dark: #2C2C2C;      
-            --text-body: #555555;
-            --border-radius: 8px;
+            --page-bg: #fefcf3;
+            --surface-card: #fffefb;
+            --brand-primary: #8b2635; /* Maroon */
+            --brand-gradient: linear-gradient(135deg, #8b2635 0%, #d33d49 100%);
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --text-light: #a3715f;
+            --gold-accent: #c5a065;
+            --border-subtle: #e8d5c4;
+            --shadow-soft: 0 10px 40px -10px rgba(63, 11, 23, 0.08);
+            --shadow-deep: 0 20px 50px -12px rgba(63, 11, 23, 0.15);
+            --radius: 12px;
         }
 
         /* --- GLOBAL STYLES --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-body);
-            line-height: 1.6;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--page-bg);
+            color: var(--text-primary);
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
         /* --- LAYOUT --- */
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 20px;
         }
 
-        /* --- BRANDING & HEADER --- */
-        .brand-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .logo-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
-        }
-
+        /* --- HEADER SECTION --- */
         .page-header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 700;
         }
 
         .page-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            color: var(--text-dark);
-            margin-bottom: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            color: var(--brand-primary);
+            line-height: 1.1;
+            margin-bottom: 20px;
         }
 
-        .date-badge {
-            display: inline-block;
-            background-color: #EEE;
-            color: #777;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 6px 16px;
-            border-radius: 50px;
-            margin-bottom: 20px;
+        .gold-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold-accent);
+            margin: 0 auto 25px auto;
+            opacity: 0.6;
         }
 
         .intro-text {
             max-width: 600px;
             margin: 0 auto;
-            font-size: 1.1rem;
-            color: #666;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
         }
 
-        /* --- CATEGORY SECTION STYLING --- */
+        /* --- FAQ CATEGORY STYLING --- */
         .faq-category {
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             opacity: 0; /* For animation */
             transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .category-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #E0E0E0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
+            font-weight: 600;
         }
 
         .category-title span {
-            margin-right: 10px;
-            color: var(--accent-gold);
-            font-size: 1.2rem;
+            color: var(--gold-accent);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-right: 15px;
+            opacity: 0.8;
+            letter-spacing: 1px;
         }
 
-        /* --- ACCORDION STYLING --- */
+        /* --- ACCORDION ITEM --- */
         .accordion-item {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid rgba(0,0,0,0.02);
-            transition: all 0.3s ease;
+            background: var(--surface-card);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             overflow: hidden;
         }
 
         .accordion-item:hover {
-            box-shadow: 0 8px 25px rgba(122, 30, 38, 0.08);
+            border-color: var(--gold-accent);
+            box-shadow: var(--shadow-soft);
             transform: translateY(-2px);
         }
 
+        .accordion-item.active {
+            border-color: var(--brand-primary);
+            box-shadow: var(--shadow-deep);
+            background: #fff;
+        }
+
+        /* --- ACCORDION HEADER --- */
         .accordion-header {
             width: 100%;
-            padding: 20px 25px;
+            padding: 24px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -140,117 +151,183 @@
             border: none;
             cursor: pointer;
             text-align: left;
-            font-family: 'Lato', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-dark);
+            font-weight: 500;
+            color: var(--text-primary);
             transition: color 0.3s ease;
         }
 
-        .accordion-header:hover {
-            color: var(--primary-color);
+        .accordion-item.active .accordion-header {
+            color: var(--brand-primary);
+            font-weight: 700;
         }
 
-        .icon {
-            width: 24px;
-            height: 24px;
+        /* --- ICON ANIMATION --- */
+        .icon-box {
+            width: 28px;
+            height: 28px;
             position: relative;
-            transition: transform 0.4s ease;
             flex-shrink: 0;
-            margin-left: 15px;
+            margin-left: 20px;
+            border-radius: 50%;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
         }
 
-        .icon::before, .icon::after {
+        .icon-box::before, .icon-box::after {
             content: '';
             position: absolute;
-            background-color: var(--accent-gold);
+            background-color: var(--text-light);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
         }
 
-        .icon::before { width: 12px; height: 2px; } /* Horizontal line */
-        .icon::after { width: 2px; height: 12px; } /* Vertical line */
+        .icon-box::before { width: 10px; height: 1.5px; } /* Horizontal */
+        .icon-box::after { width: 1.5px; height: 10px; } /* Vertical */
 
-        /* Active State */
-        .accordion-item.active {
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .accordion-item.active .icon {
-            transform: rotate(45deg); /* Turns the + into an x */
+        /* Active Icon State */
+        .accordion-item.active .icon-box {
+            border-color: var(--brand-primary);
+            background: var(--brand-primary);
+            transform: rotate(90deg);
         }
         
-        .accordion-item.active .icon::before,
-        .accordion-item.active .icon::after {
-            background-color: var(--primary-color);
+        .accordion-item.active .icon-box::before,
+        .accordion-item.active .icon-box::after {
+            background-color: #fff;
+        }
+        
+        .accordion-item.active .icon-box::after {
+            height: 0; /* Turns + into - or just rotate 45deg for x */
+            opacity: 0;
         }
 
+        /* --- CONTENT --- */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
-            background-color: #FAFAFA;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #fff;
         }
 
         .accordion-body {
-            padding: 0 25px 25px 25px;
-            color: var(--text-body);
+            padding: 0 30px 30px 30px;
+            color: var(--text-secondary);
             font-size: 1rem;
-            font-weight: 300;
-        }
-
-        .accordion-body ul {
-            padding-left: 20px;
-            margin-top: 10px;
+            font-weight: 400;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
         
-        .accordion-body ul li {
-            margin-bottom: 5px;
-            list-style-type: disc;
-        }
-
-        .accordion-body a {
-            color: var(--primary-color);
-            text-decoration: none;
-            border-bottom: 1px dotted;
-        }
-
-        /* --- FOOTER --- */
-        .contact-cta {
-            text-align: center;
-            margin-top: 80px;
-            padding: 40px;
-            background: #fff;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .contact-cta h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            font-size: 0.85rem;
-            color: #999;
-        }
-
-        /* --- ANIMATIONS --- */
-        .visible {
+        .accordion-item.active .accordion-body {
             opacity: 1;
             transform: translateY(0);
         }
 
+        .accordion-body ul {
+            padding-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .accordion-body ul li {
+            margin-bottom: 8px;
+            list-style-type: disc;
+            color: var(--text-light);
+        }
+
+        .accordion-body a {
+            color: var(--brand-primary);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--brand-primary);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .accordion-body a:hover {
+            color: var(--text-primary);
+            border-bottom-style: solid;
+        }
+
+        /* --- CONTACT CTA --- */
+        .contact-cta {
+            text-align: center;
+            margin-top: 80px;
+            padding: 60px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .watermark-v {
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 10rem;
+            font-family: "Cormorant Garamond", serif;
+            color: var(--brand-primary);
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .contact-cta h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        
+        .contact-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .btn-contact {
+            display: inline-block;
+            padding: 14px 35px;
+            background: var(--brand-gradient);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3);
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 0 20px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            border-top: 1px solid rgba(139, 38, 53, 0.05);
+            margin-top: 60px;
+        }
+
+        /* --- ANIMATIONS --- */
+        .visible { opacity: 1; transform: translateY(0); }
+
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            .page-header h1 { font-size: 2rem; }
-            .accordion-header { font-size: 1rem; padding: 15px 20px; }
-            .logo-text { font-size: 1.4rem; word-break: break-all; }
+            .container { padding: 40px 15px; }
+            .page-header h1 { font-size: 2.5rem; }
+            .accordion-header { padding: 20px; font-size: 1rem; }
+            .accordion-body { padding: 0 20px 25px 20px; }
+            .contact-cta { padding: 40px 20px; }
+            .category-title { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -258,53 +335,49 @@
 
     <div class="container">
         
-        <!-- Branding -->
-        <div class="brand-header">
-            <a href="index.html" class="logo-text">Vastramayamagic.in</a>
-        </div>
-
         <div class="page-header">
+            <span class="hero-subtitle">Help Center</span>
             <h1>Frequently Asked Questions</h1>
-            <span class="date-badge">Last Updated: 14 December 2025</span>
-            <p class="intro-text">Find answers to common questions about our traditional clothing, shipping, and returns below.</p>
+            <div class="gold-divider"></div>
+            <p class="intro-text">Everything you need to know about our heritage, shipping, and care.</p>
         </div>
 
         <!-- CATEGORY: GENERAL -->
         <div class="faq-category">
-            <h2 class="category-title"><span>01.</span> General Information</h2>
+            <h2 class="category-title"><span>01</span> General Information</h2>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    What products does Vastramayamagic.in offer?
-                    <div class="icon"></div>
+                    What defines the Vastramaya collection?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        Vastramayamagic.in offers a curated collection of traditional and vintage Indian clothing, sourced directly from trusted artisans and suppliers across India.
+                        Vastramaya offers a curated collection of traditional Indian clothing, bridging timeless handloom heritage with modern elegance. Each piece is sourced directly from trusted artisans across India, ensuring authenticity in every thread.
                     </div>
                 </div>
             </div>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    Why does the product color look slightly different?
-                    <div class="icon"></div>
+                    Why might product colors vary slightly?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        Slight variations in color or texture may occur due to screen resolution differences, studio lighting, or the handcrafted nature of our products. These are not defects but rather characteristics of authentic traditional wear.
+                        We capture our products in studio lighting to be as true to life as possible. However, slight variations may occur due to different screen calibrations or the handcrafted nature of natural dyes. These nuances are the hallmark of authentic ethnic wear.
                     </div>
                 </div>
             </div>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    How can I contact customer support?
-                    <div class="icon"></div>
+                    How can I reach customer support?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        You can reach us via email at <a href="mailto:vastramayamagic@gmail.com">vastramayamagic@gmail.com</a> or call/WhatsApp us at <strong>+91 86394 78312</strong>.
+                        We are here to assist you. Email us at <a href="mailto:vastramayamagic@gmail.com">vastramayamagic@gmail.com</a> or reach out via WhatsApp/Call at <strong>+91 86394 78312</strong> (Mon-Sat, 10 AM - 7 PM).
                     </div>
                 </div>
             </div>
@@ -312,20 +385,20 @@
 
         <!-- CATEGORY: ORDERS & PAYMENTS -->
         <div class="faq-category">
-            <h2 class="category-title"><span>02.</span> Orders & Payments</h2>
+            <h2 class="category-title"><span>02</span> Orders & Payments</h2>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    What payment methods do you accept?
-                    <div class="icon"></div>
+                    What payment methods are accepted?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        We accept all major secure online payments through Razorpay, including:
+                        We ensure a seamless checkout experience via Razorpay. Accepted methods include:
                         <ul>
-                            <li>UPI (GPay, PhonePe, Paytm)</li>
-                            <li>Debit & Credit Cards</li>
-                            <li>Net Banking</li>
+                            <li>UPI (GPay, PhonePe, Paytm, etc.)</li>
+                            <li>Credit & Debit Cards (Visa, Mastercard, RuPay)</li>
+                            <li>Net Banking (All major Indian banks)</li>
                         </ul>
                     </div>
                 </div>
@@ -333,36 +406,24 @@
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    Is it safe to pay on your website?
-                    <div class="icon"></div>
+                    Is Cash on Delivery (COD) available?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        Yes, absolutely. All payments are processed via Razorpay, a PCI-DSS compliant secure gateway. We do not store your banking credentials or card details.
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">
-                    Do you offer Cash on Delivery (COD)?
-                    <div class="icon"></div>
-                </button>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        Availability of Cash on Delivery depends on your pin code and will be displayed at checkout. Please note that additional handling charges may apply for COD orders.
+                        Yes, COD is available for most pincodes. A small handling fee of ₹100 is applicable on COD orders. You can check availability by entering your pincode at checkout.
                     </div>
                 </div>
             </div>
             
             <div class="accordion-item">
                 <button class="accordion-header">
-                    Can I cancel my order?
-                    <div class="icon"></div>
+                    Can I modify or cancel my order?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        Orders can be cancelled only <strong>before dispatch</strong>. Once the order is shipped, we cannot process a cancellation. If cancelled in time, a full refund will be initiated within 5–7 business days.
+                        Orders can be cancelled or modified only <strong>before dispatch</strong>. Once the shipping label is generated, we cannot alter the order. Please contact support immediately if you need changes.
                     </div>
                 </div>
             </div>
@@ -370,93 +431,69 @@
 
         <!-- CATEGORY: SHIPPING -->
         <div class="faq-category">
-            <h2 class="category-title"><span>03.</span> Shipping & Delivery</h2>
+            <h2 class="category-title"><span>03</span> Shipping & Delivery</h2>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    Do you ship outside India?
-                    <div class="icon"></div>
+                    Do you ship internationally?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        No, currently we only ship to addresses within India.
+                        Currently, we ship exclusively within India. We are working on expanding our logistics to serve global customers soon.
                     </div>
                 </div>
             </div>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    How long does delivery take?
-                    <div class="icon"></div>
+                    What are the delivery timelines?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        Orders are typically processed within 1–3 business days. Delivery takes an additional <strong>3–7 business days</strong> depending on your location and courier operations.
+                        Standard processing takes 1–2 business days. Delivery typically takes <strong>3–7 business days</strong> depending on your location (Metro cities are faster). You will receive tracking details via email/SMS once dispatched.
                     </div>
                 </div>
             </div>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    How can I track my order?
-                    <div class="icon"></div>
+                    What should I do if my package arrives damaged?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        You can track your order status directly on our website by visiting the <strong>"My Orders"</strong> section. Additionally, once dispatched, we will send a tracking link to your registered email or mobile number.
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">
-                    What if my package arrives damaged?
-                    <div class="icon"></div>
-                </button>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        Please refuse delivery if the package looks visibly damaged. If you find damage after opening, record a video or take photos and email us within <strong>48 hours</strong> for a resolution.
+                        Please <strong>do not accept</strong> a package if the seal is broken or the box is visibly damaged. If you discover damage after opening, please record an unboxing video and email us within 48 hours for a swift resolution.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- CATEGORY: RETURNS & REFUNDS -->
+        <!-- CATEGORY: RETURNS -->
         <div class="faq-category">
-            <h2 class="category-title"><span>04.</span> Returns & Refunds</h2>
+            <h2 class="category-title"><span>04</span> Returns & Refunds</h2>
 
             <div class="accordion-item">
                 <button class="accordion-header">
                     What is your return policy?
-                    <div class="icon"></div>
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        We accept returns only if the product is damaged, defective, or incorrect. The issue must be reported within <strong>48 hours</strong> of delivery. The item must be unused with original tags intact.
+                        We accept returns for damaged, defective, or incorrect items reported within <strong>48 hours</strong> of delivery. The product must be unused, unwashed, and have all original tags attached.
                     </div>
                 </div>
             </div>
 
             <div class="accordion-item">
                 <button class="accordion-header">
-                    Are there non-returnable items?
-                    <div class="icon"></div>
+                    Are sale items returnable?
+                    <div class="icon-box"></div>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        Yes. Sale/clearance items, customized products, and items showing signs of usage/washing are strictly non-returnable.
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header">
-                    How do I request a return?
-                    <div class="icon"></div>
-                </button>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        Email us at <a href="mailto:vastramayamagic@gmail.com">vastramayamagic@gmail.com</a> within 48 hours of delivery. Please include your Order ID and attach clear photos or videos of the issue.
+                        Clearance or Sale items are final sale and cannot be returned unless they arrive damaged. Please check the product description carefully before purchasing.
                     </div>
                 </div>
             </div>
@@ -464,17 +501,17 @@
 
         <!-- Contact CTA -->
         <div class="contact-cta">
+            <div class="watermark-v">V</div>
             <h3>Still have questions?</h3>
-            <p>We're here to help! Contact our support team.</p>
-            <p style="margin-top:15px"><strong>Email:</strong> vastramayamagic@gmail.com</p>
+            <p>Our concierge team is ready to assist you with any inquiries.</p>
+            <a href="contact.html" class="btn-contact">Contact Us</a>
         </div>
 
         <footer>
-            &copy; 2025 Vastramayamagic.in. All Rights Reserved.
+            &copy; 2025 Vastramaya. All Rights Reserved.
         </footer>
     </div>
 
-    <!-- Script for Accordion & Animation -->
     <script>
         // 1. Accordion Logic
         const accordions = document.querySelectorAll('.accordion-header');
@@ -503,7 +540,7 @@
             });
         });
 
-        // 2. Scroll Fade-in Animation for Categories
+        // 2. Scroll Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
