@@ -89,9 +89,24 @@
         .payment-option { padding: 24px; border-radius: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 18px; position: relative; cursor: pointer; background: var(--card-bg); transition: 0.2s; border: 1px solid var(--border-subtle); overflow: hidden; }
         .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
         .best-value-badge { position: absolute; top: 0; right: 0; background: var(--green-success); color: white; font-size: 11px; font-weight: 700; padding: 6px 14px; border-bottom-left-radius: 12px; z-index: 2; }
-        input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; border-radius: 50%; margin-right: 5px; flex-shrink: 0; }
-        input[type="radio"]:checked { border-color: var(--brand-primary); background: #fff; }
-        input[type="radio"]:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background: var(--brand-primary); border-radius: 50%; }
+        
+        /* Updated Radio Button (No Dot) */
+        input[type="radio"] { 
+            appearance: none; 
+            width: 22px; 
+            height: 22px; 
+            border: 2px solid #e0d0c8; 
+            border-radius: 50%; 
+            margin-right: 5px; 
+            flex-shrink: 0; 
+            transition: all 0.2s ease;
+        }
+        input[type="radio"]:checked { 
+            border-color: var(--brand-primary); 
+            background: transparent; 
+            border-width: 6px; /* Thick border indicates selection instead of a dot */
+        }
+        
         .pay-text { flex: 1; }
         .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
         .pay-sub { font-size: 14px; color: var(--text-secondary); display: block; }
@@ -177,16 +192,16 @@
             position: fixed;
             left: 0;
             width: 100vw;
-            height: 300px; /* Small strip height initially */
+            height: 300px; 
             top: 50%;
             transform: translateY(-50%);
             z-index: 10000;
             background: var(--anim-dark);
             overflow: hidden;
-            display: none; /* Hidden until active */
+            display: none; 
             align-items: center;
             justify-content: center;
-            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1); /* Cinematic ease */
+            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1); 
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
@@ -926,7 +941,7 @@
                             .set(orderDetails);
                 }
 
-                // 3. Clear Products (Based on mode)
+                // 3. Clear Products
                 if (isBuyNowMode) {
                     localStorage.removeItem('vastramaya_direct_buy');
                 } else {
