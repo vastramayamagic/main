@@ -36,7 +36,7 @@
             --shadow-modal: 0 25px 50px -12px rgba(63, 11, 23, 0.25);
             --font-main: 'DM Sans', sans-serif;
 
-            /* ANIMATION VARIABLES */
+            /* ANIMATION VARIABLES - INCREASED SCALE FOR VISIBILITY */
             --anim-primary: #275EFE;
             --anim-primary-light: #7699FF;
             --anim-dark: #1C212E;
@@ -47,13 +47,15 @@
             --anim-green: #16BF78;
             --anim-sand: #DCB773;
             --anim-sand-light: #EDD9A9;
-            --ui-scale: 2.5; 
+            
+            /* Made animation bigger */
+            --ui-scale: 3.5; 
             --font-size: 16px;
         }
 
         /* Mobile Animation Adjustments */
         @media (max-width: 768px) {
-            :root { --ui-scale: 1.3; --font-size: 14px; }
+            :root { --ui-scale: 2.0; --font-size: 14px; }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -209,7 +211,7 @@
         
         /* Updated Final Message for Lottie */
         .final-message {
-            position: absolute; left: 50%; top: -40px; 
+            position: absolute; left: 50%; top: -60px; /* Moved up slightly */
             transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
@@ -219,7 +221,7 @@
             color: var(--anim-white);
             font-size: 20px;
             font-weight: 600;
-            margin-top: 5px;
+            margin-top: 0px;
             white-space: nowrap;
         }
 
@@ -368,7 +370,7 @@
                     src="/success.json"
                     background="transparent"
                     speed="1"
-                    style="width: 80px; height: 80px;"
+                    style="width: 100px; height: 100px;"
                     autoplay>
                 </lottie-player>
                 <div class="message-text">Order Placed</div>
@@ -962,8 +964,10 @@
             stage.classList.add('active');
             
             // 3. Start Truck Animation
-            const animBox = document.getElementById('animBox');
-            animBox.classList.add('animate');
+            setTimeout(() => {
+                const animBox = document.getElementById('animBox');
+                animBox.classList.add('animate');
+            }, 50);
 
             // 4. Expand Stage after Truck leaves (approx 6s)
             setTimeout(() => {
