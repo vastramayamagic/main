@@ -307,7 +307,6 @@
         .modal-content-box { background: var(--page-bg); width: 100%; max-width: 1050px; height: 85vh; border-radius: 20px; position: relative; box-shadow: var(--shadow-float); transform: scale(0.95); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; display: flex; flex-direction: column; }
         .modal-overlay.active .modal-content-box { transform: scale(1); opacity: 1; }
 
-        /* Shared Close Button Style (Premium) */
         .premium-close-btn { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: rgba(255, 255, 255, 0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 60; transition: background 0.2s ease, transform 0.1s ease; }
         .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
         .close-icon-lines { width: 14px; height: 14px; position: relative; }
@@ -517,8 +516,7 @@
 
         .offer-box {
             background: #fff; width: 90%; max-width: 450px;
-            /* Flex layout to handle image/text content */
-            display: flex; flex-direction: column;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
             border-radius: 16px; overflow: hidden;
             position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.25);
             transform: translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -526,23 +524,34 @@
         }
         .offer-overlay.active .offer-box { transform: translateY(0); }
 
-        /* Popup Image Container */
-        #popup-image-container {
-            width: 100%; height: auto; position: relative;
+        /* Text Mode Specifics */
+        .offer-box.text-mode {
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #fffcf5 0%, #ffffff 100%);
         }
-        #popup-img {
+
+        /* Image Mode Specifics */
+        .offer-box.image-mode {
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .offer-box.image-mode #popup-image-container {
+             border-radius: 16px;
+             overflow: hidden;
+             box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+             border: 2px solid var(--brand-primary);
+             width: 100%; position: relative;
+        }
+        .offer-box.image-mode #popup-img {
             width: 100%; height: auto; display: block; object-fit: cover;
         }
-        /* Button overlay on Image */
-        #popup-image-container .offer-btn {
+        .offer-box.image-mode .offer-btn {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3); width: max-content;
         }
 
-        /* Popup Text Container */
-        #popup-text-container {
-            padding: 40px 30px 30px; text-align: center;
-        }
         #popup-title {
             font-family: 'Playfair Display', serif; color: var(--brand-primary);
             font-size: 26px; margin-bottom: 10px; line-height: 1.2;
@@ -560,6 +569,21 @@
             text-decoration: none; display: inline-block;
         }
         .offer-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139, 38, 53, 0.3); }
+
+        /* Mobile specific text mode adjustments */
+        @media (max-width: 768px) {
+            .offer-box.text-mode {
+                padding: 30px 20px;
+                width: 85%;
+            }
+            .offer-box.text-mode #popup-title {
+                font-size: 24px;
+            }
+            .offer-box.text-mode .offer-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
         
         /* --- SCOPED CSS FOR PREMIUM SECTION --- */
         .vastramaya-premium-cta {
@@ -1754,7 +1778,10 @@
                             popupImg.src = data.imageUrl;
                             imgContainer.style.display = 'block';
                             textContainer.style.display = 'none';
-                            box.style.padding = "0"; // Remove padding for image mode
+                            
+                            // Apply Image Mode Class
+                            box.classList.remove('text-mode');
+                            box.classList.add('image-mode');
                             
                             // Move button inside image container
                             imgContainer.appendChild(btn); 
@@ -1767,12 +1794,15 @@
                         // Text Mode - Show Immediately
                         imgContainer.style.display = 'none';
                         textContainer.style.display = 'block';
-                        box.style.padding = "40px"; // Restore padding
+                        
+                        // Apply Text Mode Class
+                        box.classList.remove('image-mode');
+                        box.classList.add('text-mode');
                         
                         document.getElementById('popup-title').textContent = data.title || "";
                         document.getElementById('popup-msg').textContent = data.message || "";
                         
-                        // Move button back to main box
+                        // Move button back to main box (so flexbox centers it)
                         box.appendChild(btn);
 
                         // Show Popup
