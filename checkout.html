@@ -880,7 +880,8 @@
                 address: currentAddressData,
                 amount: amount,
                 paymentMethod: method,
-                paymentStatus: status,
+                paymentStatus: status, // Paid or Pending
+                status: "Ordered",     // New Order Status
                 paymentId: payId,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
