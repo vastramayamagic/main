@@ -1,52 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Success Animation</title>
-  <script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
     body {
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       background: #f5f7fb;
-      margin: 0;
       font-family: Arial, sans-serif;
     }
-
-    .container {
+    .box {
       text-align: center;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
-
-    #lottie {
-      width: 200px;
-      height: 200px;
-      margin: auto;
-    }
-
     h2 {
-      color: #22c55e;
-      margin-top: 16px;
+      margin-top: 15px;
+      color: #2e7d32;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div id="lottie"></div>
-    <h2>Order Placed Successfully</h2>
-  </div>
+  <div class="box">
+    <lottie-player
+      src="success.json"
+      background="transparent"
+      speed="1"
+      style="width: 200px; height: 200px;"
+      autoplay>
+    </lottie-player>
 
-  <script>
-    lottie.loadAnimation({
-      container: document.getElementById("lottie"),
-      renderer: "svg",
-      loop: false,
-      autoplay: true,
-      path: "success.json"   // your lottie file
-    });
-  </script>
+    <h2>Success!</h2>
+    <p>Your action was completed successfully.</p>
+  </div>
 
 </body>
 </html>
