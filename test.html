@@ -62,7 +62,7 @@
         .d-search-bar:focus { background: var(--surface-card); border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
         .d-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-light); width: 18px; height: 18px; }
 
-        /* --- LIVE SEARCH RESULTS (NEW) --- */
+        /* --- LIVE SEARCH RESULTS --- */
         .search-results {
             position: absolute; top: 100%; left: 0; right: 0;
             background: var(--surface-card);
@@ -112,7 +112,6 @@
         .d-icon-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); stroke-width: 1.5; transition: stroke 0.2s ease; }
         .d-icon-btn:hover svg { stroke: var(--brand-primary); }
 
-        /* --- BADGES (Pill Shape for Double Digits) --- */
         .cart-badge, .wishlist-badge { 
             position: absolute; top: -6px; right: -6px; 
             background: var(--brand-primary); color: white; 
@@ -289,7 +288,6 @@
         /* --- MOBILE SEARCH & CART DRAWER --- */
         .m-search-overlay { position: fixed; inset: 0; background: var(--surface-card); z-index: 4000; display: none; flex-direction: column; }
         .m-search-header { height: 72px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; padding: 0 16px; gap: 12px; position:relative; }
-        /* Wrapped Mobile Input to handle dropdown absolute positioning */
         .m-search-wrapper { flex: 1; position: relative; }
         .m-search-input { width: 100%; padding: 14px; border: 1px solid var(--border-subtle); border-radius: 10px; font-family: "DM Sans", sans-serif; font-size: 16px; color: var(--text-primary); outline: none; background: var(--surface-light); }
         .m-search-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; }
@@ -442,17 +440,13 @@
                     <a href="index.html" class="d-nav-link active">Home</a>
                     <a href="shop.html" class="d-nav-link">Shop</a>
                     <div class="d-categories-dropdown">
-                        <!-- Changed href to avoid redirect on click -->
                         <a href="javascript:void(0)" class="d-nav-link" style="cursor: default">Categories</a>
-                        <div class="d-categories-content" id="desktop-nav-categories">
-                            <!-- Populated via Firebase -->
-                        </div>
+                        <div class="d-categories-content" id="desktop-nav-categories"></div>
                     </div>
                 </div>
                 <div class="d-search-container">
                     <svg class="d-search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                     <input type="text" class="d-search-bar" placeholder="Search products..." id="desktop-search">
-                    <!-- Live Search Results Container -->
                     <div class="search-results" id="desktop-search-results"></div>
                 </div>
                 <div class="d-action-icons">
@@ -538,7 +532,6 @@
             <div class="m-search-header">
                 <div class="m-search-wrapper">
                     <input type="text" class="m-search-input" placeholder="Search products..." id="mobile-search">
-                    <!-- Live Search Results Container -->
                     <div class="search-results" id="mobile-search-results"></div>
                 </div>
                 <button class="m-search-close" id="m-search-close">
@@ -547,7 +540,6 @@
             </div>
         </div>
 
-        <!-- REST OF MOBILE DRAWERS -->
         <div class="m-overlay" id="m-overlay">
             <div class="m-drawer">
                 <div class="m-drawer-header">
@@ -745,6 +737,7 @@
         let wishlist = [];
         let currentUser = null;
         let wishlistUnsubscribe = null;
+        let allProducts = []; // Store all products locally for search
 
         document.addEventListener('DOMContentLoaded', () => {
             initNavbarUI();
@@ -752,11 +745,24 @@
             renderCart();
             updateWishlistCount();
             loadCategories();
-            initLiveSearch(); // CHANGED: Added Live Search Logic
+            fetchAllProducts(); // Fetch data once for client-side search
+            initLiveSearch();
             initAuthModal();
         });
 
-        // --- LIVE SEARCH LOGIC ---
+        // --- NEW: FETCH ALL PRODUCTS FOR SEARCH ---
+        async function fetchAllProducts() {
+            try {
+                // Queries all 'products' subcollections across the entire database
+                const snapshot = await db.collectionGroup('products').get();
+                allProducts = snapshot.docs.map(doc => doc.data());
+                console.log(`Loaded ${allProducts.length} products for search.`);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        }
+
+        // --- UPDATED LIVE SEARCH LOGIC (Client-Side Filter) ---
         function debounce(func, wait) {
             let timeout;
             return function(...args) {
@@ -766,7 +772,7 @@
         }
 
         function initLiveSearch() {
-            const performSearch = async (query, resultsContainerId) => {
+            const performSearch = (query, resultsContainerId) => {
                 const container = document.getElementById(resultsContainerId);
                 if (!query || query.length < 2) {
                     container.classList.remove('show');
@@ -774,37 +780,29 @@
                     return;
                 }
 
-                try {
-                    // PREFIX SEARCH: Works by finding items that start with 'query'
-                    // Note: Firestore is case-sensitive by default.
-                    const snapshot = await db.collectionGroup('products')
-                        .where('name', '>=', query)
-                        .where('name', '<=', query + '\uf8ff')
-                        .limit(6)
-                        .get();
+                const lowerQuery = query.toLowerCase();
+                // Filter locally: Case-insensitive "includes"
+                const filtered = allProducts.filter(p => p.name.toLowerCase().includes(lowerQuery));
+                const results = filtered.slice(0, 6); // Limit results
 
-                    let html = '';
-                    if (snapshot.empty) {
-                        html = '<div class="search-no-results">No products found</div>';
-                    } else {
-                        snapshot.forEach(doc => {
-                            const p = doc.data();
-                            html += `
-                                <a href="product-detail.html?id=${p.productId}" class="search-result-item">
-                                    <img src="${p.image}" alt="${p.name}" class="search-result-img" onerror="this.src='https://placehold.co/48'">
-                                    <div class="search-result-info">
-                                        <div class="search-result-name">${p.name}</div>
-                                        <div class="search-result-price">₹${p.price}</div>
-                                    </div>
-                                </a>
-                            `;
-                        });
-                    }
-                    container.innerHTML = html;
-                    container.classList.add('show');
-                } catch (error) {
-                    console.error("Search error:", error);
+                let html = '';
+                if (results.length === 0) {
+                    html = '<div class="search-no-results">No products found</div>';
+                } else {
+                    results.forEach(p => {
+                        html += `
+                            <a href="product-detail.html?id=${p.productId}" class="search-result-item">
+                                <img src="${p.image}" alt="${p.name}" class="search-result-img" onerror="this.src='https://placehold.co/48'">
+                                <div class="search-result-info">
+                                    <div class="search-result-name">${p.name}</div>
+                                    <div class="search-result-price">₹${p.price}</div>
+                                </div>
+                            </a>
+                        `;
+                    });
                 }
+                container.innerHTML = html;
+                container.classList.add('show');
             };
 
             const debouncedSearchDesktop = debounce((e) => performSearch(e.target.value, 'desktop-search-results'), 300);
@@ -816,14 +814,11 @@
             if(dInput) dInput.addEventListener('input', debouncedSearchDesktop);
             if(mInput) mInput.addEventListener('input', debouncedSearchMobile);
             
-            // Close dropdowns on click outside
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('.d-search-container')) {
                     document.getElementById('desktop-search-results')?.classList.remove('show');
                 }
-                if (!e.target.closest('.m-search-header')) {
-                    // Optional: Close mobile results if clicked elsewhere in header, though usually it stays
-                }
+                // Mobile search overlay usually stays open until closed manually
             });
         }
 
