@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 
     <style>
         /* --- MAIN CHECKOUT VARIABLES --- */
@@ -91,22 +91,8 @@
         .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
         .best-value-badge { position: absolute; top: 0; right: 0; background: var(--green-success); color: white; font-size: 11px; font-weight: 700; padding: 6px 14px; border-bottom-left-radius: 12px; z-index: 2; }
         
-        /* Updated Radio Button (No Dot) */
-        input[type="radio"] { 
-            appearance: none; 
-            width: 22px; 
-            height: 22px; 
-            border: 2px solid #e0d0c8; 
-            border-radius: 50%; 
-            margin-right: 5px; 
-            flex-shrink: 0; 
-            transition: all 0.2s ease;
-        }
-        input[type="radio"]:checked { 
-            border-color: var(--brand-primary); 
-            background: transparent; 
-            border-width: 6px; 
-        }
+        input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; border-radius: 50%; margin-right: 5px; flex-shrink: 0; transition: all 0.2s ease; }
+        input[type="radio"]:checked { border-color: var(--brand-primary); background: transparent; border-width: 6px; }
         
         .pay-text { flex: 1; }
         .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
@@ -220,6 +206,16 @@
             transform: scale(var(--ui-scale)); transition: transform 0.3s ease;
         }
         
+        /* New Strip Text ("Order Placed") */
+        .strip-text {
+            position: absolute; left: 0; right: 0; top: 18px;
+            text-align: center; color: var(--anim-white);
+            font-size: 22px; font-weight: 700;
+            opacity: 0; transition: opacity 0.5s ease;
+            white-space: nowrap;
+        }
+        .strip-text.visible { opacity: 1; }
+
         .lines {
             opacity: 0; position: absolute; height: 3px; background: var(--anim-white);
             border-radius: 2px; width: 6px; top: 30px; left: 100%;
@@ -272,7 +268,7 @@
         .box:before { content: ''; top: 10px; position: absolute; left: 0; right: 0; height: 3px; background: rgba(0,0,0,0.1); }
         
         /* Animation States */
-        .animate .truck { animation: truck 6s ease forwards; }
+        .animate .truck { animation: truck 8s ease forwards; }
         .animate .truck:before { animation: door1 2.4s ease forwards .3s; }
         .animate .truck:after { animation: door2 2.4s ease forwards .6s; }
         .animate .truck .light:before { animation: light 8s ease forwards; }
@@ -303,34 +299,17 @@
         @keyframes door1 { 30%, 50% { transform: rotate(32deg); } }
         @keyframes door2 { 30%, 50% { transform: rotate(-32deg); } }
 
-        /* POST ANIMATION UI (LOTTIE + TEXT) */
-        .lottie-wrapper {
-            position: absolute;
-            left: 50%; top: 50%; transform: translate(-50%, -50%);
-            display: flex; flex-direction: column; align-items: center;
-            opacity: 0; transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-        .lottie-wrapper.visible { opacity: 1; pointer-events: auto; }
-        
-        #lottie { width: 300px; height: 300px; }
-        
-        .success-text {
-            color: white; font-size: 32px; font-weight: 700; 
-            margin-top: -40px; /* Pull text closer to animation */
-            font-family: var(--font-main);
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            opacity: 0; transition: opacity 0.5s ease;
-        }
-        .success-text.visible { opacity: 1; }
-
-        .order-details-container {
-            position: absolute; bottom: 15%; left: 0; right: 0;
+        /* FINAL CONTENT CONTAINER */
+        .final-content-container {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             display: flex; flex-direction: column; align-items: center; gap: 20px;
             opacity: 0; transition: opacity 1s ease;
+            width: 100%; pointer-events: none;
         }
-        .order-details-container.visible { opacity: 1; }
+        .final-content-container.visible { opacity: 1; pointer-events: auto; }
 
+        #lottie { width: 300px; height: 300px; }
+        
         .anim-order-id { 
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -386,14 +365,11 @@
                 <div class="light bottom"></div>
             </div>
             <div class="lines"></div>
+            <div class="strip-text" id="stripText">Order Placed</div>
         </div>
         
-        <div class="lottie-wrapper" id="lottieWrapper">
+        <div class="final-content-container" id="finalContent">
             <div id="lottie"></div>
-            <div class="success-text" id="successText">Order Placed</div>
-        </div>
-
-        <div class="order-details-container" id="orderDetails">
             <div class="anim-order-id" id="animOrderId"></div>
             <a href="index.html" class="anim-home-btn">Continue Shopping <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -594,7 +570,7 @@
         let currentUser = null;
         let currentAddressData = null;
         let isBuyNowMode = false;
-        let lottieAnim = null; // Store Lottie instance
+        let lottieAnim = null;
 
         const codModal = document.getElementById('codModal');
         const addrModal = document.getElementById('addressModal');
@@ -608,13 +584,13 @@
             checkAuth();
             loadCart();
             
-            // Pre-load Lottie
+            // Pre-load Lottie (paused)
             lottieAnim = lottie.loadAnimation({
                 container: document.getElementById('lottie'),
                 renderer: 'svg',
                 loop: true,
-                autoplay: false, // Don't play yet
-                path: './success.json'
+                autoplay: false, 
+                path: 'https://lottie.host/572e2990-2e45-4a25-9669-79a0d4869c9b/9q3s8q3s8q.json' // Use remote for reliability, swap to ./success.json if local
             });
         });
 
@@ -984,30 +960,32 @@
             const animBox = document.getElementById('animBox');
             animBox.classList.add('animate');
 
-            // 4. At 6s, show Lottie
+            // 4. At 5s, Show Text "Order Placed" inside the strip
             setTimeout(() => {
-                document.getElementById('animBox').style.opacity = '0'; // Hide truck
-                document.getElementById('lottieWrapper').classList.add('visible'); // Show Lottie
+                // Hide truck visual parts
+                const truckParts = document.querySelectorAll('.truck, .box, .lines');
+                truckParts.forEach(el => el.style.opacity = '0');
                 
-                // Play Lottie now
-                if(lottieAnim) lottieAnim.play();
-            }, 4500);
+                // Show text
+                document.getElementById('stripText').classList.add('visible');
+            }, 5000);
 
-            // 5. At 7s, Show Text
-            setTimeout(() => {
-                document.getElementById('successText').classList.add('visible');
-            }, 7000);
-
-            // 6. At 8.5s, Expand Stage
+            // 5. At 6.5s, Expand Stage
             setTimeout(() => {
                 stage.classList.add('full-screen');
-            }, 8500);
+            }, 6500);
 
-            // 7. Show Order Details (after spread completes)
+            // 6. At 7.5s, Switch to Final Content (Lottie + Details)
             setTimeout(() => {
+                // Hide the "Order Placed" text from the strip
+                document.getElementById('stripText').classList.remove('visible');
+                
+                // Show final container and init Lottie
+                document.getElementById('finalContent').classList.add('visible');
                 document.getElementById('animOrderId').innerText = `ORDER #${orderId}`;
-                document.getElementById('orderDetails').classList.add('visible');
-            }, 9500);
+                
+                if(lottieAnim) lottieAnim.play();
+            }, 7500);
         }
 
         function updateWishlistOnSuccess(boughtItems) {
