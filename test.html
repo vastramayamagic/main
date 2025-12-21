@@ -11,7 +11,6 @@
 
     <style>
         :root {
-            /* Original Light Palette */
             --page-bg: #fefcf3;
             --text-primary: #3f0b17;
             --text-secondary: #6b422a;
@@ -21,6 +20,7 @@
             --surface: #ffffff;
             --surface-alt: #fffbf7;
             --font-main: 'DM Sans', sans-serif;
+            --green-success: #4a9c7d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -53,8 +53,7 @@
             font-size: 11px;
             font-weight: 700;
             display: flex;
-            align-items: center;
-            gap: 6px;
+            align-items: center; gap: 6px;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -81,7 +80,6 @@
             transition: 0.3s ease;
             box-shadow: 0 4px 15px rgba(59, 11, 23, 0.03);
         }
-        .order-card:hover { border-color: var(--brand-gold); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(59, 11, 23, 0.06); }
 
         .card-head {
             padding: 12px 18px;
@@ -94,7 +92,6 @@
 
         .ref-no { font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.5px; }
         
-        /* Premium Status Badges */
         .status-pill {
             font-size: 10px;
             font-weight: 700;
@@ -102,45 +99,112 @@
             padding: 5px 12px;
             border-radius: 100px;
             letter-spacing: 0.5px;
-            border: 1px solid transparent;
         }
-        .st-ordered { background: #fdf6e9; color: var(--brand-gold); border-color: #f5e6cc; }
-        .st-shipped { background: #eef2f8; color: #5a7da3; border-color: #d6e0ed; }
-        .st-delivered { background: #f0f4ee; color: #738a61; border-color: #d9e2d3; }
-        .st-cancelled { background: #f8eeee; color: var(--brand-primary); border-color: #f1d5d5; }
+        .st-ordered { background: #fdf6e9; color: var(--brand-gold); }
+        .st-shipped { background: #eef2f8; color: #5a7da3; }
+        .st-delivered { background: #eafaf1; color: var(--green-success); }
+        .st-cancelled { background: #f8eeee; color: var(--brand-primary); }
 
         .card-body { padding: 18px; }
 
-        /* Internal Product Rows (Boxed Layout) */
         .product-boxed-row {
             display: flex;
             align-items: center;
             gap: 15px;
             padding: 10px;
             margin-bottom: 10px;
-            border: 1.5px solid var(--border-tan); /* Border on product */
-            border-radius: 12px; /* Radius on product row */
+            border: 1.5px solid var(--border-tan);
+            border-radius: 12px;
             background: #fff;
-            transition: 0.2s;
         }
         .product-boxed-row:last-child { margin-bottom: 0; }
-        .product-boxed-row:hover { background: var(--page-bg); border-color: var(--brand-gold); }
 
         .prod-img {
             width: 55px;
             height: 70px;
             object-fit: cover;
-            border-radius: 6px; /* Radius on image */
-            border: 1px solid var(--border-tan); /* Border on image */
-            background: #fdfaf7;
+            border-radius: 6px;
+            border: 1px solid var(--border-tan);
             flex-shrink: 0;
         }
 
         .prod-meta { flex: 1; }
-        .prod-meta h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; color: var(--text-primary); }
-        .prod-meta p { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
+        .prod-meta h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .prod-meta p { font-size: 11px; color: var(--text-secondary); }
 
         .prod-price { font-size: 14px; font-weight: 700; color: var(--brand-primary); }
+
+        /* --- TRACKER STYLES --- */
+        .tracker-container {
+            padding: 20px 30px 10px;
+            background: #fff;
+            border-top: 1.5px solid #f9f4f0;
+        }
+
+        .tracker-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tracker-steps::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #eee;
+            z-index: -1;
+        }
+
+        /* Line fill logic */
+        .tracker-container.at-shipped .tracker-steps::before {
+            background: linear-gradient(to right, var(--brand-primary) 50%, #eee 50%);
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 60px;
+        }
+
+        .dot {
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 2px solid #eee;
+            border-radius: 50%;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .step.active .dot { border-color: var(--brand-primary); background: var(--brand-primary); }
+        
+        .step-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #bbb;
+            letter-spacing: 0.5px;
+        }
+
+        .step.active .step-label { color: var(--brand-primary); }
+
+        /* PULSE EFFECT */
+        .pulse-dot {
+            animation: pulse-red 2s infinite;
+            border-color: var(--brand-primary) !important;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(139, 38, 53, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(139, 38, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(139, 38, 53, 0); }
+        }
 
         .card-foot {
             padding: 15px 18px;
@@ -151,47 +215,27 @@
             background: var(--surface-alt);
         }
 
-        .order-date { font-size: 12px; color: var(--text-secondary); font-style: italic; }
+        .date-placed { font-size: 11px; color: var(--text-secondary); font-style: italic; }
         .total-box { text-align: right; }
-        .total-label { font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px; }
+        .total-label { font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 2px; }
         .total-val { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+        .cod-notice { font-size: 9px; color: var(--brand-primary); font-weight: 700; display: block; margin-top: 2px; }
 
         /* States UI */
         .loading-wrap { text-align: center; padding: 120px 0; }
         .spinner { width: 32px; height: 32px; border: 3px solid #eee; border-top-color: var(--brand-primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .empty-state { text-align: center; padding: 80px 20px; }
-        .empty-state i { font-size: 45px; color: var(--border-tan); margin-bottom: 20px; }
-        .empty-state h2 { font-weight: 500; margin-bottom: 10px; }
-        
-        .btn-brand {
-            display: inline-block;
-            background: var(--brand-primary);
-            color: #fff;
-            padding: 14px 35px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            border-radius: 10px;
-            margin-top: 20px;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .btn-brand:hover { background: var(--text-primary); transform: translateY(-2px); }
-
         @media (max-width: 480px) {
-            .container { padding: 15px; }
-            .total-val { font-size: 18px; }
-            .product-boxed-row { gap: 12px; padding: 8px; }
-            .prod-meta h4 { font-size: 14px; }
+            .tracker-container { padding: 20px 15px 10px; }
+            .step-label { font-size: 8px; }
         }
     </style>
 </head>
 <body>
 
     <nav class="nav-header">
-        <a href="shop.html" class="back-nav"><i class="fas fa-chevron-left"></i> STUDIO</a>
+        <a href="shop.html" class="back-nav"><i class="fas fa-arrow-left"></i> STUDIO</a>
         <div class="brand-text">VASTRAMAYA</div>
         <div style="width: 45px;"></div>
     </nav>
@@ -199,19 +243,12 @@
     <div class="container">
         <div class="page-intro">
             <h1>The Archive</h1>
-            <p>Your collection history</p>
+            <p>Order tracking & history</p>
         </div>
 
         <div id="loading-state" class="loading-wrap">
             <div class="spinner"></div>
-            <p style="font-size: 11px; letter-spacing: 2px; color: var(--brand-primary); font-weight: 700;">FETCHING RECORDS</p>
-        </div>
-
-        <div id="empty-state" class="empty-state" style="display:none;">
-            <i class="fas fa-feather-alt"></i>
-            <h2>A Blank Canvas</h2>
-            <p style="color: var(--text-secondary);">Your personal archive is waiting for its first piece.</p>
-            <a href="shop.html" class="btn-brand">DISCOVER COLLECTION</a>
+            <p style="font-size: 11px; letter-spacing: 2px; color: var(--brand-primary);">SYNCING DATA</p>
         </div>
 
         <div id="orders-list"></div>
@@ -232,16 +269,16 @@
             measurementId: "G-E39VNDCFVE"
         };
 
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
         auth.onAuthStateChanged(user => {
-            if (user) fetchUserArchive(user.uid);
+            if (user) fetchArchive(user.uid);
             else window.location.href = "login.html";
         });
 
-        function fetchUserArchive(uid) {
+        function fetchArchive(uid) {
             db.collection('users').doc(uid).collection('orders')
               .orderBy('createdAt', 'desc')
               .onSnapshot(snapshot => {
@@ -249,48 +286,66 @@
                   const list = document.getElementById('orders-list');
                   list.innerHTML = '';
 
-                  if (snapshot.empty) {
-                      document.getElementById('empty-state').style.display = 'block';
-                      return;
-                  }
-
                   snapshot.forEach(doc => {
                       const data = doc.data();
                       const status = data.status || 'Ordered';
+                      const isCod = data.paymentMethod === 'COD';
                       const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString('en-GB', {
                           day: 'numeric', month: 'short', year: 'numeric'
-                      }) : 'Processing';
+                      }) : 'Pending';
 
-                      const card = document.createElement('div');
-                      card.className = 'order-card';
+                      let trackerHtml = '';
+                      // Logic: Show tracker if NOT delivered
+                      if (status !== 'Delivered' && status !== 'Cancelled') {
+                          const isShipped = status === 'Shipped';
+                          trackerHtml = `
+                            <div class="tracker-container ${isShipped ? 'at-shipped' : ''}">
+                                <div class="tracker-steps">
+                                    <div class="step active">
+                                        <div class="dot ${status === 'Ordered' ? 'pulse-dot' : ''}"></div>
+                                        <span class="step-label">Ordered</span>
+                                    </div>
+                                    <div class="step ${isShipped ? 'active' : ''}">
+                                        <div class="dot ${status === 'Shipped' ? 'pulse-dot' : ''}"></div>
+                                        <span class="step-label">Shipped</span>
+                                    </div>
+                                    <div class="step">
+                                        <div class="dot"></div>
+                                        <span class="step-label">Delivered</span>
+                                    </div>
+                                </div>
+                            </div>
+                          `;
+                      }
 
                       let itemsHtml = '';
                       (data.items || []).forEach(item => {
                           itemsHtml += `
                             <div class="product-boxed-row">
-                                <img src="${item.image}" class="prod-img" alt="piece">
+                                <img src="${item.image}" class="prod-img">
                                 <div class="prod-meta">
                                     <h4>${item.name}</h4>
                                     <p>SIZE: ${item.size || 'UNI'} • QTY: ${item.quantity}</p>
                                 </div>
                                 <div class="prod-price">₹${item.price.toLocaleString()}</div>
-                            </div>
-                          `;
+                            </div>`;
                       });
 
+                      const card = document.createElement('div');
+                      card.className = 'order-card';
                       card.innerHTML = `
                         <div class="card-head">
-                            <span class="ref-no">ID: #${data.orderId || doc.id.slice(0,8).toUpperCase()}</span>
+                            <span class="ref-no">#${data.orderId || doc.id.slice(0,8).toUpperCase()}</span>
                             <span class="status-pill st-${status.toLowerCase()}">${status}</span>
                         </div>
-                        <div class="card-body">
-                            ${itemsHtml}
-                        </div>
+                        <div class="card-body">${itemsHtml}</div>
+                        ${trackerHtml}
                         <div class="card-foot">
-                            <span class="order-date">Placed on ${date}</span>
+                            <span class="date-placed">Placed on ${date}</span>
                             <div class="total-box">
-                                <div class="total-label">INVESTMENT</div>
+                                <span class="total-label">INVESTMENT</span>
                                 <div class="total-val">₹${data.amount.toLocaleString()}</div>
+                                ${isCod ? '<span class="cod-notice">+ ₹100 Handling Fee Incl.</span>' : ''}
                             </div>
                         </div>
                       `;
