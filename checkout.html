@@ -285,26 +285,32 @@
         @keyframes door1 { 30%, 50% { transform: rotate(32deg); } }
         @keyframes door2 { 30%, 50% { transform: rotate(-32deg); } }
 
-        /* POST ANIMATION UI (HIGHLIGHTED) */
-        .post-anim-ui {
-            position: absolute; bottom: 20%; left: 0; right: 0;
-            text-align: center; opacity: 0; transition: opacity 1s ease;
-            display: flex; flex-direction: column; align-items: center; gap: 20px;
-        }
-        .post-anim-ui.visible { opacity: 1; }
-        
-        .success-lottie-container {
+        /* POST ANIMATION UI (LOTTIE + TEXT) */
+        .lottie-wrapper {
+            position: absolute;
+            left: 50%; top: 50%; transform: translate(-50%, -50%);
             display: flex; flex-direction: column; align-items: center;
-            margin-bottom: 20px;
+            opacity: 0; transition: opacity 0.5s ease;
+            pointer-events: none;
         }
+        .lottie-wrapper.visible { opacity: 1; pointer-events: auto; }
         
         #lottie { width: 300px; height: 300px; }
         
         .success-text {
-            color: white; font-size: 32px; font-weight: 700; margin-top: -30px;
+            color: white; font-size: 32px; font-weight: 700; 
+            margin-top: -40px; /* Pull text closer to animation */
             font-family: var(--font-main);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        
+
+        .order-details-container {
+            position: absolute; bottom: 15%; left: 0; right: 0;
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+            opacity: 0; transition: opacity 1s ease;
+        }
+        .order-details-container.visible { opacity: 1; }
+
         .anim-order-id { 
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -362,11 +368,12 @@
             <div class="lines"></div>
         </div>
         
-        <div class="post-anim-ui" id="postAnimUI">
-            <div class="success-lottie-container">
-                <div id="lottie"></div>
-                <div class="success-text">Order Placed</div>
-            </div>
+        <div class="lottie-wrapper" id="lottieWrapper">
+            <div id="lottie"></div>
+            <div class="success-text">Order Placed</div>
+        </div>
+
+        <div class="order-details-container" id="orderDetails">
             <div class="anim-order-id" id="animOrderId"></div>
             <a href="index.html" class="anim-home-btn">Continue Shopping <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -947,11 +954,11 @@
             const animBox = document.getElementById('animBox');
             animBox.classList.add('animate');
 
-            // 4. Expand Stage after Truck leaves (approx 6s)
+            // 4. At 6s, show Lottie
             setTimeout(() => {
-                stage.classList.add('full-screen');
+                document.getElementById('animBox').style.opacity = '0'; // Hide truck
+                document.getElementById('lottieWrapper').classList.add('visible'); // Show Lottie
                 
-                // Init Lottie now that container is visible and large
                 lottie.loadAnimation({
                   container: document.getElementById('lottie'),
                   renderer: 'svg',
@@ -961,11 +968,16 @@
                 });
             }, 6000);
 
-            // 5. Show Order Details (after spread completes)
+            // 5. At 6.5s, Expand Stage
+            setTimeout(() => {
+                stage.classList.add('full-screen');
+            }, 6500);
+
+            // 6. Show Order Details (after spread completes)
             setTimeout(() => {
                 document.getElementById('animOrderId').innerText = `ORDER #${orderId}`;
-                document.getElementById('postAnimUI').classList.add('visible');
-            }, 7000);
+                document.getElementById('orderDetails').classList.add('visible');
+            }, 7500);
         }
 
         function updateWishlistOnSuccess(boughtItems) {
