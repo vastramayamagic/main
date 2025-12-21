@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Order Vault | Vastramaya</title>
+    <title>My Archive | Vastramaya</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -11,36 +11,37 @@
 
     <style>
         :root {
-            --bg-dark: #0a0a0a;
-            --surface: #141414;
-            --surface-light: #1c1c1c;
-            --border: #2a2a2a;
-            --text-main: #ffffff;
-            --text-sub: #a0a0a0;
-            --accent: #d33d49;
-            --gold: #c5a059;
-            --font-clean: 'DM Sans', sans-serif;
+            /* Original Light Palette */
+            --page-bg: #fefcf3;
+            --text-primary: #3f0b17;
+            --text-secondary: #6b422a;
+            --brand-primary: #8b2635;
+            --brand-gold: #c5a059;
+            --border-tan: #e8d5c4;
+            --surface: #ffffff;
+            --surface-alt: #fffbf7;
+            --font-main: 'DM Sans', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            background: var(--bg-dark); 
-            color: var(--text-main); 
-            font-family: var(--font-clean); 
+            background: var(--page-bg); 
+            color: var(--text-primary); 
+            font-family: var(--font-main); 
             -webkit-font-smoothing: antialiased;
             padding-bottom: 40px;
         }
 
         /* --- Header --- */
         .nav-header {
-            padding: 15px 20px;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(254, 252, 243, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-tan);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -48,17 +49,17 @@
 
         .back-nav {
             text-decoration: none;
-            color: var(--text-main);
-            font-size: 12px;
+            color: var(--text-primary);
+            font-size: 11px;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        .brand-text { font-weight: 700; letter-spacing: 4px; font-size: 14px; color: var(--gold); }
+        .brand-text { font-weight: 700; letter-spacing: 4px; font-size: 14px; color: var(--brand-primary); }
 
         .container {
             max-width: 650px;
@@ -66,114 +67,124 @@
             padding: 20px 15px;
         }
 
-        .page-title { margin-bottom: 20px; }
-        .page-title h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
-        .page-title p { font-size: 13px; color: var(--text-sub); margin-top: 2px; }
+        .page-intro { margin-bottom: 25px; text-align: center; }
+        .page-intro h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+        .page-intro p { font-size: 13px; color: var(--text-secondary); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- DARK PREMIUM CARD --- */
+        /* --- PREMIUM CARD DESIGN --- */
         .order-card {
             background: var(--surface);
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border-tan);
             border-radius: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             overflow: hidden;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 11, 23, 0.03);
         }
-        .order-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+        .order-card:hover { border-color: var(--brand-gold); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(59, 11, 23, 0.06); }
 
         .card-head {
-            padding: 12px 16px;
+            padding: 12px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--surface-light);
-            border-bottom: 1px solid var(--border);
+            background: var(--surface-alt);
+            border-bottom: 1.5px solid var(--border-tan);
         }
 
-        .ref-no { font-size: 11px; font-weight: 700; color: var(--text-sub); font-family: monospace; }
+        .ref-no { font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.5px; }
         
+        /* Premium Status Badges */
         .status-pill {
-            font-size: 9px;
-            font-weight: 800;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 100px;
             letter-spacing: 0.5px;
             border: 1px solid transparent;
         }
-        .st-ordered { background: rgba(197, 160, 89, 0.1); color: var(--gold); border-color: rgba(197, 160, 89, 0.2); }
-        .st-shipped { background: rgba(39, 94, 254, 0.1); color: #4dabf7; border-color: rgba(39, 94, 254, 0.2); }
-        .st-delivered { background: rgba(22, 191, 120, 0.1); color: #16bf78; border-color: rgba(22, 191, 120, 0.2); }
-        .st-cancelled { background: rgba(211, 61, 73, 0.1); color: var(--accent); border-color: rgba(211, 61, 73, 0.2); }
+        .st-ordered { background: #fdf6e9; color: var(--brand-gold); border-color: #f5e6cc; }
+        .st-shipped { background: #eef2f8; color: #5a7da3; border-color: #d6e0ed; }
+        .st-delivered { background: #f0f4ee; color: #738a61; border-color: #d9e2d3; }
+        .st-cancelled { background: #f8eeee; color: var(--brand-primary); border-color: #f1d5d5; }
 
-        .card-body { padding: 16px; }
+        .card-body { padding: 18px; }
 
-        /* Product Row inside card */
-        .product-row {
+        /* Internal Product Rows (Boxed Layout) */
+        .product-boxed-row {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 8px;
+            gap: 15px;
+            padding: 10px;
             margin-bottom: 10px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: rgba(255,255,255,0.02);
+            border: 1.5px solid var(--border-tan); /* Border on product */
+            border-radius: 12px; /* Radius on product row */
+            background: #fff;
+            transition: 0.2s;
         }
-        .product-row:last-child { margin-bottom: 0; }
+        .product-boxed-row:last-child { margin-bottom: 0; }
+        .product-boxed-row:hover { background: var(--page-bg); border-color: var(--brand-gold); }
 
         .prod-img {
-            width: 50px;
-            height: 65px;
+            width: 55px;
+            height: 70px;
             object-fit: cover;
-            border-radius: 8px;
-            border: 1.5px solid var(--border);
-            background: #000;
+            border-radius: 6px; /* Radius on image */
+            border: 1px solid var(--border-tan); /* Border on image */
+            background: #fdfaf7;
+            flex-shrink: 0;
         }
 
         .prod-meta { flex: 1; }
-        .prod-meta h4 { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
-        .prod-meta p { font-size: 11px; color: var(--text-sub); }
+        .prod-meta h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; color: var(--text-primary); }
+        .prod-meta p { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
 
-        .prod-price { font-size: 13px; font-weight: 700; color: var(--gold); }
+        .prod-price { font-size: 14px; font-weight: 700; color: var(--brand-primary); }
 
         .card-foot {
-            padding: 12px 16px;
-            border-top: 1px solid var(--border);
+            padding: 15px 18px;
+            border-top: 1px dashed var(--border-tan);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: var(--surface-alt);
         }
 
-        .order-date { font-size: 11px; color: var(--text-sub); }
-        .total-info { text-align: right; }
-        .total-label { font-size: 9px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 2px; }
-        .total-val { font-size: 18px; font-weight: 700; color: #fff; }
+        .order-date { font-size: 12px; color: var(--text-secondary); font-style: italic; }
+        .total-box { text-align: right; }
+        .total-label { font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px; }
+        .total-val { font-size: 20px; font-weight: 700; color: var(--text-primary); }
 
-        /* States */
-        .loading-wrap { text-align: center; padding: 100px 0; }
-        .spinner { width: 30px; height: 30px; border: 3px solid #333; border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        /* States UI */
+        .loading-wrap { text-align: center; padding: 120px 0; }
+        .spinner { width: 32px; height: 32px; border: 3px solid #eee; border-top-color: var(--brand-primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .empty-state { text-align: center; padding: 60px 20px; }
-        .empty-state i { font-size: 40px; color: var(--border); margin-bottom: 20px; }
-        .btn-premium {
+        .empty-state { text-align: center; padding: 80px 20px; }
+        .empty-state i { font-size: 45px; color: var(--border-tan); margin-bottom: 20px; }
+        .empty-state h2 { font-weight: 500; margin-bottom: 10px; }
+        
+        .btn-brand {
             display: inline-block;
-            background: var(--gold);
-            color: #000;
-            padding: 12px 30px;
+            background: var(--brand-primary);
+            color: #fff;
+            padding: 14px 35px;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            border-radius: 8px;
-            margin-top: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            letter-spacing: 1px;
             transition: 0.3s;
         }
-        .btn-premium:hover { transform: scale(1.05); filter: brightness(1.1); }
+        .btn-brand:hover { background: var(--text-primary); transform: translateY(-2px); }
 
         @media (max-width: 480px) {
             .container { padding: 15px; }
-            .total-val { font-size: 16px; }
-            .product-row { gap: 12px; }
+            .total-val { font-size: 18px; }
+            .product-boxed-row { gap: 12px; padding: 8px; }
+            .prod-meta h4 { font-size: 14px; }
         }
     </style>
 </head>
@@ -182,31 +193,30 @@
     <nav class="nav-header">
         <a href="shop.html" class="back-nav"><i class="fas fa-chevron-left"></i> STUDIO</a>
         <div class="brand-text">VASTRAMAYA</div>
-        <div style="width: 40px;"></div>
+        <div style="width: 45px;"></div>
     </nav>
 
     <div class="container">
-        <div class="page-title">
+        <div class="page-intro">
             <h1>The Archive</h1>
-            <p>Your journey with our collection</p>
+            <p>Your collection history</p>
         </div>
 
         <div id="loading-state" class="loading-wrap">
             <div class="spinner"></div>
-            <p style="font-size: 11px; letter-spacing: 2px; color: var(--gold);">FETCHING RECORDS</p>
+            <p style="font-size: 11px; letter-spacing: 2px; color: var(--brand-primary); font-weight: 700;">FETCHING RECORDS</p>
         </div>
 
         <div id="empty-state" class="empty-state" style="display:none;">
-            <i class="fas fa-box-open"></i>
-            <h2>Vault is Empty</h2>
-            <p style="color: var(--text-sub); margin-top: 8px;">Begin your archive with a timeless piece.</p>
-            <a href="shop.html" class="btn-premium">ENTER STORE</a>
+            <i class="fas fa-feather-alt"></i>
+            <h2>A Blank Canvas</h2>
+            <p style="color: var(--text-secondary);">Your personal archive is waiting for its first piece.</p>
+            <a href="shop.html" class="btn-brand">DISCOVER COLLECTION</a>
         </div>
 
         <div id="orders-list"></div>
     </div>
 
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -227,11 +237,11 @@
         const db = firebase.firestore();
 
         auth.onAuthStateChanged(user => {
-            if (user) fetchVault(user.uid);
+            if (user) fetchUserArchive(user.uid);
             else window.location.href = "login.html";
         });
 
-        function fetchVault(uid) {
+        function fetchUserArchive(uid) {
             db.collection('users').doc(uid).collection('orders')
               .orderBy('createdAt', 'desc')
               .onSnapshot(snapshot => {
@@ -249,15 +259,15 @@
                       const status = data.status || 'Ordered';
                       const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString('en-GB', {
                           day: 'numeric', month: 'short', year: 'numeric'
-                      }) : 'Pending';
+                      }) : 'Processing';
 
                       const card = document.createElement('div');
                       card.className = 'order-card';
 
-                      let productsHtml = '';
+                      let itemsHtml = '';
                       (data.items || []).forEach(item => {
-                          productsHtml += `
-                            <div class="product-row">
+                          itemsHtml += `
+                            <div class="product-boxed-row">
                                 <img src="${item.image}" class="prod-img" alt="piece">
                                 <div class="prod-meta">
                                     <h4>${item.name}</h4>
@@ -274,11 +284,11 @@
                             <span class="status-pill st-${status.toLowerCase()}">${status}</span>
                         </div>
                         <div class="card-body">
-                            ${productsHtml}
+                            ${itemsHtml}
                         </div>
                         <div class="card-foot">
-                            <span class="order-date">${date}</span>
-                            <div class="total-info">
+                            <span class="order-date">Placed on ${date}</span>
+                            <div class="total-box">
                                 <div class="total-label">INVESTMENT</div>
                                 <div class="total-val">₹${data.amount.toLocaleString()}</div>
                             </div>
