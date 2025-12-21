@@ -92,8 +92,22 @@
         .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
         .best-value-badge { position: absolute; top: 0; right: 0; background: var(--green-success); color: white; font-size: 11px; font-weight: 700; padding: 6px 14px; border-bottom-left-radius: 12px; z-index: 2; }
         
-        input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; border-radius: 50%; margin-right: 5px; flex-shrink: 0; transition: all 0.2s ease; }
-        input[type="radio"]:checked { border-color: var(--brand-primary); background: transparent; border-width: 6px; }
+        /* Updated Radio Button (Clean Ring, No Dot) */
+        input[type="radio"] { 
+            appearance: none; 
+            width: 22px; 
+            height: 22px; 
+            border: 2px solid #e0d0c8; 
+            border-radius: 50%; 
+            margin-right: 5px; 
+            flex-shrink: 0; 
+            transition: all 0.2s ease;
+        }
+        input[type="radio"]:checked { 
+            border-color: var(--brand-primary); 
+            background: transparent; 
+            border-width: 6px; 
+        }
         
         .pay-text { flex: 1; }
         .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
@@ -304,7 +318,7 @@
         
         .success-text {
             color: white; font-size: 32px; font-weight: 700; 
-            margin-top: -40px; /* Pull text closer to animation */
+            margin-top: -40px; 
             font-family: var(--font-main);
             text-shadow: 0 4px 10px rgba(0,0,0,0.3);
             opacity: 0; transition: opacity 0.5s ease;
@@ -961,10 +975,10 @@
             const animBox = document.getElementById('animBox');
             animBox.classList.add('animate');
 
-            // 4. At 6s, show Lottie
+            // 4. At 6s, show Lottie + Text
             setTimeout(() => {
                 document.getElementById('animBox').style.opacity = '0'; // Hide truck
-                document.getElementById('lottieWrapper').classList.add('visible'); // Show Lottie
+                document.getElementById('lottieWrapper').classList.add('visible'); // Show Lottie wrapper (which contains Lottie + Text)
                 
                 lottie.loadAnimation({
                   container: document.getElementById('lottie'),
@@ -975,17 +989,17 @@
                 });
             }, 6000);
 
-            // 5. Show "Order Placed" Text
+            // 5. At 7s, Show "Order Placed" Text
             setTimeout(() => {
                 document.getElementById('successText').classList.add('visible');
             }, 7000);
 
-            // 6. At 8.5s, Expand Stage
+            // 6. At 8.5s, Expand Stage to Full Screen
             setTimeout(() => {
                 stage.classList.add('full-screen');
             }, 8500);
 
-            // 7. Show Order Details (after spread completes)
+            // 7. Show Order Details & Buttons
             setTimeout(() => {
                 document.getElementById('animOrderId').innerText = `ORDER #${orderId}`;
                 document.getElementById('orderDetails').classList.add('visible');
