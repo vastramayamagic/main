@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module"></script>
+    <script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
 
     <style>
         /* --- MAIN CHECKOUT VARIABLES --- */
@@ -92,7 +92,6 @@
         .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
         .best-value-badge { position: absolute; top: 0; right: 0; background: var(--green-success); color: white; font-size: 11px; font-weight: 700; padding: 6px 14px; border-bottom-left-radius: 12px; z-index: 2; }
         
-        /* Radio Button Logic */
         input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; border-radius: 50%; margin-right: 5px; flex-shrink: 0; transition: all 0.2s ease; }
         input[type="radio"]:checked { border-color: var(--brand-primary); background: transparent; border-width: 6px; }
         
@@ -178,29 +177,57 @@
 
         /* --- DELIVERY ANIMATION STYLES (EXPANDING) --- */
         .stage {
-            position: fixed; left: 0; width: 100vw; height: 300px; 
-            top: 50%; transform: translateY(-50%); z-index: 10000;
-            background: var(--anim-dark); overflow: hidden;
-            display: none; align-items: center; justify-content: center;
+            position: fixed;
+            left: 0;
+            width: 100vw;
+            height: 300px; 
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10000;
+            background: var(--anim-dark);
+            overflow: hidden;
+            display: none; 
+            align-items: center;
+            justify-content: center;
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1); 
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
+
         .stage.active { display: flex; }
-        .stage.full-screen { height: 100vh; top: 0; transform: translateY(0); box-shadow: none; }
+
+        .stage.full-screen {
+            height: 100vh;
+            top: 0;
+            transform: translateY(0);
+            box-shadow: none;
+        }
 
         .order-anim-container {
             position: relative; width: 240px; height: 63px;
             transform: scale(var(--ui-scale)); transition: transform 0.3s ease;
         }
         
+        /* Updated Final Message for Lottie */
         .final-message {
-            position: absolute; left: 50%; top: 50%; 
-            transform: translate(-50%, -50%);
+            position: absolute; left: 50%; top: -60px; 
+            transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-            width: 100%;
         }
-        .message-text { color: var(--anim-white); font-size: 20px; font-weight: 600; margin-top: 5px; white-space: nowrap; }
+        
+        /* Lottie Container CSS to match user request */
+        #lottie {
+            width: 120px; /* 120 * 2.5 scale = 300px visual */
+            height: 120px;
+        }
+        
+        .message-text {
+            color: var(--anim-white);
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 5px;
+            white-space: nowrap;
+        }
 
         .lines {
             opacity: 0; position: absolute; height: 3px; background: var(--anim-white);
@@ -343,12 +370,7 @@
     <div class="stage" id="stage">
         <div class="order-anim-container" id="animBox">
             <div class="final-message">
-                <dotlottie-wc
-                    src="https://lottie.host/228cc950-921c-4ba3-87b6-2a00d762c1b5/ZP4j11UJXx.lottie"
-                    autoplay
-                    loop
-                    style="width: 300px; height: 300px;">
-                </dotlottie-wc>
+                <div id="lottie"></div>
                 <div class="message-text">Order Placed</div>
             </div>
             
@@ -931,27 +953,35 @@
         }
 
         function startAnimation(orderId) {
-            // 1. Hide Checkout UI immediately
             document.getElementById('mainContainer').style.display = 'none';
             document.getElementById('mobile-bottom-bar').style.display = 'none';
             
-            // 2. Show Stage (Small Strip)
             const stage = document.getElementById('stage');
             stage.classList.add('active');
             
-            // 3. Start Truck Animation
             const animBox = document.getElementById('animBox');
             animBox.classList.add('animate');
 
-            // 4. Expand Stage after Truck leaves (approx 6s)
             setTimeout(() => {
                 stage.classList.add('full-screen');
             }, 6000);
 
-            // 5. Show Order Details (after spread completes)
             setTimeout(() => {
                 document.getElementById('animOrderId').innerText = `ORDER #${orderId}`;
                 document.getElementById('postAnimUI').classList.add('visible');
+                
+                // Initialize Lottie here when needed
+                lottie.loadAnimation({
+                  container: document.getElementById('lottie'),
+                  renderer: 'svg',
+                  loop: true,
+                  autoplay: true,
+                  path: './success.json'
+                });
+                
+                // Fade in the success container
+                document.querySelector('.final-message').style.opacity = '1';
+                
             }, 7000);
         }
 
