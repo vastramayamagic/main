@@ -307,7 +307,9 @@
             margin-top: -40px; /* Pull text closer to animation */
             font-family: var(--font-main);
             text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            opacity: 0; transition: opacity 0.5s ease;
         }
+        .success-text.visible { opacity: 1; }
 
         .order-details-container {
             position: absolute; bottom: 15%; left: 0; right: 0;
@@ -375,7 +377,7 @@
         
         <div class="lottie-wrapper" id="lottieWrapper">
             <div id="lottie"></div>
-            <div class="success-text">Order Placed</div>
+            <div class="success-text" id="successText">Order Placed</div>
         </div>
 
         <div class="order-details-container" id="orderDetails">
@@ -971,18 +973,23 @@
                   autoplay: true,
                   path: './success.json'
                 });
-            }, 4000);
+            }, 6000);
 
-            // 5. At 8s, Expand Stage (giving 2s for Lottie to play in strip)
+            // 5. Show "Order Placed" Text
+            setTimeout(() => {
+                document.getElementById('successText').classList.add('visible');
+            }, 7000);
+
+            // 6. At 8.5s, Expand Stage
             setTimeout(() => {
                 stage.classList.add('full-screen');
-            }, 8000);
+            }, 8500);
 
-            // 6. Show Order Details (after spread completes)
+            // 7. Show Order Details (after spread completes)
             setTimeout(() => {
                 document.getElementById('animOrderId').innerText = `ORDER #${orderId}`;
                 document.getElementById('orderDetails').classList.add('visible');
-            }, 9000);
+            }, 9500);
         }
 
         function updateWishlistOnSuccess(boughtItems) {
