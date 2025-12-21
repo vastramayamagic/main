@@ -7,8 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    
     <style>
         :root {
             --page-bg: #fefcf3;
@@ -30,59 +29,58 @@
             color: var(--text-primary); 
             font-family: var(--font-main); 
             -webkit-font-smoothing: antialiased;
-            padding-bottom: 40px;
+            padding-bottom: 60px;
         }
 
-        /* --- Header --- */
-        .nav-header {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(254, 252, 243, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-tan);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        /* --- Minimal Boutique Header (No Navbar) --- */
+        .header-minimal {
+            padding: 40px 20px 20px;
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
         }
 
-        .back-nav {
-            text-decoration: none;
-            color: var(--text-primary);
-            font-size: 11px;
+        .header-logo-svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 12px;
+            fill: var(--brand-primary);
+        }
+
+        .header-minimal h1 {
+            font-size: 28px;
             font-weight: 700;
-            display: flex;
-            align-items: center; gap: 6px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
         }
 
-        .brand-text { font-weight: 700; letter-spacing: 4px; font-size: 14px; color: var(--brand-primary); }
+        .header-minimal p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
 
         .container {
             max-width: 650px;
             margin: 0 auto;
-            padding: 20px 15px;
+            padding: 10px 15px;
         }
-
-        .page-intro { margin-bottom: 25px; text-align: center; }
-        .page-intro h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
-        .page-intro p { font-size: 13px; color: var(--text-secondary); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
 
         /* --- PREMIUM CARD DESIGN --- */
         .order-card {
             background: var(--surface);
             border: 1.5px solid var(--border-tan);
-            border-radius: 16px;
-            margin-bottom: 20px;
+            border-radius: 20px;
+            margin-bottom: 24px;
             overflow: hidden;
-            transition: 0.3s ease;
-            box-shadow: 0 4px 15px rgba(59, 11, 23, 0.03);
+            box-shadow: 0 4px 20px rgba(59, 11, 23, 0.04);
         }
 
         .card-head {
-            padding: 12px 18px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -90,170 +88,217 @@
             border-bottom: 1.5px solid var(--border-tan);
         }
 
-        .ref-no { font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.5px; }
+        .ref-group { display: flex; align-items: center; gap: 8px; }
+        .ref-no { font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 1px; }
         
-        .status-pill {
+        .status-badge {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             padding: 5px 12px;
             border-radius: 100px;
-            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .st-ordered { background: #fdf6e9; color: var(--brand-gold); }
         .st-shipped { background: #eef2f8; color: #5a7da3; }
         .st-delivered { background: #eafaf1; color: var(--green-success); }
         .st-cancelled { background: #f8eeee; color: var(--brand-primary); }
 
-        .card-body { padding: 18px; }
+        .card-body { padding: 20px; }
 
+        /* Boxed Product Logic */
         .product-boxed-row {
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
             border: 1.5px solid var(--border-tan);
-            border-radius: 12px;
+            border-radius: 16px;
             background: #fff;
         }
         .product-boxed-row:last-child { margin-bottom: 0; }
 
         .prod-img {
-            width: 55px;
-            height: 70px;
+            width: 60px;
+            height: 75px; /* Fixed Height */
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid var(--border-tan);
             flex-shrink: 0;
         }
 
         .prod-meta { flex: 1; }
-        .prod-meta h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-        .prod-meta p { font-size: 11px; color: var(--text-secondary); }
+        .prod-meta h4 { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+        .prod-meta p { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
-        .prod-price { font-size: 14px; font-weight: 700; color: var(--brand-primary); }
+        .prod-price { font-size: 15px; font-weight: 700; color: var(--brand-primary); }
 
-        /* --- TRACKER STYLES --- */
-        .tracker-container {
-            padding: 20px 30px 10px;
+        /* --- LUXURY TRACKER SVG --- */
+        .tracker-wrapper {
+            padding: 25px 40px;
             background: #fff;
             border-top: 1.5px solid #f9f4f0;
         }
 
-        .tracker-steps {
+        .tracker-line-container {
             display: flex;
             justify-content: space-between;
             position: relative;
+            align-items: center;
+        }
+
+        .tracker-line-bg {
+            position: absolute;
+            top: 16px;
+            left: 5%;
+            width: 90%;
+            height: 2px;
+            background: #eee;
             z-index: 1;
         }
 
-        .tracker-steps::before {
-            content: '';
+        .tracker-line-fill {
             position: absolute;
-            top: 10px;
-            left: 0;
-            width: 100%;
+            top: 16px;
+            left: 5%;
             height: 2px;
-            background: #eee;
-            z-index: -1;
+            background: var(--brand-primary);
+            z-index: 2;
+            transition: width 1s ease;
+            width: 0%;
         }
 
-        /* Line fill logic */
-        .tracker-container.at-shipped .tracker-steps::before {
-            background: linear-gradient(to right, var(--brand-primary) 50%, #eee 50%);
-        }
-
-        .step {
+        .step-item {
+            position: relative;
+            z-index: 3;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            width: 60px;
+            gap: 10px;
         }
 
-        .dot {
-            width: 20px;
-            height: 20px;
+        .step-icon-circle {
+            width: 34px;
+            height: 34px;
             background: #fff;
             border: 2px solid #eee;
             border-radius: 50%;
-            position: relative;
-            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
 
-        .step.active .dot { border-color: var(--brand-primary); background: var(--brand-primary); }
-        
+        .step-item.active .step-icon-circle {
+            border-color: var(--brand-primary);
+            background: var(--brand-primary);
+        }
+
+        .step-icon-circle svg {
+            width: 16px;
+            height: 16px;
+            fill: #ddd;
+        }
+
+        .step-item.active svg { fill: #fff; }
+
         .step-label {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            color: #bbb;
+            color: #ccc;
             letter-spacing: 0.5px;
         }
 
-        .step.active .step-label { color: var(--brand-primary); }
+        .step-item.active .step-label { color: var(--brand-primary); }
 
-        /* PULSE EFFECT */
-        .pulse-dot {
-            animation: pulse-red 2s infinite;
-            border-color: var(--brand-primary) !important;
+        /* PULSE */
+        .pulse-active {
+            animation: pulse-ring 2s infinite;
         }
 
-        @keyframes pulse-red {
+        @keyframes pulse-ring {
             0% { box-shadow: 0 0 0 0 rgba(139, 38, 53, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(139, 38, 53, 0); }
+            70% { box-shadow: 0 0 0 12px rgba(139, 38, 53, 0); }
             100% { box-shadow: 0 0 0 0 rgba(139, 38, 53, 0); }
         }
 
         .card-foot {
-            padding: 15px 18px;
-            border-top: 1px dashed var(--border-tan);
+            padding: 18px 20px;
+            border-top: 1.5px dashed var(--border-tan);
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: var(--surface-alt);
         }
 
-        .date-placed { font-size: 11px; color: var(--text-secondary); font-style: italic; }
-        .total-box { text-align: right; }
-        .total-label { font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 2px; }
-        .total-val { font-size: 20px; font-weight: 700; color: var(--text-primary); }
-        .cod-notice { font-size: 9px; color: var(--brand-primary); font-weight: 700; display: block; margin-top: 2px; }
+        .foot-date { font-size: 11px; color: var(--text-secondary); font-style: italic; }
+        .total-group { text-align: right; }
+        .total-lbl { font-size: 9px; font-weight: 700; color: var(--text-secondary); letter-spacing: 1px; }
+        .total-val { font-size: 22px; font-weight: 700; color: var(--brand-primary); }
+        .cod-tag { font-size: 9px; color: var(--brand-primary); font-weight: 700; margin-top: 2px; display: block; }
 
-        /* States UI */
-        .loading-wrap { text-align: center; padding: 120px 0; }
-        .spinner { width: 32px; height: 32px; border: 3px solid #eee; border-top-color: var(--brand-primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        /* STATES */
+        .state-container { text-align: center; padding: 100px 20px; }
+        .state-container svg { width: 60px; height: 60px; fill: var(--border-tan); margin-bottom: 20px; }
+        .btn-shop {
+            display: inline-block;
+            background: var(--brand-primary);
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .loader-spinner {
+            width: 35px; height: 35px;
+            border: 3px solid rgba(139, 38, 53, 0.1);
+            border-top: 3px solid var(--brand-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        @media (max-width: 480px) {
-            .tracker-container { padding: 20px 15px 10px; }
+        @media (max-width: 500px) {
+            .tracker-wrapper { padding: 25px 20px; }
             .step-label { font-size: 8px; }
+            .header-minimal h1 { font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="nav-header">
-        <a href="shop.html" class="back-nav"><i class="fas fa-arrow-left"></i> STUDIO</a>
-        <div class="brand-text">VASTRAMAYA</div>
-        <div style="width: 45px;"></div>
-    </nav>
+    <header class="header-minimal">
+        <svg class="header-logo-svg" viewBox="0 0 24 24"><path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM10 6a2 2 0 0 1 4 0v1h-4V6z"/></svg>
+        <h1>The Archive</h1>
+        <p>Order History & Status</p>
+    </header>
 
     <div class="container">
-        <div class="page-intro">
-            <h1>The Archive</h1>
-            <p>Order tracking & history</p>
+        <div id="loading-state" class="state-container">
+            <div class="loader-spinner"></div>
+            <p style="margin-top:15px; font-size: 11px; letter-spacing: 2px; color: var(--brand-primary);">SYNCHRONIZING</p>
         </div>
 
-        <div id="loading-state" class="loading-wrap">
-            <div class="spinner"></div>
-            <p style="font-size: 11px; letter-spacing: 2px; color: var(--brand-primary);">SYNCING DATA</p>
+        <div id="empty-state" class="state-container" style="display:none;">
+            <svg viewBox="0 0 24 24"><path d="M20 7h-4V6a4 4 0 0 0-8 0v1H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM10 6a2 2 0 0 1 4 0v1h-4V6zM4 9h16v11H4V9z"/></svg>
+            <h2 style="font-size: 20px;">History is Empty</h2>
+            <p style="color:var(--text-secondary); margin-top: 5px;">You haven't placed any orders yet.</p>
+            <a href="shop.html" class="btn-shop">CONTINUE SHOPPING</a>
         </div>
 
         <div id="orders-list"></div>
     </div>
 
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -274,43 +319,58 @@
         const db = firebase.firestore();
 
         auth.onAuthStateChanged(user => {
-            if (user) fetchArchive(user.uid);
+            if (user) loadUserOrders(user.uid);
             else window.location.href = "login.html";
         });
 
-        function fetchArchive(uid) {
+        function loadUserOrders(uid) {
             db.collection('users').doc(uid).collection('orders')
               .orderBy('createdAt', 'desc')
-              .onSnapshot(snapshot => {
+              .onSnapshot(snap => {
                   document.getElementById('loading-state').style.display = 'none';
                   const list = document.getElementById('orders-list');
                   list.innerHTML = '';
 
-                  snapshot.forEach(doc => {
-                      const data = doc.data();
-                      const status = data.status || 'Ordered';
-                      const isCod = data.paymentMethod === 'COD';
-                      const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString('en-GB', {
-                          day: 'numeric', month: 'short', year: 'numeric'
-                      }) : 'Pending';
+                  if (snap.empty) {
+                      document.getElementById('empty-state').style.display = 'block';
+                      return;
+                  }
+
+                  snap.forEach(doc => {
+                      const order = doc.data();
+                      const status = order.status || 'Ordered';
+                      const isCod = order.paymentMethod === 'COD';
+                      const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Pending';
 
                       let trackerHtml = '';
-                      // Logic: Show tracker if NOT delivered
                       if (status !== 'Delivered' && status !== 'Cancelled') {
-                          const isShipped = status === 'Shipped';
+                          const atShipped = status === 'Shipped';
+                          const lineFillWidth = atShipped ? '50%' : '0%';
+                          
                           trackerHtml = `
-                            <div class="tracker-container ${isShipped ? 'at-shipped' : ''}">
-                                <div class="tracker-steps">
-                                    <div class="step active">
-                                        <div class="dot ${status === 'Ordered' ? 'pulse-dot' : ''}"></div>
+                            <div class="tracker-wrapper">
+                                <div class="tracker-line-container">
+                                    <div class="tracker-line-bg"></div>
+                                    <div class="tracker-line-fill" style="width: ${lineFillWidth}"></div>
+                                    
+                                    <div class="step-item active">
+                                        <div class="step-icon-circle ${status === 'Ordered' ? 'pulse-active' : ''}">
+                                            <svg viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.97 4.44c-.31.17-.69.17-1 0L3.53 17.38c-.32-.17-.53-.5-.53-.88V7.5c0-.38.21-.71.53-.88l7.97-4.44c.31-.17.69-.17 1 0l7.97 4.44c.32.17.53.5.53.88v9z"/></svg>
+                                        </div>
                                         <span class="step-label">Ordered</span>
                                     </div>
-                                    <div class="step ${isShipped ? 'active' : ''}">
-                                        <div class="dot ${status === 'Shipped' ? 'pulse-dot' : ''}"></div>
+                                    
+                                    <div class="step-item ${atShipped ? 'active' : ''}">
+                                        <div class="step-icon-circle ${status === 'Shipped' ? 'pulse-active' : ''}">
+                                            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-1.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                                        </div>
                                         <span class="step-label">Shipped</span>
                                     </div>
-                                    <div class="step">
-                                        <div class="dot"></div>
+                                    
+                                    <div class="step-item">
+                                        <div class="step-icon-circle">
+                                            <svg viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+                                        </div>
                                         <span class="step-label">Delivered</span>
                                     </div>
                                 </div>
@@ -318,11 +378,11 @@
                           `;
                       }
 
-                      let itemsHtml = '';
-                      (data.items || []).forEach(item => {
-                          itemsHtml += `
+                      let productHtml = '';
+                      (order.items || []).forEach(item => {
+                          productHtml += `
                             <div class="product-boxed-row">
-                                <img src="${item.image}" class="prod-img">
+                                <img src="${item.image}" class="prod-img" alt="piece">
                                 <div class="prod-meta">
                                     <h4>${item.name}</h4>
                                     <p>SIZE: ${item.size || 'UNI'} • QTY: ${item.quantity}</p>
@@ -335,17 +395,21 @@
                       card.className = 'order-card';
                       card.innerHTML = `
                         <div class="card-head">
-                            <span class="ref-no">#${data.orderId || doc.id.slice(0,8).toUpperCase()}</span>
-                            <span class="status-pill st-${status.toLowerCase()}">${status}</span>
+                            <div class="ref-group">
+                                <span class="ref-no">ORD #${order.orderId || doc.id.slice(0,8).toUpperCase()}</span>
+                            </div>
+                            <div class="status-badge st-${status.toLowerCase()}">
+                                <span>${status}</span>
+                            </div>
                         </div>
-                        <div class="card-body">${itemsHtml}</div>
+                        <div class="card-body">${productHtml}</div>
                         ${trackerHtml}
                         <div class="card-foot">
-                            <span class="date-placed">Placed on ${date}</span>
-                            <div class="total-box">
-                                <span class="total-label">INVESTMENT</span>
-                                <div class="total-val">₹${data.amount.toLocaleString()}</div>
-                                ${isCod ? '<span class="cod-notice">+ ₹100 Handling Fee Incl.</span>' : ''}
+                            <span class="foot-date">Acquired on ${dateStr}</span>
+                            <div class="total-group">
+                                <span class="total-lbl">GRAND TOTAL</span>
+                                <div class="total-val">₹${order.amount.toLocaleString()}</div>
+                                ${isCod ? '<span class="cod-tag">+ ₹100 COD Handling Fee</span>' : ''}
                             </div>
                         </div>
                       `;
