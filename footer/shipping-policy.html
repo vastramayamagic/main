@@ -1073,27 +1073,28 @@
     </style>
 </head>
 <body>
-    <!-- DESKTOP NAVBAR STRUCTURE -->
+    <!-- DESKTOP NAVBAR STRUCTURE (REPLACED) -->
     <div class="page-desktop">
         <nav class="d-navbar">
             <div class="d-navbar-container">
                 <img class="d-navbar-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" onclick="window.location.href='index.html'" />
                 <div class="d-nav-links">
-                    <a href="index.html" class="d-nav-link">Home</a>
+                    <a href="index.html" class="d-nav-link active">Home</a>
                     <a href="shop.html" class="d-nav-link">Shop</a>
+                    <!-- CHANGED: 'href' removed to prevent redirect, using 'javascript:void(0)' -->
                     <div class="d-categories-dropdown">
-                        <a href="shop.html" class="d-nav-link">Categories</a>
+                        <a href="javascript:void(0)" class="d-nav-link" style="cursor: default">Categories</a>
                         <div class="d-categories-content" id="desktop-nav-categories">
                             <!-- Populated via Firebase -->
                         </div>
                     </div>
                 </div>
-                <div class="d-search-container">
-                    <svg class="d-search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" class="d-search-bar" placeholder="Search products..." id="desktop-search">
-                </div>
+                
+                <!-- Search Removed -->
+
                 <div class="d-action-icons">
-                    <a href="wishlist.html" class="d-icon-btn">
+                    <!-- Wishlist Link -->
+                    <a href="#" class="d-icon-btn" onclick="handleWishlistClick(event)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
                         <span class="wishlist-badge" id="wishlist-badge-desktop" style="display:none">0</span>
                     </a>
@@ -1136,6 +1137,7 @@
                                 </div>
                             </div>
                             <div class="profile-links" id="profile-links-container">
+                                <!-- Desktop Profile Links with SVGs -->
                                 <a href="my-profile.html" class="profile-link auth-only auth-hidden">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                     My Profile
@@ -1156,15 +1158,13 @@
         </nav>
     </div>
 
-    <!-- MOBILE NAVBAR STRUCTURE -->
+    <!-- MOBILE NAVBAR STRUCTURE (REPLACED) -->
     <div class="page-mobile">
         <nav class="m-navbar">
             <button class="m-menu-btn" id="m-menu-toggle"><div class="m-menu-lines"><span></span></div></button>
             <img class="m-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Vastramaya Logo" onclick="window.location.href='index.html'" />
             <div class="m-right-icons">
-                <button class="m-icon-btn" id="m-search-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                </button>
+                <!-- Search Removed -->
                 <button class="m-icon-btn" id="m-cart-toggle">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
                     <span class="mobile-cart-badge" id="cart-badge-mobile" style="display:none">0</span>
@@ -1182,7 +1182,7 @@
                 <nav class="m-drawer-nav">
                     <!-- SINGLE NAV SECTION WITH NO BORDERS -->
                     <div class="nav-section">
-                        <a href="index.html" class="m-nav-link">
+                        <a href="index.html" class="m-nav-link active">
                             <div class="m-link-content">
                                 <svg class="m-link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                                 <span>Home</span>
@@ -1211,8 +1211,8 @@
                             </div>
                         </div>
 
-                        <!-- MOVED WISHLIST & ORDERS HERE (Consolidated Layout) -->
-                        <a href="wishlist.html" class="m-nav-link">
+                        <!-- Wishlist Link Updated with OnClick Handler -->
+                        <a href="#" class="m-nav-link" onclick="handleWishlistClick(event)">
                             <div class="m-link-content">
                                 <svg class="m-link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
                                 Wishlist 
@@ -1335,6 +1335,11 @@
                                 </div>
                             </div>
                             
+                            <!-- Forgot Password Link -->
+                            <div style="text-align: right; margin-bottom: 12px;">
+                                <a href="#" id="forgot-password-link" style="font-size: 13px; color: var(--brand-primary); text-decoration: none; font-weight: 500;">Forgot Password?</a>
+                            </div>
+
                             <button type="submit" id="login-btn" class="btn-submit">Sign In</button>
                             
                             <div class="divider">Or continue with</div>
@@ -1632,8 +1637,9 @@
 
         // STATE
         let cart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
-        let wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+        let wishlist = []; // Removed Local Storage dependency for wishlist
         let currentUser = null;
+        let wishlistUnsubscribe = null; // To store the listener unsubscribe function
 
         // INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
@@ -1647,6 +1653,15 @@
         });
 
         // WISHLIST LOGIC
+        function handleWishlistClick(e) {
+            e.preventDefault();
+            if (currentUser) {
+                window.location.href = 'wishlist.html';
+            } else {
+                openAuthModal();
+            }
+        }
+
         function updateWishlistCount() {
             const count = wishlist.length;
             const dBadge = document.getElementById('wishlist-badge-desktop');
@@ -1665,43 +1680,25 @@
             }
         }
 
-        async function syncWishlistToFirestore() {
-            if (!currentUser) return;
-            try {
-                const doc = await db.collection('users').doc(currentUser.uid).get();
-                if (doc.exists && doc.data().wishlist) {
-                    if (wishlist.length === 0) {
-                        // If local empty, load from DB
+        // CHANGED: From .get() to .onSnapshot() for real-time listener
+        function setupWishlistListener(user) {
+            // Clean up previous listener if exists
+            if (wishlistUnsubscribe) {
+                wishlistUnsubscribe();
+            }
+
+            // Start listening for changes on the user's document
+            wishlistUnsubscribe = db.collection('users').doc(user.uid)
+                .onSnapshot((doc) => {
+                    if (doc.exists && doc.data().wishlist) {
                         wishlist = doc.data().wishlist;
-                        localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
-                        updateWishlistCount();
                     } else {
-                        // Merge logic
-                        const dbWishlist = doc.data().wishlist || [];
-                        const mergedIds = new Set([...wishlist.map(i=>i.id), ...dbWishlist.map(i=>i.id)]);
-                        
-                        const mergedList = [];
-                        mergedIds.forEach(id => {
-                            let item = dbWishlist.find(i => i.id === id) || wishlist.find(i => i.id === id);
-                            if(item) mergedList.push(item);
-                        });
-                        
-                        wishlist = mergedList;
-                        localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
-                        
-                        // Update DB with merged
-                        db.collection('users').doc(currentUser.uid).update({
-                            wishlist: wishlist
-                        });
-                        updateWishlistCount();
+                        wishlist = [];
                     }
-                } else if (wishlist.length > 0) {
-                    // Save local to DB if DB is empty
-                    db.collection('users').doc(currentUser.uid).set({
-                        wishlist: wishlist
-                    }, { merge: true });
-                }
-            } catch (e) { console.error("Sync wishlist error", e); }
+                    updateWishlistCount();
+                }, (error) => {
+                    console.error("Wishlist sync error:", error);
+                });
         }
 
         // AUTH MODAL LOGIC
@@ -1712,6 +1709,7 @@
             const showSignupBtn = document.getElementById('show-signup-btn');
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
             
             // Switch to Login View
             const goToLogin = () => {
@@ -1746,6 +1744,27 @@
                     modalOverlay.classList.remove('active');
                     document.body.style.overflow = '';
                 }
+            });
+
+            // ADDED: Forgot Password Logic
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                if (!email) {
+                    showToast("Please enter your email address first.");
+                    return;
+                }
+                
+                document.getElementById('loader').style.display = 'flex';
+                auth.sendPasswordResetEmail(email)
+                    .then(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        showToast(`Password reset email sent to ${email}`);
+                    })
+                    .catch((error) => {
+                        document.getElementById('loader').style.display = 'none';
+                        showToast(error.message);
+                    });
             });
 
             // Handle Login Submission
@@ -1883,7 +1902,7 @@
 
                 if (user) {
                     syncCartToFirestore();
-                    syncWishlistToFirestore(); // Sync wishlist when logged in
+                    setupWishlistListener(user); // CHANGED: Call the real-time listener
                     
                     // Fix: Sometimes displayName is null immediately after creation
                     let name = user.displayName;
@@ -1925,6 +1944,14 @@
                 } else {
                     // Guest State
                     authOnlyLinks.forEach(el => el.classList.add('auth-hidden'));
+                    
+                    // Cleanup real-time listener
+                    if(wishlistUnsubscribe) {
+                        wishlistUnsubscribe();
+                        wishlistUnsubscribe = null;
+                    }
+                    wishlist = []; // Clear wishlist in memory
+                    updateWishlistCount();
 
                     document.getElementById('user-name').textContent = "Guest User";
                     document.getElementById('user-email').textContent = "Sign in to sync";
@@ -1963,9 +1990,41 @@
             // Desktop Profile
             const pToggle = document.getElementById('d-profile-toggle');
             const pPopup = document.getElementById('profile-popup');
-            if(pToggle) {
-                pToggle.onclick = (e) => { e.stopPropagation(); pPopup.classList.toggle('show'); };
-                document.onclick = () => pPopup.classList.remove('show');
+            
+            // Desktop Cart
+            const dCartToggle = document.getElementById('d-cart-toggle');
+            const cartPopup = document.getElementById('cart-popup');
+
+            if(pToggle && dCartToggle) {
+                // Profile Toggle Click
+                pToggle.onclick = (e) => { 
+                    e.stopPropagation(); 
+                    // Close Cart if open
+                    if (cartPopup.classList.contains('show')) {
+                        cartPopup.classList.remove('show');
+                    }
+                    pPopup.classList.toggle('show'); 
+                };
+
+                // Cart Toggle Click
+                dCartToggle.onclick = (e) => { 
+                    e.stopPropagation(); 
+                    // Close Profile if open
+                    if (pPopup.classList.contains('show')) {
+                        pPopup.classList.remove('show');
+                    }
+                    cartPopup.classList.toggle('show'); 
+                };
+
+                // Close both when clicking inside popups (prevent bubbling to document)
+                cartPopup.onclick = (e) => e.stopPropagation();
+                pPopup.onclick = (e) => e.stopPropagation();
+
+                // Close both when clicking outside
+                document.addEventListener('click', () => {
+                    pPopup.classList.remove('show');
+                    cartPopup.classList.remove('show');
+                });
             }
 
             // Mobile Category Dropdown
@@ -1973,18 +2032,9 @@
             const mCatContent = document.getElementById('mobile-nav-categories');
             if(mCatToggle) {
                 mCatToggle.onclick = () => {
-                    mCatContent.classList.toggle('show');
+                    mCatContent.style.display = mCatContent.style.display === 'block' ? 'none' : 'block';
                     mCatToggle.classList.toggle('active');
                 }
-            }
-
-            // Desktop Cart
-            const dCartToggle = document.getElementById('d-cart-toggle');
-            const cartPopup = document.getElementById('cart-popup');
-            if (dCartToggle && cartPopup) {
-                dCartToggle.onclick = (e) => { e.stopPropagation(); cartPopup.classList.toggle('show'); };
-                cartPopup.onclick = (e) => e.stopPropagation();
-                document.addEventListener('click', () => cartPopup.classList.remove('show'));
             }
 
             // Mobile Cart
@@ -1995,15 +2045,6 @@
                 mCartToggle.onclick = () => cartOverlay.classList.add('open');
                 cartDrawerClose.onclick = () => cartOverlay.classList.remove('open');
                 cartOverlay.onclick = (e) => { if(e.target === cartOverlay) cartOverlay.classList.remove('open'); };
-            }
-
-            // Mobile Search
-            const mSearchToggle = document.getElementById('m-search-toggle');
-            const mSearchOverlay = document.getElementById('m-search-overlay');
-            const mSearchClose = document.getElementById('m-search-close');
-            if(mSearchToggle) {
-                mSearchToggle.onclick = () => mSearchOverlay.style.display = 'flex';
-                mSearchClose.onclick = () => mSearchOverlay.style.display = 'none';
             }
         }
 
