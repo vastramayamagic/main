@@ -2346,6 +2346,27 @@ function render(){
     else if(currentSort === 'newest') filteredList.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
 
     els.grid.innerHTML = '';
+    if (currentSort === 'az') {
+    filteredList.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+} 
+else if (currentSort === 'price-asc') {
+    filteredList.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
+} 
+else if (currentSort === 'price-desc') {
+    filteredList.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
+} 
+else if (currentSort === 'newest') {
+    filteredList.sort((a, b) => {
+        // Handle Firestore Timestamps or standard Dates
+        const dateA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime() : 0);
+        const dateB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime() : 0);
+        return dateB - dateA;
+    });
+}
+else if (currentSort === 'featured') {
+    // If 'featured' is a boolean in your DB
+    filteredList.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+}
     if(filteredList.length === 0) {
         els.grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px;">
             <div style="font-size:20px; color:var(--text-light); margin-bottom:10px;">No products found</div>
@@ -2758,22 +2779,24 @@ function initSort(){
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    // Toggle the 'open' class on the container div
     sortControl.classList.toggle('open');
   });
 
-  // Close menu when clicking anywhere else
   document.addEventListener('click', () => {
     sortControl.classList.remove('open');
   });
 
   menu.querySelectorAll('.sort-item').forEach(item => {
     item.addEventListener('click', () => {
-      currentSort = item.dataset.key;
-      label.textContent = item.textContent;
+      currentSort = item.dataset.key; // Set the key
+      label.textContent = item.textContent; // Update the label UI
+      
       menu.querySelectorAll('.sort-item').forEach(i => i.classList.remove('active'));
       item.classList.add('active');
-      sortControl.classList.remove('open'); // Close after selection
+      
+      sortControl.classList.remove('open'); // Close menu
+      
+      render(); // CRITICAL: Redraw the grid with the new order
     });
   });
 }
