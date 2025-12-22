@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,44 +66,12 @@
         body.no-scroll { overflow: hidden; }
 
         /* --- 2. CHECKOUT UI STYLES --- */
-        .container { 
-            max-width: 1100px; 
-            margin: 0 auto; 
-            padding: 40px 20px; 
-            display: grid; 
-            grid-template-columns: 1.5fr 1fr; 
-            gap: 50px; 
-            transition: opacity 0.5s ease;
-        }
-        .back-link { 
-            grid-column: span 2; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            color: var(--text-secondary); 
-            text-decoration: none; 
-            font-weight: 600; 
-            font-size: 14px; 
-            margin-bottom: -20px; 
-            width: fit-content; 
-            cursor: pointer; 
-            transition: color 0.3s ease;
-        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; }
+        .back-link { grid-column: span 2; display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 14px; margin-bottom: -20px; width: fit-content; cursor: pointer; }
         .back-link:hover { color: var(--brand-primary); }
 
         /* Empty Cart */
-        .empty-cart-container { 
-            grid-column: span 2; 
-            text-align: center; 
-            padding: 60px 20px; 
-            background: #fff; 
-            border-radius: 20px; 
-            border: 1px solid var(--border-subtle); 
-            display: none; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-        }
+        .empty-cart-container { grid-column: span 2; text-align: center; padding: 60px 20px; background: #fff; border-radius: 20px; border: 1px solid var(--border-subtle); display: none; flex-direction: column; align-items: center; justify-content: center; }
         .empty-cart-container.active { display: flex; }
         .empty-cart-icon { font-size: 64px; color: var(--border-subtle); margin-bottom: 20px; }
         .empty-cart-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
@@ -111,356 +81,60 @@
         h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; opacity: 0.9; font-weight: 700; color: var(--text-light); }
 
         /* Address Cards */
-        .address-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-subtle); 
-            border-radius: 16px; 
-            padding: 24px; 
-            margin-bottom: 30px; 
-            display: flex; 
-            gap: 15px; 
-            cursor: pointer; 
-            position: relative; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            box-shadow: 0 4px 10px rgba(59, 11, 23, 0.03); 
-        }
-        .address-card:hover { 
-            box-shadow: var(--shadow-rich); 
-            border-color: var(--brand-primary); 
-            transform: translateY(-2px); 
-        }
-        .address-empty-state { 
-            text-align: center; 
-            width: 100%; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-        }
-        .addr-type-tag { 
-            background: var(--surface-hover); 
-            color: var(--brand-primary); 
-            font-size: 10px; 
-            font-weight: 700; 
-            padding: 3px 8px; 
-            border-radius: 6px; 
-            text-transform: uppercase; 
-            margin-bottom: 8px; 
-            display: inline-block; 
-        }
-        .address-details strong { 
-            display: block; 
-            font-size: 18px; 
-            margin-bottom: 6px; 
-            color: var(--text-primary); 
-        }
-        .address-details span { 
-            font-size: 15px; 
-            color: var(--text-secondary); 
-            line-height: 1.5; 
-            display: block;
-        }
-        .change-btn { 
-            color: var(--brand-primary); 
-            font-weight: 700; 
-            font-size: 13px; 
-            text-transform: uppercase; 
-            margin-left: auto; 
-            cursor: pointer; 
-            align-self: flex-start; 
-            padding: 8px 16px; 
-            background: var(--surface-light); 
-            border: 1px solid var(--border-subtle); 
-            border-radius: 8px; 
-            transition: all 0.2s ease; 
-            white-space: nowrap; 
-        }
-        .change-btn:hover { 
-            background: var(--surface-hover); 
-            border-color: var(--brand-primary); 
-        }
+        .address-card { background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 30px; display: flex; gap: 15px; cursor: pointer; position: relative; transition: 0.3s; box-shadow: 0 4px 10px rgba(59, 11, 23, 0.03); }
+        .address-card:hover { box-shadow: var(--shadow-rich); border-color: var(--brand-primary); transform: translateY(-2px); }
+        .address-empty-state { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+        .addr-type-tag { background: var(--surface-hover); color: var(--brand-primary); font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; }
+        .address-details strong { display: block; font-size: 18px; margin-bottom: 6px; color: var(--text-primary); }
+        .address-details span { font-size: 15px; color: var(--text-secondary); line-height: 1.5; display: block;}
+        .change-btn { color: var(--brand-primary); font-weight: 700; font-size: 13px; text-transform: uppercase; margin-left: auto; cursor: pointer; align-self: flex-start; padding: 8px 16px; background: var(--surface-light); border: 1px solid var(--border-subtle); border-radius: 8px; transition: 0.2s; white-space: nowrap; }
+        .change-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
 
         /* Payment Options */
-        .payment-option { 
-            padding: 24px; 
-            border-radius: 16px; 
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: center; 
-            gap: 18px; 
-            position: relative; 
-            cursor: pointer; 
-            background: var(--card-bg); 
-            transition: all 0.3s ease; 
-            border: 2px solid transparent; 
-            overflow: hidden; 
-        }
-        .payment-option.prepaid { 
-            background: linear-gradient(to right, #ffffff, #fffbfc); 
-            border-color: var(--green-success); 
-        }
-        .payment-option.cod.selected { 
-            border-color: var(--red-warning); 
-            background: #fff5f5; 
-        }
-        .best-value-badge { 
-            position: absolute; 
-            top: 0; 
-            right: 0; 
-            background: var(--green-success); 
-            color: white; 
-            font-size: 11px; 
-            font-weight: 700; 
-            padding: 6px 14px; 
-            border-bottom-left-radius: 12px; 
-            z-index: 2; 
-        }
+        .payment-option { padding: 24px; border-radius: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 18px; position: relative; cursor: pointer; background: var(--card-bg); transition: 0.2s; border: 1px solid var(--border-subtle); overflow: hidden; }
+        .payment-option.prepaid { background: linear-gradient(to right, #ffffff, #fffbfc); border: 2px solid var(--green-success); }
+        .best-value-badge { position: absolute; top: 0; right: 0; background: var(--green-success); color: white; font-size: 11px; font-weight: 700; padding: 6px 14px; border-bottom-left-radius: 12px; z-index: 2; }
         
-        input[type="radio"] { 
-            appearance: none; 
-            width: 22px; 
-            height: 22px; 
-            border: 2px solid #e0d0c8; 
-            border-radius: 50%; 
-            margin-right: 5px; 
-            flex-shrink: 0; 
-            transition: all 0.3s ease; 
-            cursor: pointer;
-        }
-        input[type="radio"]:checked { 
-            border-color: var(--brand-primary); 
-            background: var(--brand-primary); 
-            box-shadow: 0 0 0 4px rgba(139, 38, 53, 0.1); 
-        }
+        input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid #e0d0c8; border-radius: 50%; margin-right: 5px; flex-shrink: 0; transition: all 0.2s ease; }
+        input[type="radio"]:checked { border-color: var(--brand-primary); background: transparent; border-width: 6px; }
         
         .pay-text { flex: 1; }
-        .pay-title { 
-            font-weight: 700; 
-            font-size: 16px; 
-            display: block; 
-            margin-bottom: 4px; 
-            color: var(--text-primary); 
-        }
-        .pay-sub { 
-            font-size: 14px; 
-            color: var(--text-secondary); 
-            display: block; 
-        }
-        .save-badge { 
-            display: inline-block; 
-            background: var(--green-bg); 
-            color: var(--green-success); 
-            font-weight: 700; 
-            font-size: 12px; 
-            padding: 4px 10px; 
-            border-radius: 20px; 
-            margin-left: 8px; 
-            border: 1px solid rgba(74, 156, 125, 0.3); 
-            animation: pulse-green 2s infinite; 
-        }
-        .fee-warning { 
-            display: block; 
-            margin-top: 6px; 
-            font-weight: 700; 
-            font-size: 13px; 
-            color: var(--red-warning); 
-            background: var(--red-bg); 
-            padding: 4px 12px; 
-            border-radius: 6px; 
-            width: fit-content; 
-        }
-        @keyframes pulse-green { 
-            0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 
-            70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 
-            100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); } 
-        }
+        .pay-title { font-weight: 700; font-size: 16px; display: block; margin-bottom: 4px; color: var(--text-primary); }
+        .pay-sub { font-size: 14px; color: var(--text-secondary); display: block; }
+        .save-badge { display: inline-block; background: var(--green-bg); color: var(--green-success); font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 20px; margin-left: 8px; border: 1px solid rgba(74, 156, 125, 0.3); animation: pulse-green 2s infinite; }
+        .fee-warning { display: block; margin-top: 6px; font-weight: 700; font-size: 13px; color: var(--red-warning); background: var(--red-bg); padding: 4px 12px; border-radius: 6px; width: fit-content; }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); } }
 
         /* Order Box */
-        .order-box { 
-            background: rgba(255,255,255,0.8); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid #fff; 
-            padding: 30px; 
-            border-radius: 16px; 
-            box-shadow: var(--shadow-rich); 
-            position: sticky; 
-            top: 20px; 
-            transition: transform 0.3s ease;
-        }
-        .order-box:hover {
-            transform: translateY(-5px);
-        }
-        .order-scroll-container { 
-            max-height: 400px; 
-            overflow-y: auto; 
-            padding-right: 5px; 
-            margin-bottom: 20px; 
-        }
+        .order-box { background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border: 1px solid #fff; padding: 30px; border-radius: 16px; box-shadow: var(--shadow-rich); position: sticky; top: 20px; }
+        .order-scroll-container { max-height: 400px; overflow-y: auto; padding-right: 5px; margin-bottom: 20px; }
         .order-scroll-container::-webkit-scrollbar { width: 5px; }
         .order-scroll-container::-webkit-scrollbar-thumb { background: #e8d5c4; border-radius: 10px; }
         
-        .product { 
-            display: flex; 
-            gap: 16px; 
-            margin-bottom: 20px; 
-            align-items: center; 
-            padding-bottom: 20px; 
-            border-bottom: 1px solid #f0f0f0; 
-            transition: opacity 0.3s ease;
-        }
+        .product { display: flex; gap: 16px; margin-bottom: 20px; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #f0f0f0; }
         .product:last-child { border-bottom: none; }
-        .prod-img { 
-            width: 60px; 
-            height: 80px; 
-            object-fit: cover; 
-            border-radius: 8px; 
-            border: 1px solid var(--border-subtle); 
-            box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05); 
-            transition: transform 0.3s ease;
-        }
-        .prod-img:hover {
-            transform: scale(1.05);
-        }
+        .prod-img { width: 60px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-subtle); box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05); }
         .prod-info { flex: 1; }
-        .prod-info h4 { 
-            font-size: 14px; 
-            margin-bottom: 4px; 
-            color: var(--text-primary); 
-            font-weight: 600; 
-            line-height: 1.4; 
-            display: -webkit-box; 
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical; 
-            overflow: hidden; 
-        }
+        .prod-info h4 { font-size: 14px; margin-bottom: 4px; color: var(--text-primary); font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .prod-info p { font-size: 12px; color: var(--text-light); margin-bottom: 6px; }
-        .qty-wrapper { 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            background: #fcfcfc; 
-            border: 1px solid #eee; 
-            border-radius: 6px; 
-            padding: 2px; 
-            width: fit-content; 
-        }
-        .qty-btn { 
-            width: 24px; 
-            height: 24px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #fff; 
-            border: 1px solid #ddd; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 14px; 
-            color: var(--text-primary); 
-            transition: all 0.2s ease; 
-        }
-        .qty-btn:hover { 
-            border-color: var(--brand-primary); 
-            color: var(--brand-primary); 
-            background: var(--surface-hover);
-        }
-        .qty-val { 
-            font-size: 13px; 
-            font-weight: 700; 
-            width: 20px; 
-            text-align: center; 
-            user-select: none;
-        }
-        .remove-icon-btn { 
-            color: #d33d49; 
-            cursor: pointer; 
-            padding: 8px; 
-            border-radius: 8px; 
-            transition: all 0.2s ease; 
-            font-size: 16px; 
-            margin-left: 10px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-        .remove-icon-btn:hover { 
-            background: #ffebee; 
-            transform: scale(1.1); 
-        }
+        .qty-wrapper { display: flex; align-items: center; gap: 8px; background: #fcfcfc; border: 1px solid #eee; border-radius: 6px; padding: 2px; width: fit-content; }
+        .qty-btn { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 14px; color: var(--text-primary); transition: 0.2s; }
+        .qty-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+        .qty-val { font-size: 13px; font-weight: 700; width: 20px; text-align: center; }
+        .remove-icon-btn { color: #d33d49; cursor: pointer; padding: 8px; border-radius: 8px; transition: 0.2s; font-size: 16px; margin-left: 10px; display: flex; align-items: center; justify-content: center; }
+        .remove-icon-btn:hover { background: #ffebee; transform: scale(1.1); }
 
-        .summary-row { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 14px; 
-            font-size: 15px; 
-            color: var(--text-secondary); 
-        }
-        .total-row { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-top: 10px; 
-            padding-top: 20px; 
-            border-top: 2px dashed var(--border-subtle); 
-            font-weight: 700; 
-            font-size: 20px; 
-            color: var(--text-primary); 
-        }
-        .total-row span:last-child { 
-            color: var(--brand-primary); 
-            font-size: 24px; 
-        }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
+        .total-row { display: flex; justify-content: space-between; margin-top: 10px; padding-top: 20px; border-top: 2px dashed var(--border-subtle); font-weight: 700; font-size: 20px; color: var(--text-primary); }
+        .total-row span:last-child { color: var(--brand-primary); font-size: 24px; }
         .text-green { color: var(--green-success); font-weight: 700; }
         .text-red { color: var(--red-warning); font-weight: 700; }
-        .strike { 
-            text-decoration: line-through; 
-            color: #999; 
-            margin-right: 5px; 
-            font-weight: 400; 
-            font-size: 13px;
-        }
+        .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
 
-        .btn-main { 
-            width: 100%; 
-            padding: 16px; 
-            background: var(--brand-gradient); 
-            color: white; 
-            border: none; 
-            border-radius: 12px; 
-            font-size: 16px; 
-            font-weight: 600; 
-            margin-top: 25px; 
-            cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 10px; 
-            position: relative; 
-            overflow: hidden; 
-            box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3); 
-        }
-        .btn-main::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; 
-            left: -100%; 
-            width: 100%; 
-            height: 100%; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); 
-            transition: 0.6s; 
-        }
-        .btn-main:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); 
-        }
-        .btn-main:hover::before { 
-            left: 100%; 
-        }
-        .btn-main:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
+        .btn-main { width: 100%; padding: 16px; background: var(--brand-gradient); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-top: 25px; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; overflow: hidden; box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3); }
+        .btn-main::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%); opacity: 0; transition: opacity 0.3s ease; }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); }
+        .btn-main:hover::before { opacity: 1; }
 
         .mobile-bottom-bar { display: none; }
 
@@ -468,144 +142,67 @@
         .stage {
             position: fixed; 
             left: 0; 
-            top: 0;
+            top: 50%; /* Center vertical anchor */
+            transform: translateY(-50%); /* Center vertical anchor */
             width: 100vw; 
             height: 0;
-            background: var(--anim-bg);
+            background: var(--anim-bg); /* Matches Brand Dark Maroon */
             z-index: 10000; 
             display: flex; 
             align-items: center; 
             justify-content: center;
             overflow: hidden; 
             transition: height 0.8s cubic-bezier(0.8, 0, 0.2, 1);
-            pointer-events: none;
+            pointer-events: none; /* Allows clicking through when inactive */
         }
         
         /* Grain Texture Overlay */
         .stage::before {
-            content: ""; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            opacity: 0.15; 
-            pointer-events: none;
+            opacity: 0.15; pointer-events: none;
         }
 
         /* Animation States */
         .stage.active { 
-            height: 100vh;
+            height: 300px; /* Expands symmetrically */
             pointer-events: all; 
+        }
+        .stage.full-screen { 
+            height: 100vh; /* Expands to fill screen symmetrically */
         }
 
         .order-anim-container {
-            position: relative; 
-            width: 240px; 
-            height: 63px;
-            transform: scale(var(--ui-scale)); 
-            transition: opacity 0.8s ease;
+            position: relative; width: 240px; height: 63px;
+            transform: scale(var(--ui-scale)); transition: opacity 0.8s ease;
         }
 
         /* Speed Lines */
         .lines {
-            opacity: 0; 
-            position: absolute; 
-            height: 1px; 
-            background: rgba(255,255,255,0.4);
-            width: 40px; 
-            top: 32px; 
-            left: 100%;
+            opacity: 0; position: absolute; height: 1px; background: rgba(255,255,255,0.4);
+            width: 40px; top: 32px; left: 100%;
             box-shadow: 60px 10px 0 rgba(255,255,255,0.2), 120px -15px 0 rgba(255,255,255,0.2), 80px 20px 0 rgba(255,255,255,0.1);
             filter: blur(1px);
         }
 
         /* Truck Logic */
-        .truck { 
-            width: 60px; 
-            height: 41px; 
-            left: 100%; 
-            z-index: 2; 
-            top: 11px; 
-            position: absolute; 
-            transform: translateX(24px); 
-        }
-        .truck .back { 
-            left: 0; 
-            top: 0; 
-            width: 60px; 
-            height: 41px; 
-            z-index: 1; 
-            position: absolute; 
-            background: linear-gradient(135deg, #fff 0%, #d1d1d1 100%); 
-            border-radius: 2px; 
-        }
-        .truck .front { 
-            overflow: hidden; 
-            position: absolute; 
-            border-radius: 2px 9px 9px 2px; 
-            width: 26px; 
-            height: 41px; 
-            left: 60px; 
-        }
-        .truck .front:after { 
-            content: ''; 
-            position: absolute; 
-            background: var(--brand-primary); 
-            width: 24px; 
-            height: 41px; 
-            right: 0; 
-        }
-        .truck .front .window { 
-            overflow: hidden; 
-            border-radius: 2px 8px 8px 2px; 
-            background: #2a3a5a; 
-            transform: perspective(4px) rotateY(3deg); 
-            width: 22px; 
-            height: 41px; 
-            position: absolute; 
-            left: 2px; 
-            top: 0; 
-            z-index: 1; 
-            transform-origin: 0 50%; 
-        }
+        .truck { width: 60px; height: 41px; left: 100%; z-index: 2; top: 11px; position: absolute; transform: translateX(24px); }
+        .truck .back { left: 0; top: 0; width: 60px; height: 41px; z-index: 1; position: absolute; background: linear-gradient(135deg, #fff 0%, #d1d1d1 100%); border-radius: 2px; }
+        .truck .front { overflow: hidden; position: absolute; border-radius: 2px 9px 9px 2px; width: 26px; height: 41px; left: 60px; }
+        .truck .front:after { content: ''; position: absolute; background: var(--brand-primary); width: 24px; height: 41px; right: 0; }
+        .truck .front .window { overflow: hidden; border-radius: 2px 8px 8px 2px; background: #2a3a5a; transform: perspective(4px) rotateY(3deg); width: 22px; height: 41px; position: absolute; left: 2px; top: 0; z-index: 1; transform-origin: 0 50%; }
         
-        .truck .light { 
-            width: 4px; 
-            height: 8px; 
-            left: 83px; 
-            position: absolute; 
-            border-radius: 2px; 
-            background: #fff; 
-            box-shadow: 0 0 15px #fff; 
-        }
+        .truck .light { width: 4px; height: 8px; left: 83px; position: absolute; border-radius: 2px; background: #fff; box-shadow: 0 0 15px #fff; }
         .truck .light:before {
-            content: ''; 
-            height: 20px; 
-            width: 100px; 
-            opacity: 0; 
-            position: absolute; 
-            left: 2px; 
-            top: 50%; 
-            margin-top: -10px;
+            content: ''; height: 20px; width: 100px; opacity: 0; position: absolute; left: 2px; top: 50%; margin-top: -10px;
             background: radial-gradient(ellipse at left, rgba(255, 255, 235, 0.6) 0%, rgba(255, 255, 200, 0.1) 50%, transparent 80%);
             clip-path: polygon(0% 45%, 100% 0%, 100% 100%, 0% 55%);
-            filter: blur(5px); 
-            transition: all 0.4s;
+            filter: blur(5px); transition: all 0.4s;
         }
         .truck .light.top { top: 4px; }
         .truck .light.bottom { bottom: 4px; }
 
-        .box { 
-            position: absolute; 
-            width: 21px; 
-            height: 21px; 
-            right: 100%; 
-            top: 21px; 
-            background: linear-gradient(135deg, var(--gold) 0%, #c5a059 100%); 
-            border-radius: 2px; 
-        }
+        .box { position: absolute; width: 21px; height: 21px; right: 100%; top: 21px; background: linear-gradient(135deg, var(--gold) 0%, #c5a059 100%); border-radius: 2px; }
 
         /* Animation Keyframes */
         .animate .truck { animation: truck-move 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards; }
@@ -640,82 +237,29 @@
 
         /* Success Content (Premium) */
         .success-wrapper {
-            position: absolute; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center;
-            opacity: 0; 
-            visibility: hidden; 
-            transition: all 1s ease; 
-            z-index: 10; 
-            text-align: center;
-            width: 100%; 
-            padding: 0 20px;
+            position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 1s ease; z-index: 10; text-align: center;
+            width: 100%; padding: 0 20px;
         }
-        .success-wrapper.visible { 
-            opacity: 1; 
-            visibility: visible; 
-        }
+        .success-wrapper.visible { opacity: 1; visibility: visible; }
         
-        #lottie { 
-            width: 280px; 
-            height: 280px; 
-            margin-bottom: -20px; 
-        }
+        #lottie { width: 280px; height: 280px; margin-bottom: -20px; }
         
-        .success-h1 { 
-            color: #fff; 
-            font-size: 32px; 
-            font-weight: 300; 
-            letter-spacing: 10px; 
-            text-transform: uppercase; 
-            margin-bottom: 8px; 
-        }
-        .success-p { 
-            color: var(--gold); 
-            font-size: 12px; 
-            letter-spacing: 5px; 
-            text-transform: uppercase; 
-            margin-bottom: 40px; 
-            opacity: 0.9; 
-            font-weight: 600; 
-        }
+        .success-h1 { color: #fff; font-size: 32px; font-weight: 300; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 8px; }
+        .success-p { color: var(--gold); font-size: 12px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 40px; opacity: 0.9; font-weight: 600; }
 
         /* Updated Order Panel & Button */
         .order-panel {
-            background: var(--glass); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             padding: 40px 60px; 
-            border-radius: 24px;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
+            border-radius: 24px; /* Increased Border Radius */
+            display: flex; flex-direction: column; align-items: center;
             box-shadow: 0 50px 100px rgba(0,0,0,0.5);
             max-width: 90%;
-            animation: panelFloat 3s ease-in-out infinite;
         }
-        @keyframes panelFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .panel-label { 
-            color: rgba(255,255,255,0.4); 
-            font-size: 10px; 
-            text-transform: uppercase; 
-            letter-spacing: 3px; 
-            margin-bottom: 12px; 
-        }
-        .panel-id { 
-            color: #fff; 
-            font-size: 24px; 
-            font-weight: 500; 
-            letter-spacing: 4px; 
-            font-family: monospace; 
-            text-shadow: 0 0 20px rgba(255,255,255,0.2); 
-        }
+        .panel-label { color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; }
+        .panel-id { color: #fff; font-size: 24px; font-weight: 500; letter-spacing: 4px; font-family: monospace; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
         
         /* New Button Style */
         .btn-return {
@@ -740,367 +284,64 @@
         }
 
         /* --- 4. MODAL STYLES --- */
-        .modal-overlay { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(59, 11, 23, 0.4); 
-            backdrop-filter: blur(8px); 
-            z-index: 2000; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .modal-card { 
-            background: #fff; 
-            border-radius: 20px; 
-            width: 100%; 
-            max-width: 500px; 
-            box-shadow: var(--shadow-rich); 
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            max-height: 85vh; 
-            border: 1px solid var(--border-subtle); 
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.active .modal-card {
-            transform: translateY(0);
-        }
-        .modal-header { 
-            padding: 25px 30px; 
-            border-bottom: 1px solid var(--border-subtle); 
-            flex-shrink: 0; 
-            background: var(--surface-light); 
-            border-radius: 20px 20px 0 0; 
-            position: relative; 
-        }
-        .modal-body { 
-            padding: 30px; 
-            overflow-y: auto; 
-            flex: 1; 
-        }
-        .modal-footer { 
-            padding: 20px 30px; 
-            border-top: 1px solid var(--border-subtle); 
-            background: #fff; 
-            border-radius: 0 0 20px 20px; 
-            flex-shrink: 0; 
-        }
-        @keyframes popIn { 
-            from { transform: scale(0.95); opacity: 0; } 
-            to { transform: scale(1); opacity: 1; } 
-        }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { background: #fff; border-radius: 20px; width: 100%; max-width: 500px; box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; display: flex; flex-direction: column; max-height: 85vh; border: 1px solid var(--border-subtle); }
+        .modal-header { padding: 25px 30px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; background: var(--surface-light); border-radius: 20px 20px 0 0; position: relative; }
+        .modal-body { padding: 30px; overflow-y: auto; flex: 1; }
+        .modal-footer { padding: 20px 30px; border-top: 1px solid var(--border-subtle); background: #fff; border-radius: 0 0 20px 20px; flex-shrink: 0; }
+        @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .premium-close-btn { 
-            width: 40px; 
-            height: 40px; 
-            border-radius: 10px; 
-            border: 1px solid var(--border-subtle); 
-            background: var(--surface-light); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            cursor: pointer; 
-            transition: all 0.2s ease; 
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-            z-index: 20; 
-        }
-        .premium-close-btn:hover { 
-            background: var(--surface-hover); 
-            border-color: var(--brand-primary); 
-            transform: rotate(90deg);
-        }
-        .close-icon-lines { 
-            width: 14px; 
-            height: 14px; 
-            position: relative; 
-        }
-        .close-icon-lines::before, .close-icon-lines::after { 
-            content: ""; 
-            position: absolute; 
-            inset: 0; 
-            margin: auto; 
-            width: 14px; 
-            height: 2px; 
-            border-radius: 999px; 
-            background: var(--text-primary); 
-            transition: background 0.2s; 
-        }
+        .premium-close-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--surface-light); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; position: absolute; top: 20px; right: 20px; z-index: 20; }
+        .premium-close-btn:hover { background: var(--surface-hover); border-color: var(--brand-primary); }
+        .close-icon-lines { width: 14px; height: 14px; position: relative; }
+        .close-icon-lines::before, .close-icon-lines::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; border-radius: 999px; background: var(--text-primary); transition: background 0.2s; }
         .close-icon-lines::before { transform: rotate(45deg); }
         .close-icon-lines::after { transform: rotate(-45deg); }
 
-        .input-error { 
-            border-color: var(--red-warning) !important; 
-            background-color: #fff8f8 !important; 
-        }
-        .error-msg { 
-            color: var(--red-warning); 
-            font-size: 11px; 
-            margin-top: 4px; 
-            font-weight: 600; 
-            display: none; 
-        }
+        .input-error { border-color: var(--red-warning) !important; background-color: #fff8f8 !important; }
+        .error-msg { color: var(--red-warning); font-size: 11px; margin-top: 4px; font-weight: 600; display: none; }
         .error-msg.show { display: block; }
-        .addr-form-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px; 
-            text-align: left; 
-            margin-bottom: 20px; 
-        }
+        .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 20px; }
         .full-width { grid-column: span 2; }
-        .modal-input { 
-            width: 100%; 
-            padding: 14px; 
-            border: 1px solid var(--border-subtle); 
-            border-radius: 10px; 
-            font-family: var(--font-main); 
-            font-size: 15px; 
-            background: var(--page-bg); 
-            color: var(--text-primary); 
-            transition: all 0.3s ease; 
-        }
-        .modal-input:focus { 
-            outline: none; 
-            border-color: var(--brand-primary); 
-            background: #fff; 
-            box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); 
-        }
-        .modal-label { 
-            display: block; 
-            font-size: 12px; 
-            font-weight: 700; 
-            color: var(--text-secondary); 
-            margin-bottom: 8px; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px; 
-        }
-        .addr-type-container { 
-            display: flex; 
-            gap: 10px; 
-            margin-top: 5px; 
-        }
+        .modal-input { width: 100%; padding: 14px; border: 1px solid var(--border-subtle); border-radius: 10px; font-family: var(--font-main); font-size: 15px; background: var(--page-bg); color: var(--text-primary); transition: 0.2s; }
+        .modal-input:focus { outline: none; border-color: var(--brand-primary); background: #fff; box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.1); }
+        .modal-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .addr-type-container { display: flex; gap: 10px; margin-top: 5px; }
         .addr-chip-input { display: none; }
-        .addr-chip-label { 
-            padding: 12px 20px; 
-            border: 1px solid var(--border-subtle); 
-            border-radius: 10px; 
-            font-size: 14px; 
-            font-weight: 500; 
-            cursor: pointer; 
-            color: var(--text-secondary); 
-            background: #fff; 
-            transition: all 0.2s ease; 
-            flex: 1; 
-            text-align: center; 
-        }
-        .addr-chip-input:checked + .addr-chip-label { 
-            background: var(--surface-hover); 
-            border-color: var(--brand-primary); 
-            color: var(--brand-primary); 
-            font-weight: 700; 
-        }
+        .addr-chip-label { padding: 12px 20px; border: 1px solid var(--border-subtle); border-radius: 10px; font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-secondary); background: #fff; transition: 0.2s; flex: 1; text-align: center; }
+        .addr-chip-input:checked + .addr-chip-label { background: var(--surface-hover); border-color: var(--brand-primary); color: var(--brand-primary); font-weight: 700; }
 
         .psych-content { text-align: center; padding: 40px; }
-        .modal-icon-lg { 
-            width: 80px; 
-            height: 80px; 
-            background: var(--surface-hover); 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 36px; 
-            color: var(--brand-primary); 
-            margin: 0 auto 20px; 
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+        .modal-icon-lg { width: 80px; height: 80px; background: var(--surface-hover); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; color: var(--brand-primary); margin: 0 auto 20px; }
         .psych-content h3 { font-size: 22px; color: var(--text-primary); margin-bottom: 10px; }
         .psych-content p { color: var(--text-secondary); font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
 
-        .btn-green-modal { 
-            background: var(--green-success); 
-            color: white; 
-            width: 100%; 
-            padding: 16px; 
-            border: none; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            font-size: 16px; 
-            cursor: pointer; 
-            margin-bottom: 15px; 
-            box-shadow: 0 4px 15px rgba(74, 156, 125, 0.3); 
-            transition: all 0.2s ease; 
-        }
-        .btn-green-modal:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(74, 156, 125, 0.4); 
-        }
-        .btn-outline-modal { 
-            background: transparent; 
-            border: 1px solid var(--border-subtle); 
-            color: var(--text-secondary); 
-            width: 100%; 
-            padding: 16px; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            font-size: 15px; 
-            cursor: pointer; 
-            transition: all 0.2s ease; 
-        }
-        .btn-outline-modal:hover { 
-            border-color: var(--brand-primary); 
-            color: var(--brand-primary); 
-            background: var(--surface-hover); 
-        }
+        .btn-green-modal { background: var(--green-success); color: white; width: 100%; padding: 16px; border: none; border-radius: 12px; font-weight: 600; font-size: 16px; cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(74, 156, 125, 0.3); transition: 0.2s; }
+        .btn-green-modal:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74, 156, 125, 0.4); }
+        .btn-outline-modal { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary); width: 100%; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.2s; }
+        .btn-outline-modal:hover { border-color: var(--brand-primary); color: var(--brand-primary); background: var(--surface-hover); }
 
         @media (max-width: 900px) {
-            .container { 
-                display: flex; 
-                flex-direction: column; 
-                gap: 30px; 
-                padding: 20px; 
-            }
-            .order-box { 
-                position: static; 
-                border: none; 
-                background: white; 
-                padding: 20px; 
-            }
+            .container { display: flex; flex-direction: column; gap: 30px; padding: 20px; }
+            .order-box { position: static; border: none; background: white; padding: 20px; }
             body { padding-bottom: 110px; }
             .summary-section .btn-main { display: none; }
-            .mobile-bottom-bar { 
-                display: flex; 
-                position: fixed; 
-                bottom: 0; 
-                left: 0; 
-                width: 100%; 
-                background: rgba(255, 255, 255, 0.95); 
-                backdrop-filter: blur(12px); 
-                border-top: 1px solid var(--border-subtle); 
-                padding: 12px 20px 20px 20px; 
-                z-index: 900; 
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.05); 
-            }
-            .btn-mobile-fixed { 
-                width: 100%; 
-                height: 56px; 
-                padding: 0 24px; 
-                background: var(--brand-gradient); 
-                color: white; 
-                border: 1px solid rgba(255,255,255,0.2); 
-                border-radius: 30px; 
-                font-size: 17px; 
-                font-weight: 700; 
-                cursor: pointer; 
-                box-shadow: 0 10px 25px -5px rgba(139, 38, 53, 0.5); 
-                display: flex; 
-                justify-content: center; 
-                align-items: center; 
-                gap: 12px; 
-                position: relative; 
-                overflow: hidden; 
-                letter-spacing: 0.5px; 
-                transition: all 0.3s ease;
-            }
-            .btn-mobile-fixed::before { 
-                content: ''; 
-                position: absolute; 
-                top: 0; 
-                left: -100%; 
-                width: 100%; 
-                height: 100%; 
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
-                transition: 0.6s; 
-            }
-            .btn-mobile-fixed:hover::before { 
-                left: 100%; 
-            }
-            .btn-mobile-fixed:active { 
-                transform: scale(0.98); 
-            }
-            .modal-overlay { 
-                align-items: flex-end; 
-                padding: 0; 
-            }
-            .modal-card { 
-                border-radius: 24px 24px 0 0; 
-                width: 100%; 
-                max-width: 100%; 
-                margin: 0; 
-                height: 85vh; 
-                max-height: 85vh; 
-                border: none; 
-                animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
-                display: flex; 
-                flex-direction: column; 
-            }
-            @keyframes slideUp {
-                from { transform: translateY(100%); }
-                to { transform: translateY(0); }
-            }
-            .modal-header { 
-                padding: 20px 25px; 
-                border-radius: 24px 24px 0 0; 
-                flex-shrink: 0; 
-            }
-            .modal-body { 
-                padding: 25px; 
-                overflow-y: auto; 
-                flex-grow: 1; 
-            }
-            .modal-footer { 
-                padding: 20px 25px; 
-                border-radius: 0; 
-                margin-top: auto; 
-                flex-shrink: 0; 
-                border-top: 1px solid var(--border-subtle); 
-                background: #fff; 
-            }
-            .addr-form-grid { 
-                grid-template-columns: 1fr; 
-                gap: 15px; 
-            }
+            .mobile-bottom-bar { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border-subtle); padding: 12px 20px 20px 20px; z-index: 900; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
+            .btn-mobile-fixed { width: 100%; height: 56px; padding: 0 24px; background: var(--brand-gradient); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; font-size: 17px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(139, 38, 53, 0.5); display: flex; justify-content: center; align-items: center; gap: 12px; position: relative; overflow: hidden; letter-spacing: 0.5px; }
+            .btn-mobile-fixed::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s; }
+            .btn-mobile-fixed:active::before { left: 100%; transition: 0s; }
+            .btn-mobile-fixed:active { transform: scale(0.98); }
+            .modal-overlay { align-items: flex-end; padding: 0; }
+            .modal-card { border-radius: 24px 24px 0 0; width: 100%; max-width: 100%; margin: 0; height: 85vh; max-height: 85vh; border: none; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; }
+            .modal-header { padding: 20px 25px; border-radius: 24px 24px 0 0; flex-shrink: 0; }
+            .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
+            .modal-footer { padding: 20px 25px; border-radius: 0; margin-top: auto; flex-shrink: 0; border-top: 1px solid var(--border-subtle); background: #fff; }
+            .addr-form-grid { grid-template-columns: 1fr; gap: 15px; }
             .full-width { grid-column: span 1; }
-            .premium-close-btn { 
-                position: absolute; 
-                top: 20px; 
-                right: 20px; 
-                background: #fff; 
-                border: 1px solid var(--border-subtle); 
-            }
-            .success-h1 { 
-                font-size: 24px; 
-                letter-spacing: 6px; 
-            }
-            .order-panel { 
-                padding: 30px 20px; 
-                width: 100%; 
-            }
+            .premium-close-btn { position: absolute; top: 20px; right: 20px; background: #fff; border: 1px solid var(--border-subtle); }
+            .success-h1 { font-size: 24px; letter-spacing: 6px; }
+            .order-panel { padding: 30px 20px; width: 100%; }
         }
     </style>
 </head>
@@ -1190,15 +431,14 @@
             <div class="order-box">
                 <div class="order-scroll-container">
                     <div id="order-items-container">
-                        <!-- Items will be loaded here -->
-                    </div>
+                        </div>
                 </div>
 
                 <div class="summary-row"><span>Subtotal</span><span id="subtotal-display">₹0</span></div>
                 <div class="summary-row"><span>Shipping & Handling</span><span id="shipping-display" class="text-green"><span class="strike">₹100</span> FREE</span></div>
                 <div class="total-row"><span>Total to Pay</span><span id="total-display">₹0</span></div>
 
-                <button class="btn-main" onclick="handleCheckout()" id="checkout-btn">
+                <button class="btn-main" onclick="handleCheckout()">
                     <span id="btn-text">Proceed to Pay</span> <i class="fas fa-arrow-right"></i>
                 </button>
                 
@@ -1208,7 +448,7 @@
     </div>
 
     <div class="mobile-bottom-bar" id="mobile-bottom-bar">
-        <button class="btn-mobile-fixed" onclick="handleCheckout()" id="mobile-checkout-btn">
+        <button class="btn-mobile-fixed" onclick="handleCheckout()">
             <span id="btn-text-mobile">Proceed to Pay</span>
             <i class="fas fa-arrow-right"></i>
         </button>
@@ -1241,7 +481,7 @@
                     </div>
                     <div>
                         <label class="modal-label">Mobile Number</label>
-                        <input type="tel" id="input-phone" class="modal-input" required maxlength="10">
+                        <input type="tel" id="input-phone" class="modal-input" required>
                         <div class="error-msg" id="error-phone">Enter valid 10 digit number</div>
                     </div>
                 </div>
@@ -1249,7 +489,7 @@
                 <div class="addr-form-grid">
                     <div>
                         <label class="modal-label">Pincode</label>
-                        <input type="text" id="input-zip" class="modal-input" required maxlength="6">
+                        <input type="text" id="input-zip" class="modal-input" required>
                         <div class="error-msg" id="error-zip">Enter valid 6 digit pincode</div>
                     </div>
                     <div>
@@ -1294,7 +534,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn-main" style="margin:0;" id="save-address-btn">Save Address</button>
+                <button type="submit" class="btn-main" style="margin:0;">Save Address</button>
             </div>
         </form>
     </div>
@@ -1314,14 +554,10 @@
             measurementId: "G-E39VNDCFVE"
         };
 
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Global Variables
         let baseTotal = 0;
         const codFee = 100;
         let masterCart = [];
@@ -1330,9 +566,7 @@
         let currentUser = null;
         let currentAddressData = null;
         let isBuyNowMode = false;
-        let isProcessing = false;
 
-        // DOM Elements
         const codModal = document.getElementById('codModal');
         const addrModal = document.getElementById('addressModal');
         const totalDisplay = document.getElementById('total-display');
@@ -1340,45 +574,17 @@
         const shippingDisplay = document.getElementById('shipping-display');
         const btnText = document.getElementById('btn-text');
         const btnTextMobile = document.getElementById('btn-text-mobile');
-        const checkoutBtn = document.getElementById('checkout-btn');
-        const mobileCheckoutBtn = document.getElementById('mobile-checkout-btn');
 
-        // Initialize on DOM Load
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
             loadCart();
-            setupEventListeners();
         });
-
-        function setupEventListeners() {
-            // Phone validation
-            document.getElementById('input-phone').addEventListener('input', function(e) {
-                this.value = this.value.replace(/\D/g, '').slice(0, 10);
-            });
-            
-            // Pincode validation
-            document.getElementById('input-zip').addEventListener('input', function(e) {
-                this.value = this.value.replace(/\D/g, '').slice(0, 6);
-            });
-        }
 
         function checkAuth() {
             auth.onAuthStateChanged(user => {
-                currentUser = user;
                 if (user) {
+                    currentUser = user;
                     loadAddress(user.uid);
-                } else {
-                    // Guest mode - load from localStorage if exists
-                    const savedAddress = localStorage.getItem('vastramaya_guest_address');
-                    if (savedAddress) {
-                        try {
-                            currentAddressData = JSON.parse(savedAddress);
-                            displayAddress(currentAddressData);
-                            addressExists = true;
-                        } catch(e) {
-                            console.error("Error parsing saved address:", e);
-                        }
-                    }
                 }
             });
         }
@@ -1389,46 +595,31 @@
                 if (doc.exists && doc.data().address) {
                     const addr = doc.data().address;
                     currentAddressData = addr;
-                    displayAddress(addr);
+                    
+                    document.getElementById('display-name').innerText = addr.name;
+                    document.getElementById('display-phone').innerText = addr.phone;
+                    document.getElementById('display-address').innerText = `${addr.street}, ${addr.locality}`;
+                    document.getElementById('display-city-state').innerText = `${addr.city} - ${addr.zip}, ${addr.state}`;
+                    document.getElementById('display-type').innerText = addr.type || 'Home';
+                    
+                    document.getElementById('input-name').value = addr.name;
+                    document.getElementById('input-phone').value = addr.phone;
+                    document.getElementById('input-zip').value = addr.zip;
+                    document.getElementById('input-locality').value = addr.locality;
+                    document.getElementById('input-city').value = addr.city;
+                    document.getElementById('input-state').value = addr.state;
+                    document.getElementById('input-street').value = addr.street;
+                    document.getElementById('input-landmark').value = addr.landmark || '';
+
                     addressExists = true;
+                    document.getElementById('address-filled').style.display = 'flex';
+                    document.getElementById('address-empty').style.display = 'none';
                 } else {
-                    showEmptyAddress();
+                    addressExists = false;
+                    document.getElementById('address-filled').style.display = 'none';
+                    document.getElementById('address-empty').style.display = 'flex';
                 }
-            } catch (e) { 
-                console.error("Error loading address:", e);
-                showEmptyAddress();
-            }
-        }
-
-        function displayAddress(addr) {
-            document.getElementById('display-name').innerText = addr.name;
-            document.getElementById('display-phone').innerText = `+91 ${addr.phone}`;
-            document.getElementById('display-address').innerText = `${addr.street}, ${addr.locality}`;
-            document.getElementById('display-city-state').innerText = `${addr.city} - ${addr.zip}, ${addr.state}`;
-            document.getElementById('display-type').innerText = addr.type || 'Home';
-            
-            // Pre-fill modal inputs
-            document.getElementById('input-name').value = addr.name;
-            document.getElementById('input-phone').value = addr.phone;
-            document.getElementById('input-zip').value = addr.zip;
-            document.getElementById('input-locality').value = addr.locality;
-            document.getElementById('input-city').value = addr.city;
-            document.getElementById('input-state').value = addr.state;
-            document.getElementById('input-street').value = addr.street;
-            document.getElementById('input-landmark').value = addr.landmark || '';
-            
-            // Set address type
-            const typeInput = document.querySelector(`input[name="addrType"][value="${addr.type || 'Home'}"]`);
-            if (typeInput) typeInput.checked = true;
-            
-            document.getElementById('address-filled').style.display = 'flex';
-            document.getElementById('address-empty').style.display = 'none';
-        }
-
-        function showEmptyAddress() {
-            addressExists = false;
-            document.getElementById('address-filled').style.display = 'none';
-            document.getElementById('address-empty').style.display = 'flex';
+            } catch (e) { console.error("Error loading address:", e); }
         }
 
         function loadCart() {
@@ -1437,52 +628,53 @@
 
             if (isBuyNowMode) {
                 const directItem = JSON.parse(localStorage.getItem('vastramaya_direct_buy'));
-                masterCart = directItem ? (Array.isArray(directItem) ? directItem : [directItem]) : [];
+                if (directItem) {
+                    masterCart = Array.isArray(directItem) ? directItem : [directItem];
+                } else {
+                    masterCart = [];
+                }
             } else {
                 masterCart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
             }
             
-            // Generate unique IDs for each item
             masterCart.forEach((item, index) => {
                 if(!item._checkoutId) {
-                    item._checkoutId = `item_${Date.now()}_${index}_${Math.random().toString(36).substr(2, 9)}`;
+                    item._checkoutId = Date.now() + '-' + index + '-' + Math.random().toString(36).substr(2, 9);
                 }
             });
 
-            checkoutItems = [...masterCart];
+            checkoutItems = [...masterCart]; 
             renderCheckoutList();
         }
 
         function renderCheckoutList() {
-            const container = document.getElementById('order-items-container');
-            
             if (checkoutItems.length === 0) {
                 document.getElementById('checkout-form-section').style.display = 'none';
                 document.getElementById('checkout-summary-section').style.display = 'none';
-                document.getElementById('mobile-bottom-bar').style.display = 'none';
+                document.getElementById('mobile-bottom-bar').style.display = 'none'; 
                 document.getElementById('empty-cart-msg').classList.add('active');
                 return;
             } else {
                 document.getElementById('checkout-form-section').style.display = 'block';
                 document.getElementById('checkout-summary-section').style.display = 'block';
-                document.getElementById('mobile-bottom-bar').style.display = '';
+                document.getElementById('mobile-bottom-bar').style.display = ''; 
                 document.getElementById('empty-cart-msg').classList.remove('active');
             }
 
+            const container = document.getElementById('order-items-container');
             container.innerHTML = '';
             baseTotal = 0;
 
             checkoutItems.forEach((item) => {
                 const itemTotal = item.price * item.quantity;
                 baseTotal += itemTotal;
-                
                 const div = document.createElement('div');
                 div.className = 'product';
                 div.innerHTML = `
-                    <img src="${item.image || 'https://via.placeholder.com/60x80'}" class="prod-img" alt="${item.name}">
+                    <img src="${item.image}" class="prod-img">
                     <div class="prod-info">
                         <h4>${item.name}</h4>
-                        <p>${item.size ? 'Size: ' + item.size : ''} ${item.color ? ' | Color: ' + item.color : ''}</p>
+                        <p>${item.size ? 'Size: ' + item.size : ''}</p>
                         
                         <div class="qty-wrapper">
                             <div class="qty-btn" onclick="updateQuantity('${item._checkoutId}', -1)">-</div>
@@ -1501,421 +693,326 @@
             });
 
             subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
-            updatePaymentUI();
-        }
-
-        function updateQuantity(uniqueId, change) {
-            const item = checkoutItems.find(i => i._checkoutId === uniqueId);
-            if (item) {
-                const newQty = item.quantity + change;
-                if (newQty < 1) {
-                    removeCheckoutItem(uniqueId);
-                } else if (newQty > 10) {
-                    alert('Maximum quantity per item is 10');
-                    return;
-                } else {
-                    item.quantity = newQty;
-                    renderCheckoutList();
-                }
-            }
-        }
-
-        function removeCheckoutItem(uniqueId) {
-            if (confirm('Remove this item from your cart?')) {
-                checkoutItems = checkoutItems.filter(item => item._checkoutId !== uniqueId);
-                renderCheckoutList();
-            }
-        }
-
-        // Modal Functions
-        function openAddressModal() { 
-            document.body.classList.add('no-scroll'); 
-            addrModal.classList.add('active'); 
-        }
-        
-        function closeAddressModal() { 
-            document.body.classList.remove('no-scroll'); 
-            addrModal.classList.remove('active'); 
-        }
-        
-        function openCodModal() { 
-            document.body.classList.add('no-scroll'); 
-            codModal.classList.add('active'); 
-        }
-        
-        function closeCodModal() { 
-            document.body.classList.remove('no-scroll'); 
-            codModal.classList.remove('active'); 
-        }
-
-        async function saveAddress(e) {
-            e.preventDefault();
             
-            const saveBtn = document.getElementById('save-address-btn');
-            const originalText = saveBtn.innerHTML;
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-            saveBtn.disabled = true;
-            
-            // Validate inputs
-            const name = document.getElementById('input-name').value.trim();
-            const phone = document.getElementById('input-phone').value.replace(/\D/g, '');
-            const zip = document.getElementById('input-zip').value.trim();
-            const street = document.getElementById('input-street').value.trim();
-            const locality = document.getElementById('input-locality').value.trim();
-            const city = document.getElementById('input-city').value.trim();
-            const state = document.getElementById('input-state').value.trim();
-            
-            // Clear previous errors
-            document.getElementById('error-phone').classList.remove('show');
-            document.getElementById('error-zip').classList.remove('show');
-            
-            let isValid = true;
-            
-            // Phone validation
-            const phoneRegex = /^[6-9]\d{9}$/;
-            if (!phoneRegex.test(phone)) {
-                document.getElementById('error-phone').classList.add('show');
-                isValid = false;
-            }
-            
-            // Pincode validation
-            const zipRegex = /^\d{6}$/;
-            if (!zipRegex.test(zip)) {
-                document.getElementById('error-zip').classList.add('show');
-                isValid = false;
-            }
-            
-            if (!isValid) {
-                saveBtn.innerHTML = originalText;
-                saveBtn.disabled = false;
-                return;
-            }
-            
-            const addressData = {
-                name: name,
-                phone: phone,
-                zip: zip,
-                street: street,
-                locality: locality,
-                city: city,
-                state: state,
-                landmark: document.getElementById('input-landmark').value.trim(),
-                type: document.querySelector('input[name="addrType"]:checked').value
-            };
-            
-            currentAddressData = addressData;
-            
-            // Display the address
-            displayAddress(addressData);
-            addressExists = true;
-            
-            // Save to Firebase if user is logged in
-            if (currentUser) {
-                try {
-                    await db.collection('users').doc(currentUser.uid).set({
-                        address: addressData
-                    }, { merge: true });
-                } catch (error) {
-                    console.error('Error saving address:', error);
-                }
-            } else {
-                // Save to localStorage for guest
-                localStorage.setItem('vastramaya_guest_address', JSON.stringify(addressData));
-            }
-            
-            // Close modal
-            setTimeout(() => {
-                saveBtn.innerHTML = originalText;
-                saveBtn.disabled = false;
-                closeAddressModal();
-            }, 500);
-        }
-
-        // Payment Functions
-        function togglePayment(method) {
-            if (method === 'cod') {
-                openCodModal();
-            } else {
-                setPrepaidUI();
-            }
-        }
-
-        function setPrepaidUI() {
-            document.getElementById('radio-prepaid').checked = true;
-            document.getElementById('card-prepaid').classList.add('prepaid');
-            document.getElementById('card-cod').classList.remove('selected');
-            shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
-            shippingDisplay.className = 'text-green';
-            totalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
-            btnText.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
-            btnTextMobile.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
-        }
-
-        function setCodUI() {
-            document.getElementById('radio-cod').checked = true;
-            document.getElementById('card-prepaid').classList.remove('prepaid');
-            document.getElementById('card-cod').classList.add('selected');
-            shippingDisplay.innerHTML = '+ ₹100 Fee';
-            shippingDisplay.className = 'text-red';
-            totalDisplay.innerText = `₹${(baseTotal + codFee).toLocaleString('en-IN')}`;
-            btnText.innerText = "Place Order";
-            btnTextMobile.innerText = "Place Order";
-            closeCodModal();
-        }
-
-        function switchToPrepaid() {
-            setPrepaidUI();
-            closeCodModal();
-        }
-
-        function confirmCOD() {
-            setCodUI();
-        }
-
-        function updatePaymentUI() {
-            if (document.getElementById('radio-cod').checked) {
+            if(document.getElementById('radio-cod').checked) {
                 setCodUI();
             } else {
                 setPrepaidUI();
             }
         }
 
-        // Checkout Handler
-        async function handleCheckout() {
-            if (isProcessing) return;
+        function updateQuantity(uniqueId, change) {
+            const item = checkoutItems.find(i => i._checkoutId === uniqueId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeCheckoutItem(uniqueId);
+                } else {
+                    renderCheckoutList();
+                }
+            }
+        }
+
+        function removeCheckoutItem(uniqueId) {
+            checkoutItems = checkoutItems.filter(item => item._checkoutId !== uniqueId);
+            renderCheckoutList();
+        }
+
+        function openAddressModal() { document.body.classList.add('no-scroll'); addrModal.style.display = 'flex'; }
+        function closeAddressModal() { document.body.classList.remove('no-scroll'); addrModal.style.display = 'none'; }
+        function closeCodModal() { document.body.classList.remove('no-scroll'); codModal.style.display = 'none'; setPrepaidUI(); }
+        
+        async function saveAddress(e) {
+            e.preventDefault();
+            const newName = document.getElementById('input-name').value;
+            const newPhoneInput = document.getElementById('input-phone');
+            const newZipInput = document.getElementById('input-zip');
             
+            document.getElementById('error-phone').classList.remove('show');
+            newPhoneInput.classList.remove('input-error');
+            document.getElementById('error-zip').classList.remove('show');
+            newZipInput.classList.remove('input-error');
+
+            let isValid = true;
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const cleanPhone = newPhoneInput.value.replace(/\D/g, '');
+            if (!phoneRegex.test(cleanPhone)) {
+                document.getElementById('error-phone').classList.add('show');
+                newPhoneInput.classList.add('input-error');
+                isValid = false;
+            }
+            const zipRegex = /^\d{6}$/;
+            if (!zipRegex.test(newZipInput.value)) {
+                document.getElementById('error-zip').classList.add('show');
+                newZipInput.classList.add('input-error');
+                isValid = false;
+            }
+            if (!isValid) return;
+
+            const addressData = {
+                name: newName, phone: cleanPhone, zip: newZipInput.value,
+                street: document.getElementById('input-street').value,
+                locality: document.getElementById('input-locality').value,
+                city: document.getElementById('input-city').value,
+                state: document.getElementById('input-state').value,
+                landmark: document.getElementById('input-landmark').value,
+                type: document.querySelector('input[name="addrType"]:checked').value
+            };
+
+            currentAddressData = addressData;
+            document.getElementById('display-name').innerText = addressData.name;
+            document.getElementById('display-address').innerText = `${addressData.street}`;
+            document.getElementById('address-filled').style.display = 'flex';
+            document.getElementById('address-empty').style.display = 'none';
+            addressExists = true;
+
+            if(currentUser) {
+                await db.collection('users').doc(currentUser.uid).set({ address: addressData }, { merge: true });
+            }
+            closeAddressModal();
+        }
+
+        function togglePayment(method) {
+            if (method === 'cod') { document.body.classList.add('no-scroll'); codModal.style.display = 'flex'; } 
+            else { setPrepaidUI(); }
+        }
+        function setPrepaidUI() {
+            document.getElementById('radio-prepaid').checked = true;
+            document.getElementById('card-prepaid').style.borderColor = "var(--green-success)";
+            document.getElementById('card-cod').style.borderColor = "var(--border-subtle)";
+            document.getElementById('card-cod').style.background = "#fff";
+            shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
+            shippingDisplay.className = 'text-green';
+            totalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
+            btnText.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
+            btnTextMobile.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
+        }
+        function setCodUI() {
+            document.getElementById('card-prepaid').style.borderColor = "var(--border-subtle)";
+            document.getElementById('card-cod').style.borderColor = "var(--red-warning)";
+            document.getElementById('card-cod').style.background = "#fff5f5";
+            shippingDisplay.innerHTML = '+ ₹100 Fee';
+            shippingDisplay.className = 'text-red';
+            totalDisplay.innerText = `₹${(baseTotal + codFee).toLocaleString('en-IN')}`;
+            btnText.innerText = "Place Order"; 
+            btnTextMobile.innerText = "Place Order";
+        }
+        function switchToPrepaid() { closeCodModal(); }
+        function confirmCOD() { document.body.classList.remove('no-scroll'); codModal.style.display = 'none'; setCodUI(); }
+
+        async function handleCheckout() {
             if (!addressExists) {
-                alert("Please add a delivery address to continue.");
+                alert("Please add a delivery address.");
                 openAddressModal();
                 return;
             }
             
             if (checkoutItems.length === 0) {
-                alert("Your cart is empty. Please add items to checkout.");
+                alert("Your checkout list is empty.");
                 return;
             }
-            
-            isProcessing = true;
-            
+
             const isCod = document.getElementById('radio-cod').checked;
-            const totalAmount = isCod ? baseTotal + codFee : baseTotal;
-            
-            // Disable buttons and show loading
-            checkoutBtn.disabled = true;
-            mobileCheckoutBtn.disabled = true;
-            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            mobileCheckoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            
+            const btnDesktop = document.getElementById('btn-text');
+            const btnMobile = document.getElementById('btn-text-mobile');
+            const originalText = btnDesktop.innerText;
+
+            const loadingHtml = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+            btnDesktop.innerHTML = loadingHtml;
+            btnMobile.innerHTML = loadingHtml;
+
             if (isCod) {
-                // COD Order
                 setTimeout(() => {
-                    const orderId = `VS${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
-                    finalizeOrder(orderId, 'COD', 'Pending', totalAmount);
-                }, 1500);
+                    const orderId = `COD-${Math.floor(100000 + Math.random() * 900000)}`;
+                    finalizeOrder(orderId, 'COD', 'Pending', (baseTotal + codFee));
+                }, 1000);
+
             } else {
-                // Online Payment
                 try {
-                    // For demo purposes - in production, call your backend
-                    const orderId = `VS${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
-                    
-                    // Create Razorpay order
+                    const response = await fetch('/api/razorpay', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ amount: baseTotal })
+                    });
+
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const orderData = await response.json();
+
                     const options = {
-                        key: 'rzp_test_1DP5mmOlF5G5ag', // Test key - replace with your key in production
-                        amount: totalAmount * 100, // Amount in paise
-                        currency: 'INR',
-                        name: 'Vastramaya',
-                        description: 'Fashion Purchase',
-                        image: 'https://product-ecommerces.netlify.app/vastramaya.png',
-                        order_id: null, // Will be created on your backend
-                        handler: function(response) {
-                            finalizeOrder(orderId, 'Online', 'Paid', totalAmount, response.razorpay_payment_id);
+                        key: orderData.key || 'YOUR_LIVE_PUBLIC_KEY_HERE',
+                        amount: orderData.amount,
+                        currency: orderData.currency,
+                        name: "Vastramaya",
+                        description: "Purchase Description",
+                        image: "https://product-ecommerces.netlify.app/vastramaya.png",
+                        order_id: orderData.id, 
+                        handler: function (response) {
+                            finalizeOrder(orderData.id, 'Online', 'Paid', baseTotal, response.razorpay_payment_id);
                         },
                         prefill: {
                             name: currentAddressData.name,
                             contact: currentAddressData.phone,
-                            email: currentUser ? currentUser.email : 'guest@example.com'
+                            email: currentUser ? (currentUser.email || "") : ""
                         },
                         theme: {
-                            color: '#8b2635'
+                            color: "#8b2635"
                         },
                         modal: {
                             ondismiss: function() {
-                                resetButtons();
-                                isProcessing = false;
+                                btnDesktop.innerText = originalText;
+                                btnMobile.innerText = originalText;
+                                alert("Payment Cancelled");
                             }
                         }
                     };
-                    
-                    // For demo - simulate successful payment
-                    // In production, use: const rzp = new Razorpay(options); rzp.open();
-                    
-                    // Demo mode - simulate payment
-                    if (confirm(`Proceed with payment of ₹${totalAmount}? (Demo Mode)`)) {
-                        setTimeout(() => {
-                            finalizeOrder(orderId, 'Online', 'Paid', totalAmount, 'demo_payment_' + Date.now());
-                        }, 1000);
-                    } else {
-                        resetButtons();
-                        isProcessing = false;
-                    }
-                    
+
+                    const rzp1 = new Razorpay(options);
+                    rzp1.open();
+
                 } catch (error) {
-                    console.error('Payment error:', error);
-                    alert('Payment initialization failed. Please try again.');
-                    resetButtons();
-                    isProcessing = false;
+                    console.error(error);
+                    alert("Payment initiation failed. Please try again.");
+                    btnDesktop.innerText = originalText;
+                    btnMobile.innerText = originalText;
                 }
             }
         }
 
-        function resetButtons() {
-            checkoutBtn.disabled = false;
-            mobileCheckoutBtn.disabled = false;
-            checkoutBtn.innerHTML = '<span id="btn-text">Proceed to Pay</span> <i class="fas fa-arrow-right"></i>';
-            mobileCheckoutBtn.innerHTML = '<span id="btn-text-mobile">Proceed to Pay</span> <i class="fas fa-arrow-right"></i>';
-        }
-
-        async function finalizeOrder(orderId, method, status, amount, paymentId = null) {
+        async function finalizeOrder(orderId, method, status, amount, payId = null) {
+            
             const orderDetails = {
                 orderId: orderId,
                 userId: currentUser ? currentUser.uid : 'guest',
-                userEmail: currentUser ? currentUser.email : 'guest',
-                items: checkoutItems.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                    size: item.size,
-                    color: item.color,
-                    image: item.image
-                })),
+                items: checkoutItems, 
                 address: currentAddressData,
                 amount: amount,
                 paymentMethod: method,
                 paymentStatus: status,
-                orderStatus: "Confirmed",
-                paymentId: paymentId,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
+                status: "Ordered",
+                paymentId: payId,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
-            
+
             try {
-                // Save to Firebase if available
-                if (db) {
-                    await db.collection('orders').doc(orderId).set(orderDetails);
-                    
-                    if (currentUser) {
-                        await db.collection('users').doc(currentUser.uid).collection('orders').doc(orderId).set(orderDetails);
-                    }
+                // 1. Save to main Orders
+                await db.collection('orders').doc(orderId).set(orderDetails);
+
+                // 2. Save to User Orders (Sub-collection)
+                if (currentUser) {
+                    await db.collection('users')
+                            .doc(currentUser.uid)
+                            .collection('orders')
+                            .doc(orderId)
+                            .set(orderDetails);
                 }
-                
-                // Update cart
+
+                // 3. Clear Products (Based on mode)
                 if (isBuyNowMode) {
                     localStorage.removeItem('vastramaya_direct_buy');
                 } else {
                     const boughtIds = checkoutItems.map(item => item._checkoutId);
                     const remainingCart = masterCart.filter(item => !boughtIds.includes(item._checkoutId));
+                    remainingCart.forEach(item => delete item._checkoutId);
+
                     localStorage.setItem('vastramaya_cart', JSON.stringify(remainingCart));
                     
-                    // Update Firebase cart if logged in
-                    if (currentUser && db) {
-                        await db.collection('users').doc(currentUser.uid).update({
-                            cart: remainingCart
-                        });
+                    if (currentUser) {
+                        await db.collection('users').doc(currentUser.uid).update({ cart: remainingCart });
                     }
                 }
-                
-                // Update wishlist
+
+                // 4. Update Wishlist
                 updateWishlistOnSuccess(checkoutItems);
-                
-                // Show success animation
+
+                // 5. TRIGGER NEW ANIMATION
                 startAnimation(orderId);
-                
+
             } catch (error) {
-                console.error('Error saving order:', error);
-                // Still show success but log error
-                startAnimation(orderId);
+                console.error("Error saving order", error);
+                alert("Order success, but error saving to DB. Please contact support.");
             }
         }
 
-        // Animation Functions
+        // --- FIXED ANIMATION LOGIC (CENTER EXPANSION) ---
         function startAnimation(orderId) {
-            document.getElementById('displayOrderId').textContent = orderId;
+            // 1. Hide Checkout UI & Lock Scroll
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('mobile-bottom-bar').style.display = 'none';
+            document.body.classList.add('no-scroll');
+
+            // 2. Set Order ID
+            document.getElementById('displayOrderId').innerText = orderId;
+
+            // 3. Select Elements
             const stage = document.getElementById('mainStage');
             const truck = document.getElementById('truckBox');
             const reveal = document.getElementById('successReveal');
-            
-            // Hide main container
-            document.getElementById('mainContainer').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('mainContainer').style.display = 'none';
-            }, 300);
-            
-            // Start animation
+
+            // 4. Trigger Stage (Center Letterbox)
             stage.classList.add('active');
-            
+
+            // 5. Start Truck (0.5s delay)
+            setTimeout(() => { truck.classList.add('animate'); }, 500);
+
+            // 6. Expand to Full Screen from Center & Hide Truck (6s)
             setTimeout(() => {
-                truck.classList.add('animate');
-            }, 500);
-            
-            setTimeout(() => {
+                stage.classList.add('full-screen');
                 truck.style.opacity = '0';
+            }, 6000);
+
+            // 7. Reveal Success Panel (6.8s)
+            setTimeout(() => {
                 reveal.classList.add('visible');
                 
-                // Load Lottie animation
+                // Robust Lottie Loading with Fallback
                 try {
                     const lottieContainer = document.getElementById('lottie');
-                    lottie.loadAnimation({
+                    const animPath = './success.json';
+                    
+                    const animation = lottie.loadAnimation({
                         container: lottieContainer,
                         renderer: 'svg',
                         loop: false,
                         autoplay: true,
-                        path: 'https://assets1.lottiefiles.com/packages/lf20_raiw2hpe.json' // Success animation
+                        path: animPath
                     });
-                } catch (error) {
-                    console.error('Lottie error:', error);
-                    // Fallback to icon
-                    document.getElementById('lottie').innerHTML = '<i class="fas fa-check-circle" style="font-size: 120px; color: #4CAF50;"></i>';
+
+                    // Error fallback
+                    animation.addEventListener('data_failed', () => {
+                        console.warn('Primary Lottie failed, loading backup');
+                        lottieContainer.innerHTML = '';
+                        lottie.loadAnimation({
+                            container: lottieContainer,
+                            renderer: 'svg', loop: true, autoplay: true,
+                            path: 'https://assets10.lottiefiles.com/packages/lf20_y4p43sqe.json' // Generic checkmark
+                        });
+                    });
+
+                } catch (e) {
+                    console.error("Lottie Error:", e);
                 }
-            }, 6000);
+            }, 6800);
         }
 
         function updateWishlistOnSuccess(boughtItems) {
-            const wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
-            if (wishlist.length === 0) return;
-            
-            const boughtProductIds = boughtItems.map(item => item.id);
+            let wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+            if(wishlist.length === 0) return;
+
+            const boughtProductIds = boughtItems.map(i => i.id); 
             const newWishlist = wishlist.filter(id => !boughtProductIds.includes(id));
-            
-            if (wishlist.length !== newWishlist.length) {
+
+            if(wishlist.length !== newWishlist.length) {
                 localStorage.setItem('vastramaya_wishlist', JSON.stringify(newWishlist));
-                
-                // Update Firebase if logged in
-                if (currentUser && db) {
-                    db.collection('users').doc(currentUser.uid).update({
-                        wishlist: newWishlist
-                    }).catch(e => console.log('Wishlist update error:', e));
+                if (currentUser) {
+                    db.collection('users').doc(currentUser.uid).update({ wishlist: newWishlist }).catch(e => console.log(e));
                 }
             }
         }
 
-        // Close modals when clicking outside
         window.onclick = function(event) {
-            if (event.target === codModal) {
-                closeCodModal();
-            }
-            if (event.target === addrModal) {
-                closeAddressModal();
-            }
+            if (event.target == codModal) closeCodModal();
+            if (event.target == addrModal) closeAddressModal();
         }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeCodModal();
-                closeAddressModal();
-            }
-        });
     </script>
 </body>
 </html>
