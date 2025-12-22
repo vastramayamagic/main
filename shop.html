@@ -2318,56 +2318,74 @@ async function fetchFullDataInBackground() {
     } catch (e) { console.error("Bg fetch error", e); }
 }
 
-function render(){
+
+
+
+function render() {
+    // --- STEP 1: FILTERING ---
+    // We always start from RAW_PRODUCTS and create a new filteredList
     filteredList = RAW_PRODUCTS.filter(p => {
-        if(p.price < state.minPrice || p.price > state.maxPrice) return false;
-        if(state.categories.size) {
+        // Price Filter
+        if (p.price < state.minPrice || p.price > state.maxPrice) return false;
+
+        // Category Filter
+        if (state.categories.size > 0) {
             const catName = p.categoryName || p.category;
-            const isMatch = state.categories.has(catName) || state.categories.has(p.categoryId);
-            if(!isMatch) return false;
+            if (!state.categories.has(catName) && !state.categories.has(p.categoryId)) return false;
         }
-        if(state.fabrics.size && p.fabric && !state.fabrics.has(p.fabric)) return false;
-        if(state.colors.size) {
+
+        // Fabric Filter
+        if (state.fabrics.size > 0 && p.fabric && !state.fabrics.has(p.fabric)) return false;
+
+        // Color Filter
+        if (state.colors.size > 0) {
             const pColors = p.colorVariants ? p.colorVariants.map(v => v.name) : [];
-            if(!pColors.some(c => state.colors.has(c))) return false;
+            if (!pColors.some(c => state.colors.has(c))) return false;
         }
-        if(state.sizes.size) {
+
+        // Size Filter
+        if (state.sizes.size > 0) {
             let hasSize = false;
-            if(p.colorVariants) p.colorVariants.forEach(v => { if(v.sizes) v.sizes.forEach(s => { if(state.sizes.has(s.name) && s.available) hasSize=true; })});
-            else if(p.sizes) p.sizes.forEach(s => { if(state.sizes.has(s.name || s) && (s.available!==false)) hasSize=true; });
-            if(!hasSize) return false;
+            if (p.colorVariants) {
+                p.colorVariants.forEach(v => {
+                    if (v.sizes) v.sizes.forEach(s => {
+                        if (state.sizes.has(s.name) && s.available) hasSize = true;
+                    });
+                });
+            } else if (p.sizes) {
+                p.sizes.forEach(s => {
+                    const sName = s.name || s;
+                    if (state.sizes.has(sName) && (s.available !== false)) hasSize = true;
+                });
+            }
+            if (!hasSize) return false;
         }
+
         return true;
     });
 
-    if(currentSort === 'az') filteredList.sort((a,b) => a.name.localeCompare(b.name));
-    else if(currentSort === 'price-asc') filteredList.sort((a,b) => a.price - b.price);
-    else if(currentSort === 'price-desc') filteredList.sort((a,b) => b.price - a.price);
-    else if(currentSort === 'newest') filteredList.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-
-    els.grid.innerHTML = '';
+    // --- STEP 2: SORTING (Applied to the results of STEP 1) ---
     if (currentSort === 'az') {
-    filteredList.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-} 
-else if (currentSort === 'price-asc') {
-    filteredList.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
-} 
-else if (currentSort === 'price-desc') {
-    filteredList.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
-} 
-else if (currentSort === 'newest') {
-    filteredList.sort((a, b) => {
-        // Handle Firestore Timestamps or standard Dates
-        const dateA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime() : 0);
-        const dateB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime() : 0);
-        return dateB - dateA;
-    });
-}
-else if (currentSort === 'featured') {
-    // If 'featured' is a boolean in your DB
-    filteredList.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-}
-    if(filteredList.length === 0) {
+        filteredList.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+    } 
+    else if (currentSort === 'price-asc') {
+        filteredList.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
+    } 
+    else if (currentSort === 'price-desc') {
+        filteredList.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
+    } 
+    else if (currentSort === 'newest') {
+        filteredList.sort((a, b) => {
+            const dateA = a.createdAt?.seconds || (a.createdAt ? new Date(a.createdAt).getTime() : 0);
+            const dateB = b.createdAt?.seconds || (b.createdAt ? new Date(b.createdAt).getTime() : 0);
+            return dateB - dateA;
+        });
+    }
+
+    // --- STEP 3: RENDERING HTML ---
+    els.grid.innerHTML = '';
+    
+    if (filteredList.length === 0) {
         els.grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px;">
             <div style="font-size:20px; color:var(--text-light); margin-bottom:10px;">No products found</div>
             <button onclick="clearFilters(event)" class="btn-main" style="width:auto; padding:10px 25px;">Clear Filters</button>
@@ -2375,9 +2393,9 @@ else if (currentSort === 'featured') {
         return;
     }
 
+    // Map through the sorted/filtered list to create cards
     filteredList.forEach(p => {
         const oldPrice = p.oldPrice || Math.round(p.price * 1.25);
-        
         let displayImage = (p.images && p.images.length > 0) ? p.images[0] : (p.image || 'https://via.placeholder.com/300');
         let urlColorParam = '';
         let preSelectedColor = '';
@@ -2395,9 +2413,7 @@ else if (currentSort === 'featured') {
         const card = document.createElement('article');
         card.className = 'card';
         card.onclick = (e) => { 
-            if(!e.target.closest('button')) {
-                window.location.href = `view.html?id=${p.id}${urlColorParam}`;
-            }
+            if(!e.target.closest('button')) window.location.href = `view.html?id=${p.id}${urlColorParam}`;
         };
         
         card.innerHTML = `
@@ -2409,7 +2425,7 @@ else if (currentSort === 'featured') {
                 <div class="quick-view-btn" onclick="openQuickView(event, '${p.id}', '${preSelectedColor}')">Quick View</div>
             </div>
             <div class="info">
-                <div class="category-tag">${p.categoryName || 'Ethnic Wear'}</div>
+                <div class="category-tag">${p.categoryName || 'Vastramaya'}</div>
                 <div class="title">${p.name}</div>
                 <div class="bottom-row">
                     <div class="price-block">
@@ -2420,11 +2436,14 @@ else if (currentSort === 'featured') {
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     </button>
                 </div>
-            </div>
-        `;
+            </div>`;
         els.grid.appendChild(card);
     });
 }
+
+
+
+
 
 async function openQuickView(e, id, preSelectedColor = null) {
     if(e) e.stopPropagation();
