@@ -2225,12 +2225,15 @@ const els = {
 async function initShopPage(){
     renderSkeletonGrid();
     
-    // 1. Wait for data to load
+    // 1. Get the category from URL and put it in 'state' first
+    checkUrlParams();
+
+    // 2. Wait for data to load
     await Promise.all([fetchMetadata(), fetchFastLoadData()]);
     
-    // 2. Build the filter UI components
+    // 3. Build UI (makeCheckbox will now see the 'state' from step 1)
     buildColors();
-    els.typeList.innerHTML = ''; // Clear previous if any
+    els.typeList.innerHTML = '';
     AVAILABLE_CATEGORIES.forEach(i => els.typeList.appendChild(makeCheckbox(i, state.categories)));
     AVAILABLE_FABRICS.forEach(i => els.fabricList.appendChild(makeCheckbox(i, state.fabrics)));
     STANDARD_SIZES.forEach(i => els.sizeList.appendChild(makeCheckbox(i, state.sizes)));
@@ -2239,13 +2242,9 @@ async function initShopPage(){
     initAccordions(); 
     initSort(); 
     
-    // 3. Now that UI and Data are ready, apply URL params
-    checkUrlParams();
-    
     // 4. Final single render
     render(); 
     
-    // Background fetch for more details
     fetchFullDataInBackground();
 
     document.getElementById('mobileFilterBtn').addEventListener('click', openMobile);
@@ -2289,20 +2288,20 @@ async function fetchFastLoadData() {
         const catSnap = await db.collection('categories').get();
         let allProds = [];
         const promises = catSnap.docs.map(async (catDoc) => {
+            const catData = catDoc.data(); // Get category metadata (like name)
             const subSnap = await catDoc.ref.collection('products').get();
             subSnap.forEach(pDoc => {
                 let d = pDoc.data();
                 d.id = pDoc.id; 
                 d.categoryId = catDoc.id; 
+                // CRITICAL: Ensure the fast-load data has the name for the filter to match
+                d.categoryName = catData.name; 
                 allProds.push(d);
             });
         });
         await Promise.all(promises);
-        
-        // Initial Render with Summary Data
         RAW_PRODUCTS = allProds;
-        render(); 
-        
+        // render() REMOVED FROM HERE
     } catch (error) { console.error(error); }
 }
 
@@ -2671,10 +2670,21 @@ function saveCartShop() {
 }
 
 function makeCheckbox(name, set){
+    const isChecked = set.has(name); // Check if URL param already added this to state
     const wrap = document.createElement('label'); wrap.className = 'checkbox-row';
-    wrap.innerHTML = `<input type="checkbox"><span class="checkbox-box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span class="checkbox-label">${name}</span>`;
+    wrap.innerHTML = `
+        <input type="checkbox" ${isChecked ? 'checked' : ''}>
+        <span class="checkbox-box">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </span>
+        <span class="checkbox-label">${name}</span>`;
+    
     const input = wrap.querySelector('input');
-    input.addEventListener('change', ()=>{ if(input.checked) set.add(name); else set.delete(name); render(); });
+    input.addEventListener('change', ()=>{ 
+        if(input.checked) set.add(name); 
+        else set.delete(name); 
+        render(); 
+    });
     return wrap;
 }
 
@@ -2771,18 +2781,8 @@ function initSort(){
 function checkUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const cat = urlParams.get('category');
-    
     if(cat) { 
-        const decodedCat = decodeURIComponent(cat);
-        state.categories.add(decodedCat); // Set the logic state immediately
-        
-        // Update the checkbox UI visually
-        document.querySelectorAll('.checkbox-label').forEach(label => {
-            if(label.textContent.trim() === decodedCat) {
-                const input = label.parentElement.querySelector('input');
-                if(input) input.checked = true;
-            }
-        });
+        state.categories.add(decodeURIComponent(cat));
     }
 }
 
