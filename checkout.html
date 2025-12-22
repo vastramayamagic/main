@@ -16,10 +16,10 @@
     <style>
         /* --- 1. CORE VARIABLES --- */
         :root {
-            /* Main Page Theme Integration */
+            /* Theme Colors */
             --page-bg: #fefcf3;
             --card-bg: #fffefb;
-            --text-primary: #3f0b17;  /* Deep Maroon */
+            --text-primary: #3f0b17;
             --text-secondary: #6b422a;
             --text-light: #a3715f;
             --brand-primary: #8b2635;
@@ -36,7 +36,7 @@
             --red-warning: #c62828;
             --red-bg: #ffebee;
 
-            /* Animation Theme (Premium) */
+            /* Animation Theme */
             --anim-bg: #3f0b17; 
             --gold: #e6d2a9;
             --gold-solid: #d4af37;
@@ -54,26 +54,16 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            min-height: 100vh; 
-            background: var(--page-bg); 
-            font-family: var(--font-main); 
-            overflow-x: hidden; 
-            color: var(--text-primary); 
-            width: 100%; 
+            min-height: 100vh; background: var(--page-bg); font-family: var(--font-main); 
+            overflow-x: hidden; color: var(--text-primary); width: 100%; 
         }
         body.no-scroll { overflow: hidden; }
 
-        /* --- 2. CHECKOUT UI STYLES --- */
+        /* --- 2. LAYOUT & TYPOGRAPHY --- */
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; }
         .back-link { grid-column: span 2; display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 14px; margin-bottom: -20px; width: fit-content; cursor: pointer; }
         .back-link:hover { color: var(--brand-primary); }
 
-        /* Empty Cart */
-        .empty-cart-container { grid-column: span 2; text-align: center; padding: 60px 20px; background: #fff; border-radius: 20px; border: 1px solid var(--border-subtle); display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .empty-cart-container.active { display: flex; }
-        .empty-cart-icon { font-size: 64px; color: var(--border-subtle); margin-bottom: 20px; }
-        .empty-cart-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
-        
         h1 { font-family: var(--font-main); font-size: 26px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
         p.sub-head { color: var(--text-secondary); margin-bottom: 30px; font-size: 15px; }
         h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; opacity: 0.9; font-weight: 700; color: var(--text-light); }
@@ -103,7 +93,13 @@
         .fee-warning { display: block; margin-top: 6px; font-weight: 700; font-size: 13px; color: var(--red-warning); background: var(--red-bg); padding: 4px 12px; border-radius: 6px; width: fit-content; }
         @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0); } }
 
-        /* Order Box */
+        /* Empty Cart */
+        .empty-cart-container { grid-column: span 2; text-align: center; padding: 60px 20px; background: #fff; border-radius: 20px; border: 1px solid var(--border-subtle); display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .empty-cart-container.active { display: flex; }
+        .empty-cart-icon { font-size: 64px; color: var(--border-subtle); margin-bottom: 20px; }
+        .empty-cart-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+
+        /* --- 3. ORDER BOX & COUPONS --- */
         .order-box { background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border: 1px solid #fff; padding: 30px; border-radius: 16px; box-shadow: var(--shadow-rich); position: sticky; top: 20px; }
         .order-scroll-container { max-height: 400px; overflow-y: auto; padding-right: 5px; margin-bottom: 20px; }
         .order-scroll-container::-webkit-scrollbar { width: 5px; }
@@ -117,11 +113,23 @@
         .prod-info p { font-size: 12px; color: var(--text-light); margin-bottom: 6px; }
         .qty-wrapper { display: flex; align-items: center; gap: 8px; background: #fcfcfc; border: 1px solid #eee; border-radius: 6px; padding: 2px; width: fit-content; }
         .qty-btn { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 14px; color: var(--text-primary); transition: 0.2s; }
-        .qty-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
         .qty-val { font-size: 13px; font-weight: 700; width: 20px; text-align: center; }
         .remove-icon-btn { color: #d33d49; cursor: pointer; padding: 8px; border-radius: 8px; transition: 0.2s; font-size: 16px; margin-left: 10px; display: flex; align-items: center; justify-content: center; }
         .remove-icon-btn:hover { background: #ffebee; transform: scale(1.1); }
 
+        /* COUPON SECTION */
+        .coupon-section { padding: 15px 0; border-bottom: 1px solid var(--border-subtle); margin-bottom: 15px; }
+        .coupon-input-group { display: flex; gap: 10px; }
+        .coupon-input-group input { flex: 1; padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: 8px; font-family: var(--font-main); outline: none; transition: 0.3s; font-size: 14px; }
+        .coupon-input-group input:focus { border-color: var(--brand-primary); }
+        .coupon-input-group button { padding: 0 20px; background: var(--text-primary); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 13px; }
+        .coupon-input-group button:hover { background: var(--brand-primary); }
+        .active-coupon-display { background: var(--green-bg); border: 1px solid rgba(74, 156, 125, 0.3); padding: 10px 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .coupon-msg { font-size: 12px; margin-top: 8px; font-weight: 600; }
+        .coupon-msg.success { color: var(--green-success); }
+        .coupon-msg.error { color: var(--red-warning); }
+
+        /* Totals */
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 15px; color: var(--text-secondary); }
         .total-row { display: flex; justify-content: space-between; margin-top: 10px; padding-top: 20px; border-top: 2px dashed var(--border-subtle); font-weight: 700; font-size: 20px; color: var(--text-primary); }
         .total-row span:last-child { color: var(--brand-primary); font-size: 24px; }
@@ -130,80 +138,62 @@
         .strike { text-decoration: line-through; color: #999; margin-right: 5px; font-weight: 400; font-size: 13px;}
 
         .btn-main { width: 100%; padding: 16px; background: var(--brand-gradient); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-top: 25px; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; overflow: hidden; box-shadow: 0 10px 20px -5px rgba(139, 38, 53, 0.3); }
-        .btn-main::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%); opacity: 0; transition: opacity 0.3s ease; }
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(139, 38, 53, 0.4); }
-        .btn-main:hover::before { opacity: 1; }
 
         .mobile-bottom-bar { display: none; }
 
-        /* --- 3. PREMIUM ANIMATION STYLES (Center Expansion) --- */
+        /* --- 4. PREMIUM ANIMATION STYLES (Center Expansion) --- */
         .stage {
-            position: fixed; 
-            left: 0; 
-            top: 50%; /* Center vertical anchor */
-            transform: translateY(-50%); /* Center vertical anchor */
-            width: 100vw; 
-            height: 0;
-            background: var(--anim-bg); /* Matches Brand Dark Maroon */
-            z-index: 10000; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            overflow: hidden; 
-            transition: height 0.8s cubic-bezier(0.8, 0, 0.2, 1);
-            pointer-events: none; /* Allows clicking through when inactive */
+            position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+            width: 100vw; height: 0;
+            background: var(--anim-bg);
+            z-index: 10000; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; transition: height 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+            pointer-events: none;
         }
-        
-        /* Grain Texture Overlay */
         .stage::before {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             opacity: 0.15; pointer-events: none;
         }
-
-        /* Animation States */
-        .stage.active { 
-            height: 300px; /* Expands symmetrically */
-            pointer-events: all; 
-        }
-        .stage.full-screen { 
-            height: 100vh; /* Expands to fill screen symmetrically */
-        }
+        .stage.active { height: 300px; pointer-events: all; }
+        .stage.full-screen { height: 100vh; }
 
         .order-anim-container {
             position: relative; width: 240px; height: 63px;
             transform: scale(var(--ui-scale)); transition: opacity 0.8s ease;
         }
 
-        /* Speed Lines */
-        .lines {
-            opacity: 0; position: absolute; height: 1px; background: rgba(255,255,255,0.4);
-            width: 40px; top: 32px; left: 100%;
-            box-shadow: 60px 10px 0 rgba(255,255,255,0.2), 120px -15px 0 rgba(255,255,255,0.2), 80px 20px 0 rgba(255,255,255,0.1);
-            filter: blur(1px);
-        }
-
-        /* Truck Logic */
+        /* --- TRUCK DOORS (FIXED) --- */
         .truck { width: 60px; height: 41px; left: 100%; z-index: 2; top: 11px; position: absolute; transform: translateX(24px); }
+        
+        /* Truck Doors Pseudo-Elements - Restored for Animation */
+        .truck:before, .truck:after {
+            --r: -90deg; content: ''; height: 2px; width: 20px; right: 58px;
+            position: absolute; display: block; background: #fff;
+            border-radius: 1px; transform-origin: 100% 50%; transform: rotate(var(--r));
+            z-index: 1; /* Ensure visible */
+        }
+        .truck:before { top: 4px; }
+        .truck:after { --r: 90deg; bottom: 4px; }
+
         .truck .back { left: 0; top: 0; width: 60px; height: 41px; z-index: 1; position: absolute; background: linear-gradient(135deg, #fff 0%, #d1d1d1 100%); border-radius: 2px; }
-        .truck .front { overflow: hidden; position: absolute; border-radius: 2px 9px 9px 2px; width: 26px; height: 41px; left: 60px; }
+        .truck .front { overflow: hidden; position: absolute; border-radius: 2px 9px 9px 2px; width: 26px; height: 41px; left: 60px; z-index: 2; }
         .truck .front:after { content: ''; position: absolute; background: var(--brand-primary); width: 24px; height: 41px; right: 0; }
         .truck .front .window { overflow: hidden; border-radius: 2px 8px 8px 2px; background: #2a3a5a; transform: perspective(4px) rotateY(3deg); width: 22px; height: 41px; position: absolute; left: 2px; top: 0; z-index: 1; transform-origin: 0 50%; }
         
         .truck .light { width: 4px; height: 8px; left: 83px; position: absolute; border-radius: 2px; background: #fff; box-shadow: 0 0 15px #fff; }
-        .truck .light:before {
-            content: ''; height: 20px; width: 100px; opacity: 0; position: absolute; left: 2px; top: 50%; margin-top: -10px;
-            background: radial-gradient(ellipse at left, rgba(255, 255, 235, 0.6) 0%, rgba(255, 255, 200, 0.1) 50%, transparent 80%);
-            clip-path: polygon(0% 45%, 100% 0%, 100% 100%, 0% 55%);
-            filter: blur(5px); transition: all 0.4s;
-        }
+        .truck .light:before { content: ''; height: 20px; width: 100px; opacity: 0; position: absolute; left: 2px; top: 50%; margin-top: -10px; background: radial-gradient(ellipse at left, rgba(255, 255, 235, 0.6) 0%, rgba(255, 255, 200, 0.1) 50%, transparent 80%); clip-path: polygon(0% 45%, 100% 0%, 100% 100%, 0% 55%); filter: blur(5px); transition: all 0.4s; }
         .truck .light.top { top: 4px; }
         .truck .light.bottom { bottom: 4px; }
 
-        .box { position: absolute; width: 21px; height: 21px; right: 100%; top: 21px; background: linear-gradient(135deg, var(--gold) 0%, #c5a059 100%); border-radius: 2px; }
+        .box { position: absolute; width: 21px; height: 21px; right: 100%; top: 21px; background: linear-gradient(135deg, var(--gold) 0%, #c5a059 100%); border-radius: 2px; z-index: 0; /* Box goes inside truck */ }
+        .lines { opacity: 0; position: absolute; height: 1px; background: rgba(255,255,255,0.4); width: 40px; top: 32px; left: 100%; box-shadow: 60px 10px 0 rgba(255,255,255,0.2), 120px -15px 0 rgba(255,255,255,0.2), 80px 20px 0 rgba(255,255,255,0.1); filter: blur(1px); }
 
         /* Animation Keyframes */
         .animate .truck { animation: truck-move 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards; }
+        .animate .truck:before { animation: door1 2.4s ease forwards .3s; }
+        .animate .truck:after { animation: door2 2.4s ease forwards .6s; }
         .animate .truck .light:before { animation: light-intensify 7.5s forwards; }
         .animate .box { animation: box-move 7.5s forwards; }
         .animate .lines { animation: lines-move 7.5s forwards; }
@@ -215,73 +205,27 @@
             60% { transform: translateX(-224px); } 
             75%, 100% { transform: translateX(180vw); } 
         }
-        @keyframes light-intensify { 
-            0%, 38% { opacity: 0; width: 100px; } 
-            42% { opacity: 0.8; width: 150px; } 
-            60% { opacity: 0.6; width: 120px; }
-            75%, 100% { opacity: 1; width: 300px; filter: blur(8px); } 
-        }
-        @keyframes box-move { 
-            8%, 10% { transform: translateX(40px); opacity: 1; } 
-            25% { transform: translateX(112px); opacity: 1; } 
-            26%, 100% { transform: translateX(112px); opacity: 0; } 
-        }
-        @keyframes lines-move { 
-            0%, 40% { opacity: 0; transform: translateX(0); } 
-            45% { opacity: 1; } 
-            70% { opacity: 1; transform: translateX(-120vw); } 
-            71%, 100% { opacity: 0; }
-        }
+        @keyframes door1 { 30%, 50% { transform: rotate(32deg); } }
+        @keyframes door2 { 30%, 50% { transform: rotate(-32deg); } }
+        @keyframes light-intensify { 0%, 38% { opacity: 0; width: 100px; } 42% { opacity: 0.8; width: 150px; } 60% { opacity: 0.6; width: 120px; } 75%, 100% { opacity: 1; width: 300px; filter: blur(8px); } }
+        @keyframes box-move { 8%, 10% { transform: translateX(40px); opacity: 1; } 25% { transform: translateX(112px); opacity: 1; } 26%, 100% { transform: translateX(112px); opacity: 0; } }
+        @keyframes lines-move { 0%, 40% { opacity: 0; transform: translateX(0); } 45% { opacity: 1; } 70% { opacity: 1; transform: translateX(-120vw); } 71%, 100% { opacity: 0; } }
 
-        /* Success Content (Premium) */
-        .success-wrapper {
-            position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: all 1s ease; z-index: 10; text-align: center;
-            width: 100%; padding: 0 20px;
-        }
+        /* Success Panel */
+        .success-wrapper { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 1s ease; z-index: 10; text-align: center; width: 100%; padding: 0 20px; }
         .success-wrapper.visible { opacity: 1; visibility: visible; }
-        
         #lottie { width: 280px; height: 280px; margin-bottom: -20px; }
-        
         .success-h1 { color: #fff; font-size: 32px; font-weight: 300; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 8px; }
         .success-p { color: var(--gold); font-size: 12px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 40px; opacity: 0.9; font-weight: 600; }
 
-        /* Updated Order Panel & Button */
-        .order-panel {
-            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            padding: 40px 60px; 
-            border-radius: 24px; /* Increased Border Radius */
-            display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-            max-width: 90%;
-        }
+        .order-panel { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); padding: 40px 60px; border-radius: 24px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 50px 100px rgba(0,0,0,0.5); max-width: 90%; }
         .panel-label { color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; }
         .panel-id { color: #fff; font-size: 24px; font-weight: 500; letter-spacing: 4px; font-family: monospace; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
         
-        /* New Button Style */
-        .btn-return {
-            margin-top: 30px;
-            padding: 16px 40px;
-            background: var(--gold-solid);
-            color: var(--text-primary);
-            border: none;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px var(--gold-glow);
-        }
-        .btn-return:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px var(--gold-glow);
-            background: #fff;
-        }
+        .btn-return { margin-top: 30px; padding: 16px 40px; background: var(--gold-solid); color: var(--text-primary); border: none; border-radius: 30px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 30px var(--gold-glow); }
+        .btn-return:hover { transform: translateY(-3px); box-shadow: 0 15px 40px var(--gold-glow); background: #fff; }
 
-        /* --- 4. MODAL STYLES --- */
+        /* --- 5. MODAL STYLES --- */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(59, 11, 23, 0.4); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .modal-card { background: #fff; border-radius: 20px; width: 100%; max-width: 500px; box-shadow: var(--shadow-rich); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; display: flex; flex-direction: column; max-height: 85vh; border: 1px solid var(--border-subtle); }
         .modal-header { padding: 25px 30px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; background: var(--surface-light); border-radius: 20px 20px 0 0; position: relative; }
@@ -428,12 +372,34 @@
         <div class="summary-section" id="checkout-summary-section">
             <div class="order-box">
                 <div class="order-scroll-container">
-                    <div id="order-items-container">
+                    <div id="order-items-container"></div>
+                </div>
+
+                <div class="coupon-section">
+                    <div class="coupon-input-group" id="coupon-input-wrapper">
+                        <input type="text" id="coupon-code" placeholder="Enter Coupon Code" oninput="this.value = this.value.toUpperCase()">
+                        <button onclick="applyCoupon()">Apply</button>
+                    </div>
+                    <div class="active-coupon-display" id="active-coupon-wrapper" style="display: none;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <i class="fas fa-tag" style="color:var(--brand-primary)"></i>
+                            <span id="applied-code-text" style="font-weight:700;">CODE</span>
+                            <span style="font-size:12px; color:var(--green-success);">Applied</span>
                         </div>
+                        <div onclick="removeCoupon()" style="color:var(--red-warning); cursor:pointer; font-size:12px; font-weight:600;">Remove</div>
+                    </div>
+                    <div id="coupon-message" class="coupon-msg"></div>
                 </div>
 
                 <div class="summary-row"><span>Subtotal</span><span id="subtotal-display">₹0</span></div>
+                
+                <div class="summary-row" id="discount-row" style="display:none; color: var(--green-success); font-weight: 600;">
+                    <span>Coupon Discount</span>
+                    <span id="discount-display">-₹0</span>
+                </div>
+
                 <div class="summary-row"><span>Shipping & Handling</span><span id="shipping-display" class="text-green"><span class="strike">₹100</span> FREE</span></div>
+                
                 <div class="total-row"><span>Total to Pay</span><span id="total-display">₹0</span></div>
 
                 <button class="btn-main" onclick="handleCheckout()">
@@ -557,6 +523,8 @@
         const db = firebase.firestore();
 
         let baseTotal = 0;
+        let discountAmount = 0;
+        let appliedCouponData = null;
         const codFee = 100;
         let masterCart = [];
         let checkoutItems = [];
@@ -569,6 +537,7 @@
         const addrModal = document.getElementById('addressModal');
         const totalDisplay = document.getElementById('total-display');
         const subtotalDisplay = document.getElementById('subtotal-display');
+        const discountDisplay = document.getElementById('discount-display');
         const shippingDisplay = document.getElementById('shipping-display');
         const btnText = document.getElementById('btn-text');
         const btnTextMobile = document.getElementById('btn-text-mobile');
@@ -691,11 +660,134 @@
             });
 
             subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
+            updateCalculations();
+        }
+
+        // --- COUPON LOGIC START ---
+        async function applyCoupon() {
+            const codeInput = document.getElementById('coupon-code');
+            const code = codeInput.value.trim().toUpperCase();
+            const msgBox = document.getElementById('coupon-message');
+
+            if (!code) {
+                showCouponMsg("Please enter a code", "error");
+                return;
+            }
+
+            // Reset current coupon state
+            discountAmount = 0;
+            appliedCouponData = null;
+            updateCalculations();
+
+            try {
+                // Query Firestore: Coupon -> Coupon -> List (where code == input)
+                const snapshot = await db.collection('Coupon').doc('Coupon').collection('List')
+                    .where('code', '==', code)
+                    .where('active', '==', true)
+                    .get();
+
+                if (snapshot.empty) {
+                    showCouponMsg("Invalid or inactive coupon", "error");
+                    return;
+                }
+
+                const doc = snapshot.docs[0];
+                const coupon = { id: doc.id, ...doc.data() };
+
+                // 1. Check Expiry
+                if (coupon.expiry) {
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    const expDate = new Date(coupon.expiry);
+                    if (today > expDate) {
+                        showCouponMsg("Coupon has expired", "error");
+                        return;
+                    }
+                }
+
+                // 2. Check Global Limit
+                const currentUsage = coupon.used || 0;
+                const limit = coupon.limit || 100000;
+                if (currentUsage >= limit) {
+                    showCouponMsg("Coupon usage limit reached", "error");
+                    return;
+                }
+
+                // 3. Calculate Discount
+                if (coupon.type === "Percentage (%)") {
+                    discountAmount = Math.round((baseTotal * coupon.value) / 100);
+                } else {
+                    // Flat Amount
+                    discountAmount = coupon.value;
+                }
+
+                // Cap discount
+                if (discountAmount > baseTotal) discountAmount = baseTotal;
+
+                // Success
+                appliedCouponData = coupon;
+                showCouponUI(true);
+                updateCalculations(); 
+                showCouponMsg(`Coupon ${code} applied! Saved ₹${discountAmount}`, "success");
+
+            } catch (error) {
+                console.error("Coupon error:", error);
+                showCouponMsg("Error checking coupon", "error");
+            }
+        }
+
+        function removeCoupon() {
+            appliedCouponData = null;
+            discountAmount = 0;
+            document.getElementById('coupon-code').value = "";
+            showCouponUI(false);
+            updateCalculations();
+            document.getElementById('coupon-message').innerText = "";
+        }
+
+        function showCouponMsg(text, type) {
+            const el = document.getElementById('coupon-message');
+            el.innerText = text;
+            el.className = `coupon-msg ${type}`;
+        }
+
+        function showCouponUI(isActive) {
+            const inputWrapper = document.getElementById('coupon-input-wrapper');
+            const displayWrapper = document.getElementById('active-coupon-wrapper');
+            const discountRow = document.getElementById('discount-row');
             
-            if(document.getElementById('radio-cod').checked) {
-                setCodUI();
+            if (isActive) {
+                inputWrapper.style.display = 'none';
+                displayWrapper.style.display = 'flex';
+                discountRow.style.display = 'flex';
+                document.getElementById('applied-code-text').innerText = appliedCouponData.code;
             } else {
-                setPrepaidUI();
+                inputWrapper.style.display = 'flex';
+                displayWrapper.style.display = 'none';
+                discountRow.style.display = 'none';
+            }
+        }
+        // --- COUPON LOGIC END ---
+
+        function updateCalculations() {
+            const isCod = document.getElementById('radio-cod').checked;
+            const shippingCost = isCod ? codFee : 0;
+            const finalTotal = Math.max(0, (baseTotal - discountAmount) + shippingCost);
+
+            document.getElementById('discount-display').innerText = `-₹${discountAmount.toLocaleString('en-IN')}`;
+            
+            if(isCod) {
+                shippingDisplay.innerHTML = '+ ₹100 Fee';
+                shippingDisplay.className = 'text-red';
+                totalDisplay.innerText = `₹${finalTotal.toLocaleString('en-IN')}`;
+                btnText.innerText = "Place Order";
+                btnTextMobile.innerText = "Place Order";
+            } else {
+                shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
+                shippingDisplay.className = 'text-green';
+                totalDisplay.innerText = `₹${finalTotal.toLocaleString('en-IN')}`;
+                btnText.innerText = `Pay ₹${finalTotal.toLocaleString('en-IN')}`;
+                btnTextMobile.innerText = `Pay ₹${finalTotal.toLocaleString('en-IN')}`;
             }
         }
 
@@ -779,21 +871,13 @@
             document.getElementById('card-prepaid').style.borderColor = "var(--green-success)";
             document.getElementById('card-cod').style.borderColor = "var(--border-subtle)";
             document.getElementById('card-cod').style.background = "#fff";
-            shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
-            shippingDisplay.className = 'text-green';
-            totalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
-            btnText.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
-            btnTextMobile.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
+            updateCalculations();
         }
         function setCodUI() {
             document.getElementById('card-prepaid').style.borderColor = "var(--border-subtle)";
             document.getElementById('card-cod').style.borderColor = "var(--red-warning)";
             document.getElementById('card-cod').style.background = "#fff5f5";
-            shippingDisplay.innerHTML = '+ ₹100 Fee';
-            shippingDisplay.className = 'text-red';
-            totalDisplay.innerText = `₹${(baseTotal + codFee).toLocaleString('en-IN')}`;
-            btnText.innerText = "Place Order"; 
-            btnTextMobile.innerText = "Place Order";
+            updateCalculations();
         }
         function switchToPrepaid() { closeCodModal(); }
         function confirmCOD() { document.body.classList.remove('no-scroll'); codModal.style.display = 'none'; setCodUI(); }
@@ -819,10 +903,13 @@
             btnDesktop.innerHTML = loadingHtml;
             btnMobile.innerHTML = loadingHtml;
 
+            // Recalculate Final Amount safely
+            const finalAmount = Math.max(0, (baseTotal - discountAmount) + (isCod ? codFee : 0));
+
             if (isCod) {
                 setTimeout(() => {
                     const orderId = `COD-${Math.floor(100000 + Math.random() * 900000)}`;
-                    finalizeOrder(orderId, 'COD', 'Pending', (baseTotal + codFee));
+                    finalizeOrder(orderId, 'COD', 'Pending', finalAmount);
                 }, 1000);
 
             } else {
@@ -830,7 +917,7 @@
                     const response = await fetch('/api/razorpay', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ amount: baseTotal })
+                        body: JSON.stringify({ amount: finalAmount })
                     });
 
                     if (!response.ok) throw new Error('Network response was not ok');
@@ -838,14 +925,14 @@
 
                     const options = {
                         key: orderData.key || 'YOUR_LIVE_PUBLIC_KEY_HERE',
-                        amount: orderData.amount,
+                        amount: orderData.amount, // Amount from backend (already in paisa)
                         currency: orderData.currency,
                         name: "Vastramaya",
                         description: "Purchase Description",
                         image: "https://product-ecommerces.netlify.app/vastramaya.png",
                         order_id: orderData.id, 
                         handler: function (response) {
-                            finalizeOrder(orderData.id, 'Online', 'Paid', baseTotal, response.razorpay_payment_id);
+                            finalizeOrder(orderData.id, 'Online', 'Paid', finalAmount, response.razorpay_payment_id);
                         },
                         prefill: {
                             name: currentAddressData.name,
@@ -888,7 +975,11 @@
                 paymentStatus: status,
                 status: "Ordered",
                 paymentId: payId,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                couponApplied: appliedCouponData ? {
+                    code: appliedCouponData.code,
+                    discount: discountAmount
+                } : null
             };
 
             try {
@@ -904,7 +995,15 @@
                             .set(orderDetails);
                 }
 
-                // 3. Clear Products (Based on mode)
+                // 3. INCREMENT COUPON USED COUNT
+                if (appliedCouponData) {
+                    const increment = firebase.firestore.FieldValue.increment(1);
+                    await db.collection('Coupon').doc('Coupon').collection('List').doc(appliedCouponData.id).update({
+                        used: increment
+                    });
+                }
+
+                // 4. Clear Products (Based on mode)
                 if (isBuyNowMode) {
                     localStorage.removeItem('vastramaya_direct_buy');
                 } else {
@@ -919,10 +1018,10 @@
                     }
                 }
 
-                // 4. Update Wishlist
+                // 5. Update Wishlist
                 updateWishlistOnSuccess(checkoutItems);
 
-                // 5. TRIGGER NEW ANIMATION
+                // 6. TRIGGER NEW ANIMATION
                 startAnimation(orderId);
 
             } catch (error) {
@@ -931,7 +1030,7 @@
             }
         }
 
-        // --- FIXED ANIMATION LOGIC (CENTER EXPANSION) ---
+        // --- ANIMATION LOGIC (Center Expansion) ---
         function startAnimation(orderId) {
             // 1. Hide Checkout UI & Lock Scroll
             document.getElementById('mainContainer').style.display = 'none';
@@ -962,9 +1061,10 @@
             setTimeout(() => {
                 reveal.classList.add('visible');
                 
-                // Robust Lottie Loading with Fallback
+                // Robust Lottie Loading
                 try {
                     const lottieContainer = document.getElementById('lottie');
+                    // Gold Checkmark Animation
                     const animPath = 'https://lottie.host/857e49aa-9d33-41c0-b8f1-f76156e5428a/39S52TjS0M.json';
                     
                     const animation = lottie.loadAnimation({
@@ -977,12 +1077,11 @@
 
                     // Error fallback
                     animation.addEventListener('data_failed', () => {
-                        console.warn('Primary Lottie failed, loading backup');
                         lottieContainer.innerHTML = '';
                         lottie.loadAnimation({
                             container: lottieContainer,
                             renderer: 'svg', loop: true, autoplay: true,
-                            path: 'https://assets10.lottiefiles.com/packages/lf20_y4p43sqe.json' // Generic checkmark
+                            path: 'https://assets10.lottiefiles.com/packages/lf20_y4p43sqe.json'
                         });
                     });
 
