@@ -532,14 +532,36 @@ body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Ro
 .clear-btn:hover { border-color: var(--brand-secondary); color: var(--brand-secondary); background: #fff5f5; }
 
 /* Filter Sections */
-.section { border-bottom: 1px solid var(--border-subtle); padding: 15px 0; }
+.section { 
+    border-bottom: 1px solid var(--border-subtle); 
+    padding: 0; 
+}
 .section:first-child { border-top: 1px solid var(--border-subtle); }
-.section-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 5px 0; }
+.section-header { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    cursor: pointer; 
+    padding: 15px 0; 
+}
 .section-title { font-weight: 700; color: var(--text-secondary); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
 .m-link-arrow { transition: transform 0.3s ease; width: 20px; height: 20px; stroke: var(--text-light); }
 .section.open .m-link-arrow { transform: rotate(90deg); stroke: var(--brand-primary); }
-.section-body { overflow: hidden; max-height: 0; padding-top: 0; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-.section.open .section-body { opacity: 1; max-height: 1000px; padding-top: 15px; visibility: visible; }
+.section-body { 
+    overflow: hidden; 
+    max-height: 0; 
+    padding: 0; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.section.open .section-body { 
+    opacity: 1; 
+    max-height: 1000px; 
+    padding-bottom: 20px; 
+    visibility: visible; 
+}
 
 .checkbox-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; margin-bottom: 4px; cursor: pointer; }
 .checkbox-box { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--border-subtle); background: #fff; display: flex; align-items: center; justify-content: center; transition: all .2s; }
@@ -1588,28 +1610,28 @@ body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Ro
             <div class="section-header"><span class="section-title">Color</span>
                 <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
             </div>
-            <div class="section-body open" style="opacity:1; max-height:none;"><div class="color-list" id="colorList"></div></div>
+            <div class="section-body"><div class="color-list" id="colorList"></div></div>
         </div>
         
         <div class="section">
             <div class="section-header"><span class="section-title">Category</span>
                 <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
             </div>
-            <div class="section-body open" style="opacity:1; max-height:none;"><div id="typeList"></div></div>
+            <div class="section-body"><div id="typeList"></div></div>
         </div>
         
         <div class="section">
             <div class="section-header"><span class="section-title">Fabric</span>
                 <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
             </div>
-            <div class="section-body open" style="opacity:1; max-height:none;"><div id="fabricList"></div></div>
+            <div class="section-body"><div id="fabricList"></div></div>
         </div>
         
         <div class="section">
             <div class="section-header"><span class="section-title">Size</span>
                 <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
             </div>
-            <div class="section-body open" style="opacity:1; max-height:none;"><div id="sizeList"></div></div>
+            <div class="section-body"><div id="sizeList"></div></div>
         </div>
     </div>
     
@@ -2807,8 +2829,13 @@ function initSlider(){
 
 function initAccordions(){
   document.querySelectorAll('.section-header').forEach(h => {
-    h.parentElement.classList.add('open');
-    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
+    // This line makes them start OPEN. 
+    // If you want them to start CLOSED, remove the next line:
+    h.parentElement.classList.add('open'); 
+    
+    h.addEventListener('click', () => {
+      h.parentElement.classList.toggle('open');
+    });
   });
 }
 
