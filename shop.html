@@ -2225,13 +2225,12 @@ const els = {
 async function initShopPage(){
     renderSkeletonGrid();
     
-    // 1. FAST LOAD: Get Metadata & Summary Data (Categories)
+    // 1. Wait for data to load
     await Promise.all([fetchMetadata(), fetchFastLoadData()]);
     
-    // 2. BACKGROUND LOAD: Get Full Data for Filtering
-    fetchFullDataInBackground();
-    
+    // 2. Build the filter UI components
     buildColors();
+    els.typeList.innerHTML = ''; // Clear previous if any
     AVAILABLE_CATEGORIES.forEach(i => els.typeList.appendChild(makeCheckbox(i, state.categories)));
     AVAILABLE_FABRICS.forEach(i => els.fabricList.appendChild(makeCheckbox(i, state.fabrics)));
     STANDARD_SIZES.forEach(i => els.sizeList.appendChild(makeCheckbox(i, state.sizes)));
@@ -2239,8 +2238,16 @@ async function initShopPage(){
     initSlider(); 
     initAccordions(); 
     initSort(); 
+    
+    // 3. Now that UI and Data are ready, apply URL params
     checkUrlParams();
     
+    // 4. Final single render
+    render(); 
+    
+    // Background fetch for more details
+    fetchFullDataInBackground();
+
     document.getElementById('mobileFilterBtn').addEventListener('click', openMobile);
     document.getElementById('overlayDim').addEventListener('click', closeMobile);
 }
@@ -2756,7 +2763,6 @@ function initSort(){
       label.textContent = item.textContent;
       menu.querySelectorAll('.sort-item').forEach(i => i.classList.remove('active'));
       item.classList.add('active');
-      render();
       sortControl.classList.remove('open'); // Close after selection
     });
   });
@@ -2765,19 +2771,19 @@ function initSort(){
 function checkUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const cat = urlParams.get('category');
+    
     if(cat) { 
         const decodedCat = decodeURIComponent(cat);
-        state.categories.add(decodedCat);
-        setTimeout(() => {
-            document.querySelectorAll('.checkbox-label').forEach(label => {
-                if(label.textContent.trim() === decodedCat) {
-                    label.parentElement.querySelector('input').checked = true;
-                }
-            });
-            render();
-        }, 100);
+        state.categories.add(decodedCat); // Set the logic state immediately
+        
+        // Update the checkbox UI visually
+        document.querySelectorAll('.checkbox-label').forEach(label => {
+            if(label.textContent.trim() === decodedCat) {
+                const input = label.parentElement.querySelector('input');
+                if(input) input.checked = true;
+            }
+        });
     }
-    render();
 }
 
 // MODIFIED WISHLIST FUNCTION FOR SHOP PAGE
