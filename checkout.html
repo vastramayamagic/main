@@ -60,7 +60,6 @@
             overflow-x: hidden; 
             color: var(--text-primary); 
             width: 100%; 
-            position: relative;
         }
         body.no-scroll { overflow: hidden; }
 
@@ -72,12 +71,9 @@
             display: grid; 
             grid-template-columns: 1.5fr 1fr; 
             gap: 50px; 
-            opacity: 1;
             transition: opacity 0.3s ease;
         }
-        .container.fade-out {
-            opacity: 0;
-        }
+        
         .back-link { 
             grid-column: span 2; 
             display: flex; 
@@ -90,6 +86,7 @@
             margin-bottom: -20px; 
             width: fit-content; 
             cursor: pointer; 
+            transition: color 0.3s ease;
         }
         .back-link:hover { color: var(--brand-primary); }
 
@@ -98,13 +95,14 @@
             grid-column: span 2; 
             text-align: center; 
             padding: 60px 20px; 
-            background: #fff; 
+            background: var(--card-bg); 
             border-radius: 20px; 
             border: 1px solid var(--border-subtle); 
             display: none; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
+            animation: fadeIn 0.5s ease;
         }
         .empty-cart-container.active { display: flex; }
         .empty-cart-icon { font-size: 64px; color: var(--border-subtle); margin-bottom: 20px; }
@@ -141,6 +139,7 @@
             align-items: center; 
             justify-content: center; 
             gap: 10px; 
+            cursor: pointer;
         }
         .addr-type-tag { 
             background: var(--surface-hover); 
@@ -177,7 +176,7 @@
             background: var(--surface-light); 
             border: 1px solid var(--border-subtle); 
             border-radius: 8px; 
-            transition: 0.2s; 
+            transition: all 0.2s ease; 
             white-space: nowrap; 
         }
         .change-btn:hover { 
@@ -196,17 +195,13 @@
             position: relative; 
             cursor: pointer; 
             background: var(--card-bg); 
-            transition: all 0.3s ease; 
+            transition: all 0.2s ease; 
             border: 2px solid transparent;
             overflow: hidden; 
         }
         .payment-option.selected {
-            border-color: var(--brand-primary);
+            border-color: var(--green-success);
             background: linear-gradient(to right, #ffffff, #fffbfc);
-        }
-        .payment-option.prepaid.selected { 
-            background: linear-gradient(to right, #ffffff, #fffbfc); 
-            border-color: var(--green-success); 
         }
         .best-value-badge { 
             position: absolute; 
@@ -234,7 +229,7 @@
         }
         input[type="radio"]:checked { 
             border-color: var(--brand-primary); 
-            background: var(--brand-primary); 
+            background: transparent; 
             border-width: 6px; 
         }
         
@@ -274,6 +269,12 @@
             border-radius: 6px; 
             width: fit-content; 
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         @keyframes pulse-green { 
             0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 
             70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 
@@ -282,18 +283,14 @@
 
         /* Order Box */
         .order-box { 
-            background: rgba(255,255,255,0.8); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid #fff; 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-subtle); 
             padding: 30px; 
             border-radius: 16px; 
             box-shadow: var(--shadow-rich); 
             position: sticky; 
             top: 20px; 
-            transition: transform 0.3s ease;
-        }
-        .order-box:hover {
-            transform: translateY(-5px);
+            animation: slideInRight 0.5s ease;
         }
         .order-scroll-container { 
             max-height: 400px; 
@@ -302,7 +299,10 @@
             margin-bottom: 20px; 
         }
         .order-scroll-container::-webkit-scrollbar { width: 5px; }
-        .order-scroll-container::-webkit-scrollbar-thumb { background: #e8d5c4; border-radius: 10px; }
+        .order-scroll-container::-webkit-scrollbar-thumb { 
+            background: #e8d5c4; 
+            border-radius: 10px; 
+        }
         
         .product { 
             display: flex; 
@@ -311,6 +311,7 @@
             align-items: center; 
             padding-bottom: 20px; 
             border-bottom: 1px solid #f0f0f0; 
+            animation: fadeIn 0.3s ease;
         }
         .product:last-child { border-bottom: none; }
         .prod-img { 
@@ -360,26 +361,25 @@
             cursor: pointer; 
             font-size: 14px; 
             color: var(--text-primary); 
-            transition: 0.2s; 
-            user-select: none;
+            transition: all 0.2s ease; 
         }
         .qty-btn:hover { 
             border-color: var(--brand-primary); 
             color: var(--brand-primary); 
+            transform: scale(1.1);
         }
         .qty-val { 
             font-size: 13px; 
             font-weight: 700; 
             width: 20px; 
             text-align: center; 
-            user-select: none;
         }
         .remove-icon-btn { 
             color: #d33d49; 
             cursor: pointer; 
             padding: 8px; 
             border-radius: 8px; 
-            transition: 0.2s; 
+            transition: all 0.2s ease; 
             font-size: 16px; 
             margin-left: 10px; 
             display: flex; 
@@ -449,8 +449,8 @@
             left: -100%; 
             width: 100%; 
             height: 100%; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); 
-            transition: 0.5s; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
+            transition: left 0.6s ease; 
         }
         .btn-main:hover { 
             transform: translateY(-2px); 
@@ -459,34 +459,27 @@
         .btn-main:hover::before { 
             left: 100%; 
         }
-        .btn-main:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
 
         .mobile-bottom-bar { display: none; }
 
-        /* --- 3. PREMIUM ANIMATION STYLES (Center Expansion) --- */
+        /* --- 3. PREMIUM ANIMATION STYLES --- */
         .stage {
             position: fixed; 
             left: 0; 
-            top: 50%; 
-            transform: translateY(-50%) scaleY(0); 
+            top: 50%;
+            transform: translateY(-50%); 
             width: 100vw; 
             height: 0;
-            background: var(--anim-bg); 
+            background: var(--anim-bg);
             z-index: 10000; 
             display: flex; 
             align-items: center; 
             justify-content: center;
             overflow: hidden; 
-            transition: all 0.8s cubic-bezier(0.8, 0, 0.2, 1);
-            pointer-events: none; 
-            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+            pointer-events: none;
         }
         
-        /* Grain Texture Overlay */
         .stage::before {
             content: ""; 
             position: absolute; 
@@ -499,17 +492,12 @@
             pointer-events: none;
         }
 
-        /* Animation States */
         .stage.active { 
-            opacity: 1;
-            transform: translateY(-50%) scaleY(1);
             height: 300px;
             pointer-events: all; 
         }
         .stage.full-screen { 
-            height: 100vh; 
-            top: 0;
-            transform: none;
+            height: 100vh;
         }
 
         .order-anim-container {
@@ -533,7 +521,7 @@
             filter: blur(1px);
         }
 
-        /* Truck Logic */
+        /* Truck */
         .truck { 
             width: 60px; 
             height: 41px; 
@@ -620,11 +608,6 @@
         }
 
         /* Animation Keyframes */
-        .animate .truck { animation: truck-move 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards; }
-        .animate .truck .light:before { animation: light-intensify 7.5s forwards; }
-        .animate .box { animation: box-move 7.5s forwards; }
-        .animate .lines { animation: lines-move 7.5s forwards; }
-
         @keyframes truck-move { 
             0% { transform: translateX(24px); }
             10%, 30% { transform: translateX(-164px); } 
@@ -650,7 +633,7 @@
             71%, 100% { opacity: 0; }
         }
 
-        /* Success Content (Premium) */
+        /* Success Content */
         .success-wrapper {
             position: absolute; 
             display: flex; 
@@ -694,19 +677,19 @@
             font-weight: 600; 
         }
 
-        /* Updated Order Panel & Button */
         .order-panel {
             background: var(--glass); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             padding: 40px 60px; 
-            border-radius: 24px; 
+            border-radius: 24px;
             display: flex; 
             flex-direction: column; 
             align-items: center;
             box-shadow: 0 50px 100px rgba(0,0,0,0.5);
             max-width: 90%;
+            animation: fadeIn 0.5s ease 0.3s both;
         }
         .panel-label { 
             color: rgba(255,255,255,0.4); 
@@ -724,7 +707,6 @@
             text-shadow: 0 0 20px rgba(255,255,255,0.2); 
         }
         
-        /* New Button Style */
         .btn-return {
             margin-top: 30px;
             padding: 16px 40px;
@@ -761,6 +743,7 @@
             justify-content: center; 
             align-items: center; 
             padding: 20px; 
+            animation: fadeIn 0.3s ease;
         }
         .modal-card { 
             background: #fff; 
@@ -795,13 +778,15 @@
             border-radius: 0 0 20px 20px; 
             flex-shrink: 0; 
         }
+        
         @keyframes popIn { 
             from { transform: scale(0.95); opacity: 0; } 
             to { transform: scale(1); opacity: 1; } 
         }
-        @keyframes slideUp { 
-            from { transform: translateY(100%); } 
-            to { transform: translateY(0); } 
+        
+        @keyframes slideInRight {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .premium-close-btn { 
@@ -843,10 +828,26 @@
         .close-icon-lines::before { transform: rotate(45deg); }
         .close-icon-lines::after { transform: rotate(-45deg); }
 
-        .input-error { border-color: var(--red-warning) !important; background-color: #fff8f8 !important; }
-        .error-msg { color: var(--red-warning); font-size: 11px; margin-top: 4px; font-weight: 600; display: none; }
+        .input-error { 
+            border-color: var(--red-warning) !important; 
+            background-color: #fff8f8 !important; 
+        }
+        .error-msg { 
+            color: var(--red-warning); 
+            font-size: 11px; 
+            margin-top: 4px; 
+            font-weight: 600; 
+            display: none; 
+        }
         .error-msg.show { display: block; }
-        .addr-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 20px; }
+        
+        .addr-form-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            text-align: left; 
+            margin-bottom: 20px; 
+        }
         .full-width { grid-column: span 2; }
         .modal-input { 
             width: 100%; 
@@ -889,7 +890,7 @@
             cursor: pointer; 
             color: var(--text-secondary); 
             background: #fff; 
-            transition: 0.2s; 
+            transition: all 0.2s ease; 
             flex: 1; 
             text-align: center; 
         }
@@ -952,32 +953,6 @@
             background: var(--surface-hover); 
         }
 
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--brand-primary);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            box-shadow: var(--shadow-rich);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 3000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .toast i {
-            font-size: 20px;
-        }
-
         @media (max-width: 900px) {
             .container { 
                 display: flex; 
@@ -1005,6 +980,7 @@
                 padding: 12px 20px 20px 20px; 
                 z-index: 900; 
                 box-shadow: 0 -5px 20px rgba(0,0,0,0.05); 
+                animation: slideUp 0.3s ease;
             }
             .btn-mobile-fixed { 
                 width: 100%; 
@@ -1025,6 +1001,7 @@
                 position: relative; 
                 overflow: hidden; 
                 letter-spacing: 0.5px; 
+                transition: all 0.2s ease;
             }
             .btn-mobile-fixed::before { 
                 content: ''; 
@@ -1034,7 +1011,7 @@
                 width: 100%; 
                 height: 100%; 
                 background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
-                transition: 0.6s; 
+                transition: left 0.6s; 
             }
             .btn-mobile-fixed:active::before { left: 100%; transition: 0s; }
             .btn-mobile-fixed:active { transform: scale(0.98); }
@@ -1051,35 +1028,19 @@
                 display: flex; 
                 flex-direction: column; 
             }
-            .modal-header { 
-                padding: 20px 25px; 
-                border-radius: 24px 24px 0 0; 
-                flex-shrink: 0; 
-            }
-            .modal-body { 
-                padding: 25px; 
-                overflow-y: auto; 
-                flex-grow: 1; 
-            }
-            .modal-footer { 
-                padding: 20px 25px; 
-                border-radius: 0; 
-                margin-top: auto; 
-                flex-shrink: 0; 
-                border-top: 1px solid var(--border-subtle); 
-                background: #fff; 
-            }
+            .modal-header { padding: 20px 25px; border-radius: 24px 24px 0 0; flex-shrink: 0; }
+            .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
+            .modal-footer { padding: 20px 25px; border-radius: 0; margin-top: auto; flex-shrink: 0; border-top: 1px solid var(--border-subtle); background: #fff; }
             .addr-form-grid { grid-template-columns: 1fr; gap: 15px; }
             .full-width { grid-column: span 1; }
-            .premium-close-btn { 
-                position: absolute; 
-                top: 20px; 
-                right: 20px; 
-                background: #fff; 
-                border: 1px solid var(--border-subtle); 
-            }
+            .premium-close-btn { position: absolute; top: 20px; right: 20px; background: #fff; border: 1px solid var(--border-subtle); }
             .success-h1 { font-size: 24px; letter-spacing: 6px; }
             .order-panel { padding: 30px 20px; width: 100%; }
+            
+            @keyframes slideUp {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+            }
         }
     </style>
 </head>
@@ -1146,9 +1107,9 @@
 
             <h2>Payment Method</h2>
             
-            <label class="payment-option prepaid selected" id="card-prepaid">
+            <label class="payment-option selected" id="card-prepaid">
                 <div class="best-value-badge">RECOMMENDED</div>
-                <input type="radio" name="payment" value="prepaid" id="radio-prepaid" checked onchange="togglePayment('prepaid')">
+                <input type="radio" name="payment" value="prepaid" id="radio-prepaid" checked>
                 <div class="pay-text">
                     <span class="pay-title">Pay Online <span class="save-badge">Save ₹100</span></span>
                     <span class="pay-sub">UPI, Cards, Net Banking</span>
@@ -1156,8 +1117,8 @@
                 <i class="fas fa-check-circle" style="color:var(--green-success); font-size: 24px;"></i>
             </label>
 
-            <label class="payment-option cod" id="card-cod">
-                <input type="radio" name="payment" value="cod" id="radio-cod" onchange="togglePayment('cod')">
+            <label class="payment-option" id="card-cod">
+                <input type="radio" name="payment" value="cod" id="radio-cod">
                 <div class="pay-text">
                     <span class="pay-title">Cash on Delivery</span>
                     <span class="fee-warning"><i class="fas fa-exclamation-triangle"></i> + ₹100 Handling Fee</span>
@@ -1169,7 +1130,7 @@
             <div class="order-box">
                 <div class="order-scroll-container">
                     <div id="order-items-container">
-                        <!-- Items will be dynamically added here -->
+                        <!-- Items will be dynamically inserted here -->
                     </div>
                 </div>
 
@@ -1220,7 +1181,7 @@
                     </div>
                     <div>
                         <label class="modal-label">Mobile Number</label>
-                        <input type="tel" id="input-phone" class="modal-input" required>
+                        <input type="tel" id="input-phone" class="modal-input" required maxlength="10">
                         <div class="error-msg" id="error-phone">Enter valid 10 digit number</div>
                     </div>
                 </div>
@@ -1228,7 +1189,7 @@
                 <div class="addr-form-grid">
                     <div>
                         <label class="modal-label">Pincode</label>
-                        <input type="text" id="input-zip" class="modal-input" required>
+                        <input type="text" id="input-zip" class="modal-input" required maxlength="6">
                         <div class="error-msg" id="error-zip">Enter valid 6 digit pincode</div>
                     </div>
                     <div>
@@ -1278,16 +1239,12 @@
         </form>
     </div>
 
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toast-message">Operation successful</span>
-    </div>
-
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
             authDomain: "vastramaya---magic.firebaseapp.com",
@@ -1298,10 +1255,15 @@
             measurementId: "G-E39VNDCFVE"
         };
 
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        // Global Variables
         let baseTotal = 0;
         const codFee = 100;
         let masterCart = [];
@@ -1312,6 +1274,7 @@
         let isBuyNowMode = false;
         let isProcessing = false;
 
+        // DOM Elements
         const codModal = document.getElementById('codModal');
         const addrModal = document.getElementById('addressModal');
         const totalDisplay = document.getElementById('total-display');
@@ -1321,34 +1284,30 @@
         const btnTextMobile = document.getElementById('btn-text-mobile');
         const checkoutBtn = document.getElementById('checkout-btn');
         const mobileCheckoutBtn = document.getElementById('mobile-checkout-btn');
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toast-message');
 
-        // Toast notification function
-        function showToast(message, type = 'success') {
-            toastMessage.textContent = message;
-            toast.style.background = type === 'success' ? 'var(--green-success)' : 
-                                   type === 'error' ? 'var(--red-warning)' : 'var(--brand-primary)';
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', initializeApp);
+        
+        function initializeApp() {
             checkAuth();
             loadCart();
             setupEventListeners();
-        });
+        }
 
         function setupEventListeners() {
-            // Prevent form submission on enter key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'INPUT') {
-                    e.preventDefault();
-                }
+            // Payment method selection
+            document.getElementById('radio-prepaid').addEventListener('change', () => togglePayment('prepaid'));
+            document.getElementById('radio-cod').addEventListener('change', () => togglePayment('cod'));
+            
+            // Close modals on outside click
+            window.addEventListener('click', function(event) {
+                if (event.target == codModal) closeCodModal();
+                if (event.target == addrModal) closeAddressModal();
             });
+            
+            // Input validation
+            document.getElementById('input-phone').addEventListener('input', validatePhone);
+            document.getElementById('input-zip').addEventListener('input', validateZip);
         }
 
         function checkAuth() {
@@ -1357,8 +1316,16 @@
                     currentUser = user;
                     loadAddress(user.uid);
                 } else {
-                    // Guest user - try to load address from localStorage
-                    loadGuestAddress();
+                    // Guest mode - check localStorage for address
+                    const savedAddress = localStorage.getItem('vastramaya_guest_address');
+                    if (savedAddress) {
+                        try {
+                            currentAddressData = JSON.parse(savedAddress);
+                            displayAddress(currentAddressData);
+                        } catch (e) {
+                            console.error("Error parsing saved address:", e);
+                        }
+                    }
                 }
             });
         }
@@ -1369,58 +1336,47 @@
                 if (doc.exists && doc.data().address) {
                     const addr = doc.data().address;
                     currentAddressData = addr;
+                    displayAddress(addr);
                     
-                    updateAddressDisplay(addr);
+                    // Pre-fill form
+                    document.getElementById('input-name').value = addr.name || '';
+                    document.getElementById('input-phone').value = addr.phone || '';
+                    document.getElementById('input-zip').value = addr.zip || '';
+                    document.getElementById('input-locality').value = addr.locality || '';
+                    document.getElementById('input-city').value = addr.city || '';
+                    document.getElementById('input-state').value = addr.state || '';
+                    document.getElementById('input-street').value = addr.street || '';
+                    document.getElementById('input-landmark').value = addr.landmark || '';
+                    
+                    // Set address type
+                    const type = addr.type || 'Home';
+                    document.querySelector(`input[name="addrType"][value="${type}"]`).checked = true;
+
                     addressExists = true;
-                    document.getElementById('address-filled').style.display = 'flex';
-                    document.getElementById('address-empty').style.display = 'none';
                 } else {
-                    loadGuestAddress();
+                    showEmptyAddress();
                 }
             } catch (e) { 
                 console.error("Error loading address:", e);
-                loadGuestAddress();
+                showEmptyAddress();
             }
         }
 
-        function loadGuestAddress() {
-            const savedAddress = localStorage.getItem('vastramaya_guest_address');
-            if (savedAddress) {
-                try {
-                    const addr = JSON.parse(savedAddress);
-                    currentAddressData = addr;
-                    updateAddressDisplay(addr);
-                    addressExists = true;
-                    document.getElementById('address-filled').style.display = 'flex';
-                    document.getElementById('address-empty').style.display = 'none';
-                } catch (e) {
-                    console.error("Error parsing saved address:", e);
-                }
-            }
-        }
-
-        function updateAddressDisplay(addr) {
+        function displayAddress(addr) {
             document.getElementById('display-name').innerText = addr.name;
-            document.getElementById('display-phone').innerText = `Phone: ${addr.phone}`;
-            document.getElementById('display-address').innerText = `${addr.street}`;
+            document.getElementById('display-phone').innerText = addr.phone;
+            document.getElementById('display-address').innerText = `${addr.street}, ${addr.locality}`;
             document.getElementById('display-city-state').innerText = `${addr.city} - ${addr.zip}, ${addr.state}`;
             document.getElementById('display-type').innerText = addr.type || 'Home';
             
-            // Fill modal inputs
-            document.getElementById('input-name').value = addr.name;
-            document.getElementById('input-phone').value = addr.phone;
-            document.getElementById('input-zip').value = addr.zip;
-            document.getElementById('input-locality').value = addr.locality;
-            document.getElementById('input-city').value = addr.city;
-            document.getElementById('input-state').value = addr.state;
-            document.getElementById('input-street').value = addr.street;
-            document.getElementById('input-landmark').value = addr.landmark || '';
-            
-            // Set address type
-            const typeRadios = document.querySelectorAll('input[name="addrType"]');
-            typeRadios.forEach(radio => {
-                if (radio.value === addr.type) radio.checked = true;
-            });
+            document.getElementById('address-filled').style.display = 'flex';
+            document.getElementById('address-empty').style.display = 'none';
+        }
+
+        function showEmptyAddress() {
+            addressExists = false;
+            document.getElementById('address-filled').style.display = 'none';
+            document.getElementById('address-empty').style.display = 'flex';
         }
 
         function loadCart() {
@@ -1438,48 +1394,47 @@
                 masterCart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
             }
             
-            // Add unique IDs for checkout items
+            // Generate unique IDs for checkout items
             masterCart.forEach((item, index) => {
                 if(!item._checkoutId) {
                     item._checkoutId = Date.now() + '-' + index + '-' + Math.random().toString(36).substr(2, 9);
                 }
             });
 
-            checkoutItems = [...masterCart];
+            checkoutItems = [...masterCart]; 
             renderCheckoutList();
         }
 
         function renderCheckoutList() {
-            const container = document.getElementById('mainContainer');
+            const container = document.getElementById('order-items-container');
+            
             if (checkoutItems.length === 0) {
                 document.getElementById('checkout-form-section').style.display = 'none';
                 document.getElementById('checkout-summary-section').style.display = 'none';
                 document.getElementById('mobile-bottom-bar').style.display = 'none'; 
                 document.getElementById('empty-cart-msg').classList.add('active');
-                container.style.display = 'none';
                 return;
             } else {
                 document.getElementById('checkout-form-section').style.display = 'block';
                 document.getElementById('checkout-summary-section').style.display = 'block';
                 document.getElementById('mobile-bottom-bar').style.display = ''; 
                 document.getElementById('empty-cart-msg').classList.remove('active');
-                container.style.display = 'grid';
             }
 
-            const itemsContainer = document.getElementById('order-items-container');
-            itemsContainer.innerHTML = '';
+            container.innerHTML = '';
             baseTotal = 0;
 
             checkoutItems.forEach((item) => {
                 const itemTotal = item.price * item.quantity;
                 baseTotal += itemTotal;
+                
                 const div = document.createElement('div');
                 div.className = 'product';
                 div.innerHTML = `
-                    <img src="${item.image || 'https://via.placeholder.com/60x80'}" class="prod-img" alt="${item.name}">
+                    <img src="${item.image}" class="prod-img" alt="${item.name}">
                     <div class="prod-info">
                         <h4>${item.name}</h4>
-                        <p>${item.size ? 'Size: ' + item.size : ''}${item.color ? ' | Color: ' + item.color : ''}</p>
+                        <p>${item.size ? 'Size: ' + item.size : ''} ${item.color ? ' | Color: ' + item.color : ''}</p>
                         
                         <div class="qty-wrapper">
                             <div class="qty-btn" onclick="updateQuantity('${item._checkoutId}', -1)">-</div>
@@ -1494,10 +1449,16 @@
                         </div>
                     </div>
                 `;
-                itemsContainer.appendChild(div);
+                container.appendChild(div);
             });
 
-            updatePaymentUI();
+            subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
+            
+            if(document.getElementById('radio-cod').checked) {
+                setCodUI();
+            } else {
+                setPrepaidUI();
+            }
         }
 
         function updateQuantity(uniqueId, change) {
@@ -1510,26 +1471,20 @@
                     removeCheckoutItem(uniqueId);
                 } else {
                     renderCheckoutList();
-                    saveCartToStorage();
                 }
             }
         }
 
         function removeCheckoutItem(uniqueId) {
-            checkoutItems = checkoutItems.filter(item => item._checkoutId !== uniqueId);
-            renderCheckoutList();
-            saveCartToStorage();
-            showToast('Item removed from cart', 'success');
-        }
-
-        function saveCartToStorage() {
-            if (isBuyNowMode) {
-                localStorage.setItem('vastramaya_direct_buy', JSON.stringify(checkoutItems));
-            } else {
-                localStorage.setItem('vastramaya_cart', JSON.stringify(checkoutItems));
+            if (isProcessing) return;
+            
+            if (confirm('Are you sure you want to remove this item?')) {
+                checkoutItems = checkoutItems.filter(item => item._checkoutId !== uniqueId);
+                renderCheckoutList();
             }
         }
 
+        // Modal Functions
         function openAddressModal() { 
             document.body.classList.add('no-scroll'); 
             addrModal.style.display = 'flex'; 
@@ -1543,52 +1498,55 @@
         function closeCodModal() { 
             document.body.classList.remove('no-scroll'); 
             codModal.style.display = 'none'; 
-            // Revert to prepaid if COD modal closed
-            document.getElementById('radio-prepaid').checked = true;
-            updatePaymentUI();
+            setPrepaidUI();
         }
-        
+
+        // Input Validation
+        function validatePhone() {
+            const phoneInput = document.getElementById('input-phone');
+            const errorElement = document.getElementById('error-phone');
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const cleanPhone = phoneInput.value.replace(/\D/g, '');
+
+            if (!phoneRegex.test(cleanPhone) && phoneInput.value.length > 0) {
+                errorElement.classList.add('show');
+                phoneInput.classList.add('input-error');
+                return false;
+            } else {
+                errorElement.classList.remove('show');
+                phoneInput.classList.remove('input-error');
+                phoneInput.value = cleanPhone;
+                return true;
+            }
+        }
+
+        function validateZip() {
+            const zipInput = document.getElementById('input-zip');
+            const errorElement = document.getElementById('error-zip');
+            const zipRegex = /^\d{6}$/;
+
+            if (!zipRegex.test(zipInput.value) && zipInput.value.length > 0) {
+                errorElement.classList.add('show');
+                zipInput.classList.add('input-error');
+                return false;
+            } else {
+                errorElement.classList.remove('show');
+                zipInput.classList.remove('input-error');
+                return true;
+            }
+        }
+
         async function saveAddress(e) {
             e.preventDefault();
-            if (isProcessing) return;
             
-            const newName = document.getElementById('input-name').value.trim();
-            const newPhoneInput = document.getElementById('input-phone');
-            const newZipInput = document.getElementById('input-zip');
-            
-            // Reset errors
-            document.getElementById('error-phone').classList.remove('show');
-            newPhoneInput.classList.remove('input-error');
-            document.getElementById('error-zip').classList.remove('show');
-            newZipInput.classList.remove('input-error');
-
-            // Validation
-            let isValid = true;
-            const phoneRegex = /^[6-9]\d{9}$/;
-            const cleanPhone = newPhoneInput.value.replace(/\D/g, '');
-            if (!phoneRegex.test(cleanPhone)) {
-                document.getElementById('error-phone').classList.add('show');
-                newPhoneInput.classList.add('input-error');
-                isValid = false;
+            if (!validatePhone() || !validateZip()) {
+                return;
             }
-            const zipRegex = /^\d{6}$/;
-            if (!zipRegex.test(newZipInput.value)) {
-                document.getElementById('error-zip').classList.add('show');
-                newZipInput.classList.add('input-error');
-                isValid = false;
-            }
-            if (!isValid) return;
-
-            isProcessing = true;
-            const saveBtn = e.target.querySelector('button[type="submit"]');
-            const originalText = saveBtn.innerHTML;
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-            saveBtn.disabled = true;
 
             const addressData = {
-                name: newName, 
-                phone: cleanPhone, 
-                zip: newZipInput.value,
+                name: document.getElementById('input-name').value.trim(),
+                phone: document.getElementById('input-phone').value.replace(/\D/g, ''),
+                zip: document.getElementById('input-zip').value.trim(),
                 street: document.getElementById('input-street').value.trim(),
                 locality: document.getElementById('input-locality').value.trim(),
                 city: document.getElementById('input-city').value.trim(),
@@ -1597,226 +1555,198 @@
                 type: document.querySelector('input[name="addrType"]:checked').value
             };
 
-            currentAddressData = addressData;
-            updateAddressDisplay(addressData);
-            
-            addressExists = true;
-            document.getElementById('address-filled').style.display = 'flex';
-            document.getElementById('address-empty').style.display = 'none';
+            // Validate required fields
+            if (!addressData.name || !addressData.phone || !addressData.zip || 
+                !addressData.street || !addressData.locality || !addressData.city || !addressData.state) {
+                alert('Please fill in all required fields.');
+                return;
+            }
 
-            // Save to Firebase if user is logged in, otherwise to localStorage
-            if(currentUser) {
+            currentAddressData = addressData;
+            displayAddress(addressData);
+            addressExists = true;
+
+            // Save address based on user status
+            if (currentUser) {
                 try {
                     await db.collection('users').doc(currentUser.uid).set({ 
                         address: addressData 
                     }, { merge: true });
-                } catch (error) {
-                    console.error("Error saving address to Firebase:", error);
+                } catch (e) {
+                    console.error("Error saving address:", e);
+                    alert('Error saving address. Please try again.');
                 }
             } else {
+                // Save to localStorage for guest users
                 localStorage.setItem('vastramaya_guest_address', JSON.stringify(addressData));
             }
 
-            // Reset button state
-            setTimeout(() => {
-                saveBtn.innerHTML = originalText;
-                saveBtn.disabled = false;
-                isProcessing = false;
-                closeAddressModal();
-                showToast('Address saved successfully', 'success');
-            }, 500);
+            closeAddressModal();
         }
 
         function togglePayment(method) {
             if (method === 'cod') { 
                 document.body.classList.add('no-scroll'); 
                 codModal.style.display = 'flex'; 
+                
+                // Update UI
+                document.getElementById('card-prepaid').classList.remove('selected');
+                document.getElementById('card-cod').classList.add('selected');
             } else { 
                 setPrepaidUI(); 
+                
+                // Update UI
+                document.getElementById('card-prepaid').classList.add('selected');
+                document.getElementById('card-cod').classList.remove('selected');
             }
         }
 
         function setPrepaidUI() {
             document.getElementById('radio-prepaid').checked = true;
-            document.getElementById('card-prepaid').classList.add('selected');
-            document.getElementById('card-cod').classList.remove('selected');
-            
             shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
             shippingDisplay.className = 'text-green';
-            const total = baseTotal;
-            totalDisplay.innerText = `₹${total.toLocaleString('en-IN')}`;
-            btnText.innerText = `Pay ₹${total.toLocaleString('en-IN')}`;
-            btnTextMobile.innerText = `Pay ₹${total.toLocaleString('en-IN')}`;
+            totalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
+            btnText.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
+            btnTextMobile.innerText = `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
         }
 
         function setCodUI() {
             document.getElementById('radio-cod').checked = true;
-            document.getElementById('card-prepaid').classList.remove('selected');
-            document.getElementById('card-cod').classList.add('selected');
-            
             shippingDisplay.innerHTML = '+ ₹100 Fee';
             shippingDisplay.className = 'text-red';
-            const total = baseTotal + codFee;
-            totalDisplay.innerText = `₹${total.toLocaleString('en-IN')}`;
-            btnText.innerText = "Place Order (COD)"; 
-            btnTextMobile.innerText = "Place Order (COD)";
-        }
-
-        function updatePaymentUI() {
-            const isCod = document.getElementById('radio-cod').checked;
-            if (isCod) {
-                setCodUI();
-            } else {
-                setPrepaidUI();
-            }
+            totalDisplay.innerText = `₹${(baseTotal + codFee).toLocaleString('en-IN')}`;
+            btnText.innerText = "Place Order"; 
+            btnTextMobile.innerText = "Place Order";
         }
 
         function switchToPrepaid() { 
             closeCodModal(); 
+            document.getElementById('radio-prepaid').checked = true;
             setPrepaidUI();
         }
-        
+
         function confirmCOD() { 
             document.body.classList.remove('no-scroll'); 
             codModal.style.display = 'none'; 
-            setCodUI(); 
+            setCodUI();
         }
 
         async function handleCheckout() {
             if (isProcessing) return;
             
-            // Address validation
             if (!addressExists) {
-                showToast("Please add a delivery address.", "error");
+                alert("Please add a delivery address.");
                 openAddressModal();
                 return;
             }
             
-            // Cart validation
             if (checkoutItems.length === 0) {
-                showToast("Your cart is empty.", "error");
+                alert("Your checkout list is empty.");
                 return;
             }
 
-            isProcessing = true;
             const isCod = document.getElementById('radio-cod').checked;
             
             // Disable buttons and show loading
+            isProcessing = true;
             checkoutBtn.disabled = true;
             mobileCheckoutBtn.disabled = true;
-            const originalText = btnText.innerText;
+            
             const loadingHtml = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+            const originalText = btnText.innerText;
+            const originalMobileText = btnTextMobile.innerText;
+            
             btnText.innerHTML = loadingHtml;
             btnTextMobile.innerHTML = loadingHtml;
 
-            // Fade out container
-            document.getElementById('mainContainer').classList.add('fade-out');
+            try {
+                if (isCod) {
+                    // Simulate processing delay for COD
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    const orderId = `COD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+                    await finalizeOrder(orderId, 'COD', 'Pending', (baseTotal + codFee));
+                } else {
+                    // Online payment
+                    const response = await fetch('/api/create-razorpay-order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            amount: baseTotal * 100, // Razorpay expects amount in paise
+                            currency: 'INR'
+                        })
+                    });
 
-            if (isCod) {
-                // Simulate COD processing
-                setTimeout(() => {
-                    const orderId = `COD-${Date.now().toString().slice(-6)}`;
-                    finalizeOrder(orderId, 'COD', 'Pending', (baseTotal + codFee));
-                }, 1500);
-            } else {
-                // Online payment with Razorpay
-                try {
-                    // Note: In production, this should be a server-side call
-                    // For demo purposes, we'll simulate the response
-                    const amountInPaise = baseTotal * 100; // Razorpay uses paise
+                    if (!response.ok) throw new Error('Network response was not ok');
                     
-                    // Mock server response
-                    const mockOrderData = {
-                        id: `order_${Date.now()}`,
-                        amount: amountInPaise,
-                        currency: 'INR',
-                        key: 'rzp_test_YOUR_KEY_HERE' // Replace with actual key
-                    };
+                    const orderData = await response.json();
 
                     const options = {
-                        key: mockOrderData.key,
-                        amount: mockOrderData.amount,
-                        currency: mockOrderData.currency,
+                        key: orderData.key || 'rzp_test_YOUR_KEY_HERE', // Replace with your key
+                        amount: orderData.amount,
+                        currency: orderData.currency,
                         name: "Vastramaya",
                         description: "Fashion Purchase",
-                        image: "https://product-ecommerces.netlify.app/vastramaya.png",
-                        order_id: mockOrderData.id,
+                        image: "https://via.placeholder.com/150", // Replace with your logo
+                        order_id: orderData.id,
                         handler: function (response) {
-                            finalizeOrder(
-                                response.razorpay_order_id, 
-                                'Online', 
-                                'Paid', 
-                                baseTotal, 
-                                response.razorpay_payment_id
-                            );
+                            finalizeOrder(orderData.id, 'Online', 'Paid', baseTotal, response.razorpay_payment_id);
                         },
                         prefill: {
-                            name: currentAddressData.name,
-                            contact: currentAddressData.phone,
-                            email: currentUser ? (currentUser.email || "") : "guest@example.com"
+                            name: currentAddressData?.name || '',
+                            contact: currentAddressData?.phone || '',
+                            email: currentUser?.email || ''
                         },
                         theme: {
                             color: "#8b2635"
                         },
                         modal: {
                             ondismiss: function() {
-                                resetProcessingState();
-                                showToast("Payment cancelled", "error");
+                                resetButtons(originalText, originalMobileText);
+                                alert("Payment was cancelled. You can try again.");
                             }
                         }
                     };
 
                     const rzp1 = new Razorpay(options);
                     rzp1.open();
-
-                } catch (error) {
-                    console.error("Payment initiation failed:", error);
-                    resetProcessingState();
-                    showToast("Payment failed. Please try again.", "error");
                 }
+            } catch (error) {
+                console.error("Checkout error:", error);
+                alert("An error occurred. Please try again.");
+                resetButtons(originalText, originalMobileText);
             }
         }
 
-        function resetProcessingState() {
+        function resetButtons(originalText, originalMobileText) {
             isProcessing = false;
             checkoutBtn.disabled = false;
             mobileCheckoutBtn.disabled = false;
-            btnText.innerText = document.getElementById('radio-cod').checked ? "Place Order (COD)" : `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
-            btnTextMobile.innerText = document.getElementById('radio-cod').checked ? "Place Order (COD)" : `Pay ₹${baseTotal.toLocaleString('en-IN')}`;
-            document.getElementById('mainContainer').classList.remove('fade-out');
+            btnText.innerText = originalText;
+            btnTextMobile.innerText = originalMobileText;
         }
 
         async function finalizeOrder(orderId, method, status, amount, payId = null) {
             const orderDetails = {
                 orderId: orderId,
                 userId: currentUser ? currentUser.uid : 'guest',
-                userEmail: currentUser ? currentUser.email : 'guest',
-                items: checkoutItems.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                    size: item.size,
-                    color: item.color,
-                    image: item.image
-                })),
+                items: checkoutItems,
                 address: currentAddressData,
                 amount: amount,
                 paymentMethod: method,
                 paymentStatus: status,
-                status: "Ordered",
+                orderStatus: "Confirmed",
                 paymentId: payId,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                timestamp: new Date().toISOString()
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             };
 
             try {
-                // Save to Firebase
+                // Save order to Firestore
                 if (currentUser) {
-                    await db.collection('users').doc(currentUser.uid).collection('orders').doc(orderId).set(orderDetails);
+                    await db.collection('orders').doc(orderId).set(orderDetails);
+                    await db.collection('users').doc(currentUser.uid)
+                        .collection('orders').doc(orderId).set(orderDetails);
                 }
-                // Also save to main orders collection
-                await db.collection('orders').doc(orderId).set(orderDetails);
 
                 // Clear cart based on mode
                 if (isBuyNowMode) {
@@ -1824,11 +1754,12 @@
                 } else {
                     const boughtIds = checkoutItems.map(item => item._checkoutId);
                     const remainingCart = masterCart.filter(item => !boughtIds.includes(item._checkoutId));
+                    
                     localStorage.setItem('vastramaya_cart', JSON.stringify(remainingCart));
                     
                     if (currentUser) {
                         await db.collection('users').doc(currentUser.uid).update({ 
-                            cart: remainingCart 
+                            cart: firebase.firestore.FieldValue.arrayRemove(...checkoutItems) 
                         });
                     }
                 }
@@ -1836,10 +1767,8 @@
                 // Update wishlist
                 updateWishlistOnSuccess(checkoutItems);
 
-                // Trigger animation
-                setTimeout(() => {
-                    startAnimation(orderId);
-                }, 500);
+                // Trigger success animation
+                startAnimation(orderId);
 
             } catch (error) {
                 console.error("Error saving order:", error);
@@ -1848,79 +1777,76 @@
             }
         }
 
-        // --- ANIMATION LOGIC ---
         function startAnimation(orderId) {
+            // Hide main UI
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('mobile-bottom-bar').style.display = 'none';
+            document.body.classList.add('no-scroll');
+
             // Set order ID
-            document.getElementById('displayOrderId').textContent = orderId;
+            document.getElementById('displayOrderId').innerText = orderId;
 
             const stage = document.getElementById('mainStage');
-            const truck = document.getElementById('truckBox');
-            const reveal = document.getElementById('successReveal');
+            const truckBox = document.getElementById('truckBox');
+            const successReveal = document.getElementById('successReveal');
 
-            // Activate stage
+            // Start animation sequence
             stage.classList.add('active');
 
-            // Start truck animation after a delay
-            setTimeout(() => { 
-                truck.classList.add('animate'); 
+            setTimeout(() => {
+                // Start truck animation
+                truckBox.style.animation = 'truck-move 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards';
+                truckBox.querySelector('.truck').style.animation = 'light-intensify 7.5s forwards';
+                truckBox.querySelector('.box').style.animation = 'box-move 7.5s forwards';
+                truckBox.querySelector('.lines').style.animation = 'lines-move 7.5s forwards';
             }, 500);
 
-            // Expand to full screen and hide truck
             setTimeout(() => {
                 stage.classList.add('full-screen');
-                truck.style.opacity = '0';
+                truckBox.style.opacity = '0';
             }, 6000);
 
-            // Show success animation
             setTimeout(() => {
-                reveal.classList.add('visible');
+                successReveal.classList.add('visible');
                 
                 // Load Lottie animation
                 try {
-                    const lottieContainer = document.getElementById('lottie');
-                    // Using a public success animation as fallback
-                    const animation = lottie.loadAnimation({
-                        container: lottieContainer,
+                    lottie.loadAnimation({
+                        container: document.getElementById('lottie'),
                         renderer: 'svg',
                         loop: false,
                         autoplay: true,
-                        path: 'https://assets10.lottiefiles.com/packages/lf20_y4p43sqe.json'
+                        path: 'https://assets10.lottiefiles.com/packages/lf20_y4p43sqe.json' // Success checkmark
                     });
                 } catch (e) {
-                    console.log("Using fallback success animation");
+                    console.error("Lottie error:", e);
+                    // Fallback to icon
+                    document.getElementById('lottie').innerHTML = '<i class="fas fa-check-circle" style="font-size: 120px; color: var(--gold)"></i>';
                 }
             }, 6800);
         }
 
         function updateWishlistOnSuccess(boughtItems) {
-            let wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
-            if(wishlist.length === 0) return;
+            try {
+                let wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+                if (wishlist.length === 0) return;
 
-            const boughtProductIds = boughtItems.map(i => i.id); 
-            const newWishlist = wishlist.filter(id => !boughtProductIds.includes(id));
+                const boughtProductIds = boughtItems.map(i => i.id);
+                const newWishlist = wishlist.filter(id => !boughtProductIds.includes(id));
 
-            if(wishlist.length !== newWishlist.length) {
-                localStorage.setItem('vastramaya_wishlist', JSON.stringify(newWishlist));
-                if (currentUser) {
-                    db.collection('users').doc(currentUser.uid).update({ 
-                        wishlist: newWishlist 
-                    }).catch(e => console.log(e));
+                if (wishlist.length !== newWishlist.length) {
+                    localStorage.setItem('vastramaya_wishlist', JSON.stringify(newWishlist));
+                    
+                    if (currentUser) {
+                        db.collection('users').doc(currentUser.uid).update({ 
+                            wishlist: newWishlist 
+                        }).catch(e => console.log("Wishlist update error:", e));
+                    }
                 }
+            } catch (e) {
+                console.error("Wishlist update error:", e);
             }
         }
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target == codModal) closeCodModal();
-            if (event.target == addrModal) closeAddressModal();
-        }
-
-        // Prevent accidental navigation
-        window.onbeforeunload = function() {
-            if (isProcessing) {
-                return "You have an ongoing transaction. Are you sure you want to leave?";
-            }
-        };
     </script>
 </body>
 </html>
