@@ -71,9 +71,8 @@
             display: grid; 
             grid-template-columns: 1.5fr 1fr; 
             gap: 50px; 
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease;
         }
-        
         .back-link { 
             grid-column: span 2; 
             display: flex; 
@@ -95,14 +94,13 @@
             grid-column: span 2; 
             text-align: center; 
             padding: 60px 20px; 
-            background: var(--card-bg); 
+            background: #fff; 
             border-radius: 20px; 
             border: 1px solid var(--border-subtle); 
             display: none; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            animation: fadeIn 0.5s ease;
         }
         .empty-cart-container.active { display: flex; }
         .empty-cart-icon { font-size: 64px; color: var(--border-subtle); margin-bottom: 20px; }
@@ -139,7 +137,6 @@
             align-items: center; 
             justify-content: center; 
             gap: 10px; 
-            cursor: pointer;
         }
         .addr-type-tag { 
             background: var(--surface-hover); 
@@ -195,13 +192,17 @@
             position: relative; 
             cursor: pointer; 
             background: var(--card-bg); 
-            transition: all 0.2s ease; 
-            border: 2px solid transparent;
+            transition: all 0.3s ease; 
+            border: 2px solid transparent; 
             overflow: hidden; 
         }
-        .payment-option.selected {
-            border-color: var(--green-success);
-            background: linear-gradient(to right, #ffffff, #fffbfc);
+        .payment-option.prepaid { 
+            background: linear-gradient(to right, #ffffff, #fffbfc); 
+            border-color: var(--green-success); 
+        }
+        .payment-option.cod.selected { 
+            border-color: var(--red-warning); 
+            background: #fff5f5; 
         }
         .best-value-badge { 
             position: absolute; 
@@ -224,13 +225,13 @@
             border-radius: 50%; 
             margin-right: 5px; 
             flex-shrink: 0; 
-            transition: all 0.2s ease; 
+            transition: all 0.3s ease; 
             cursor: pointer;
         }
         input[type="radio"]:checked { 
             border-color: var(--brand-primary); 
-            background: transparent; 
-            border-width: 6px; 
+            background: var(--brand-primary); 
+            box-shadow: 0 0 0 4px rgba(139, 38, 53, 0.1); 
         }
         
         .pay-text { flex: 1; }
@@ -269,12 +270,6 @@
             border-radius: 6px; 
             width: fit-content; 
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
         @keyframes pulse-green { 
             0% { box-shadow: 0 0 0 0 rgba(74, 156, 125, 0.4); } 
             70% { box-shadow: 0 0 0 6px rgba(74, 156, 125, 0); } 
@@ -283,14 +278,18 @@
 
         /* Order Box */
         .order-box { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-subtle); 
+            background: rgba(255,255,255,0.8); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid #fff; 
             padding: 30px; 
             border-radius: 16px; 
             box-shadow: var(--shadow-rich); 
             position: sticky; 
             top: 20px; 
-            animation: slideInRight 0.5s ease;
+            transition: transform 0.3s ease;
+        }
+        .order-box:hover {
+            transform: translateY(-5px);
         }
         .order-scroll-container { 
             max-height: 400px; 
@@ -299,10 +298,7 @@
             margin-bottom: 20px; 
         }
         .order-scroll-container::-webkit-scrollbar { width: 5px; }
-        .order-scroll-container::-webkit-scrollbar-thumb { 
-            background: #e8d5c4; 
-            border-radius: 10px; 
-        }
+        .order-scroll-container::-webkit-scrollbar-thumb { background: #e8d5c4; border-radius: 10px; }
         
         .product { 
             display: flex; 
@@ -311,7 +307,7 @@
             align-items: center; 
             padding-bottom: 20px; 
             border-bottom: 1px solid #f0f0f0; 
-            animation: fadeIn 0.3s ease;
+            transition: opacity 0.3s ease;
         }
         .product:last-child { border-bottom: none; }
         .prod-img { 
@@ -321,6 +317,10 @@
             border-radius: 8px; 
             border: 1px solid var(--border-subtle); 
             box-shadow: 0 2px 8px rgba(59, 11, 23, 0.05); 
+            transition: transform 0.3s ease;
+        }
+        .prod-img:hover {
+            transform: scale(1.05);
         }
         .prod-info { flex: 1; }
         .prod-info h4 { 
@@ -334,11 +334,7 @@
             -webkit-box-orient: vertical; 
             overflow: hidden; 
         }
-        .prod-info p { 
-            font-size: 12px; 
-            color: var(--text-light); 
-            margin-bottom: 6px; 
-        }
+        .prod-info p { font-size: 12px; color: var(--text-light); margin-bottom: 6px; }
         .qty-wrapper { 
             display: flex; 
             align-items: center; 
@@ -366,13 +362,14 @@
         .qty-btn:hover { 
             border-color: var(--brand-primary); 
             color: var(--brand-primary); 
-            transform: scale(1.1);
+            background: var(--surface-hover);
         }
         .qty-val { 
             font-size: 13px; 
             font-weight: 700; 
             width: 20px; 
             text-align: center; 
+            user-select: none;
         }
         .remove-icon-btn { 
             color: #d33d49; 
@@ -449,8 +446,8 @@
             left: -100%; 
             width: 100%; 
             height: 100%; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
-            transition: left 0.6s ease; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); 
+            transition: 0.6s; 
         }
         .btn-main:hover { 
             transform: translateY(-2px); 
@@ -459,15 +456,19 @@
         .btn-main:hover::before { 
             left: 100%; 
         }
+        .btn-main:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
 
         .mobile-bottom-bar { display: none; }
 
-        /* --- 3. PREMIUM ANIMATION STYLES --- */
+        /* --- 3. PREMIUM ANIMATION STYLES (Center Expansion) --- */
         .stage {
             position: fixed; 
             left: 0; 
-            top: 50%;
-            transform: translateY(-50%); 
+            top: 0;
             width: 100vw; 
             height: 0;
             background: var(--anim-bg);
@@ -480,6 +481,7 @@
             pointer-events: none;
         }
         
+        /* Grain Texture Overlay */
         .stage::before {
             content: ""; 
             position: absolute; 
@@ -492,12 +494,10 @@
             pointer-events: none;
         }
 
+        /* Animation States */
         .stage.active { 
-            height: 300px;
-            pointer-events: all; 
-        }
-        .stage.full-screen { 
             height: 100vh;
+            pointer-events: all; 
         }
 
         .order-anim-container {
@@ -521,7 +521,7 @@
             filter: blur(1px);
         }
 
-        /* Truck */
+        /* Truck Logic */
         .truck { 
             width: 60px; 
             height: 41px; 
@@ -608,6 +608,11 @@
         }
 
         /* Animation Keyframes */
+        .animate .truck { animation: truck-move 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards; }
+        .animate .truck .light:before { animation: light-intensify 7.5s forwards; }
+        .animate .box { animation: box-move 7.5s forwards; }
+        .animate .lines { animation: lines-move 7.5s forwards; }
+
         @keyframes truck-move { 
             0% { transform: translateX(24px); }
             10%, 30% { transform: translateX(-164px); } 
@@ -633,7 +638,7 @@
             71%, 100% { opacity: 0; }
         }
 
-        /* Success Content */
+        /* Success Content (Premium) */
         .success-wrapper {
             position: absolute; 
             display: flex; 
@@ -677,6 +682,7 @@
             font-weight: 600; 
         }
 
+        /* Updated Order Panel & Button */
         .order-panel {
             background: var(--glass); 
             backdrop-filter: blur(20px); 
@@ -689,7 +695,11 @@
             align-items: center;
             box-shadow: 0 50px 100px rgba(0,0,0,0.5);
             max-width: 90%;
-            animation: fadeIn 0.5s ease 0.3s both;
+            animation: panelFloat 3s ease-in-out infinite;
+        }
+        @keyframes panelFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         .panel-label { 
             color: rgba(255,255,255,0.4); 
@@ -707,6 +717,7 @@
             text-shadow: 0 0 20px rgba(255,255,255,0.2); 
         }
         
+        /* New Button Style */
         .btn-return {
             margin-top: 30px;
             padding: 16px 40px;
@@ -721,7 +732,6 @@
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px var(--gold-glow);
-            cursor: pointer;
         }
         .btn-return:hover {
             transform: translateY(-3px);
@@ -743,7 +753,17 @@
             justify-content: center; 
             align-items: center; 
             padding: 20px; 
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
             animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .modal-card { 
             background: #fff; 
@@ -757,6 +777,11 @@
             flex-direction: column; 
             max-height: 85vh; 
             border: 1px solid var(--border-subtle); 
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
         }
         .modal-header { 
             padding: 25px 30px; 
@@ -778,15 +803,9 @@
             border-radius: 0 0 20px 20px; 
             flex-shrink: 0; 
         }
-        
         @keyframes popIn { 
             from { transform: scale(0.95); opacity: 0; } 
             to { transform: scale(1); opacity: 1; } 
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(30px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
         }
 
         .premium-close-btn { 
@@ -799,7 +818,7 @@
             align-items: center; 
             justify-content: center; 
             cursor: pointer; 
-            transition: 0.2s; 
+            transition: all 0.2s ease; 
             position: absolute; 
             top: 20px; 
             right: 20px; 
@@ -808,6 +827,7 @@
         .premium-close-btn:hover { 
             background: var(--surface-hover); 
             border-color: var(--brand-primary); 
+            transform: rotate(90deg);
         }
         .close-icon-lines { 
             width: 14px; 
@@ -840,7 +860,6 @@
             display: none; 
         }
         .error-msg.show { display: block; }
-        
         .addr-form-grid { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -858,7 +877,7 @@
             font-size: 15px; 
             background: var(--page-bg); 
             color: var(--text-primary); 
-            transition: 0.2s; 
+            transition: all 0.3s ease; 
         }
         .modal-input:focus { 
             outline: none; 
@@ -913,6 +932,12 @@
             font-size: 36px; 
             color: var(--brand-primary); 
             margin: 0 auto 20px; 
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         .psych-content h3 { font-size: 22px; color: var(--text-primary); margin-bottom: 10px; }
         .psych-content p { color: var(--text-secondary); font-size: 16px; margin-bottom: 30px; line-height: 1.6; }
@@ -929,7 +954,7 @@
             cursor: pointer; 
             margin-bottom: 15px; 
             box-shadow: 0 4px 15px rgba(74, 156, 125, 0.3); 
-            transition: 0.2s; 
+            transition: all 0.2s ease; 
         }
         .btn-green-modal:hover { 
             transform: translateY(-2px); 
@@ -945,7 +970,7 @@
             font-weight: 600; 
             font-size: 15px; 
             cursor: pointer; 
-            transition: 0.2s; 
+            transition: all 0.2s ease; 
         }
         .btn-outline-modal:hover { 
             border-color: var(--brand-primary); 
@@ -980,7 +1005,6 @@
                 padding: 12px 20px 20px 20px; 
                 z-index: 900; 
                 box-shadow: 0 -5px 20px rgba(0,0,0,0.05); 
-                animation: slideUp 0.3s ease;
             }
             .btn-mobile-fixed { 
                 width: 100%; 
@@ -1001,7 +1025,7 @@
                 position: relative; 
                 overflow: hidden; 
                 letter-spacing: 0.5px; 
-                transition: all 0.2s ease;
+                transition: all 0.3s ease;
             }
             .btn-mobile-fixed::before { 
                 content: ''; 
@@ -1011,11 +1035,18 @@
                 width: 100%; 
                 height: 100%; 
                 background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); 
-                transition: left 0.6s; 
+                transition: 0.6s; 
             }
-            .btn-mobile-fixed:active::before { left: 100%; transition: 0s; }
-            .btn-mobile-fixed:active { transform: scale(0.98); }
-            .modal-overlay { align-items: flex-end; padding: 0; }
+            .btn-mobile-fixed:hover::before { 
+                left: 100%; 
+            }
+            .btn-mobile-fixed:active { 
+                transform: scale(0.98); 
+            }
+            .modal-overlay { 
+                align-items: flex-end; 
+                padding: 0; 
+            }
             .modal-card { 
                 border-radius: 24px 24px 0 0; 
                 width: 100%; 
@@ -1028,18 +1059,47 @@
                 display: flex; 
                 flex-direction: column; 
             }
-            .modal-header { padding: 20px 25px; border-radius: 24px 24px 0 0; flex-shrink: 0; }
-            .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
-            .modal-footer { padding: 20px 25px; border-radius: 0; margin-top: auto; flex-shrink: 0; border-top: 1px solid var(--border-subtle); background: #fff; }
-            .addr-form-grid { grid-template-columns: 1fr; gap: 15px; }
-            .full-width { grid-column: span 1; }
-            .premium-close-btn { position: absolute; top: 20px; right: 20px; background: #fff; border: 1px solid var(--border-subtle); }
-            .success-h1 { font-size: 24px; letter-spacing: 6px; }
-            .order-panel { padding: 30px 20px; width: 100%; }
-            
             @keyframes slideUp {
                 from { transform: translateY(100%); }
                 to { transform: translateY(0); }
+            }
+            .modal-header { 
+                padding: 20px 25px; 
+                border-radius: 24px 24px 0 0; 
+                flex-shrink: 0; 
+            }
+            .modal-body { 
+                padding: 25px; 
+                overflow-y: auto; 
+                flex-grow: 1; 
+            }
+            .modal-footer { 
+                padding: 20px 25px; 
+                border-radius: 0; 
+                margin-top: auto; 
+                flex-shrink: 0; 
+                border-top: 1px solid var(--border-subtle); 
+                background: #fff; 
+            }
+            .addr-form-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .full-width { grid-column: span 1; }
+            .premium-close-btn { 
+                position: absolute; 
+                top: 20px; 
+                right: 20px; 
+                background: #fff; 
+                border: 1px solid var(--border-subtle); 
+            }
+            .success-h1 { 
+                font-size: 24px; 
+                letter-spacing: 6px; 
+            }
+            .order-panel { 
+                padding: 30px 20px; 
+                width: 100%; 
             }
         }
     </style>
@@ -1107,9 +1167,9 @@
 
             <h2>Payment Method</h2>
             
-            <label class="payment-option selected" id="card-prepaid">
+            <label class="payment-option prepaid" id="card-prepaid">
                 <div class="best-value-badge">RECOMMENDED</div>
-                <input type="radio" name="payment" value="prepaid" id="radio-prepaid" checked>
+                <input type="radio" name="payment" value="prepaid" id="radio-prepaid" checked onchange="togglePayment('prepaid')">
                 <div class="pay-text">
                     <span class="pay-title">Pay Online <span class="save-badge">Save ₹100</span></span>
                     <span class="pay-sub">UPI, Cards, Net Banking</span>
@@ -1117,8 +1177,8 @@
                 <i class="fas fa-check-circle" style="color:var(--green-success); font-size: 24px;"></i>
             </label>
 
-            <label class="payment-option" id="card-cod">
-                <input type="radio" name="payment" value="cod" id="radio-cod">
+            <label class="payment-option cod" id="card-cod">
+                <input type="radio" name="payment" value="cod" id="radio-cod" onchange="togglePayment('cod')">
                 <div class="pay-text">
                     <span class="pay-title">Cash on Delivery</span>
                     <span class="fee-warning"><i class="fas fa-exclamation-triangle"></i> + ₹100 Handling Fee</span>
@@ -1130,7 +1190,7 @@
             <div class="order-box">
                 <div class="order-scroll-container">
                     <div id="order-items-container">
-                        <!-- Items will be dynamically inserted here -->
+                        <!-- Items will be loaded here -->
                     </div>
                 </div>
 
@@ -1234,7 +1294,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn-main" style="margin:0;">Save Address</button>
+                <button type="submit" class="btn-main" style="margin:0;" id="save-address-btn">Save Address</button>
             </div>
         </form>
     </div>
@@ -1244,7 +1304,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCdeonH3VytC21F3X6x0rCVCn2xXrGPoug",
             authDomain: "vastramaya---magic.firebaseapp.com",
@@ -1259,7 +1318,6 @@
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
-        
         const auth = firebase.auth();
         const db = firebase.firestore();
 
@@ -1285,44 +1343,39 @@
         const checkoutBtn = document.getElementById('checkout-btn');
         const mobileCheckoutBtn = document.getElementById('mobile-checkout-btn');
 
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', initializeApp);
-        
-        function initializeApp() {
+        // Initialize on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
             loadCart();
             setupEventListeners();
-        }
+        });
 
         function setupEventListeners() {
-            // Payment method selection
-            document.getElementById('radio-prepaid').addEventListener('change', () => togglePayment('prepaid'));
-            document.getElementById('radio-cod').addEventListener('change', () => togglePayment('cod'));
-            
-            // Close modals on outside click
-            window.addEventListener('click', function(event) {
-                if (event.target == codModal) closeCodModal();
-                if (event.target == addrModal) closeAddressModal();
+            // Phone validation
+            document.getElementById('input-phone').addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
             });
             
-            // Input validation
-            document.getElementById('input-phone').addEventListener('input', validatePhone);
-            document.getElementById('input-zip').addEventListener('input', validateZip);
+            // Pincode validation
+            document.getElementById('input-zip').addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '').slice(0, 6);
+            });
         }
 
         function checkAuth() {
             auth.onAuthStateChanged(user => {
+                currentUser = user;
                 if (user) {
-                    currentUser = user;
                     loadAddress(user.uid);
                 } else {
-                    // Guest mode - check localStorage for address
+                    // Guest mode - load from localStorage if exists
                     const savedAddress = localStorage.getItem('vastramaya_guest_address');
                     if (savedAddress) {
                         try {
                             currentAddressData = JSON.parse(savedAddress);
                             displayAddress(currentAddressData);
-                        } catch (e) {
+                            addressExists = true;
+                        } catch(e) {
                             console.error("Error parsing saved address:", e);
                         }
                     }
@@ -1337,21 +1390,6 @@
                     const addr = doc.data().address;
                     currentAddressData = addr;
                     displayAddress(addr);
-                    
-                    // Pre-fill form
-                    document.getElementById('input-name').value = addr.name || '';
-                    document.getElementById('input-phone').value = addr.phone || '';
-                    document.getElementById('input-zip').value = addr.zip || '';
-                    document.getElementById('input-locality').value = addr.locality || '';
-                    document.getElementById('input-city').value = addr.city || '';
-                    document.getElementById('input-state').value = addr.state || '';
-                    document.getElementById('input-street').value = addr.street || '';
-                    document.getElementById('input-landmark').value = addr.landmark || '';
-                    
-                    // Set address type
-                    const type = addr.type || 'Home';
-                    document.querySelector(`input[name="addrType"][value="${type}"]`).checked = true;
-
                     addressExists = true;
                 } else {
                     showEmptyAddress();
@@ -1364,10 +1402,24 @@
 
         function displayAddress(addr) {
             document.getElementById('display-name').innerText = addr.name;
-            document.getElementById('display-phone').innerText = addr.phone;
+            document.getElementById('display-phone').innerText = `+91 ${addr.phone}`;
             document.getElementById('display-address').innerText = `${addr.street}, ${addr.locality}`;
             document.getElementById('display-city-state').innerText = `${addr.city} - ${addr.zip}, ${addr.state}`;
             document.getElementById('display-type').innerText = addr.type || 'Home';
+            
+            // Pre-fill modal inputs
+            document.getElementById('input-name').value = addr.name;
+            document.getElementById('input-phone').value = addr.phone;
+            document.getElementById('input-zip').value = addr.zip;
+            document.getElementById('input-locality').value = addr.locality;
+            document.getElementById('input-city').value = addr.city;
+            document.getElementById('input-state').value = addr.state;
+            document.getElementById('input-street').value = addr.street;
+            document.getElementById('input-landmark').value = addr.landmark || '';
+            
+            // Set address type
+            const typeInput = document.querySelector(`input[name="addrType"][value="${addr.type || 'Home'}"]`);
+            if (typeInput) typeInput.checked = true;
             
             document.getElementById('address-filled').style.display = 'flex';
             document.getElementById('address-empty').style.display = 'none';
@@ -1385,23 +1437,19 @@
 
             if (isBuyNowMode) {
                 const directItem = JSON.parse(localStorage.getItem('vastramaya_direct_buy'));
-                if (directItem) {
-                    masterCart = Array.isArray(directItem) ? directItem : [directItem];
-                } else {
-                    masterCart = [];
-                }
+                masterCart = directItem ? (Array.isArray(directItem) ? directItem : [directItem]) : [];
             } else {
                 masterCart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
             }
             
-            // Generate unique IDs for checkout items
+            // Generate unique IDs for each item
             masterCart.forEach((item, index) => {
                 if(!item._checkoutId) {
-                    item._checkoutId = Date.now() + '-' + index + '-' + Math.random().toString(36).substr(2, 9);
+                    item._checkoutId = `item_${Date.now()}_${index}_${Math.random().toString(36).substr(2, 9)}`;
                 }
             });
 
-            checkoutItems = [...masterCart]; 
+            checkoutItems = [...masterCart];
             renderCheckoutList();
         }
 
@@ -1411,13 +1459,13 @@
             if (checkoutItems.length === 0) {
                 document.getElementById('checkout-form-section').style.display = 'none';
                 document.getElementById('checkout-summary-section').style.display = 'none';
-                document.getElementById('mobile-bottom-bar').style.display = 'none'; 
+                document.getElementById('mobile-bottom-bar').style.display = 'none';
                 document.getElementById('empty-cart-msg').classList.add('active');
                 return;
             } else {
                 document.getElementById('checkout-form-section').style.display = 'block';
                 document.getElementById('checkout-summary-section').style.display = 'block';
-                document.getElementById('mobile-bottom-bar').style.display = ''; 
+                document.getElementById('mobile-bottom-bar').style.display = '';
                 document.getElementById('empty-cart-msg').classList.remove('active');
             }
 
@@ -1431,7 +1479,7 @@
                 const div = document.createElement('div');
                 div.className = 'product';
                 div.innerHTML = `
-                    <img src="${item.image}" class="prod-img" alt="${item.name}">
+                    <img src="${item.image || 'https://via.placeholder.com/60x80'}" class="prod-img" alt="${item.name}">
                     <div class="prod-info">
                         <h4>${item.name}</h4>
                         <p>${item.size ? 'Size: ' + item.size : ''} ${item.color ? ' | Color: ' + item.color : ''}</p>
@@ -1453,32 +1501,27 @@
             });
 
             subtotalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
-            
-            if(document.getElementById('radio-cod').checked) {
-                setCodUI();
-            } else {
-                setPrepaidUI();
-            }
+            updatePaymentUI();
         }
 
         function updateQuantity(uniqueId, change) {
-            if (isProcessing) return;
-            
             const item = checkoutItems.find(i => i._checkoutId === uniqueId);
             if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
+                const newQty = item.quantity + change;
+                if (newQty < 1) {
                     removeCheckoutItem(uniqueId);
+                } else if (newQty > 10) {
+                    alert('Maximum quantity per item is 10');
+                    return;
                 } else {
+                    item.quantity = newQty;
                     renderCheckoutList();
                 }
             }
         }
 
         function removeCheckoutItem(uniqueId) {
-            if (isProcessing) return;
-            
-            if (confirm('Are you sure you want to remove this item?')) {
+            if (confirm('Remove this item from your cart?')) {
                 checkoutItems = checkoutItems.filter(item => item._checkoutId !== uniqueId);
                 renderCheckoutList();
             }
@@ -1487,122 +1530,120 @@
         // Modal Functions
         function openAddressModal() { 
             document.body.classList.add('no-scroll'); 
-            addrModal.style.display = 'flex'; 
+            addrModal.classList.add('active'); 
         }
         
         function closeAddressModal() { 
             document.body.classList.remove('no-scroll'); 
-            addrModal.style.display = 'none'; 
+            addrModal.classList.remove('active'); 
+        }
+        
+        function openCodModal() { 
+            document.body.classList.add('no-scroll'); 
+            codModal.classList.add('active'); 
         }
         
         function closeCodModal() { 
             document.body.classList.remove('no-scroll'); 
-            codModal.style.display = 'none'; 
-            setPrepaidUI();
-        }
-
-        // Input Validation
-        function validatePhone() {
-            const phoneInput = document.getElementById('input-phone');
-            const errorElement = document.getElementById('error-phone');
-            const phoneRegex = /^[6-9]\d{9}$/;
-            const cleanPhone = phoneInput.value.replace(/\D/g, '');
-
-            if (!phoneRegex.test(cleanPhone) && phoneInput.value.length > 0) {
-                errorElement.classList.add('show');
-                phoneInput.classList.add('input-error');
-                return false;
-            } else {
-                errorElement.classList.remove('show');
-                phoneInput.classList.remove('input-error');
-                phoneInput.value = cleanPhone;
-                return true;
-            }
-        }
-
-        function validateZip() {
-            const zipInput = document.getElementById('input-zip');
-            const errorElement = document.getElementById('error-zip');
-            const zipRegex = /^\d{6}$/;
-
-            if (!zipRegex.test(zipInput.value) && zipInput.value.length > 0) {
-                errorElement.classList.add('show');
-                zipInput.classList.add('input-error');
-                return false;
-            } else {
-                errorElement.classList.remove('show');
-                zipInput.classList.remove('input-error');
-                return true;
-            }
+            codModal.classList.remove('active'); 
         }
 
         async function saveAddress(e) {
             e.preventDefault();
             
-            if (!validatePhone() || !validateZip()) {
+            const saveBtn = document.getElementById('save-address-btn');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            saveBtn.disabled = true;
+            
+            // Validate inputs
+            const name = document.getElementById('input-name').value.trim();
+            const phone = document.getElementById('input-phone').value.replace(/\D/g, '');
+            const zip = document.getElementById('input-zip').value.trim();
+            const street = document.getElementById('input-street').value.trim();
+            const locality = document.getElementById('input-locality').value.trim();
+            const city = document.getElementById('input-city').value.trim();
+            const state = document.getElementById('input-state').value.trim();
+            
+            // Clear previous errors
+            document.getElementById('error-phone').classList.remove('show');
+            document.getElementById('error-zip').classList.remove('show');
+            
+            let isValid = true;
+            
+            // Phone validation
+            const phoneRegex = /^[6-9]\d{9}$/;
+            if (!phoneRegex.test(phone)) {
+                document.getElementById('error-phone').classList.add('show');
+                isValid = false;
+            }
+            
+            // Pincode validation
+            const zipRegex = /^\d{6}$/;
+            if (!zipRegex.test(zip)) {
+                document.getElementById('error-zip').classList.add('show');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
                 return;
             }
-
+            
             const addressData = {
-                name: document.getElementById('input-name').value.trim(),
-                phone: document.getElementById('input-phone').value.replace(/\D/g, ''),
-                zip: document.getElementById('input-zip').value.trim(),
-                street: document.getElementById('input-street').value.trim(),
-                locality: document.getElementById('input-locality').value.trim(),
-                city: document.getElementById('input-city').value.trim(),
-                state: document.getElementById('input-state').value.trim(),
+                name: name,
+                phone: phone,
+                zip: zip,
+                street: street,
+                locality: locality,
+                city: city,
+                state: state,
                 landmark: document.getElementById('input-landmark').value.trim(),
                 type: document.querySelector('input[name="addrType"]:checked').value
             };
-
-            // Validate required fields
-            if (!addressData.name || !addressData.phone || !addressData.zip || 
-                !addressData.street || !addressData.locality || !addressData.city || !addressData.state) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
+            
             currentAddressData = addressData;
+            
+            // Display the address
             displayAddress(addressData);
             addressExists = true;
-
-            // Save address based on user status
+            
+            // Save to Firebase if user is logged in
             if (currentUser) {
                 try {
-                    await db.collection('users').doc(currentUser.uid).set({ 
-                        address: addressData 
+                    await db.collection('users').doc(currentUser.uid).set({
+                        address: addressData
                     }, { merge: true });
-                } catch (e) {
-                    console.error("Error saving address:", e);
-                    alert('Error saving address. Please try again.');
+                } catch (error) {
+                    console.error('Error saving address:', error);
                 }
             } else {
-                // Save to localStorage for guest users
+                // Save to localStorage for guest
                 localStorage.setItem('vastramaya_guest_address', JSON.stringify(addressData));
             }
-
-            closeAddressModal();
+            
+            // Close modal
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+                closeAddressModal();
+            }, 500);
         }
 
+        // Payment Functions
         function togglePayment(method) {
-            if (method === 'cod') { 
-                document.body.classList.add('no-scroll'); 
-                codModal.style.display = 'flex'; 
-                
-                // Update UI
-                document.getElementById('card-prepaid').classList.remove('selected');
-                document.getElementById('card-cod').classList.add('selected');
-            } else { 
-                setPrepaidUI(); 
-                
-                // Update UI
-                document.getElementById('card-prepaid').classList.add('selected');
-                document.getElementById('card-cod').classList.remove('selected');
+            if (method === 'cod') {
+                openCodModal();
+            } else {
+                setPrepaidUI();
             }
         }
 
         function setPrepaidUI() {
             document.getElementById('radio-prepaid').checked = true;
+            document.getElementById('card-prepaid').classList.add('prepaid');
+            document.getElementById('card-cod').classList.remove('selected');
             shippingDisplay.innerHTML = '<span class="strike">₹100</span> FREE';
             shippingDisplay.className = 'text-green';
             totalDisplay.innerText = `₹${baseTotal.toLocaleString('en-IN')}`;
@@ -1612,241 +1653,269 @@
 
         function setCodUI() {
             document.getElementById('radio-cod').checked = true;
+            document.getElementById('card-prepaid').classList.remove('prepaid');
+            document.getElementById('card-cod').classList.add('selected');
             shippingDisplay.innerHTML = '+ ₹100 Fee';
             shippingDisplay.className = 'text-red';
             totalDisplay.innerText = `₹${(baseTotal + codFee).toLocaleString('en-IN')}`;
-            btnText.innerText = "Place Order"; 
+            btnText.innerText = "Place Order";
             btnTextMobile.innerText = "Place Order";
+            closeCodModal();
         }
 
-        function switchToPrepaid() { 
-            closeCodModal(); 
-            document.getElementById('radio-prepaid').checked = true;
+        function switchToPrepaid() {
             setPrepaidUI();
+            closeCodModal();
         }
 
-        function confirmCOD() { 
-            document.body.classList.remove('no-scroll'); 
-            codModal.style.display = 'none'; 
+        function confirmCOD() {
             setCodUI();
         }
 
+        function updatePaymentUI() {
+            if (document.getElementById('radio-cod').checked) {
+                setCodUI();
+            } else {
+                setPrepaidUI();
+            }
+        }
+
+        // Checkout Handler
         async function handleCheckout() {
             if (isProcessing) return;
             
             if (!addressExists) {
-                alert("Please add a delivery address.");
+                alert("Please add a delivery address to continue.");
                 openAddressModal();
                 return;
             }
             
             if (checkoutItems.length === 0) {
-                alert("Your checkout list is empty.");
+                alert("Your cart is empty. Please add items to checkout.");
                 return;
             }
-
+            
+            isProcessing = true;
+            
             const isCod = document.getElementById('radio-cod').checked;
+            const totalAmount = isCod ? baseTotal + codFee : baseTotal;
             
             // Disable buttons and show loading
-            isProcessing = true;
             checkoutBtn.disabled = true;
             mobileCheckoutBtn.disabled = true;
+            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            mobileCheckoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             
-            const loadingHtml = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
-            const originalText = btnText.innerText;
-            const originalMobileText = btnTextMobile.innerText;
-            
-            btnText.innerHTML = loadingHtml;
-            btnTextMobile.innerHTML = loadingHtml;
-
-            try {
-                if (isCod) {
-                    // Simulate processing delay for COD
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    const orderId = `COD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-                    await finalizeOrder(orderId, 'COD', 'Pending', (baseTotal + codFee));
-                } else {
-                    // Online payment
-                    const response = await fetch('/api/create-razorpay-order', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            amount: baseTotal * 100, // Razorpay expects amount in paise
-                            currency: 'INR'
-                        })
-                    });
-
-                    if (!response.ok) throw new Error('Network response was not ok');
+            if (isCod) {
+                // COD Order
+                setTimeout(() => {
+                    const orderId = `VS${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+                    finalizeOrder(orderId, 'COD', 'Pending', totalAmount);
+                }, 1500);
+            } else {
+                // Online Payment
+                try {
+                    // For demo purposes - in production, call your backend
+                    const orderId = `VS${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
                     
-                    const orderData = await response.json();
-
+                    // Create Razorpay order
                     const options = {
-                        key: orderData.key || 'rzp_test_YOUR_KEY_HERE', // Replace with your key
-                        amount: orderData.amount,
-                        currency: orderData.currency,
-                        name: "Vastramaya",
-                        description: "Fashion Purchase",
-                        image: "https://via.placeholder.com/150", // Replace with your logo
-                        order_id: orderData.id,
-                        handler: function (response) {
-                            finalizeOrder(orderData.id, 'Online', 'Paid', baseTotal, response.razorpay_payment_id);
+                        key: 'rzp_test_1DP5mmOlF5G5ag', // Test key - replace with your key in production
+                        amount: totalAmount * 100, // Amount in paise
+                        currency: 'INR',
+                        name: 'Vastramaya',
+                        description: 'Fashion Purchase',
+                        image: 'https://product-ecommerces.netlify.app/vastramaya.png',
+                        order_id: null, // Will be created on your backend
+                        handler: function(response) {
+                            finalizeOrder(orderId, 'Online', 'Paid', totalAmount, response.razorpay_payment_id);
                         },
                         prefill: {
-                            name: currentAddressData?.name || '',
-                            contact: currentAddressData?.phone || '',
-                            email: currentUser?.email || ''
+                            name: currentAddressData.name,
+                            contact: currentAddressData.phone,
+                            email: currentUser ? currentUser.email : 'guest@example.com'
                         },
                         theme: {
-                            color: "#8b2635"
+                            color: '#8b2635'
                         },
                         modal: {
                             ondismiss: function() {
-                                resetButtons(originalText, originalMobileText);
-                                alert("Payment was cancelled. You can try again.");
+                                resetButtons();
+                                isProcessing = false;
                             }
                         }
                     };
-
-                    const rzp1 = new Razorpay(options);
-                    rzp1.open();
+                    
+                    // For demo - simulate successful payment
+                    // In production, use: const rzp = new Razorpay(options); rzp.open();
+                    
+                    // Demo mode - simulate payment
+                    if (confirm(`Proceed with payment of ₹${totalAmount}? (Demo Mode)`)) {
+                        setTimeout(() => {
+                            finalizeOrder(orderId, 'Online', 'Paid', totalAmount, 'demo_payment_' + Date.now());
+                        }, 1000);
+                    } else {
+                        resetButtons();
+                        isProcessing = false;
+                    }
+                    
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    alert('Payment initialization failed. Please try again.');
+                    resetButtons();
+                    isProcessing = false;
                 }
-            } catch (error) {
-                console.error("Checkout error:", error);
-                alert("An error occurred. Please try again.");
-                resetButtons(originalText, originalMobileText);
             }
         }
 
-        function resetButtons(originalText, originalMobileText) {
-            isProcessing = false;
+        function resetButtons() {
             checkoutBtn.disabled = false;
             mobileCheckoutBtn.disabled = false;
-            btnText.innerText = originalText;
-            btnTextMobile.innerText = originalMobileText;
+            checkoutBtn.innerHTML = '<span id="btn-text">Proceed to Pay</span> <i class="fas fa-arrow-right"></i>';
+            mobileCheckoutBtn.innerHTML = '<span id="btn-text-mobile">Proceed to Pay</span> <i class="fas fa-arrow-right"></i>';
         }
 
-        async function finalizeOrder(orderId, method, status, amount, payId = null) {
+        async function finalizeOrder(orderId, method, status, amount, paymentId = null) {
             const orderDetails = {
                 orderId: orderId,
                 userId: currentUser ? currentUser.uid : 'guest',
-                items: checkoutItems,
+                userEmail: currentUser ? currentUser.email : 'guest',
+                items: checkoutItems.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    size: item.size,
+                    color: item.color,
+                    image: item.image
+                })),
                 address: currentAddressData,
                 amount: amount,
                 paymentMethod: method,
                 paymentStatus: status,
                 orderStatus: "Confirmed",
-                paymentId: payId,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                paymentId: paymentId,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
             };
-
+            
             try {
-                // Save order to Firestore
-                if (currentUser) {
+                // Save to Firebase if available
+                if (db) {
                     await db.collection('orders').doc(orderId).set(orderDetails);
-                    await db.collection('users').doc(currentUser.uid)
-                        .collection('orders').doc(orderId).set(orderDetails);
+                    
+                    if (currentUser) {
+                        await db.collection('users').doc(currentUser.uid).collection('orders').doc(orderId).set(orderDetails);
+                    }
                 }
-
-                // Clear cart based on mode
+                
+                // Update cart
                 if (isBuyNowMode) {
                     localStorage.removeItem('vastramaya_direct_buy');
                 } else {
                     const boughtIds = checkoutItems.map(item => item._checkoutId);
                     const remainingCart = masterCart.filter(item => !boughtIds.includes(item._checkoutId));
-                    
                     localStorage.setItem('vastramaya_cart', JSON.stringify(remainingCart));
                     
-                    if (currentUser) {
-                        await db.collection('users').doc(currentUser.uid).update({ 
-                            cart: firebase.firestore.FieldValue.arrayRemove(...checkoutItems) 
+                    // Update Firebase cart if logged in
+                    if (currentUser && db) {
+                        await db.collection('users').doc(currentUser.uid).update({
+                            cart: remainingCart
                         });
                     }
                 }
-
+                
                 // Update wishlist
                 updateWishlistOnSuccess(checkoutItems);
-
-                // Trigger success animation
+                
+                // Show success animation
                 startAnimation(orderId);
-
+                
             } catch (error) {
-                console.error("Error saving order:", error);
+                console.error('Error saving order:', error);
                 // Still show success but log error
                 startAnimation(orderId);
             }
         }
 
+        // Animation Functions
         function startAnimation(orderId) {
-            // Hide main UI
-            document.getElementById('mainContainer').style.display = 'none';
-            document.getElementById('mobile-bottom-bar').style.display = 'none';
-            document.body.classList.add('no-scroll');
-
-            // Set order ID
-            document.getElementById('displayOrderId').innerText = orderId;
-
+            document.getElementById('displayOrderId').textContent = orderId;
             const stage = document.getElementById('mainStage');
-            const truckBox = document.getElementById('truckBox');
-            const successReveal = document.getElementById('successReveal');
-
-            // Start animation sequence
+            const truck = document.getElementById('truckBox');
+            const reveal = document.getElementById('successReveal');
+            
+            // Hide main container
+            document.getElementById('mainContainer').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('mainContainer').style.display = 'none';
+            }, 300);
+            
+            // Start animation
             stage.classList.add('active');
-
+            
             setTimeout(() => {
-                // Start truck animation
-                truckBox.style.animation = 'truck-move 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards';
-                truckBox.querySelector('.truck').style.animation = 'light-intensify 7.5s forwards';
-                truckBox.querySelector('.box').style.animation = 'box-move 7.5s forwards';
-                truckBox.querySelector('.lines').style.animation = 'lines-move 7.5s forwards';
+                truck.classList.add('animate');
             }, 500);
-
+            
             setTimeout(() => {
-                stage.classList.add('full-screen');
-                truckBox.style.opacity = '0';
-            }, 6000);
-
-            setTimeout(() => {
-                successReveal.classList.add('visible');
+                truck.style.opacity = '0';
+                reveal.classList.add('visible');
                 
                 // Load Lottie animation
                 try {
+                    const lottieContainer = document.getElementById('lottie');
                     lottie.loadAnimation({
-                        container: document.getElementById('lottie'),
+                        container: lottieContainer,
                         renderer: 'svg',
                         loop: false,
                         autoplay: true,
-                        path: 'https://assets10.lottiefiles.com/packages/lf20_y4p43sqe.json' // Success checkmark
+                        path: 'https://assets1.lottiefiles.com/packages/lf20_raiw2hpe.json' // Success animation
                     });
-                } catch (e) {
-                    console.error("Lottie error:", e);
+                } catch (error) {
+                    console.error('Lottie error:', error);
                     // Fallback to icon
-                    document.getElementById('lottie').innerHTML = '<i class="fas fa-check-circle" style="font-size: 120px; color: var(--gold)"></i>';
+                    document.getElementById('lottie').innerHTML = '<i class="fas fa-check-circle" style="font-size: 120px; color: #4CAF50;"></i>';
                 }
-            }, 6800);
+            }, 6000);
         }
 
         function updateWishlistOnSuccess(boughtItems) {
-            try {
-                let wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
-                if (wishlist.length === 0) return;
-
-                const boughtProductIds = boughtItems.map(i => i.id);
-                const newWishlist = wishlist.filter(id => !boughtProductIds.includes(id));
-
-                if (wishlist.length !== newWishlist.length) {
-                    localStorage.setItem('vastramaya_wishlist', JSON.stringify(newWishlist));
-                    
-                    if (currentUser) {
-                        db.collection('users').doc(currentUser.uid).update({ 
-                            wishlist: newWishlist 
-                        }).catch(e => console.log("Wishlist update error:", e));
-                    }
+            const wishlist = JSON.parse(localStorage.getItem('vastramaya_wishlist')) || [];
+            if (wishlist.length === 0) return;
+            
+            const boughtProductIds = boughtItems.map(item => item.id);
+            const newWishlist = wishlist.filter(id => !boughtProductIds.includes(id));
+            
+            if (wishlist.length !== newWishlist.length) {
+                localStorage.setItem('vastramaya_wishlist', JSON.stringify(newWishlist));
+                
+                // Update Firebase if logged in
+                if (currentUser && db) {
+                    db.collection('users').doc(currentUser.uid).update({
+                        wishlist: newWishlist
+                    }).catch(e => console.log('Wishlist update error:', e));
                 }
-            } catch (e) {
-                console.error("Wishlist update error:", e);
             }
         }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target === codModal) {
+                closeCodModal();
+            }
+            if (event.target === addrModal) {
+                closeAddressModal();
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCodModal();
+                closeAddressModal();
+            }
+        });
     </script>
 </body>
 </html>
