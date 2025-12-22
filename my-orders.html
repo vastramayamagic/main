@@ -75,7 +75,7 @@
 
         /* ===== NAVBAR STYLES ===== */
         /* --- DESKTOP LAYOUT --- */
-        .page-desktop { min-height: 100vh; display: flex; flex-direction: column; width: 100%; }
+        .page-desktop { display: flex; flex-direction: column; width: 100%; }
         
         .d-navbar { 
             height: var(--header-height-desktop); 
@@ -580,7 +580,6 @@
 
         /* --- MOBILE LAYOUT --- */
         .page-mobile { 
-            min-height: 100vh; 
             display: flex; 
             flex-direction: column; 
             display: none; 
@@ -1527,7 +1526,7 @@
         /* ===== ARCHIVE PAGE STYLES ===== */
         /* --- Header Section --- */
         .header-minimal {
-            padding: 130px 20px 30px; /* Increased padding-top for fixed navbar */
+            padding: 0px 20px 30px; /* Increased padding-top for fixed navbar */
             text-align: center;
             max-width: 650px;
             margin: 0 auto;
@@ -1760,7 +1759,7 @@
         body { padding-top: 80px; }
         @media (max-width: 768px) {
             body { padding-top: 70px; }
-            .header-minimal { padding: 100px 20px 30px; }
+            .header-minimal { padding: 0px 20px 30px; }
         }
 
         /* ===== FOOTER STYLES ===== */
@@ -2253,7 +2252,6 @@
                         <a href="javascript:void(0)" class="d-nav-link" style="cursor: default">Categories</a>
                         <div class="d-categories-content" id="desktop-nav-categories"></div>
                     </div>
-                    <a href="my-orders.html" class="d-nav-link active">My Orders</a>
                 </div>
                 <div class="d-search-container">
                     <svg class="d-search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
