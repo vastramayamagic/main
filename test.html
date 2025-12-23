@@ -1625,14 +1625,7 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
-        .reviews-section-premium { 
-            padding: 40px; 
-            background: var(--page-bg); 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            border-top: 1px solid var(--border-subtle); 
-            display: block; 
-        }
+
         .reviews-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1708,16 +1701,58 @@
         /* =========================================
            RELATED PRODUCTS UI (EXACT MATCH)
            ========================================= */
+/* =========================================
+   UNIFIED ALIGNMENT (REVIEWS & PRODUCTS)
+   ========================================= */
+.reviews-section-premium,
 .category-products-section { 
-    padding: 40px; 
-    background: var(--page-bg); 
-    width: 100%;             /* Ensure it tries to span full width */
-    max-width: 1400px;      /* Limits expansion on large screens */
-    margin: 0 auto;         /* Centers the section */
-    border-top: 1px solid var(--border-subtle); 
-    position: relative; 
-    z-index: 1; 
-    box-sizing: border-box; /* Includes padding in width calculation */
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important; 
+    padding: 60px 40px;      /* Consistent padding for both */
+    box-sizing: border-box;  /* Ensures padding doesn't reduce width */
+    background: var(--page-bg);
+    border-top: 1px solid var(--border-subtle);
+    display: block;
+}
+
+/* Header alignment: Text LEFT, Navigation/View More RIGHT */
+.reviews-header,
+.section-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+/* Heading alignment */
+.reviews-header h2,
+.section-header h2 { 
+    font-size: 24px; 
+    font-weight: 700; 
+    margin: 0;
+    text-align: left;
+}
+
+/* Inner containers anchor to the left edge of the 1400px container */
+.reviews-scroll-container,
+.products-grid { 
+    display: flex; 
+    width: 100%;
+    justify-content: flex-start; 
+    gap: 25px; 
+    padding: 10px 0 30px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+/* Mobile Alignment Adjustments */
+@media (max-width: 768px) {
+    .reviews-section-premium,
+    .category-products-section { 
+        padding: 40px 20px; 
+    }
 }
 .section-header { 
     display: flex; 
@@ -4568,35 +4603,28 @@ async function loadRelatedProducts(field, value, currentId) {
 
     try {
         const snap = await db.collection('products').where(field, '==', value).limit(10).get();
-        relatedProductsData = [];
-        
-        snap.docs.forEach(doc => {
-            if (doc.id === currentId) return;
-            relatedProductsData.push({ id: doc.id, ...doc.data() });
-        });
+        relatedProductsData = snap.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter(p => p.id !== currentId);
 
         if (relatedProductsData.length === 0) {
             document.querySelector('.category-products-section').style.display = 'none';
             return;
         }
 
-        // --- FIXED SECTION: Defining all variables inside the map loop ---
+        const relatedGrid = document.getElementById('relatedGrid');
         relatedGrid.innerHTML = relatedProductsData.map(p => {
-            // 1. Define the image variable correctly
-            const displayImage = (p.images && p.images.length > 0) ? p.images[0] : (p.image || 'https://via.placeholder.com/300');
-            
-            // 2. Define Category and Price variables
+            // FIXED: Variables defined inside the map function
+            const displayImg = (p.images && p.images.length > 0) ? p.images[0] : (p.image || 'https://via.placeholder.com/300');
             const catName = p.categoryName || p.category || 'Vastramaya';
-            const currentPrice = Number(p.price || 0);
-            const oldPrice = p.oldPrice || Math.round(currentPrice * 1.25);
-            
-            // 3. Define wishlist state
+            const price = Number(p.price || 0);
+            const oldPrice = p.oldPrice || Math.round(price * 1.25);
             const isWishlisted = wishlist.includes(p.id);
 
             return `
-            <div class="card" data-id="${p.id}">
+            <div class="card" data-id="${p.id}" onclick="if(!event.target.closest('button') && !event.target.closest('.quick-view-btn')) window.location.href='view.html?id=${p.id}'">
                 <div class="thumb">
-                    <img src="${displayImage}" alt="${p.name}" class="no-copy">
+                    <img src="${displayImg}" alt="${p.name}" class="no-copy">
                     <button class="wishlist-btn ${isWishlisted ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlistById('${p.id}'); this.classList.toggle('active');">
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                     </button>
@@ -4607,7 +4635,7 @@ async function loadRelatedProducts(field, value, currentId) {
                     <div class="title">${p.name}</div>
                     <div class="bottom-row">
                         <div class="price-block">
-                            <span class="current-price">₹${currentPrice}</span>
+                            <span class="current-price">₹${price}</span>
                             <span class="old-price">₹${oldPrice}</span>
                         </div>
                         <button class="add-cart-icon-btn" onclick="event.stopPropagation(); openModal('${p.id}', 'cart')">
@@ -4617,24 +4645,7 @@ async function loadRelatedProducts(field, value, currentId) {
                 </div>
             </div>`;
         }).join('');
-
-        const nav = document.querySelector('.category-products-section .section-nav');
-        if (nav && relatedGrid.scrollWidth <= relatedGrid.clientWidth) {
-            nav.style.display = 'none';
-        }
-
-        // Add a general card click listener for navigation
-        relatedGrid.querySelectorAll('.card').forEach(card => {
-            card.onclick = (e) => {
-                if(!e.target.closest('button') && !e.target.closest('.quick-view-btn')) {
-                    window.location.href = `view.html?id=${card.dataset.id}`;
-                }
-            };
-        });
-
-    } catch(e) { 
-        console.error("Error loading related products:", e); 
-    }
+    } catch(e) { console.error(e); }
 }
 
         function initModalLogic() {
