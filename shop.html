@@ -2711,24 +2711,36 @@ function addToCartQV() {
         colorName = qvProductData.colorVariants[qvCurrentColorIndex].name;
     }
     const img = qvActiveImages[0];
-    const existing = shopCart.find(i => i.id === qvProductData.id && i.size === qvSelectedSize && i.color === colorName);
-    if(existing) existing.quantity += qvQty;
-else {
+// 1. Force sync variables first to prevent duplicates
+shopCart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
+
+// 2. Use a safer check (converting null/undefined to empty strings)
+const existing = shopCart.find(i => 
+    i.id === qvProductData.id && 
+    i.size === qvSelectedSize && 
+    (i.color || "") === (colorName || "")
+);
+
+if(existing) {
+    existing.quantity += qvQty;
+} else {
+    // 3. Add the new item
     shopCart.push({
-        // Create a unique ID combining ID, size, and color
-        uniqueId: `${qvProductData.id}-${qvSelectedSize}-${colorName || 'none'}`, 
+        uniqueId: `${qvProductData.id}-${qvSelectedSize}-${colorName || 'none'}`,
         id: qvProductData.id,
         name: qvProductData.name,
         price: qvProductData.price,
-        image: img,
+        image: qvActiveImages[0],
         size: qvSelectedSize,
         color: colorName,
         quantity: qvQty
     });
 }
-    saveCartShop();
-    cart = shopCart; 
-    renderCart();
+
+// 4. Save and immediately update the global navbar variable
+saveCartShop();
+cart = shopCart; 
+renderCart();
     showToast("Added to Cart");
     closeQuickView();
 }
