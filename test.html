@@ -1625,15 +1625,14 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
-/* Change Line 670 */
-.reviews-section-premium {
-    padding: 40px;
-    background: var(--page-bg);
-    max-width: 1400px;
-    margin: 0 auto; /* <--- Changed from 0 to 0 auto */
-    border-top: 1px solid var(--border-subtle);
-    display: block;
-}
+        .reviews-section-premium { 
+            padding: 40px; 
+            background: var(--page-bg); 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            border-top: 1px solid var(--border-subtle); 
+            display: block; 
+        }
         .reviews-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1709,31 +1708,28 @@
         /* =========================================
            RELATED PRODUCTS UI (EXACT MATCH)
            ========================================= */
-/* Change Line 693 */
-.category-products-section { 
-    padding: 40px; 
-    background: var(--page-bg); 
-    max-width: 1400px; 
-    margin: 0 auto;      /* <--- Change this from 0 to 0 auto */
-    border-top: 1px solid var(--border-subtle); 
-    position: relative; 
-    z-index: 1; 
-}
-.section-header { 
-    display: flex; 
-    justify-content: space-between; /* <--- This pushes Title Left, View More Right */
-    align-items: center; 
-    margin-bottom: 25px; 
-    width: 100%;
-}
-
-.section-header h2 { 
-    font-size: 24px; 
-    font-weight: 700; 
-    color: var(--text-primary); 
-    margin: 0; 
-    text-align: left; /* Forces title text left */
-}
+        .category-products-section { 
+            padding: 40px; 
+            background: var(--page-bg); 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            border-top: 1px solid var(--border-subtle); 
+            position: relative; 
+            z-index: 1; 
+        }
+        .section-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 25px; 
+        }
+        .section-header h2 { 
+            font-size: 24px; 
+            font-weight: 700; 
+            color: var(--text-primary); 
+            position: relative; 
+            margin: 0; 
+        }
         .section-header h2::after { 
             content: ''; 
             position: absolute; 
@@ -3305,14 +3301,13 @@
                 color: white; 
             }
 
-.reviews-section-premium { 
-    padding: 40px; 
-    background: var(--page-bg); 
-    max-width: 1400px; 
-    margin: 0 auto;      /* <--- Change this from 0 to 0 auto */
-    border-top: 1px solid var(--border-subtle); 
-    display: block; 
-}
+            .category-products-section, .reviews-section-premium { 
+                padding: 30px 15px; 
+                margin-bottom: 0; 
+                border-top: 1px solid var(--border-subtle); 
+                background: var(--page-bg); 
+                display: block; 
+            }
             .section-header { margin-bottom: 20px; }
             .section-header h2, .reviews-header h2 { font-size: 22px; }
             
@@ -3883,7 +3878,7 @@
 
         <section class="category-products-section">
             <div class="section-header">
-                <h2 id="relatedTitle">You may also like</h2> 
+                <h2 id="relatedTitle">You may also like</h2>
                 <div class="section-header-right">
                     <a href="shop.html" class="view-more-link">View More</a>
                     <div class="section-nav">
