@@ -1718,21 +1718,19 @@
     z-index: 1; 
 }
 .section-header { 
-    display: flex; 
-    justify-content: space-between; /* This pushes Title to left, View More to right */
+    display: flex !important; 
+    justify-content: space-between !important; /* Pushes content to far left and far right */
     align-items: center; 
-    margin-bottom: 25px;
+    margin-bottom: 25px; 
     width: 100%;
 }
-        .section-header h2 { 
-          text-align: left;
-            font-size: 24px; 
-            font-weight: 700; 
-            color: var(--text-primary); 
-            position: relative; 
-            margin: 0; 
-            margin: 0;
-        }
+.section-header h2 { 
+    font-size: 24px; 
+    font-weight: 700; 
+    color: var(--text-primary); 
+    margin: 0; 
+    text-align: left; /* Forces title text left */
+}
         .section-header h2::after { 
             content: ''; 
             position: absolute; 
@@ -3308,9 +3306,10 @@
 .reviews-section-premium { 
     padding: 40px; 
     background: var(--page-bg); 
-    max-width: 1400px;  /* Match the max-width of the top section */
-    margin: 0 auto;     /* This keeps the section centered on the screen */
-    width: 100%;
+    max-width: 1400px;      /* Limits the width */
+    width: 100%;            /* Allows it to be centered */
+    margin: 0 auto !important; /* Centers the box on the screen */
+    border-top: 1px solid var(--border-subtle); 
     display: block; 
 }
             .section-header { margin-bottom: 20px; }
@@ -3883,7 +3882,7 @@
 
         <section class="category-products-section">
             <div class="section-header">
-                <h2 id="relatedTitle">You may also like</h2>
+                <h2 id="relatedTitle">You may also like</h2> 
                 <div class="section-header-right">
                     <a href="shop.html" class="view-more-link">View More</a>
                     <div class="section-nav">
