@@ -1708,21 +1708,24 @@
         /* =========================================
            RELATED PRODUCTS UI (EXACT MATCH)
            ========================================= */
-        .category-products-section { 
-            padding: 40px; 
-            background: var(--page-bg); 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            border-top: 1px solid var(--border-subtle); 
-            position: relative; 
-            z-index: 1; 
-        }
-        .section-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 25px; 
-        }
+.category-products-section { 
+    padding: 40px; 
+    background: var(--page-bg); 
+    width: 100%;             /* Ensure it tries to span full width */
+    max-width: 1400px;      /* Limits expansion on large screens */
+    margin: 0 auto;         /* Centers the section */
+    border-top: 1px solid var(--border-subtle); 
+    position: relative; 
+    z-index: 1; 
+    box-sizing: border-box; /* Includes padding in width calculation */
+}
+.section-header { 
+    display: flex; 
+    justify-content: space-between; /* Heading LEFT, View More RIGHT */
+    align-items: center; 
+    margin-bottom: 25px; 
+    width: 100%;            /* Force header to span full width */
+}
         .section-header h2 { 
             font-size: 24px; 
             font-weight: 700; 
@@ -1780,30 +1783,31 @@
         }
         .nav-btn:hover svg { stroke: white; }
 
-        .products-grid { 
-            display: flex; 
-            gap: 25px; 
-            padding: 10px 5px 30px; 
-            overflow-x: auto; 
-            scrollbar-width: none; 
-            scroll-behavior: smooth; 
-        }
+.products-grid { 
+    display: flex; 
+    width: 100%;            /* Grid container spans full width of parent */
+    justify-content: flex-start; /* Keeps items anchored to the LEFT */
+    gap: 25px; 
+    padding: 10px 5px 30px; 
+    overflow-x: auto; 
+    scrollbar-width: none; 
+    scroll-behavior: smooth; 
+}
         .products-grid::-webkit-scrollbar { display: none; }
 
         /* Card Styles */
-        .card { 
-            background: var(--surface-card); 
-            border-radius: var(--radius); 
-            transition: all 0.3s ease; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            border: 1px solid var(--border-subtle); 
-            cursor: pointer; 
-            overflow: hidden; 
-            flex: 0 0 auto; 
-            width: 280px; 
-        }
+.card { 
+    background: var(--surface-card); 
+    border-radius: var(--radius); 
+    transition: all 0.3s ease; 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    border: 1px solid var(--border-subtle); 
+    cursor: pointer; 
+    overflow: hidden; 
+    flex: 0 0 280px;        /* Fixed width: does not grow, does not shrink */
+}
         .card:hover { 
             transform: translateY(-5px); 
             border-color: var(--brand-primary); 
