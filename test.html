@@ -1625,14 +1625,14 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
-        .reviews-section-premium { 
-            padding: 40px; 
-            background: var(--page-bg); 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            border-top: 1px solid var(--border-subtle); 
-            display: block; 
-        }
+.reviews-section-premium {
+    padding: 40px;
+    background: var(--page-bg);
+    max-width: 1400px;
+    margin: 0;      /* <--- Change from 0 auto to 0 */
+    border-top: 1px solid var(--border-subtle);
+    display: block;
+}
         .reviews-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1708,24 +1708,24 @@
         /* =========================================
            RELATED PRODUCTS UI (EXACT MATCH)
            ========================================= */
-        .category-products-section { 
-            padding: 40px; 
-            background: var(--page-bg); 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            border-top: 1px solid var(--border-subtle); 
-            position: relative; 
-            z-index: 1; 
-        }
-        .section-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 25px; 
-            width: 100%; 
-            text-align: left;
-        }
+.category-products-section { 
+    padding: 40px; 
+    background: var(--page-bg); 
+    max-width: 1400px; 
+    margin: 0;      /* <--- Change to 0 to keep it left */
+    border-top: 1px solid var(--border-subtle); 
+    position: relative; 
+    z-index: 1; 
+}
+.section-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 25px;
+    width: 100%;
+}
         .section-header h2 { 
+          text-align: left;
             font-size: 24px; 
             font-weight: 700; 
             color: var(--text-primary); 
