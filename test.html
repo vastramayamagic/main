@@ -3776,125 +3776,92 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <div class="container">
-            <div class="left-section">
-                <div class="mobile-wrapper">
-                    <div class="mobile-image" id="mobileCarousel">
-                        <img id="mobileMain" src="" alt="Product Image">
-                    </div>
-                    <div class="dots" id="dots"></div>
+<div class="main-content">
+    <div class="container">
+        <div class="left-section">
+            <div class="mobile-wrapper">
+                <div class="mobile-image" id="mobileCarousel">
+                    <img id="mobileMain" src="" alt="Product Image">
                 </div>
-                <div class="left-content">
-                    <div class="thumbnail-list" id="thumbs"></div>
-                    <div class="main-image">
-                        <img id="mainImage" src="" alt="Main Product Image">
-                    </div>
+                <div class="dots" id="dots"></div>
+            </div>
+            <div class="left-content">
+                <div class="thumbnail-list" id="thumbs"></div>
+                <div class="main-image">
+                    <img id="mainImage" src="" alt="Main Product Image">
                 </div>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="title-header">
+                <div class="title-row">
+                    <h1 id="productTitle"></h1>
+                    <a id="waLink" href="#" target="_blank" class="wa-btn loading-hide">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="price">
+                <span id="priceCurrent" class="current"></span>
+                <span id="priceOld" class="old"></span>
+                <span id="saveBadge" class="save loading-hide">SAVE 20%</span>
             </div>
             
-            <div class="right-section">
-                <div class="title-header">
-                    <div class="title-row">
-                        <h1 id="productTitle"></h1>
-                        <a id="waLink" href="#" target="_blank" class="wa-btn loading-hide">
-                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                        </a>
-                    </div>
-                </div>
+            <h3 id="colorHeader" class="loading-hide">Color: <span style="font-weight:400; color:var(--text-primary)" id="selectedColorName"></span></h3>
+            <div class="color-options" id="colorOptions"></div>
+            
+            <h3 id="sizeHeader" class="loading-hide">Size: <span id="sizeLabel" style="font-weight:400; color:var(--text-primary);">Select Size</span></h3>
+            <div class="size-boxes" id="sizeBoxes"></div>
+            
+            <h3 class="loading-hide">Quantity:</h3>
+            <div class="quantity-container loading-hide">
+                <button class="qty-btn" id="decQty">&minus;</button><span id="qtyValue">1</span><button class="qty-btn" id="incQty">&plus;</button>
+            </div>
+            
+            <div class="desktop-actions loading-hide">
+                <button class="action-button add-cart-btn" id="desktopAddCart">Add to Cart</button>
+                <button class="action-button wishlist-btn-desktop" id="wishlistBtnDesktop">Add to Wishlist</button>
+            </div>
+            <button class="buy-now-btn loading-hide" id="desktopBuyNow">BUY NOW</button>
+            
+            <div class="mobile-static-actions loading-hide" id="staticActions">
+                <button class="action-button add-cart-btn" id="mobileStaticCart">Add to Cart</button>
+                <button class="buy-now-btn" id="mobileStaticBuy">Buy Now</button>
+            </div>
 
-                <div class="price">
-                    <span id="priceCurrent" class="current"></span>
-                    <span id="priceOld" class="old"></span>
-                    <span id="saveBadge" class="save loading-hide">SAVE 20%</span>
-                </div>
-                
-                <h3 id="colorHeader" class="loading-hide">Color: <span style="font-weight:400; color:var(--text-primary)" id="selectedColorName"></span></h3>
-                <div class="color-options" id="colorOptions"></div>
-                
-                <h3 id="sizeHeader" class="loading-hide">Size: <span id="sizeLabel" style="font-weight:400; color:var(--text-primary);">Select Size</span></h3>
-                <div class="size-boxes" id="sizeBoxes"></div>
-                
-                <h3 class="loading-hide">Quantity:</h3>
-                <div class="quantity-container loading-hide">
-                    <button class="qty-btn" id="decQty">&minus;</button><span id="qtyValue">1</span><button class="qty-btn" id="incQty">&plus;</button>
-                </div>
-                
-                <div class="desktop-actions loading-hide">
-                    <button class="action-button add-cart-btn" id="desktopAddCart">Add to Cart</button>
-                    <button class="action-button wishlist-btn-desktop" id="wishlistBtnDesktop">Add to Wishlist</button>
-                </div>
-                <button class="buy-now-btn loading-hide" id="desktopBuyNow">BUY NOW</button>
-                
-                <div class="mobile-static-actions loading-hide" id="staticActions">
-                    <button class="action-button add-cart-btn" id="mobileStaticCart">Add to Cart</button>
-                    <button class="buy-now-btn" id="mobileStaticBuy">Buy Now</button>
-                </div>
+            <div class="trust-badges loading-hide">
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13-10-7z"></path><path d="M2 9h20"></path><path d="M12 2v20"></path></svg><span>Premium<br>Quality</span></div>
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M2 8h-2"/><path d="M1 11h-2"/><rect x="3" y="4" width="13" height="12" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="7.5" cy="19" r="2.5" /><circle cx="18.5" cy="19" r="2.5" /></svg><span>Fast<br>Shipping</span></div>
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Best Price<br>Guarantee</span></div>
+                <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg><span>Easy<br>Returns</span></div>
+            </div>
 
-                <div class="trust-badges loading-hide">
-                    <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13-10-7z"></path><path d="M2 9h20"></path><path d="M12 2v20"></path></svg><span>Premium<br>Quality</span></div>
-                    <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M2 8h-2"/><path d="M1 11h-2"/><rect x="3" y="4" width="13" height="12" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="7.5" cy="19" r="2.5" /><circle cx="18.5" cy="19" r="2.5" /></svg><span>Fast<br>Shipping</span></div>
-                    <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Best Price<br>Guarantee</span></div>
-                    <div class="badge-item"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg><span>Easy<br>Returns</span></div>
+            <div class="accordion-wrapper loading-hide">
+                <button class="accordion-header">Shipping & Returns</button>
+                <div class="accordion-content">
+                    <p><strong>Shipping:</strong> We offer free standard shipping on all orders over ₹999. Orders are typically processed within 24-48 hours.</p>
+                    <p><strong>Returns:</strong> We accept returns within 7 days of delivery for unworn, unwashed items with original tags attached.</p>
                 </div>
+            </div>
 
-                <div class="accordion-wrapper loading-hide">
-                    <button class="accordion-header">Shipping & Returns</button>
-                    <div class="accordion-content">
-                        <p><strong>Shipping:</strong> We offer free standard shipping on all orders over ₹999. Orders are typically processed within 24-48 hours.</p>
-                        <p><strong>Returns:</strong> We accept returns within 7 days of delivery for unworn, unwashed items with original tags attached.</p>
-                    </div>
-                </div>
-
-                <div class="product-description">
-                    <h4>Product Description</h4>
-                    <div id="descContainer">
-                        <p id="productDesc" class="desc-clamp" style="min-height: 60px;"></p>
-                        <span id="viewMoreBtn" class="view-more-btn">View more</span>
-                    </div>
+            <div class="product-description">
+                <h4>Product Description</h4>
+                <div id="descContainer">
+                    <p id="productDesc" class="desc-clamp" style="min-height: 60px;"></p>
+                    <span id="viewMoreBtn" class="view-more-btn">View more</span>
                 </div>
             </div>
         </div>
-
-        <div class="mobile-add-cart-container loading-hide" id="stickyFooter">
-            <button class="mobile-btn m-add" id="mobileAddCartBtn">Add to Cart</button>
-            <button class="mobile-btn m-buy" id="mobileBuyNow">Buy Now</button>
-        </div>
-
-        <section class="reviews-section-premium" id="reviewsSection" style="display:none;">
-            <div class="reviews-header">
-                <h2>Customer Reviews</h2>
-                <div class="section-nav">
-                    <button class="nav-btn" id="revPrev">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-                    </button>
-                    <button class="nav-btn" id="revNext">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-                    </button>
-                </div>
-            </div>
-            <div class="reviews-scroll-container" id="reviewsContainer"></div>
-        </section>
-
-        <section class="category-products-section">
-            <div class="section-header">
-                <h2 id="relatedTitle">You may also like</h2>
-                <div class="section-header-right">
-                    <a href="shop.html" class="view-more-link">View More</a>
-                    <div class="section-nav">
-                        <button class="nav-btn" id="prev-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                        </button>
-                        <button class="nav-btn" id="next-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="products-grid" id="relatedGrid"></div>
-        </section>
     </div>
+
+    <!-- STICKY FOOTER (Mobile Only) -->
+    <div class="mobile-add-cart-container loading-hide" id="stickyFooter">
+        <button class="mobile-btn m-add" id="mobileAddCartBtn">Add to Cart</button>
+        <button class="mobile-btn m-buy" id="mobileBuyNow">Buy Now</button>
+    </div>
+</div>
 
     <!-- FOOTER -->
     <footer class="site-footer">
