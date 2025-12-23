@@ -1625,11 +1625,12 @@
         /* =========================================
            REVIEWS SECTION (Premium)
            ========================================= */
+/* Change Line 670 */
 .reviews-section-premium {
     padding: 40px;
     background: var(--page-bg);
     max-width: 1400px;
-    margin: 0;      /* <--- Change from 0 auto to 0 */
+    margin: 0 auto; /* <--- Changed from 0 to 0 auto */
     border-top: 1px solid var(--border-subtle);
     display: block;
 }
@@ -1712,18 +1713,19 @@
     padding: 40px; 
     background: var(--page-bg); 
     max-width: 1400px; 
-    margin: 0;      /* <--- Change to 0 to keep it left */
+    margin: 0 auto; /* <--- Changed from 0 to 0 auto */
     border-top: 1px solid var(--border-subtle); 
     position: relative; 
     z-index: 1; 
 }
 .section-header { 
-    display: flex !important; 
-    justify-content: space-between !important; /* Pushes content to far left and far right */
+    display: flex; 
+    justify-content: space-between; /* <--- This pushes Title Left, View More Right */
     align-items: center; 
     margin-bottom: 25px; 
     width: 100%;
 }
+
 .section-header h2 { 
     font-size: 24px; 
     font-weight: 700; 
