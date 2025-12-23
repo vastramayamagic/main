@@ -1719,7 +1719,7 @@
 }
 .section-header { 
     display: flex; 
-    justify-content: space-between; 
+    justify-content: space-between; /* This pushes Title to left, View More to right */
     align-items: center; 
     margin-bottom: 25px;
     width: 100%;
@@ -1731,6 +1731,7 @@
             color: var(--text-primary); 
             position: relative; 
             margin: 0; 
+            margin: 0;
         }
         .section-header h2::after { 
             content: ''; 
@@ -3303,13 +3304,15 @@
                 color: white; 
             }
 
-            .category-products-section, .reviews-section-premium { 
-                padding: 30px 15px; 
-                margin-bottom: 0; 
-                border-top: 1px solid var(--border-subtle); 
-                background: var(--page-bg); 
-                display: block; 
-            }
+.category-products-section, 
+.reviews-section-premium { 
+    padding: 40px; 
+    background: var(--page-bg); 
+    max-width: 1400px;  /* Match the max-width of the top section */
+    margin: 0 auto;     /* This keeps the section centered on the screen */
+    width: 100%;
+    display: block; 
+}
             .section-header { margin-bottom: 20px; }
             .section-header h2, .reviews-header h2 { font-size: 22px; }
             
