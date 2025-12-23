@@ -1931,23 +1931,49 @@
             justify-content: space-between; 
             margin-top: auto; 
         }
-        .price-block-card { 
-            display: flex; 
-            align-items: baseline; 
-            gap: 8px; 
-        }
-        .add-cart-icon-btn { 
-            width: 34px; 
-            height: 34px; 
-            border-radius: 8px; 
-            background: var(--surface-hover); 
-            color: var(--brand-primary); 
-            border: 1px solid rgba(139, 38, 53, 0.1); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            transition: all 0.2s; 
-        }
+/* Updated Price Block to match reference */
+.price-block { 
+    display: flex; 
+    align-items: baseline; 
+    gap: 8px; 
+}
+.current-price { 
+    font-size: 16px; 
+    font-weight: 700; 
+    color: var(--brand-primary); 
+}
+.old-price { 
+    font-size: 13px; 
+    color: var(--text-light); 
+    text-decoration: line-through; 
+    opacity: 0.7; 
+}
+
+/* Updated Typography */
+.title { 
+    font-size: 15px; 
+    font-weight: 600; /* Bolder weight from reference */
+    color: var(--text-primary); 
+    margin-bottom: 5px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+.add-cart-icon-btn { 
+    width: 34px; 
+    height: 34px; 
+    border-radius: 8px; 
+    background: var(--surface-hover); 
+    color: var(--brand-primary); 
+    border: 1px solid rgba(139, 38, 53, 0.1); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: all 0.2s; 
+    cursor: pointer;
+}
+.add-cart-icon-btn:hover { background: var(--brand-primary); color: #fff; }
         .add-cart-icon-btn:hover { 
             background: var(--brand-primary); 
             color: #fff; 
@@ -4564,29 +4590,28 @@
                     const activeClass = isWishlisted ? 'active' : '';
 
                     return `
-                    <div class="card" data-id="${p.id}">
-                        <div class="thumb">
-                            <img src="${img1}" class="default-image no-copy" alt="${p.name}">
-                            <img src="${img2}" class="hover-image no-copy" alt="${p.name}">
-                            <button class="wishlist-btn ${activeClass}">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                            </button>
-                            <button class="quick-view-btn">Quick View</button>
-                        </div>
-                        <div class="info">
-                            <div class="category-tag">${catName}</div>
-                            <div class="title">${p.name}</div>
-                            <div class="bottom-row">
-                                <div class="price-block-card">
-                                    <span class="current-price">₹${p.price}</span>
-                                    ${oldPriceDisplay}
-                                </div>
-                                <div class="add-cart-icon-btn add-to-cart">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+    <div class="card" data-id="${p.id}">
+        <div class="thumb">
+            <img src="${displayImage}" alt="${p.name}" class="no-copy">
+            <button class="wishlist-btn ${isWishlisted ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlistById('${p.id}'); this.classList.toggle('active');">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div class="quick-view-btn" onclick="event.stopPropagation(); openModal('${p.id}', 'quickview')">Quick View</div>
+        </div>
+        <div class="info">
+            <div class="category-tag">${catName}</div>
+            <div class="title">${p.name}</div>
+            <div class="bottom-row">
+                <div class="price-block">
+                    <span class="current-price">₹${currentPrice}</span>
+                    <span class="old-price">₹${oldPrice}</span>
+                </div>
+                <button class="add-cart-icon-btn" onclick="event.stopPropagation(); openModal('${p.id}', 'cart')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>`;
                 }).join('');
 
                 const nav = document.querySelector('.category-products-section .section-nav');
