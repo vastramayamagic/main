@@ -2713,17 +2713,19 @@ function addToCartQV() {
     const img = qvActiveImages[0];
     const existing = shopCart.find(i => i.id === qvProductData.id && i.size === qvSelectedSize && i.color === colorName);
     if(existing) existing.quantity += qvQty;
-    else {
-        shopCart.push({
-            id: qvProductData.id,
-            name: qvProductData.name,
-            price: qvProductData.price,
-            image: img,
-            size: qvSelectedSize,
-            color: colorName,
-            quantity: qvQty
-        });
-    }
+else {
+    shopCart.push({
+        // Create a unique ID combining ID, size, and color
+        uniqueId: `${qvProductData.id}-${qvSelectedSize}-${colorName || 'none'}`, 
+        id: qvProductData.id,
+        name: qvProductData.name,
+        price: qvProductData.price,
+        image: img,
+        size: qvSelectedSize,
+        color: colorName,
+        quantity: qvQty
+    });
+}
     saveCartShop();
     showToast("Added to Cart");
     closeQuickView();
