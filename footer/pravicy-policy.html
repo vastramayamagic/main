@@ -1948,11 +1948,11 @@
                 const mobileNav = document.getElementById('mobile-nav-categories');
                 
                 const dHtml = categories.map(c => 
-                    `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`
+                    `<a href="https://www.vastramayamagic.in/shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`
                 ).join('');
                 
                 const mHtml = categories.map(c => 
-                    `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="m-category-item">${c.name}</a>`
+                    `<a href="https://www.vastramayamagic.in/shop.html?category=${encodeURIComponent(c.name)}" class="m-category-item">${c.name}</a>`
                 ).join('');
                 
                 if(desktopNav) desktopNav.innerHTML = dHtml;
