@@ -4862,73 +4862,84 @@ async function loadRelatedProducts(field, value, currentId) {
             processBuyNow(modalCurrentProduct, modalSelectedSize || "One Size", modalQty, modalSelectedColorIndex);
         }
 
-        function processCartAdd(product, size, qty, variantIdx) {
-            if (!product) return;
-            
-            const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
-            const productSizes = variant.sizes || product.sizes || [];
-            
-            if (productSizes.length > 0 && (!size || size === "Select Size")) { 
-                showToast("Please select a size", "error"); 
-                return; 
-            }
-            
-            const finalSize = (productSizes.length === 0) ? "One Size" : size;
-            const colorName = variant.name || 'Default';
-            const uniqueId = `${product.id}-${colorName}-${finalSize}`;
-            const img = variant.images?.[0] || product.images?.[0];
+function processCartAdd(product, size, qty, variantIdx) {
+    if (!product) return;
+    
+    const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
+    const productSizes = variant.sizes || product.sizes || [];
+    
+    // 1. Validation
+    if (productSizes.length > 0 && (!size || size === "Select Size" || size === null)) { 
+        showToast("Please select a size", "error"); 
+        return; 
+    }
+    
+    // 2. Refresh cart from storage to avoid overwriting items from other tabs
+    cart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
 
-            const existingItem = cart.find(item => item.uniqueId === uniqueId);
-            if (existingItem) existingItem.quantity += qty;
-            else {
-                cart.push({ 
-                    id: product.id, 
-                    uniqueId, 
-                    name: product.name, 
-                    price: product.price, 
-                    image: img, 
-                    quantity: qty, 
-                    size: finalSize, 
-                    color: colorName 
-                });
-            }
-            saveCart();
-            renderCart(); // Update navbar cart
-            showToast("Added to Cart!");
-        }
+    const finalSize = (productSizes.length === 0) ? "Standard" : size;
+    const colorName = variant.name || null;
+    
+    // 3. Standardized Unique ID Template
+    const uniqueId = `${product.id}-${finalSize}-${colorName || 'none'}`;
+    const img = variant.images?.[0] || product.image || product.images?.[0];
+
+    const existingItem = cart.find(item => item.uniqueId === uniqueId);
+    
+    if (existingItem) {
+        existingItem.quantity += qty;
+    } else {
+        cart.push({ 
+            id: product.id, 
+            uniqueId: uniqueId, 
+            name: product.name, 
+            price: product.price, 
+            image: img, 
+            quantity: qty, 
+            size: finalSize, 
+            color: colorName 
+        });
+    }
+
+    // 4. Save and Update Global UI
+    saveCart(true); // Param true ensures Firebase sync if logged in
+    renderCart(); 
+    showToast("Added to Cart!");
+}
 
         function buyNowFromModal() { 
             processBuyNow(currentProduct, selectedSize, quantity, activeVariantIndex); 
         }
 
-        function processBuyNow(product, size, qty, variantIdx) {
-            if (!product) return;
-            
-            const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
-            const productSizes = variant.sizes || product.sizes || [];
+function processBuyNow(product, size, qty, variantIdx) {
+    if (!product) return;
+    
+    const variant = product.colorVariants ? product.colorVariants[variantIdx] : {};
+    const productSizes = variant.sizes || product.sizes || [];
 
-            if (productSizes.length > 0 && (!size || size === "Select Size")) { 
-                showToast("Please select a size", "error"); 
-                return; 
-            }
+    if (productSizes.length > 0 && (!size || size === "Select Size" || size === null)) { 
+        showToast("Please select a size", "error"); 
+        return; 
+    }
 
-            const finalSize = (productSizes.length === 0) ? "One Size" : size;
-            const colorName = variant.name || 'Default';
-            const img = variant.images?.[0] || product.images?.[0];
+    const finalSize = (productSizes.length === 0) ? "Standard" : size;
+    const colorName = variant.name || null;
+    const img = variant.images?.[0] || product.image || product.images?.[0];
 
-            const directItem = {
-                id: product.id, 
-                uniqueId: `${product.id}-${colorName}-${finalSize}-direct`,
-                name: product.name, 
-                price: product.price, 
-                image: img, 
-                quantity: qty, 
-                size: finalSize, 
-                color: colorName
-            };
-            localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
-            window.location.href = "checkout.html?buy_now=true";
-        }
+    const directItem = {
+        id: product.id, 
+        uniqueId: `${product.id}-${Date.now()}`, // Prevents item cache issues on checkout
+        name: product.name, 
+        price: product.price, 
+        image: img, 
+        quantity: qty, 
+        size: finalSize, 
+        color: colorName
+    };
+    
+    localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
+    window.location.href = "checkout.html?buy_now=true";
+}
 
         function saveCart() {
             localStorage.setItem('vastramaya_cart', JSON.stringify(cart));
@@ -4964,22 +4975,35 @@ async function loadRelatedProducts(field, value, currentId) {
             updateWishlistState(); 
         }
         
-        function toggleWishlistById(id) {
-            const index = wishlist.indexOf(id);
-            if (index === -1) { 
-                wishlist.push(id); 
-                showToast("Added to Wishlist"); 
-            } 
-            else { 
-                wishlist.splice(index, 1); 
-                showToast("Removed from Wishlist"); 
-            }
-            localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
-            if (currentUser) {
-                db.collection('users').doc(currentUser.uid).update({ wishlist: wishlist }).catch(console.error);
-            }
-            updateWishlistCount();
-        }
+function toggleWishlistById(id) {
+    // 1. Strict Auth Check
+    if (!currentUser) {
+        openAuthModal();
+        return;
+    }
+
+    // 2. Toggle logic
+    const index = wishlist.indexOf(id);
+    if (index === -1) { 
+        wishlist.push(id); 
+        showToast("Added to Wishlist"); 
+    } else { 
+        wishlist.splice(index, 1); 
+        showToast("Removed from Wishlist"); 
+    }
+
+    // 3. Sync to Local and Firebase
+    localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
+    if (currentUser) {
+        db.collection('users').doc(currentUser.uid).update({ 
+            wishlist: wishlist 
+        }).catch(err => console.error("Firebase Wishlist Sync Error:", err));
+    }
+
+    // 4. UI Refresh
+    updateWishlistCount();
+    updateWishlistState(); // Updates the main button if viewing that product
+}
         
         function updateWishlistState() {
             if (!currentProduct) return;
