@@ -5226,12 +5226,15 @@ async function syncUserData() {
                 const pass = document.getElementById('login-password').value;
                 document.getElementById('loader-auth').style.display = 'flex';
                 auth.signInWithEmailAndPassword(email, pass)
-                    .then(() => { 
-                        document.getElementById('loader-auth').style.display = 'none'; 
-                        showToast("Login Successful!"); 
-                        modalOverlay.classList.remove('active'); 
-                        document.body.style.overflow = '';
-                    })
+.then(() => { 
+    document.getElementById('loader-auth').style.display = 'none'; 
+    showToast("Login Successful!"); 
+    
+    // CHANGE THIS LINE: Use explicit ID
+    document.getElementById('login-modal-overlay').classList.remove('active'); 
+    
+    document.body.style.overflow = '';
+})
                     .catch((error) => { 
                         document.getElementById('loader-auth').style.display = 'none'; 
                         showToast(error.message); 
@@ -5255,12 +5258,15 @@ async function syncUserData() {
                              });
                         });
                     })
-                    .then(() => { 
-                        document.getElementById('loader-auth').style.display = 'none'; 
-                        showToast("Account Created!"); 
-                        modalOverlay.classList.remove('active'); 
-                        document.body.style.overflow = '';
-                    })
+.then(() => { 
+    document.getElementById('loader-auth').style.display = 'none'; 
+    showToast("Account Created!"); 
+    
+    // CHANGE THIS LINE: Use explicit ID
+    document.getElementById('login-modal-overlay').classList.remove('active'); 
+    
+    document.body.style.overflow = '';
+})
                     .catch((error) => { 
                         document.getElementById('loader-auth').style.display = 'none'; 
                         showToast(error.message); 
@@ -5279,7 +5285,7 @@ async function syncUserData() {
                             }, { merge: true });
                         }
                         showToast("Welcome " + result.user.displayName); 
-                        modalOverlay.classList.remove('active');
+                        document.getElementById('login-modal-overlay').classList.remove('active');
                         document.body.style.overflow = '';
                     })
                     .catch((error) => showToast(error.message));
