@@ -2273,7 +2273,7 @@
                     const response = await fetch('/api/razorpay', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ amount: finalAmount * 100 }) // Convert to paisa
+                        body: JSON.stringify({ amount: finalAmount }) // Convert to paisa
                     });
 
                     if (!response.ok) throw new Error('Payment initialization failed');
