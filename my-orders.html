@@ -2262,6 +2262,26 @@
                 font-size: 14px;
             }
         }
+        
+        
+        
+        /* Empty State Full Height Logic */
+.container.empty-view {
+    min-height: 80vh; /* Using 80vh keeps it centered visually without forcing scroll */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Optional: Make the empty message look better */
+.empty-state-text {
+    font-size: 16px;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-top: 20px;
+}
     </style>
 </head>
 <body>
@@ -2688,20 +2708,50 @@
         function loadUserOrders(uid) {
             db.collection('users').doc(uid).collection('orders')
               .orderBy('createdAt', 'desc')
-              .onSnapshot(snap => {
+.onSnapshot(snap => {
+                  // 1. Hide Loaders
                   document.getElementById('loading-state').style.display = 'none';
                   document.getElementById('loading-state-mobile').style.display = 'none';
+                  
+                  // 2. Get Container Elements
                   const list = document.getElementById('orders-list');
                   const mobileList = document.getElementById('orders-list-mobile');
+                  
+                  // 3. Reset Content
                   list.innerHTML = '';
                   mobileList.innerHTML = '';
 
+                  // 4. Handle Empty State (100vh Logic)
+                  if (snap.empty) {
+                      // Add class to parent .container to center content vertically
+                      list.parentElement.classList.add('empty-view');
+                      mobileList.parentElement.classList.add('empty-view');
+                      
+                      const emptyMsg = '<div class="empty-state-text">No orders found in your archive.</div>';
+                      list.innerHTML = emptyMsg;
+                      mobileList.innerHTML = emptyMsg;
+                      return; // Stop execution so we don't try to render cards
+                  }
+
+                  // 5. Remove Empty State Class if orders exist
+                  list.parentElement.classList.remove('empty-view');
+                  mobileList.parentElement.classList.remove('empty-view');
+
+                  // 6. Loop through orders
                   snap.forEach(doc => {
                       const order = doc.data();
                       const status = order.status || 'Ordered';
                       const isCod = order.paymentMethod === 'COD';
-                      const dateStr = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Pending';
+                      
+                      // Format Date
+                      const dateStr = order.createdAt 
+                          ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) 
+                          : 'Pending';
 
+                      // Get Order Reference ID
+                      const orderRef = order.orderId || doc.id.slice(0,8).toUpperCase();
+
+                      // --- TRACKER LOGIC ---
                       let trackerHtml = '';
                       if (status !== 'Delivered' && status !== 'Cancelled') {
                           const atShipped = status === 'Shipped';
@@ -2731,11 +2781,12 @@
                             </div>`;
                       }
 
+                      // --- PRODUCT ROW LOGIC ---
                       let productHtml = '';
                       (order.items || []).forEach(item => {
                           productHtml += `
                             <div class="product-boxed-row">
-                                <img src="${item.image}" class="prod-img">
+                                <img src="${item.image}" class="prod-img" onerror="this.src='https://placehold.co/60x75'">
                                 <div class="prod-meta">
                                     <h4>${item.name}</h4>
                                     <p>SIZE: ${item.size || 'UNI'} • QTY: ${item.quantity}</p>
@@ -2744,19 +2795,15 @@
                             </div>`;
                       });
 
-// 1. Capture the Order ID reference clearly
-                      const orderRef = order.orderId || doc.id.slice(0,8).toUpperCase();
-
-                      // 2. Logic to create Cancel Button if status is 'Ordered'
+                      // --- CANCEL BUTTON LOGIC ---
                       let cancelBtnHtml = '';
                       if (status === 'Ordered') {
-                          // Encode the message for URL
+                          // Create WhatsApp Link with pre-filled message
                           const whatsappMsg = encodeURIComponent(`I want to cancel my order ${orderRef}`);
-                          // Link to WhatsApp
                           cancelBtnHtml = `<a href="https://wa.me/918639478312?text=${whatsappMsg}" target="_blank" class="cancel-btn">Cancel Order</a>`;
                       }
 
-                      // 3. Update the HTML structure (Modified .card-foot)
+                      // --- CARD ASSEMBLY ---
                       const cardHtml = `
                         <div class="order-card">
                             <div class="card-head">
@@ -2768,7 +2815,7 @@
                             <div class="card-foot">
                                 <div class="foot-left-col">
                                     <span class="foot-date">Acquired on ${dateStr}</span>
-                                    ${cancelBtnHtml} <!-- Button injects here -->
+                                    ${cancelBtnHtml}
                                 </div>
                                 <div class="total-group">
                                     <span class="total-lbl">GRAND TOTAL</span>
@@ -2778,10 +2825,12 @@
                             </div>
                         </div>`;
 
+                      // Append to Desktop List
                       const card = document.createElement('div');
                       card.innerHTML = cardHtml;
                       list.appendChild(card.firstElementChild);
 
+                      // Append to Mobile List
                       const mobileCard = document.createElement('div');
                       mobileCard.innerHTML = cardHtml;
                       mobileList.appendChild(mobileCard.firstElementChild);
