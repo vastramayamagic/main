@@ -5027,7 +5027,12 @@ function toggleWishlistById(id) {
             }
         }
         
-        async function syncUserData() {
+        
+        
+        
+        
+        
+async function syncUserData() {
             try {
                 const doc = await db.collection('users').doc(currentUser.uid).get();
                 if (doc.exists) {
@@ -5041,9 +5046,23 @@ function toggleWishlistById(id) {
         }
 
         // ========== NAVBAR FUNCTIONS ==========
+
+        // Handle clicking the Heart icon in the Navbar
+        function handleNavbarWishlistClick(e) {
+            e.preventDefault();
+            if (currentUser) {
+                window.location.href = 'wishlist.html';
+            } else {
+                openAuthModal();
+            }
+        }
+
         async function fetchAllProducts() {
             try {
                 const snapshot = await db.collection('products').get();
+                
+                
+                
                 allProducts = [];
                 snapshot.docs.forEach(doc => {
                     allProducts.push({ productId: doc.id, ...doc.data() });
