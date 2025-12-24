@@ -3671,22 +3671,12 @@
                     <input type="text" class="d-search-bar" placeholder="Search products..." id="desktop-search">
                     <div class="search-results" id="desktop-search-results"></div>
                 </div>
-                
-                
-<div class="d-action-icons">
-    <!-- WISHLIST ICON ADDED HERE -->
-    <a href="#" class="d-icon-btn" onclick="handleNavbarWishlistClick(event)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
-        <span class="wishlist-badge" id="wishlist-badge-desktop" style="display:none">0</span>
-    </a>
-
-    <div class="d-profile-dropdown">
-        <button class="d-icon-btn" id="d-cart-toggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-            <span class="cart-badge" id="cart-badge-desktop" style="display:none">0</span>
-        </button>
-                        
-                        
+                <div class="d-action-icons">
+                    <div class="d-profile-dropdown">
+                        <button class="d-icon-btn" id="d-cart-toggle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+                            <span class="cart-badge" id="cart-badge-desktop" style="display:none">0</span>
+                        </button>
                         <div class="cart-popup" id="cart-popup">
                             <div class="cart-popup-header">
                                 <div class="cart-popup-title">Your Shopping Cart</div>
@@ -3768,11 +3758,6 @@
                     <img class="m-drawer-logo" src="https://product-ecommerces.netlify.app/vastramaya.png" alt="Logo" />
                     <button class="m-drawer-close" id="m-drawer-close"><div class="m-drawer-close-icon"></div></button>
                 </div>
-                
-                
-                
-                
-                
                 <nav class="m-drawer-nav">
                     <div class="nav-section">
                         <a href="index.html" class="m-nav-link">
@@ -3799,18 +3784,6 @@
                             </div>
                             <div class="m-categories-content" id="mobile-nav-categories"></div>
                         </div>
-                        
-                        
-                                <a href="#" class="m-nav-link" onclick="handleNavbarWishlistClick(event)">
-            <div class="m-link-content">
-                <svg class="m-link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                Wishlist 
-                <span class="mobile-wishlist-badge" id="wishlist-badge-mobile" style="display:none; position:relative; top:0; right:0; margin-left:8px;">0</span>
-            </div>
-            <svg class="m-link-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </a>
-                        
-                        
                         <a href="my-orders.html" class="m-nav-link auth-only auth-hidden">
                             <div class="m-link-content">
                                 <svg class="m-link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22v-9"/></svg>
@@ -5059,31 +5032,12 @@ function toggleWishlistById(id) {
         async function fetchAllProducts() {
             try {
                 const snapshot = await db.collection('products').get();
- // ========== NAVBAR & AUTH FUNCTIONS (CLEANED) ==========
-
-        // Handle clicking the heart icon in the Navbar
-        function handleNavbarWishlistClick(e) {
-            e.preventDefault();
-            if (currentUser) {
-                window.location.href = 'wishlist.html';
-            } else {
-                openAuthModal();
-            }
-        }
-
-        async function fetchAllProducts() {
-            try {
-                const snapshot = await db.collectionGroup('products').get();
-                const uniqueProducts = new Map();
+                allProducts = [];
                 snapshot.docs.forEach(doc => {
-                    const data = doc.data();
-                    if(data.productId && !uniqueProducts.has(data.productId)){
-                        uniqueProducts.set(data.productId, data);
-                    }
+                    allProducts.push({ productId: doc.id, ...doc.data() });
                 });
-                allProducts = Array.from(uniqueProducts.values());
             } catch (error) {
-                console.error("Error fetching products for search:", error);
+                console.error("Error fetching products:", error);
             }
         }
 
@@ -5105,7 +5059,9 @@ function toggleWishlistById(id) {
                 }
 
                 const lowerQuery = query.toLowerCase();
-                const filtered = allProducts.filter(p => p.name.toLowerCase().includes(lowerQuery));
+                const filtered = allProducts.filter(p => 
+                    p.name && p.name.toLowerCase().includes(lowerQuery)
+                );
                 const results = filtered.slice(0, 6); 
 
                 let html = '';
@@ -5114,13 +5070,14 @@ function toggleWishlistById(id) {
                 } else {
                     results.forEach(p => {
                         html += `
-                            <a href="view.html?id=${p.id || p.productId}" class="search-result-item">
-                                <img src="${p.image || p.images?.[0]}" alt="${p.name}" class="search-result-img" onerror="this.src='https://placehold.co/48'">
+                            <a href="view.html?id=${p.productId}" class="search-result-item">
+                                <img src="${p.images?.[0] || p.image || 'https://placehold.co/48'}" alt="${p.name}" class="search-result-img" onerror="this.src='https://placehold.co/48'">
                                 <div class="search-result-info">
                                     <div class="search-result-name">${p.name}</div>
                                     <div class="search-result-price">₹${p.price}</div>
                                 </div>
-                            </a>`;
+                            </a>
+                        `;
                     });
                 }
                 container.innerHTML = html;
@@ -5132,6 +5089,7 @@ function toggleWishlistById(id) {
 
             const dInput = document.getElementById('desktop-search');
             const mInput = document.getElementById('mobile-search');
+
             if(dInput) dInput.addEventListener('input', debouncedSearchDesktop);
             if(mInput) mInput.addEventListener('input', debouncedSearchMobile);
             
@@ -5142,11 +5100,188 @@ function toggleWishlistById(id) {
             });
         }
 
+        function updateWishlistCount() {
+            const count = wishlist.length;
+            // Update wishlist badges if they exist
+            const dBadge = document.getElementById('wishlist-badge-desktop');
+            const mBadge = document.getElementById('wishlist-badge-mobile');
+            if (dBadge) { 
+                dBadge.textContent = count; 
+                dBadge.style.display = count > 0 ? 'flex' : 'none'; 
+            }
+            if (mBadge) { 
+                mBadge.textContent = count; 
+                mBadge.style.display = count > 0 ? 'flex' : 'none'; 
+            }
+        }
+
+        function setupWishlistListener(user) {
+            if (wishlistUnsubscribe) wishlistUnsubscribe();
+            wishlistUnsubscribe = db.collection('users').doc(user.uid)
+                .onSnapshot((doc) => {
+                    if (doc.exists && doc.data().wishlist) {
+                        wishlist = doc.data().wishlist;
+                    } else {
+                        wishlist = [];
+                    }
+                    updateWishlistCount();
+                    updateWishlistState(); // Update product page wishlist button
+                }, (error) => console.error("Wishlist sync error:", error));
+        }
+
+        function initAuthModal() {
+            const modalOverlay = document.getElementById('login-modal-overlay');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const showLoginBtn = document.getElementById('show-login-btn');
+            const showSignupBtn = document.getElementById('show-signup-btn');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
+            
+            const goToLogin = () => {
+                signupForm.classList.remove('active'); 
+                showSignupBtn.classList.remove('active');
+                loginForm.classList.add('active'); 
+                showLoginBtn.classList.add('active');
+            };
+            
+            const goToSignup = () => {
+                loginForm.classList.remove('active'); 
+                showLoginBtn.classList.remove('active');
+                signupForm.classList.add('active'); 
+                showSignupBtn.classList.add('active');
+            };
+
+            showLoginBtn.addEventListener('click', goToLogin);
+            showSignupBtn.addEventListener('click', goToSignup);
+            document.querySelectorAll('.switch-to-login').forEach(el => el.addEventListener('click', goToLogin));
+            document.querySelectorAll('.switch-to-signup').forEach(el => el.addEventListener('click', goToSignup));
+
+            closeModalBtn.addEventListener('click', () => { 
+                modalOverlay.classList.remove('active'); 
+                document.body.style.overflow = ''; 
+            });
+            
+            modalOverlay.addEventListener('click', (e) => { 
+                if (e.target === modalOverlay) { 
+                    modalOverlay.classList.remove('active'); 
+                    document.body.style.overflow = ''; 
+                }
+            });
+
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                if (!email) { 
+                    showToast("Please enter your email address first."); 
+                    return; 
+                }
+                document.getElementById('loader-auth').style.display = 'flex';
+                auth.sendPasswordResetEmail(email)
+                    .then(() => { 
+                        document.getElementById('loader-auth').style.display = 'none'; 
+                        showToast(`Password reset email sent to ${email}`); 
+                    })
+                    .catch((error) => { 
+                        document.getElementById('loader-auth').style.display = 'none'; 
+                        showToast(error.message); 
+                    });
+            });
+
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const pass = document.getElementById('login-password').value;
+                document.getElementById('loader-auth').style.display = 'flex';
+                auth.signInWithEmailAndPassword(email, pass)
+                    .then(() => { 
+                        document.getElementById('loader-auth').style.display = 'none'; 
+                        showToast("Login Successful!"); 
+                        modalOverlay.classList.remove('active'); 
+                        document.body.style.overflow = '';
+                    })
+                    .catch((error) => { 
+                        document.getElementById('loader-auth').style.display = 'none'; 
+                        showToast(error.message); 
+                    });
+            });
+
+            document.getElementById('signup-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const pass = document.getElementById('signup-password').value;
+                document.getElementById('loader-auth').style.display = 'flex';
+                auth.createUserWithEmailAndPassword(email, pass)
+                    .then((userCredential) => {
+                        return userCredential.user.updateProfile({ displayName: name })
+                        .then(() => {
+                             return db.collection('users').doc(userCredential.user.uid).set({
+                                name: name, 
+                                email: email, 
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                             });
+                        });
+                    })
+                    .then(() => { 
+                        document.getElementById('loader-auth').style.display = 'none'; 
+                        showToast("Account Created!"); 
+                        modalOverlay.classList.remove('active'); 
+                        document.body.style.overflow = '';
+                    })
+                    .catch((error) => { 
+                        document.getElementById('loader-auth').style.display = 'none'; 
+                        showToast(error.message); 
+                    });
+            });
+
+            document.getElementById('google-login-btn').addEventListener('click', () => {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then((result) => {
+                        if (result.additionalUserInfo.isNewUser) {
+                            db.collection('users').doc(result.user.uid).set({
+                                name: result.user.displayName, 
+                                email: result.user.email, 
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true });
+                        }
+                        showToast("Welcome " + result.user.displayName); 
+                        modalOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    })
+                    .catch((error) => showToast(error.message));
+            });
+        }
+
         function openAuthModal() {
-            const modal = document.getElementById('login-modal-overlay');
-            if(modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            document.getElementById('login-modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerHTML = '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>';
+            } else {
+                input.type = 'password';
+                icon.innerHTML = '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>';
+            }
+        }
+
+        async function loadCategories() {
+            try {
+                const snapshot = await db.collection('categories').get();
+                const categories = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})).filter(c => c.enabled !== false); 
+                const desktopNav = document.getElementById('desktop-nav-categories');
+                const mobileNav = document.getElementById('mobile-nav-categories');
+                const dHtml = categories.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`).join('');
+                const mHtml = categories.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="m-category-item">${c.name}</a>`).join('');
+                if(desktopNav) desktopNav.innerHTML = dHtml;
+                if(mobileNav) mobileNav.innerHTML = mHtml;
+            } catch (error) { 
+                console.error("Error loading categories:", error); 
             }
         }
 
@@ -5161,75 +5296,185 @@ function toggleWishlistById(id) {
                 if (user) {
                     syncCartToFirestore();
                     setupWishlistListener(user);
-                    let name = user.displayName || 'User';
+                    let name = user.displayName;
+                    if (!name) {
+                        try { 
+                            const userDoc = await db.collection('users').doc(user.uid).get(); 
+                            if (userDoc.exists && userDoc.data().name) name = userDoc.data().name; 
+                            else name = 'User'; 
+                        } catch(e) { name = 'User'; }
+                    }
                     authOnlyLinks.forEach(el => el.classList.remove('auth-hidden'));
                     document.getElementById('user-name').textContent = name;
                     document.getElementById('user-email').textContent = user.email;
                     triggerDesktop.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>Sign Out`;
-                    triggerDesktop.onclick = (e) => { e.preventDefault(); auth.signOut(); };
+                    triggerDesktop.onclick = (e) => { 
+                        e.preventDefault(); 
+                        auth.signOut(); 
+                    };
                     document.getElementById('user-name-mobile').textContent = name;
                     document.getElementById('user-phone-mobile').innerHTML = user.email;
+                    triggerMobile.onclick = (e) => { 
+                        e.stopPropagation(); 
+                        if(e.target.closest('.m-profile-popup-menu')) return; 
+                        mProfilePopup.classList.toggle('active'); 
+                    }
                     document.getElementById('mobile-logout-btn').onclick = () => auth.signOut();
                 } else {
                     authOnlyLinks.forEach(el => el.classList.add('auth-hidden'));
-                    if(wishlistUnsubscribe) { wishlistUnsubscribe(); wishlistUnsubscribe = null; }
-                    wishlist = []; updateWishlistCount();
+                    if(wishlistUnsubscribe) { 
+                        wishlistUnsubscribe(); 
+                        wishlistUnsubscribe = null; 
+                    }
+                    wishlist = []; 
+                    updateWishlistCount();
                     document.getElementById('user-name').textContent = "Guest User";
                     document.getElementById('user-email').textContent = "Sign in to sync";
                     triggerDesktop.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>Sign In`;
-                    triggerDesktop.onclick = (e) => { e.preventDefault(); openAuthModal(); };
+                    triggerDesktop.onclick = (e) => { 
+                        e.preventDefault(); 
+                        openAuthModal(); 
+                    };
                     document.getElementById('user-name-mobile').textContent = "Guest";
                     document.getElementById('user-phone-mobile').innerHTML = '<span class="m-login-text">Login / Sign Up</span>';
-                    if(mProfilePopup) mProfilePopup.classList.remove('active');
+                    mProfilePopup.classList.remove('active');
+                    triggerMobile.onclick = (e) => { 
+                        e.preventDefault(); 
+                        openAuthModal(); 
+                    };
                 }
             });
         }
 
-        async function loadCategories() {
-            try {
-                const snapshot = await db.collection('categories').get();
-                const categories = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})).filter(c => c.enabled !== false); 
-                const desktopNav = document.getElementById('desktop-nav-categories');
-                const mobileNav = document.getElementById('mobile-nav-categories');
-                const dHtml = categories.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="d-category-item">${c.name}</a>`).join('');
-                const mHtml = categories.map(c => `<a href="shop.html?category=${encodeURIComponent(c.name)}" class="m-category-item">${c.name}</a>`).join('');
-                if(desktopNav) desktopNav.innerHTML = dHtml;
-                if(mobileNav) mobileNav.innerHTML = mHtml;
-            } catch (error) { console.error("Error loading categories:", error); }
-        }
-
         function initNavbarUI() {
+            // Dropdown exclusivity logic
             const pToggle = document.getElementById('d-profile-toggle');
             const pPopup = document.getElementById('profile-popup');
             const dCartToggle = document.getElementById('d-cart-toggle');
             const cartPopup = document.getElementById('cart-popup');
             
-            function closeAll() {
-                if(pPopup) pPopup.classList.remove('show');
-                if(cartPopup) cartPopup.classList.remove('show');
+            // Close all dropdowns
+            function closeAllDropdowns() {
+                pPopup.classList.remove('show');
+                cartPopup.classList.remove('show');
+                const mProfilePopup = document.getElementById('m-profile-popup');
+                if (mProfilePopup) mProfilePopup.classList.remove('active');
             }
             
-            if(dCartToggle) dCartToggle.onclick = (e) => { e.stopPropagation(); const isShown = cartPopup.classList.contains('show'); closeAll(); if(!isShown) cartPopup.classList.add('show'); };
-            if(pToggle) pToggle.onclick = (e) => { e.stopPropagation(); const isShown = pPopup.classList.contains('show'); closeAll(); if(!isShown) pPopup.classList.add('show'); };
-            document.addEventListener('click', closeAll);
-
+            // Desktop cart toggle
+            if (dCartToggle && cartPopup) {
+                dCartToggle.onclick = (e) => {
+                    e.stopPropagation();
+                    if (cartPopup.classList.contains('show')) {
+                        cartPopup.classList.remove('show');
+                    } else {
+                        closeAllDropdowns();
+                        cartPopup.classList.add('show');
+                    }
+                };
+            }
+            
+            // Desktop profile toggle
+            if (pToggle && pPopup) {
+                pToggle.onclick = (e) => {
+                    e.stopPropagation();
+                    if (pPopup.classList.contains('show')) {
+                        pPopup.classList.remove('show');
+                    } else {
+                        closeAllDropdowns();
+                        pPopup.classList.add('show');
+                    }
+                };
+            }
+            
+            // Mobile profile toggle
+            const mobileProfileTrigger = document.getElementById('mobile-profile-trigger');
+            const mProfilePopup = document.getElementById('m-profile-popup');
+            if (mobileProfileTrigger && mProfilePopup) {
+                mobileProfileTrigger.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (currentUser) {
+                        // Toggle profile popup for logged in users
+                        if (mProfilePopup.classList.contains('active')) {
+                            mProfilePopup.classList.remove('active');
+                        } else {
+                            // Close cart drawer if open
+                            const cartOverlay = document.getElementById('cart-overlay');
+                            if (cartOverlay) cartOverlay.classList.remove('open');
+                            mProfilePopup.classList.add('active');
+                        }
+                    } else {
+                        // Open auth modal for guests
+                        openAuthModal();
+                    }
+                };
+            }
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', () => {
+                closeAllDropdowns();
+            });
+            
+            // Mobile menu
             const mMenuToggle = document.getElementById('m-menu-toggle');
-            const mOverlay = document.getElementById('m-overlay');
             const mDrawerClose = document.getElementById('m-drawer-close');
-            if(mMenuToggle) mMenuToggle.onclick = () => mOverlay.classList.add('open');
-            if(mDrawerClose) mDrawerClose.onclick = () => mOverlay.classList.remove('open');
+            const mOverlay = document.getElementById('m-overlay');
+            if(mMenuToggle) mMenuToggle.onclick = () => mOverlay.classList.toggle('open');
+            if(mDrawerClose) mDrawerClose.onclick = () => mOverlay.classList.toggle('open');
+            if(mOverlay) mOverlay.onclick = (e) => { 
+                if(e.target === mOverlay) mOverlay.classList.toggle('open'); 
+            };
+
+            const mCatToggle = document.getElementById('m-categories-toggle');
+            const mCatContent = document.getElementById('mobile-nav-categories');
+            if(mCatToggle) { 
+                mCatToggle.onclick = () => { 
+                    mCatContent.style.display = mCatContent.style.display === 'block' ? 'none' : 'block'; 
+                    mCatToggle.classList.toggle('active'); 
+                }
+            }
 
             const mCartToggle = document.getElementById('m-cart-toggle');
             const cartOverlay = document.getElementById('cart-overlay');
             const cartDrawerClose = document.getElementById('cart-drawer-close');
-            if(mCartToggle) mCartToggle.onclick = () => cartOverlay.classList.add('open');
-            if(cartDrawerClose) cartDrawerClose.onclick = () => cartOverlay.classList.remove('open');
+            if (mCartToggle && cartOverlay) {
+                mCartToggle.onclick = () => {
+                    closeAllDropdowns();
+                    cartOverlay.classList.add('open');
+                };
+                cartDrawerClose.onclick = () => cartOverlay.classList.remove('open');
+                cartOverlay.onclick = (e) => { 
+                    if(e.target === cartOverlay) cartOverlay.classList.remove('open'); 
+                };
+            }
 
             const mSearchToggle = document.getElementById('m-search-toggle');
             const mSearchOverlay = document.getElementById('m-search-overlay');
             const mSearchClose = document.getElementById('m-search-close');
-            if(mSearchToggle) mSearchToggle.onclick = () => mSearchOverlay.style.display = 'flex';
-            if(mSearchClose) mSearchClose.onclick = () => mSearchOverlay.style.display = 'none';
+            if(mSearchToggle) { 
+                mSearchToggle.onclick = () => mSearchOverlay.style.display = 'flex'; 
+                mSearchClose.onclick = () => mSearchOverlay.style.display = 'none'; 
+            }
+        }
+
+        function removeFromCart(uniqueId) {
+            cart = cart.filter(item => String(item.uniqueId) !== String(uniqueId));
+            saveCart(true); 
+            renderCart();
+        }
+
+        function updateQuantity(uniqueId, change) {
+            const item = cart.find(item => String(item.uniqueId) === String(uniqueId));
+            if (item) { 
+                item.quantity += change; 
+                if (item.quantity <= 0) {
+                    removeFromCart(uniqueId); 
+                } else { 
+                    saveCart(true); 
+                    renderCart(); 
+                }
+            }
         }
 
         async function syncCartToFirestore() {
@@ -5237,43 +5482,64 @@ function toggleWishlistById(id) {
             try {
                 const doc = await db.collection('users').doc(currentUser.uid).get();
                 if (doc.exists && doc.data().cart) {
-                    const dbCart = doc.data().cart || [];
-                    if (cart.length === 0) { cart = dbCart; } 
+                    if (cart.length === 0) { 
+                        cart = doc.data().cart; 
+                        saveCart(false); 
+                        renderCart(); 
+                    } 
                     else {
-                        cart.forEach(localItem => {
-                            const existing = dbCart.find(d => d.uniqueId === localItem.uniqueId);
-                            if (existing) existing.quantity = Math.max(existing.quantity, localItem.quantity);
-                            else dbCart.push(localItem);
-                        });
-                        cart = dbCart;
+                         const dbCart = doc.data().cart || [];
+                         cart.forEach(localItem => { 
+                             const existing = dbCart.find(d => String(d.uniqueId) === String(localItem.uniqueId)); 
+                             if (existing) existing.quantity = Math.max(existing.quantity, localItem.quantity); 
+                             else dbCart.push(localItem); 
+                         });
+                         cart = dbCart; 
+                         saveCart(true); 
+                         renderCart();
                     }
-                    saveCart(true); renderCart();
-                }
-            } catch (e) { console.error("Sync error", e); }
+                } else if (cart.length > 0) saveCart(true);
+            } catch (e) { 
+                console.error("Sync error", e); 
+            }
         }
 
-        function saveCart(syncDB = true) {
+        function saveCart(syncDB) {
             localStorage.setItem('vastramaya_cart', JSON.stringify(cart));
             if (syncDB && currentUser) {
-                db.collection('users').doc(currentUser.uid).update({ cart: cart }).catch(console.error);
+                db.collection('users').doc(currentUser.uid).update({ cart: cart }).catch(err => console.log("Error syncing cart", err));
             }
         }
 
         function renderCart() {
-            const dBody = document.getElementById('cart-items-desktop');
-            const mBody = document.getElementById('cart-items-mobile');
-            let total = 0, count = 0, html = '';
+            const desktopBody = document.getElementById('cart-items-desktop');
+            const mobileBody = document.getElementById('cart-items-mobile');
+            const badgeDesktop = document.getElementById('cart-badge-desktop');
+            const badgeMobile = document.getElementById('cart-badge-mobile');
+            const totalDesktop = document.getElementById('cart-total-desktop');
+            const totalMobile = document.getElementById('cart-total-mobile');
+            const countDesktop = document.getElementById('cart-count-desktop');
+            const countMobile = document.getElementById('cart-count-mobile');
+
+            let total = 0; 
+            let count = 0; 
+            let html = '';
             
-            if (cart.length === 0) html = '<div class="empty-cart-msg">Your cart is empty</div>';
-            else {
+            if (cart.length === 0) {
+                html = '<div class="empty-cart-msg">Your cart is empty</div>';
+            } else {
                 cart.forEach(item => {
-                    total += item.price * item.quantity; count += item.quantity;
+                    total += item.price * item.quantity; 
+                    count += item.quantity;
                     html += `
                     <div class="cart-item">
-                        <img src="${item.image}" class="cart-item-img">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
                         <div class="cart-item-details">
                             <div class="cart-item-title">${item.name}</div>
-                            <div style="font-size:12px; color:var(--text-light)">${item.size || ''} ${item.color || ''}</div>
+                            <div style="font-size:12px; color:var(--text-light); margin-bottom:4px;">
+                                ${item.color ? `Color: ${item.color}` : ''} 
+                                ${item.size ? `Size: ${item.size}` : ''}
+                            </div>
                             <div class="cart-item-price">₹${item.price}</div>
                             <div class="cart-item-quantity">
                                 <div class="quantity-btn" onclick="updateQuantity('${item.uniqueId}', -1)">-</div>
@@ -5281,30 +5547,29 @@ function toggleWishlistById(id) {
                                 <div class="quantity-btn" onclick="updateQuantity('${item.uniqueId}', 1)">+</div>
                             </div>
                         </div>
-                        <div class="cart-item-remove" onclick="removeFromCart('${item.uniqueId}')">✕</div>
+                        <div class="cart-item-remove" onclick="removeFromCart('${item.uniqueId}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                            </svg>
+                        </div>
                     </div>`;
                 });
             }
-            if(dBody) dBody.innerHTML = html;
-            if(mBody) mBody.innerHTML = html;
-            document.getElementById('cart-total-desktop').textContent = `₹${total}`;
-            document.getElementById('cart-total-mobile').textContent = `₹${total}`;
-            const badges = [document.getElementById('cart-badge-desktop'), document.getElementById('cart-badge-mobile')];
-            badges.forEach(b => { if(b){ b.textContent = count; b.style.display = count > 0 ? 'flex' : 'none'; }});
-        }
-
-        function removeFromCart(uid) {
-            cart = cart.filter(i => i.uniqueId !== uid);
-            saveCart(true); renderCart();
-        }
-
-        function updateQuantity(uid, change) {
-            const item = cart.find(i => i.uniqueId === uid);
-            if(item) {
-                item.quantity += change;
-                if(item.quantity <= 0) removeFromCart(uid);
-                else { saveCart(true); renderCart(); }
+            
+            if (desktopBody) desktopBody.innerHTML = html;
+            if (mobileBody) mobileBody.innerHTML = html;
+            if (badgeDesktop) { 
+                badgeDesktop.textContent = count; 
+                badgeDesktop.style.display = count > 0 ? 'flex' : 'none'; 
             }
+            if (badgeMobile) { 
+                badgeMobile.textContent = count; 
+                badgeMobile.style.display = count > 0 ? 'flex' : 'none'; 
+            }
+            if (totalDesktop) totalDesktop.textContent = `₹${total.toFixed(2)}`;
+            if (totalMobile) totalMobile.textContent = `₹${total.toFixed(2)}`;
+            if (countDesktop) countDesktop.textContent = `${count} item${count !== 1 ? 's' : ''}`;
+            if (countMobile) countMobile.textContent = `Your Cart (${count})`;
         }
     </script>
 </body>
