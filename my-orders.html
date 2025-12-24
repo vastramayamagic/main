@@ -1720,6 +1720,32 @@
             color: var(--text-secondary); 
             font-style: italic; 
         }
+        /* NEW: Cancel Button Styles */
+        .foot-left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .cancel-btn {
+            font-size: 10px;
+            font-weight: 700;
+            color: #d33d49; /* Brand Red */
+            border: 1px solid #d33d49;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            background: transparent;
+            display: inline-block;
+        }
+
+        .cancel-btn:hover {
+            background: #d33d49;
+            color: white;
+        }
         .total-group { text-align: right; }
         .total-lbl { 
             font-size: 9px; 
@@ -2535,7 +2561,7 @@
                         </div>
                         <div class="contact-details">
                             <span class="contact-label">Adress</span>
-                            <span class="contact-value">Challapalli, A.P 521126</span>
+                            <span class="contact-value">Nellore, A.P 524001</span>
                         </div>
                     </div>
                 </div>
@@ -2718,16 +2744,32 @@
                             </div>`;
                       });
 
+// 1. Capture the Order ID reference clearly
+                      const orderRef = order.orderId || doc.id.slice(0,8).toUpperCase();
+
+                      // 2. Logic to create Cancel Button if status is 'Ordered'
+                      let cancelBtnHtml = '';
+                      if (status === 'Ordered') {
+                          // Encode the message for URL
+                          const whatsappMsg = encodeURIComponent(`I want to cancel my order ${orderRef}`);
+                          // Link to WhatsApp
+                          cancelBtnHtml = `<a href="https://wa.me/918639478312?text=${whatsappMsg}" target="_blank" class="cancel-btn">Cancel Order</a>`;
+                      }
+
+                      // 3. Update the HTML structure (Modified .card-foot)
                       const cardHtml = `
                         <div class="order-card">
                             <div class="card-head">
-                                <span class="ref-no">ORD #${order.orderId || doc.id.slice(0,8).toUpperCase()}</span>
+                                <span class="ref-no">ORD #${orderRef}</span>
                                 <span class="status-badge st-${status.toLowerCase()}">${status}</span>
                             </div>
                             <div class="card-body">${productHtml}</div>
                             ${trackerHtml}
                             <div class="card-foot">
-                                <span class="foot-date">Acquired on ${dateStr}</span>
+                                <div class="foot-left-col">
+                                    <span class="foot-date">Acquired on ${dateStr}</span>
+                                    ${cancelBtnHtml} <!-- Button injects here -->
+                                </div>
                                 <div class="total-group">
                                     <span class="total-lbl">GRAND TOTAL</span>
                                     <div class="total-val">₹${order.amount.toLocaleString()}</div>
