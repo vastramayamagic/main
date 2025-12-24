@@ -2345,23 +2345,29 @@
 
         // Finalize Order
         async function finalizeOrder(orderId, method, status, amount, payId = null) {
-            const orderDetails = {
-                orderId: orderId,
-                userId: currentUser ? currentUser.uid : 'guest',
-                userEmail: currentUser ? currentUser.email : null,
-                items: checkoutItems,
-                address: currentAddressData,
-                amount: amount,
-                paymentMethod: method,
-                paymentStatus: status,
-                orderStatus: "Ordered",
-                paymentId: payId,
-                couponApplied: appliedCouponData ? {
-                    code: appliedCouponData.code,
-                    discount: discountAmount
-                } : null,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
+const orderDetails = {
+            orderId: orderId,
+            userId: currentUser ? currentUser.uid : 'guest',
+            userEmail: currentUser ? currentUser.email : null,
+            items: checkoutItems,
+            address: currentAddressData,
+            amount: amount,                 // Final amount user paid
+            paymentMethod: method,
+            paymentStatus: status,
+            orderStatus: "Ordered",
+            paymentId: payId,
+            
+            // NEW ENHANCED VERSION
+            couponData: appliedCouponData ? {
+                code: appliedCouponData.code,       // The Code (e.g., "DIWALI20")
+                savedAmount: discountAmount,        // Exact amount they saved (e.g., 150)
+                couponId: appliedCouponData.id,     // System ID for the coupon
+                type: appliedCouponData.type,       // "Percentage" or "Flat"
+                value: appliedCouponData.value      // The value (e.g., 20)
+            } : null,
+
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
 
             try {
                 // 1. Save to main orders collection
