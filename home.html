@@ -1155,6 +1155,75 @@
                 margin-top: 5px;
             }
         }
+        
+        
+        /* --- WHATSAPP FLOATING BUTTON --- */
+.whatsapp-float {
+    position: fixed;
+    /* Desktop Positioning */
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 4000; /* Below Modals (5000) but above content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    
+    /* Desktop Size */
+    width: 60px;
+    height: 60px;
+}
+
+.whatsapp-float svg {
+    fill: white;
+    width: 35px;
+    height: 35px;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    background-color: #20ba5a;
+}
+
+/* Pulse Animation */
+.whatsapp-float::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #25d366;
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.7;
+    animation: whatsapp-pulse 1.5s infinite;
+}
+
+@keyframes whatsapp-pulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        /* Mobile Size & Position */
+        width: 50px;
+        height: 50px;
+        bottom: 25px;
+        right: 20px;
+    }
+    .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+    }
+}
     </style>
 </head>
 <body>
@@ -1683,6 +1752,12 @@
     </div>
 
     <div id="toast-container"></div>
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/918639478312?text=Hi%20Vastramaya,%20I%20would%20like%20to%20know%20more%20about%20your%20products." class="whatsapp-float" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-1.017-.272-.149-.469-.223-.669.074-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.506-.669-.516-.173-.009-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+</a>
 
     <!-- FIREBASE SCRIPTS (Single instance) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -1857,17 +1932,45 @@ function handleWishlistAction(id) {
             };
         }
 
-        function initLiveSearch() {
+function initLiveSearch() {
             const performSearch = (query, resultsContainerId) => {
                 const container = document.getElementById(resultsContainerId);
+                
                 if (!query || query.length < 2) {
                     container.classList.remove('show');
                     container.innerHTML = '';
                     return;
                 }
 
-                const lowerQuery = query.toLowerCase();
-                const filtered = allProducts.filter(p => p.name.toLowerCase().includes(lowerQuery));
+                const lowerQuery = query.toLowerCase().trim();
+
+                // UPDATED FILTERING LOGIC STARTS HERE
+                const filtered = allProducts.filter(p => {
+                    // 1. Check Product Name
+                    if ((p.name || '').toLowerCase().includes(lowerQuery)) return true;
+                    
+                    // 2. Check Category Name
+                    if ((p.category || '').toLowerCase().includes(lowerQuery)) return true;
+                    
+                    // 3. Check Description
+                    if ((p.description || '').toLowerCase().includes(lowerQuery)) return true;
+
+                    // 4. Check Main Color Field
+                    if ((p.color || '').toLowerCase().includes(lowerQuery)) return true;
+
+                    // 5. Check Color Variants (Arrays of objects)
+                    if (p.colorVariants && Array.isArray(p.colorVariants)) {
+                        return p.colorVariants.some(variant => {
+                            // Handle if variant is an object with a name, or just a string
+                            const vName = (variant.name || variant || '').toString().toLowerCase();
+                            return vName.includes(lowerQuery);
+                        });
+                    }
+
+                    return false;
+                });
+                // UPDATED FILTERING LOGIC ENDS HERE
+
                 const results = filtered.slice(0, 6); 
 
                 let html = '';
@@ -1890,6 +1993,7 @@ function handleWishlistAction(id) {
                 container.classList.add('show');
             };
 
+            // ... rest of the function (debounce logic) remains the same
             const debouncedSearchDesktop = debounce((e) => performSearch(e.target.value, 'desktop-search-results'), 300);
             const debouncedSearchMobile = debounce((e) => performSearch(e.target.value, 'mobile-search-results'), 300);
 
@@ -1905,6 +2009,12 @@ function handleWishlistAction(id) {
                 }
             });
         }
+
+
+
+
+
+
 
         function initNavbarUI() {
             const mMenuToggle = document.getElementById('m-menu-toggle');
@@ -2918,7 +3028,7 @@ window.buyNowQV = function() {
                         </div>
                         <div class="contact-details">
                             <span class="contact-label">Adress</span>
-                            <span class="contact-value">Challapalli, A.P 521126</span>
+                            <span class="contact-value">Nellore, A.P 524001</span>
                         </div>
                     </div>
                 </div>
