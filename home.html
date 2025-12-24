@@ -1760,46 +1760,41 @@
         }
 
         // MAIN PAGE WISHLIST HANDLER (Original)
-        function handleWishlistAction(id) {
-            if (!currentUser) {
-                openAuthModal();
-                return;
-            }
-            
-            const index = wishlist.indexOf(id);
-            const isAdding = index === -1;
+function handleWishlistAction(id) {
+    // 1. Force Login Check
+    if (!currentUser) {
+        openAuthModal();
+        return;
+    }
+    
+    // 2. Toggle Logic
+    if(wishlist.includes(id)) {
+        wishlist = wishlist.filter(i => i !== id);
+        showToast("Removed from wishlist");
+    } else {
+        wishlist.push(id);
+        showToast("Added to wishlist");
+    }
+    
+    // 3. Save to Local & Firebase
+    localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
+    if (currentUser) {
+        db.collection('users').doc(currentUser.uid).update({ 
+            wishlist: wishlist 
+        }).catch(error => console.error("Error updating wishlist:", error));
+    }
 
-            if (isAdding) {
-                wishlist.push(id);
-                showToast("Added to Wishlist");
-            } else {
-                wishlist.splice(index, 1);
-                showToast("Removed from Wishlist");
-            }
+    // 4. Update UI Badges
+    updateWishlistCount();
 
-            localStorage.setItem('vastramaya_wishlist', JSON.stringify(wishlist));
-
-            if (currentUser) {
-                db.collection('users').doc(currentUser.uid).update({ wishlist: wishlist }).catch(err => {
-                    console.error("Wishlist sync failed", err);
-                });
-            }
-
-            updateWishlistCount();
-            
-            // Update UI
-            const allWishlistBtns = document.querySelectorAll('.wishlist-btn-row, .wishlist-btn-abs, .wishlist-btn-top-right');
-            allWishlistBtns.forEach(btn => {
-                const onClickAttr = btn.getAttribute('onclick');
-                if (onClickAttr && onClickAttr.includes(`'${id}'`)) {
-                    if (isAdding) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                }
-            });
+    // 5. Update All instances of the product heart icon on the page
+    const buttons = document.querySelectorAll(`[onclick*="'${id}'"]`);
+    buttons.forEach(btn => {
+        if(btn.classList.contains('wishlist-btn-abs') || btn.classList.contains('wishlist-btn-row')) {
+            wishlist.includes(id) ? btn.classList.add('active') : btn.classList.remove('active');
         }
+    });
+}
 
         // NAVBAR FUNCTIONS
         function updateWishlistCount() {
@@ -2537,73 +2532,76 @@
             document.getElementById('qvQtyValue').textContent = qvQty;
         }
 
-        window.addToCartQV = function() {
-            if(!activeProduct) return; 
-            
-            const sizeContainer = document.getElementById('qvSizes');
-            if (sizeContainer.children.length > 0 && !qvSelectedSize) {
-                 showToast("Please select a size"); 
-                 return; 
-            }
-            
-            let colorName = null;
-            if(activeProduct.colorVariants && activeProduct.colorVariants[qvCurrentColorIndex]) {
-                colorName = activeProduct.colorVariants[qvCurrentColorIndex].name;
-            }
-            const img = qvActiveImages[0];
-            const uniqueId = `${activeProduct.id}-${colorName||'def'}-${qvSelectedSize||'def'}`;
-            
-            const existing = cart.find(i => i.uniqueId === uniqueId);
-            if(existing) existing.quantity += qvQty;
-            else {
-                cart.push({
-                    id: activeProduct.id,
-                    uniqueId: uniqueId,
-                    name: activeProduct.name,
-                    price: activeProduct.price,
-                    image: img,
-                    size: qvSelectedSize,
-                    color: colorName,
-                    quantity: qvQty
-                });
-            }
-            
-            saveCart(true);
-            renderCart();
-            showToast("Added to Cart");
-            closeModal();
-        }
+window.addToCartQV = function() {
+    if(!activeProduct) return; 
+    
+    // 1. Validation
+    const sizeContainer = document.getElementById('qvSizes');
+    if (sizeContainer.children.length > 0 && !qvSelectedSize) {
+         showToast("Please select a size"); 
+         return; 
+    }
+    
+    let colorName = (activeProduct.colorVariants && activeProduct.colorVariants[qvCurrentColorIndex]) 
+        ? activeProduct.colorVariants[qvCurrentColorIndex].name 
+        : null;
 
-        window.buyNowQV = function() {
-            if(!activeProduct) return;
-            
-            const sizeContainer = document.getElementById('qvSizes');
-            if (sizeContainer.children.length > 0 && !qvSelectedSize) {
-                 showToast("Please select a size"); 
-                 return; 
-            }
-            
-            let colorName = null;
-            if(activeProduct.colorVariants && activeProduct.colorVariants[qvCurrentColorIndex]) {
-                colorName = activeProduct.colorVariants[qvCurrentColorIndex].name;
-            }
-            const img = qvActiveImages[0];
-            const uniqueId = `${activeProduct.id}-${colorName||'def'}-${qvSelectedSize||'def'}`;
-            
-            const directItem = {
-                id: activeProduct.id, 
-                uniqueId: uniqueId,
-                name: activeProduct.name, 
-                price: activeProduct.price, 
-                image: img, 
-                quantity: qvQty, 
-                size: qvSelectedSize, 
-                color: colorName
-            };
-            
-            localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
-            window.location.href = "checkout.html?buy_now=true";
-        }
+    // 2. Force Variable Sync (Crucial for multi-tab consistency)
+    cart = JSON.parse(localStorage.getItem('vastramaya_cart')) || [];
+    
+    // 3. Unique ID and Existence Check
+    const uniqueId = `${activeProduct.id}-${qvSelectedSize || 'none'}-${colorName || 'none'}`;
+    const existing = cart.find(i => i.uniqueId === uniqueId);
+
+    if(existing) {
+        existing.quantity += qvQty;
+    } else {
+        cart.push({
+            uniqueId: uniqueId,
+            id: activeProduct.id,
+            name: activeProduct.name,
+            price: activeProduct.price,
+            image: qvActiveImages[0],
+            size: qvSelectedSize,
+            color: colorName,
+            quantity: qvQty
+        });
+    }
+    
+    // 4. Save, Sync Navbar, and Close
+    saveCart(true);
+    renderCart(); 
+    showToast("Added to Cart");
+    closeModal();
+}
+
+window.buyNowQV = function() {
+    if(!activeProduct) return;
+    
+    const sizeContainer = document.getElementById('qvSizes');
+    if (sizeContainer.children.length > 0 && !qvSelectedSize) {
+         showToast("Please select a size"); 
+         return; 
+    }
+    
+    let colorName = (activeProduct.colorVariants && activeProduct.colorVariants[qvCurrentColorIndex]) 
+        ? activeProduct.colorVariants[qvCurrentColorIndex].name 
+        : null;
+
+    const directItem = {
+        id: activeProduct.id, 
+        uniqueId: `${activeProduct.id}-${Date.now()}`, // Unique timestamp to prevent cache issues
+        name: activeProduct.name, 
+        price: activeProduct.price, 
+        image: qvActiveImages[0], 
+        quantity: qvQty, 
+        size: qvSelectedSize, 
+        color: colorName
+    };
+    
+    localStorage.setItem('vastramaya_direct_buy', JSON.stringify([directItem]));
+    window.location.href = "checkout.html?buy_now=true";
+}
 
         async function loadCategories() {
             try {
