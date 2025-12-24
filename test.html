@@ -3672,67 +3672,61 @@
                     <div class="search-results" id="desktop-search-results"></div>
                 </div>
                 
-                
-                <button href="#" class="d-icon-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
-        <span class="wishlist-badge" id="wishlist-badge-desktop" style="display:none">0</span>
-    </button>
-    
-                <div class="d-action-icons">
-                    <div class="d-profile-dropdown">
-                      <button href="./wishlist.html" class="d-icon-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
-        <span class="wishlist-badge" id="wishlist-badge-desktop" style="display:none">0</span>
-    </button>
-                        <button class="d-icon-btn" id="d-cart-toggle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
-                            <span class="cart-badge" id="cart-badge-desktop" style="display:none">0</span>
-                        </button>
-                        
-                        
-                        <div class="cart-popup" id="cart-popup">
-                            <div class="cart-popup-header">
-                                <div class="cart-popup-title">Your Shopping Cart</div>
-                                <div class="cart-popup-subtitle" id="cart-count-desktop">0 items</div>
+            <div class="d-action-icons">
+                <a href="#" class="d-icon-btn" onclick="handleWishlistClick(event)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                    <span class="wishlist-badge" id="wishlist-badge-desktop" style="display:none">0</span>
+                </a>
+                <div class="d-profile-dropdown">
+                    <button class="d-icon-btn" id="d-cart-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+                        <span class="cart-badge" id="cart-badge-desktop" style="display:none">0</span>
+                    </button>
+                    <div class="cart-popup" id="cart-popup">
+                        <div class="cart-popup-header">
+                            <div class="cart-popup-title">Your Shopping Cart</div>
+                            <div class="cart-popup-subtitle" id="cart-count-desktop">0 items</div>
+                        </div>
+                        <div class="cart-popup-body" id="cart-items-desktop"></div>
+                        <div class="cart-popup-footer">
+                            <div class="cart-total">
+                                <div class="cart-total-label">Total Amount</div>
+                                <div class="cart-total-amount" id="cart-total-desktop">$0.00</div>
                             </div>
-                            <div class="cart-popup-body" id="cart-items-desktop"></div>
-                            <div class="cart-popup-footer">
-                                <div class="cart-total">
-                                    <div class="cart-total-label">Total Amount</div>
-                                    <div class="cart-total-amount" id="cart-total-desktop">₹0.00</div>
-                                </div>
-                                <button class="buy-btn" onclick="window.location.href='checkout.html'">
-                                    <span>Checkout Now</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                                </button>
-                            </div>
+                            <button class="buy-btn" onclick="window.location.href='checkout.html'">
+                                <span>Checkout Now</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </button>
                         </div>
                     </div>
-                    <div class="d-profile-dropdown">
-                        <button class="d-profile-btn" id="d-profile-toggle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        </button>
-                        <div class="profile-popup" id="profile-popup">
-                            <div class="profile-header">
-                                <div class="profile-info">
-                                    <div class="profile-name" id="user-name">Guest User</div>
-                                    <div class="profile-email" id="user-email">Sign in to sync</div>
-                                </div>
+                </div>
+                <div class="d-profile-dropdown">
+                    <button class="d-profile-btn" id="d-profile-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </button>
+                    <div class="profile-popup" id="profile-popup">
+                        <div class="profile-header">
+                            <div class="profile-info">
+                                <div class="profile-name" id="user-name">Guest User</div>
+                                <div class="profile-email" id="user-email">Sign in to sync</div>
                             </div>
-                            <div class="profile-links" id="profile-links-container">
-                                <a href="my-profile.html" class="profile-link auth-only auth-hidden">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> My Profile
-                                </a>
-                                <a href="my-orders.html" class="profile-link auth-only auth-hidden">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22v-9"/></svg> My Orders
-                                </a>
-                                <div id="login-trigger-desktop" class="profile-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg> Sign In
-                                </div>
+                        </div>
+                        <div class="profile-links" id="profile-links-container">
+                            <a href="my-profile.html" class="profile-link auth-only auth-hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> My Profile
+                            </a>
+                            <a href="my-orders.html" class="profile-link auth-only auth-hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22v-9"/></svg> My Orders
+                            </a>
+                            <div id="login-trigger-desktop" class="profile-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg> Sign In
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+                
+                
             </div>
         </nav>
     </div>
