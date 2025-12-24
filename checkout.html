@@ -1920,7 +1920,7 @@
             } else {
                 document.getElementById('checkout-form-section').style.display = 'block';
                 document.getElementById('checkout-summary-section').style.display = 'block';
-                document.getElementById('mobile-bottom-bar').style.display = 'flex';
+                document.getElementById('mobile-bottom-bar').style.removeProperty('display');
                 document.getElementById('empty-cart-msg').classList.remove('active');
             }
 
