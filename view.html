@@ -4376,7 +4376,7 @@
             document.getElementById('priceCurrent').textContent = `₹${price}`;
             
             const waMsg = encodeURIComponent(`Hi, I am interested in ${currentProduct.name} - ₹${price}\nLink: ${window.location.href}`);
-            document.getElementById('waLink').href = `https://wa.me/917799181716?text=${waMsg}`;
+            document.getElementById('waLink').href = `https://wa.me/918639478312?text=${waMsg}`;
             
             const oldPrice = parseVal(currentProduct.oldPrice);
             
@@ -5220,30 +5220,28 @@ async function syncUserData() {
                     });
             });
 
-            document.getElementById('login-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('login-email').value;
-                const pass = document.getElementById('login-password').value;
-                document.getElementById('loader-auth').style.display = 'flex';
-                auth.signInWithEmailAndPassword(email, pass)
-.then(() => { 
-    document.getElementById('loader-auth').style.display = 'none'; 
-    showToast("Login Successful!"); 
+document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-password').value;
+    document.getElementById('loader-auth').style.display = 'flex';
     
-           document.getElementById('login-modal-overlay').classList.remove('active'); 
-        document.body.style.overflow = '';  
-    
-    
-    // CHANGE THIS LINE: Use explicit ID
-    document.getElementById('login-modal-overlay').classList.remove('active'); 
-    
-    document.body.style.overflow = '';
-})
-                    .catch((error) => { 
-                        document.getElementById('loader-auth').style.display = 'none'; 
-                        showToast(error.message); 
-                    });
-            });
+    auth.signInWithEmailAndPassword(email, pass)
+        .then(() => { 
+            document.getElementById('loader-auth').style.display = 'none'; 
+            
+            // This will now work because you added the HTML div
+            showToast("Login Successful!"); 
+            
+            // This will now execute
+            document.getElementById('login-modal-overlay').classList.remove('active'); 
+            document.body.style.overflow = '';
+        })
+        .catch((error) => { 
+            document.getElementById('loader-auth').style.display = 'none'; 
+            showToast(error.message); 
+        });
+});
 
             document.getElementById('signup-form').addEventListener('submit', (e) => {
                 e.preventDefault();
