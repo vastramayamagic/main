@@ -5230,6 +5230,10 @@ async function syncUserData() {
     document.getElementById('loader-auth').style.display = 'none'; 
     showToast("Login Successful!"); 
     
+           document.getElementById('login-modal-overlay').classList.remove('active'); 
+        document.body.style.overflow = '';  
+    
+    
     // CHANGE THIS LINE: Use explicit ID
     document.getElementById('login-modal-overlay').classList.remove('active'); 
     
@@ -5262,6 +5266,8 @@ async function syncUserData() {
     document.getElementById('loader-auth').style.display = 'none'; 
     showToast("Account Created!"); 
     
+            document.getElementById('login-modal-overlay').classList.remove('active'); 
+        document.body.style.overflow = ''; 
     // CHANGE THIS LINE: Use explicit ID
     document.getElementById('login-modal-overlay').classList.remove('active'); 
     
