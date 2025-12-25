@@ -737,7 +737,14 @@ body { min-height: 100vh; background: var(--page-bg); font-family: "DM Sans", Ro
         border: 1px solid var(--border-subtle); background: #fff; color: var(--text-primary);
         box-shadow: 0 2px 5px rgba(0,0,0,0.03); margin: 0;
     }
-    
+        #sortLabel {
+        max-width: 75px; /* Limits the width of the changing text */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* Adds '...' if text is too long */
+        vertical-align: middle;
+        margin: 0 3px;
+    }
     .filters.mobile-open { 
         display: flex; flex-direction: column; 
         position: fixed; inset: 0; left: 0; right: auto; width: 85%; max-width: 340px; height: 100dvh; 
