@@ -2182,8 +2182,9 @@ function initLiveSearch() {
                 auth.signInWithEmailAndPassword(email, pass)
                     .then(() => { 
                         document.getElementById('loader').style.display = 'none'; 
-                        showToast("Login Successful!"); 
-                        modalOverlay.classList.remove('active'); 
+showToast("Login Successful!"); 
+modalOverlay.classList.remove('active'); 
+document.body.style.overflow = '';
                     })
                     .catch((error) => { 
                         document.getElementById('loader').style.display = 'none'; 
@@ -2208,8 +2209,9 @@ function initLiveSearch() {
                     })
                     .then(() => { 
                         document.getElementById('loader').style.display = 'none'; 
-                        showToast("Account Created!"); 
-                        modalOverlay.classList.remove('active'); 
+showToast("Account Created!"); 
+modalOverlay.classList.remove('active'); 
+document.body.style.overflow = '';
                     })
                     .catch((error) => { 
                         document.getElementById('loader').style.display = 'none'; 
@@ -2226,8 +2228,9 @@ function initLiveSearch() {
                                 name: result.user.displayName, email: result.user.email, createdAt: firebase.firestore.FieldValue.serverTimestamp()
                             }, { merge: true });
                         }
-                        showToast("Welcome " + result.user.displayName); 
-                        modalOverlay.classList.remove('active');
+showToast("Welcome " + result.user.displayName); 
+modalOverlay.classList.remove('active');
+document.body.style.overflow = '';
                     })
                     .catch((error) => showToast(error.message));
             });
