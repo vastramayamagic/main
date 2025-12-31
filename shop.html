@@ -2418,18 +2418,23 @@ async function fetchFastLoadData() {
     try {
         const catSnap = await db.collection('categories').get();
         let allProds = [];
-        const promises = catSnap.docs.map(async (catDoc) => {
-            const catData = catDoc.data(); // Get category metadata (like name)
-            const subSnap = await catDoc.ref.collection('products').get();
-            subSnap.forEach(pDoc => {
-                let d = pDoc.data();
-                d.id = pDoc.id; 
-                d.categoryId = catDoc.id; 
-                // CRITICAL: Ensure the fast-load data has the name for the filter to match
-                d.categoryName = catData.name; 
-                allProds.push(d);
-            });
-        });
+const promises = catSnap.docs.map(async (catDoc) => {
+    const catData = catDoc.data(); 
+    // FIX: Skip the entire category if it is turned off
+    if (catData.enabled === false) return; 
+
+    const subSnap = await catDoc.ref.collection('products').get();
+    subSnap.forEach(pDoc => {
+        let d = pDoc.data();
+        // FIX: Skip individual products if they are turned off
+        if (d.isAvailable === false) return; 
+
+        d.id = pDoc.id; 
+        d.categoryId = catDoc.id; 
+        d.categoryName = catData.name; 
+        allProds.push(d);
+    });
+});
         await Promise.all(promises);
         RAW_PRODUCTS = allProds;
         // render() REMOVED FROM HERE
@@ -2439,13 +2444,12 @@ async function fetchFastLoadData() {
 async function fetchFullDataInBackground() {
     try {
         const snap = await db.collection('products').get();
-        const fullData = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
-        
-        // Merge full details into RAW_PRODUCTS seamlessly
+        const fullData = snap.docs
+            .map(doc => ({id: doc.id, ...doc.data()}))
+            // FIX: Ensure only available products are kept in the global list
+            .filter(p => p.isAvailable !== false); 
+            
         RAW_PRODUCTS = fullData; 
-        
-        // Re-render only if filters are applied to show correct count
-        // render(); 
     } catch (e) { console.error("Bg fetch error", e); }
 }
 
@@ -2458,7 +2462,10 @@ function render() {
     filteredList = RAW_PRODUCTS.filter(p => {
         // Price Filter
         if (p.price < state.minPrice || p.price > state.maxPrice) return false;
-
+    // FIX: Master check for Enabled Categories
+    // (AVAILABLE_CATEGORIES only contains categories where enabled !== false)
+    const catName = p.categoryName || p.category;
+    if (!AVAILABLE_CATEGORIES.includes(catName)) return false;
         // Category Filter
         if (state.categories.size > 0) {
             const catName = p.categoryName || p.category;
