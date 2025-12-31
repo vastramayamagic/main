@@ -2402,10 +2402,19 @@ document.body.style.overflow = '';
                 );
                 
                 const snapshots = await Promise.all(fetchPromises);
-                const products = snapshots
-                    .filter(s => s && s.exists)
-                    .map(s => ({id: s.id, ...s.data()}))
-                    .filter(p => p.isAvailable !== false);
+const products = snapshots
+    .filter(s => s && s.exists)
+    .map(s => ({id: s.id, ...s.data()}))
+    .filter(p => {
+        // 1. Check if product itself is available
+        if (p.isAvailable === false) return false;
+        
+        // 2. Check if the product's category is enabled
+        const parentCategory = allCategories.find(c => c.name === p.category);
+        if (parentCategory && parentCategory.enabled === false) return false;
+        
+        return true;
+    });
 
                 renderBestSellers(products);
 
